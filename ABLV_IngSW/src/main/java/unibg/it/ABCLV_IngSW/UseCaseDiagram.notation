@@ -16,6 +16,22 @@
     <element xmi:type="uml:Actor" href="UseCaseDiagram.uml#_b1rc0LmqEfCFSvgadSq75w"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b1104bmqEfCFSvgadSq75w" x="323" y="202"/>
   </children>
+  <children xmi:type="notation:Shape" xmi:id="_WIbwsLmrEfCb1sY35tLU7g" type="Actor_Shape">
+    <children xmi:type="notation:DecorationNode" xmi:id="_WIdl4LmrEfCb1sY35tLU7g" type="Actor_NameLabel">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_WIdl4bmrEfCb1sY35tLU7g" y="15"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_WIeM8LmrEfCb1sY35tLU7g" type="Actor_StereotypeLabel">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_WIeM8bmrEfCb1sY35tLU7g" x="20" y="100"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_WIeM8rmrEfCb1sY35tLU7g" type="Actor_QualifiedNameLabel">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_WIeM87mrEfCb1sY35tLU7g" x="20" y="80"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_WIeM9LmrEfCb1sY35tLU7g" type="Actor_FloatingNameLabel">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_WIeM9bmrEfCb1sY35tLU7g" y="15"/>
+    </children>
+    <element xmi:type="uml:Actor" href="UseCaseDiagram.uml#_WISmwLmrEfCb1sY35tLU7g"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_WIbwsbmrEfCb1sY35tLU7g" x="486" y="233"/>
+  </children>
   <styles xmi:type="notation:StringValueStyle" xmi:id="_a8S9wbmqEfCFSvgadSq75w" name="diagram_compatibility_version" stringValue="1.4.0"/>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_a8S9wrmqEfCFSvgadSq75w"/>
   <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_a8S9w7mqEfCFSvgadSq75w" diagramKindId="org.eclipse.papyrus.uml.diagram.useCase">
