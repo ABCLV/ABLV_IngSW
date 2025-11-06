@@ -15,12 +15,12 @@
   <packagedElement xmi:type="uml:Actor" xmi:id="_2lXuYLmxEfCjRPrfckFa_w" name="Società di Pesca">
     <generalization xmi:type="uml:Generalization" xmi:id="_hq2PoLqKEfCYQJk2O5vr8w" general="_HOvZsLqJEfCYQJk2O5vr8w"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Activity" xmi:id="_5vDcILmxEfCjRPrfckFa_w" name="Sistema gestione gare pesca" useCase="_FsCLgLmyEfCjRPrfckFa_w _JPBKELmyEfCjRPrfckFa_w _LZp1oLmyEfCjRPrfckFa_w _NSYR0LmyEfCjRPrfckFa_w _P4_uwLmyEfCjRPrfckFa_w _Q_Cw0LmyEfCjRPrfckFa_w _gbR1ULmyEfCjRPrfckFa_w _iU4bQLmyEfCjRPrfckFa_w _lSe00LmyEfCjRPrfckFa_w _oIsM8LmyEfCjRPrfckFa_w _r5CSELmyEfCjRPrfckFa_w _um-fALmyEfCjRPrfckFa_w _t5LBALm2EfCjRPrfckFa_w _nShp0LqKEfCYQJk2O5vr8w _9FeYwLqKEfCYQJk2O5vr8w _EPlPALqLEfCYQJk2O5vr8w _PO8fkLqLEfCYQJk2O5vr8w _TQ4D8LqLEfCYQJk2O5vr8w _UIMGcLqLEfCYQJk2O5vr8w _WTk_8LqLEfCYQJk2O5vr8w _fepBULqLEfCYQJk2O5vr8w _yVADULqLEfCYQJk2O5vr8w __hJUgLqLEfCYQJk2O5vr8w _Iup7ALqOEfCYQJk2O5vr8w _MakMELqOEfCYQJk2O5vr8w _dQtCwLqOEfCYQJk2O5vr8w _LWEzwLqPEfCYQJk2O5vr8w _M1f_ILqPEfCYQJk2O5vr8w _UJqJQLqPEfCYQJk2O5vr8w _VpXogLqPEfCYQJk2O5vr8w _qafRkLqQEfCYQJk2O5vr8w _0-7rQLqREfCYQJk2O5vr8w _-b8_ULqREfCYQJk2O5vr8w _smqG0LqTEfCYQJk2O5vr8w _xU5XkLqTEfCYQJk2O5vr8w _B0U-cLqUEfCYQJk2O5vr8w _FXBpILqUEfCYQJk2O5vr8w _U73QALqUEfCYQJk2O5vr8w _Y_SCILqUEfCYQJk2O5vr8w _bOfEoLqUEfCYQJk2O5vr8w _z4eSILqUEfCYQJk2O5vr8w">
+  <packagedElement xmi:type="uml:Activity" xmi:id="_5vDcILmxEfCjRPrfckFa_w" name="Sistema gestione gare pesca" useCase="_FsCLgLmyEfCjRPrfckFa_w _JPBKELmyEfCjRPrfckFa_w _LZp1oLmyEfCjRPrfckFa_w _NSYR0LmyEfCjRPrfckFa_w _P4_uwLmyEfCjRPrfckFa_w _Q_Cw0LmyEfCjRPrfckFa_w _gbR1ULmyEfCjRPrfckFa_w _iU4bQLmyEfCjRPrfckFa_w _lSe00LmyEfCjRPrfckFa_w _oIsM8LmyEfCjRPrfckFa_w _r5CSELmyEfCjRPrfckFa_w _um-fALmyEfCjRPrfckFa_w _t5LBALm2EfCjRPrfckFa_w _nShp0LqKEfCYQJk2O5vr8w _9FeYwLqKEfCYQJk2O5vr8w _EPlPALqLEfCYQJk2O5vr8w _PO8fkLqLEfCYQJk2O5vr8w _TQ4D8LqLEfCYQJk2O5vr8w _UIMGcLqLEfCYQJk2O5vr8w _WTk_8LqLEfCYQJk2O5vr8w _fepBULqLEfCYQJk2O5vr8w _yVADULqLEfCYQJk2O5vr8w __hJUgLqLEfCYQJk2O5vr8w _Iup7ALqOEfCYQJk2O5vr8w _MakMELqOEfCYQJk2O5vr8w _dQtCwLqOEfCYQJk2O5vr8w _LWEzwLqPEfCYQJk2O5vr8w _M1f_ILqPEfCYQJk2O5vr8w _UJqJQLqPEfCYQJk2O5vr8w _VpXogLqPEfCYQJk2O5vr8w _qafRkLqQEfCYQJk2O5vr8w _0-7rQLqREfCYQJk2O5vr8w _-b8_ULqREfCYQJk2O5vr8w _smqG0LqTEfCYQJk2O5vr8w _xU5XkLqTEfCYQJk2O5vr8w _B0U-cLqUEfCYQJk2O5vr8w _FXBpILqUEfCYQJk2O5vr8w _U73QALqUEfCYQJk2O5vr8w _Y_SCILqUEfCYQJk2O5vr8w _bOfEoLqUEfCYQJk2O5vr8w _z4eSILqUEfCYQJk2O5vr8w _9r6gsLsZEfCk864s4-ESuw _UpOfELscEfCk864s4-ESuw">
     <ownedComment xmi:type="uml:Comment" xmi:id="_WI6GQLm1EfCjRPrfckFa_w">
       <body>Extension point:&#xD;
 Pubblicazione classifica&#xD;
 Condition:&#xD;
-Amministratore esegue il calcolo&#xD;
+Sistema esegue il calcolo&#xD;
 </body>
     </ownedComment>
     <ownedComment xmi:type="uml:Comment" xmi:id="_DJKkELqMEfCYQJk2O5vr8w">
@@ -66,7 +66,7 @@ raggiungimento nuovo accordo&#xD;
       <extend xmi:type="uml:Extend" xmi:id="_Xab1ALm0EfCjRPrfckFa_w" extendedCase="_NSYR0LmyEfCjRPrfckFa_w" extensionLocation="_Xab1Abm0EfCjRPrfckFa_w"/>
       <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_undAILmyEfCjRPrfckFa_w" name="ExtensionPoint1"/>
     </ownedUseCase>
-    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_t5LBALm2EfCjRPrfckFa_w" name="Iscrizione" subject="_5vDcILmxEfCjRPrfckFa_w">
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_t5LBALm2EfCjRPrfckFa_w" name="Iscriversi a gara" subject="_5vDcILmxEfCjRPrfckFa_w">
       <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_CeP-0LqMEfCYQJk2O5vr8w" name="ExtensionPoint1"/>
       <include xmi:type="uml:Include" xmi:id="_zzYs4LqLEfCYQJk2O5vr8w" addition="_yVADULqLEfCYQJk2O5vr8w"/>
       <include xmi:type="uml:Include" xmi:id="_wVK_8LqTEfCYQJk2O5vr8w" addition="_smqG0LqTEfCYQJk2O5vr8w"/>
@@ -108,12 +108,13 @@ raggiungimento nuovo accordo&#xD;
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_0-7rQLqREfCYQJk2O5vr8w" name="Comunicare al territorio " subject="_5vDcILmxEfCjRPrfckFa_w"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_-b8_ULqREfCYQJk2O5vr8w" name="Accettare/Negare proposta di gara" subject="_5vDcILmxEfCjRPrfckFa_w"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_smqG0LqTEfCYQJk2O5vr8w" name="Inserire dati anagrafici" subject="_5vDcILmxEfCjRPrfckFa_w"/>
-    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_xU5XkLqTEfCYQJk2O5vr8w" name="Ricevere notifica pre-gara" subject="_5vDcILmxEfCjRPrfckFa_w"/>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_xU5XkLqTEfCYQJk2O5vr8w" name="Inviare notifica pre-gara" subject="_5vDcILmxEfCjRPrfckFa_w"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_B0U-cLqUEfCYQJk2O5vr8w" name="Gestire sponsor personale" subject="_5vDcILmxEfCjRPrfckFa_w">
       <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_GvWuAbqUEfCYQJk2O5vr8w" name="ExtensionPoint1"/>
     </ownedUseCase>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_FXBpILqUEfCYQJk2O5vr8w" name="Cambiare sponsor" subject="_5vDcILmxEfCjRPrfckFa_w">
       <extend xmi:type="uml:Extend" xmi:id="_GvWuALqUEfCYQJk2O5vr8w" extendedCase="_B0U-cLqUEfCYQJk2O5vr8w" extensionLocation="_GvWuAbqUEfCYQJk2O5vr8w"/>
+      <include xmi:type="uml:Include" xmi:id="_Bxt4cLsaEfCk864s4-ESuw" addition="_9r6gsLsZEfCk864s4-ESuw"/>
     </ownedUseCase>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_U73QALqUEfCYQJk2O5vr8w" name="Cambio di società di appartenenza" subject="_5vDcILmxEfCjRPrfckFa_w"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_Y_SCILqUEfCYQJk2O5vr8w" name="Valutare arbitro" subject="_5vDcILmxEfCjRPrfckFa_w"/>
@@ -121,13 +122,8 @@ raggiungimento nuovo accordo&#xD;
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_z4eSILqUEfCYQJk2O5vr8w" name="Proporre nuova gara" subject="_5vDcILmxEfCjRPrfckFa_w">
       <include xmi:type="uml:Include" xmi:id="_4-71oLqUEfCYQJk2O5vr8w" addition="_-b8_ULqREfCYQJk2O5vr8w"/>
     </ownedUseCase>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="_Uq_BoLmzEfCjRPrfckFa_w" memberEnd="_Uq_osrmzEfCjRPrfckFa_w _Uq_os7mzEfCjRPrfckFa_w">
-    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Uq_osLmzEfCjRPrfckFa_w" source="org.eclipse.papyrus">
-      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Uq_osbmzEfCjRPrfckFa_w" key="nature" value="UML_Nature"/>
-    </eAnnotations>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_Uq_osrmzEfCjRPrfckFa_w" name="consultare classifiche" type="_P4_uwLmyEfCjRPrfckFa_w" association="_Uq_BoLmzEfCjRPrfckFa_w"/>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_Uq_os7mzEfCjRPrfckFa_w" name="partecipante" type="_HOvZsLqJEfCYQJk2O5vr8w" association="_Uq_BoLmzEfCjRPrfckFa_w"/>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_9r6gsLsZEfCk864s4-ESuw" name="Approvare cambio sponsor" subject="_5vDcILmxEfCjRPrfckFa_w"/>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_UpOfELscEfCk864s4-ESuw" name="Suggerire gare simili" subject="_5vDcILmxEfCjRPrfckFa_w"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_XpKqALmzEfCjRPrfckFa_w" memberEnd="_XpLRErmzEfCjRPrfckFa_w _XpLRE7mzEfCjRPrfckFa_w">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XpLRELmzEfCjRPrfckFa_w" source="org.eclipse.papyrus">
@@ -148,7 +144,7 @@ raggiungimento nuovo accordo&#xD;
       <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_fS1xIbmzEfCjRPrfckFa_w" key="nature" value="UML_Nature"/>
     </eAnnotations>
     <ownedEnd xmi:type="uml:Property" xmi:id="_fS1xIrmzEfCjRPrfckFa_w" name="calcolare classifiche" type="_NSYR0LmyEfCjRPrfckFa_w" association="_fS1KELmzEfCjRPrfckFa_w"/>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_fS1xI7mzEfCjRPrfckFa_w" name="amministratore" type="_1dfgULmxEfCjRPrfckFa_w" association="_fS1KELmzEfCjRPrfckFa_w"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_fS1xI7mzEfCjRPrfckFa_w" name="amministratore" type="_CokS0LsYEfCk864s4-ESuw" association="_fS1KELmzEfCjRPrfckFa_w"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_gxsUwLmzEfCjRPrfckFa_w" memberEnd="_gxs70rmzEfCjRPrfckFa_w _gxs707mzEfCjRPrfckFa_w">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_gxs70LmzEfCjRPrfckFa_w" source="org.eclipse.papyrus">
@@ -270,13 +266,6 @@ raggiungimento nuovo accordo&#xD;
     <ownedEnd xmi:type="uml:Property" xmi:id="_vXlWULqTEfCYQJk2O5vr8w" name="inserire dati anagrafici" type="_smqG0LqTEfCYQJk2O5vr8w" association="_vXjhILqTEfCYQJk2O5vr8w"/>
     <ownedEnd xmi:type="uml:Property" xmi:id="_vXlWUbqTEfCYQJk2O5vr8w" name="concorrente" type="_WISmwLmrEfCb1sY35tLU7g" association="_vXjhILqTEfCYQJk2O5vr8w"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="_5ooIULqTEfCYQJk2O5vr8w" memberEnd="_5ooIU7qTEfCYQJk2O5vr8w _5ooIVLqTEfCYQJk2O5vr8w">
-    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_5ooIUbqTEfCYQJk2O5vr8w" source="org.eclipse.papyrus">
-      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_5ooIUrqTEfCYQJk2O5vr8w" key="nature" value="UML_Nature"/>
-    </eAnnotations>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_5ooIU7qTEfCYQJk2O5vr8w" name="concorrente" type="_WISmwLmrEfCb1sY35tLU7g" association="_5ooIULqTEfCYQJk2O5vr8w"/>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_5ooIVLqTEfCYQJk2O5vr8w" name="ricevere notifica pre-gara" type="_xU5XkLqTEfCYQJk2O5vr8w" association="_5ooIULqTEfCYQJk2O5vr8w"/>
-  </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_EZhfELqUEfCYQJk2O5vr8w" memberEnd="_EZiGILqUEfCYQJk2O5vr8w _EZiGIbqUEfCYQJk2O5vr8w">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_EZhfEbqUEfCYQJk2O5vr8w" source="org.eclipse.papyrus">
       <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_EZhfErqUEfCYQJk2O5vr8w" key="nature" value="UML_Nature"/>
@@ -318,5 +307,41 @@ raggiungimento nuovo accordo&#xD;
     </eAnnotations>
     <ownedEnd xmi:type="uml:Property" xmi:id="_363JgrqUEfCYQJk2O5vr8w" name="proporre nuova gara" type="_z4eSILqUEfCYQJk2O5vr8w" association="_362icLqUEfCYQJk2O5vr8w"/>
     <ownedEnd xmi:type="uml:Property" xmi:id="_363Jg7qUEfCYQJk2O5vr8w" type="_2lXuYLmxEfCjRPrfckFa_w" association="_362icLqUEfCYQJk2O5vr8w"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_CokS0LsYEfCk864s4-ESuw" name="Sistema"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_GBZ24LsYEfCk864s4-ESuw" memberEnd="_GBcTILsYEfCk864s4-ESuw _GBcTIbsYEfCk864s4-ESuw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_GBbFALsYEfCk864s4-ESuw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_GBbFAbsYEfCk864s4-ESuw" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_GBcTILsYEfCk864s4-ESuw" name="sistema" type="_CokS0LsYEfCk864s4-ESuw" association="_GBZ24LsYEfCk864s4-ESuw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_GBcTIbsYEfCk864s4-ESuw" name="inviare notifica pre-gara" type="_xU5XkLqTEfCYQJk2O5vr8w" association="_GBZ24LsYEfCk864s4-ESuw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_fOjb0LsYEfCk864s4-ESuw" memberEnd="_fOkp8rsYEfCk864s4-ESuw _fOkp87sYEfCk864s4-ESuw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_fOkp8LsYEfCk864s4-ESuw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_fOkp8bsYEfCk864s4-ESuw" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_fOkp8rsYEfCk864s4-ESuw" name="sistema" type="_CokS0LsYEfCk864s4-ESuw" association="_fOjb0LsYEfCk864s4-ESuw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_fOkp87sYEfCk864s4-ESuw" name="annullamento gara" type="_MakMELqOEfCYQJk2O5vr8w" association="_fOjb0LsYEfCk864s4-ESuw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_CFPG0LsZEfCk864s4-ESuw" memberEnd="_CFQ8ALsZEfCk864s4-ESuw _CFQ8AbsZEfCk864s4-ESuw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CFQU8LsZEfCk864s4-ESuw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_CFQU8bsZEfCk864s4-ESuw" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_CFQ8ALsZEfCk864s4-ESuw" name="chiudere iscrizione al raggiungimento del max" type="__hJUgLqLEfCYQJk2O5vr8w" association="_CFPG0LsZEfCk864s4-ESuw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_CFQ8AbsZEfCk864s4-ESuw" type="_CokS0LsYEfCk864s4-ESuw" association="_CFPG0LsZEfCk864s4-ESuw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_Kh6YMLsZEfCk864s4-ESuw" memberEnd="_Kh6_QrsZEfCk864s4-ESuw _Kh7mULsZEfCk864s4-ESuw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Kh6_QLsZEfCk864s4-ESuw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Kh6_QbsZEfCk864s4-ESuw" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Kh6_QrsZEfCk864s4-ESuw" type="_HOvZsLqJEfCYQJk2O5vr8w" association="_Kh6YMLsZEfCk864s4-ESuw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Kh7mULsZEfCk864s4-ESuw" name="consultare risultati delle gare" type="_P4_uwLmyEfCjRPrfckFa_w" association="_Kh6YMLsZEfCk864s4-ESuw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_YRHLwLscEfCk864s4-ESuw" memberEnd="_YRHy0rscEfCk864s4-ESuw _YRHy07scEfCk864s4-ESuw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_YRHy0LscEfCk864s4-ESuw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_YRHy0bscEfCk864s4-ESuw" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_YRHy0rscEfCk864s4-ESuw" name="sistema" type="_CokS0LsYEfCk864s4-ESuw" association="_YRHLwLscEfCk864s4-ESuw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_YRHy07scEfCk864s4-ESuw" name="suggerire gare simili" type="_UpOfELscEfCk864s4-ESuw" association="_YRHLwLscEfCk864s4-ESuw"/>
   </packagedElement>
 </uml:Model>
