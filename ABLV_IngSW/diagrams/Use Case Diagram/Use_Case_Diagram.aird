@@ -6,6 +6,7 @@
   <semanticResources>pathmap://UML_PROFILES/Standard.profile.uml</semanticResources>
   <semanticResources>pathmap://UML_METAMODELS/UML.metamodel.uml</semanticResources>
   <semanticResources>pathmap://UML_METAMODELS/Ecore.metamodel.uml</semanticResources>
+  <semanticResources>Use_Case_Diagram.uml</semanticResources>
   <ownedViews xmi:type="viewpoint:DView" uid="_Bb32YKVEEfCEKZWrOua3GQ">
     <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.papyrus.sirius.uml.diagram.communication/description/papyrus_communication.odesign#//@ownedViewpoints[name='CommunicationDiagram']"/>
   </ownedViews>
