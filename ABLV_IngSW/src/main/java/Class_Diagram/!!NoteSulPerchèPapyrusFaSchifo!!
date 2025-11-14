@@ -1,0 +1,6 @@
+Permette di creare classi con spazi nel nome, che quando genero il codice naturalmente non vanno bene (metterci un refactoring automatico che corregga anche il rispetto delle convenzioni era troppo difficile?).
+I metodi vengono generati completamente sbagliati, non rispettano minimamente la sintassi Java.
+Il tipo delle date in Papyrus non viene convertito in un tipo valido in Java (EDATE?).
+Le associazioni sono completamente ignorate nella generazione del codice.
+Le classi collegate alle associazioni vengono ignorate.
+Le classi non vengono generate direttamente nel progetto, ma ti fa creare un altro progetto e poi devi fare copia e incolla
