@@ -723,6 +723,24 @@
     <element xmi:type="uml:Property" href="Class_Diagram.uml#_0UcfQLy_EfCweZ0hsbO5pQ"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9goNkcCGEfCvu40bpDRsvA" x="1121" y="118"/>
   </children>
+  <children xmi:type="notation:Shape" xmi:id="_IXgosMIVEfCfn-1HpZfxAg" type="Text" fontName="Segoe UI" description="Text">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_IXhPwMIVEfCfn-1HpZfxAg" source="PapyrusCSSForceValue">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_IXh20MIVEfCfn-1HpZfxAg" key="lineColor" value="true"/>
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_IXid4MIVEfCfn-1HpZfxAg" key="fontHeight" value="true"/>
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_IXid4cIVEfCfn-1HpZfxAg" key="bold" value="true"/>
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_IXid4sIVEfCfn-1HpZfxAg" key="italic" value="true"/>
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_IXid48IVEfCfn-1HpZfxAg" key="fontColor" value="true"/>
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_IXid5MIVEfCfn-1HpZfxAg" key="fillColor" value="true"/>
+    </eAnnotations>
+    <children xmi:type="notation:BasicDecorationNode" xmi:id="_IXid5cIVEfCfn-1HpZfxAg" type="DiagramName">
+      <element xsi:nil="true"/>
+    </children>
+    <children xmi:type="notation:BasicDecorationNode" xmi:id="_IXid5sIVEfCfn-1HpZfxAg" type="Description">
+      <element xsi:nil="true"/>
+    </children>
+    <element xsi:nil="true"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_IXgoscIVEfCfn-1HpZfxAg" x="917" y="582"/>
+  </children>
   <styles xmi:type="notation:StringValueStyle" xmi:id="_U4m64btIEfCDxK-kEWVaCA" name="diagram_compatibility_version" stringValue="1.4.0"/>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_U4m64rtIEfCDxK-kEWVaCA"/>
   <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_U4m647tIEfCDxK-kEWVaCA" diagramKindId="org.eclipse.papyrus.uml.diagram.class">
