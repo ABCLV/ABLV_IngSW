@@ -57,17 +57,19 @@ alt data valida e posti disponibili
     Gara --> Main : dataOK
     Main -> Gara : verificaMax()
     Gara --> Main : postiDisponibili()
+    Main -> Contratto : getContrattiAttivi()
+    Contratto --> Main : elencoContratti()
 
 '--------------------------------------------------------
 ' 4. Scelta (opzionale) dello sponsor - opt
 '--------------------------------------------------------
 
-opt esiste sponsor disponibile
-    Main -> Contratto : getContrattiAttivi()
-    Contratto --> Main : elencoContratti()
+opt esistono contratti disponibili
     Main -> Pagina : mostraSponsorDisponibili()
-    Concorrente -> Sponsor : selezionaSponsor()
-    Sponsor -> Main : confermaSponsor()
+    Concorrente -> Pagina : selezionaSponsor()
+    Pagina -> Main : confermaSponsor()
+    Main -> Sponsor: getSponsor()
+    Sponsor --> Main : datiSponsor()
 end
 
 '--------------------------------------------------------
