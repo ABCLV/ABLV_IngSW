@@ -1,0 +1,152 @@
+/*
+*
+* Viene implementato il diagramma di stato per gestire il ciclo di vita di una gara agonistica di pesca
+* Una gara nasce come proposta da parte di una società o di un amministratore:
+* la proposta viene valutata dall’amministrazione, che può approvarla oppure rifiutarla.
+* Se approvata, la gara entra nello stato di programmata, viene definito il campo gara (zona, settori), 
+* fissata la data, nominato l’arbitro e aperte le iscrizioni. 
+* Durante lo stato di iscrizioni aperte i concorrenti (o le società) possono iscriversi, finché non si raggiunge il numero massimo di partecipanti
+* o non viene superata la data di chiusura. 
+* Alla chiusura delle iscrizioni, se il numero di iscritti è inferiore al minimo previsto per quella gara, la gara viene annullata;
+* in questo caso il sistema avvia il processo di rimborso delle quote di iscrizione entro 24 ore e aggiorna lo storico delle gare annullate.
+* Se invece il numero di iscritti è compreso tra minimo e massimo, la gara diventa confermata.
+* Una gara confermata può essere rinviata dall’arbitro o dall’amministratore in caso di condizioni meteo non idonee o di indisponibilità del campo gara;
+* in questo stato viene concordata una nuova data e, una volta riprogrammata, la gara torna nello stato di programmata con le iscrizioni chiuse e mantenendo gli iscritti precedenti.
+* Il giorno stabilito, una gara confermata entra nello stato di gara in svolgimento:
+* l’arbitro prepara i settori, effettua il sorteggio dei gruppi, registra i risultati (in diretta o in differita) e gestisce eventuali squalifiche o penalità dei concorrenti.
+* Al termine di tutti i turni, la gara passa allo stato conclusa: vengono calcolate le classifiche per gruppi, turni e prova, vengono generati i punteggi finali e vengono pubblicate le classifiche.
+* Una volta concluse queste attività, la gara viene archiviata nello storico: i risultati rimangono consultabili da concorrenti, società e utenti esterni, ma la gara non può più essere modificata.
+* Anche le gare rifutate vengono archiviate per una futura consultazione.
+*
+*/
+
+@startuml
+title Ciclo di vita di una gara di pesca
+
+[*] --> Proposta
+
+'-------------------------
+' Proposta
+'-------------------------
+state Proposta
+Proposta : entry / raccogliDatiBaseGara()
+
+Proposta --> InValutazione : nuovaProposta()
+
+'-------------------------
+' Valutazione gara (stato composito)
+'-------------------------
+state "Valutazione gara" as InValutazione {
+  [*] --> InEsame
+  InEsame --> Programmata : approvaProposta()
+  InEsame --> Rifiutata   : rifiutaProposta()
+}
+
+'-------------------------
+' Rifiutata
+'-------------------------
+state Rifiutata
+Rifiutata : entry / notificaRifiutoSocieta()
+
+'-------------------------
+' Programmata
+'-------------------------
+state Programmata
+Programmata : entry / definisciCampoGara()
+Programmata : entry / assegnaArbitro()
+Programmata : entry / inviaEmailComune()
+Programmata : exit  / pubblicaBandoGara()
+
+Programmata --> IscrizioniAperte : apriIscrizioni()
+
+'-------------------------
+' IscrizioniAperte
+'-------------------------
+state IscrizioniAperte
+IscrizioniAperte : entry / abilitaIscrizioniOnline()
+IscrizioniAperte : do    / riceviIscrizioni()
+
+IscrizioniAperte --> IscrizioniAperte : nuovaIscrizione()
+
+' chiusura iscrizioni per data limite
+IscrizioniAperte --> Confermata : chiudiIscrizioni() [numIscritti >= minPartecipanti]
+IscrizioniAperte --> Annullata  : chiudiIscrizioni() [numIscritti < minPartecipanti]
+
+' chiusura anticipata per raggiungimento massimo
+IscrizioniAperte --> Confermata : raggiuntoMaxIscritti() [raggiuntoMax]
+
+'-------------------------
+' Confermata
+'-------------------------
+state Confermata
+Confermata : entry / inviaPromemoriaPartecipanti()
+
+' rinvio per maltempo o problemi campo gara
+Programmata --> Rinviata : rinviaGara() [meteoPericoloso || campoNonDisponibile]
+Confermata  --> Rinviata : rinviaGara() [meteoPericoloso || campoNonDisponibile]
+
+'-------------------------
+' Rinviata
+'-------------------------
+state Rinviata
+Rinviata : entry / comunicaNuovaData()
+Rinviata : entry / aggiornaCalendario()
+
+Rinviata --> Programmata : riprogrammaGara()
+
+'-------------------------
+' InSvolgimento (stato composito)
+'-------------------------
+Confermata --> InSvolgimento : inizioGara()
+
+state InSvolgimento {
+  InSvolgimento : entry / avviaGestioneGara()
+  [*] --> Preparazione
+
+  state Preparazione
+  Preparazione : entry / preparaSettori()
+  Preparazione : entry / sorteggiaGruppi()
+
+  Preparazione --> GaraAttiva : startTurni()
+
+  state GaraAttiva
+  GaraAttiva : entry / registraCattureLive()
+  GaraAttiva : do    / gestisciPenalizzazioni()
+
+  GaraAttiva --> FineOperazioni : fineTuttiITurni()
+
+  state FineOperazioni
+  FineOperazioni : entry / chiudiCampoGara()
+
+  FineOperazioni --> [*]
+}
+
+InSvolgimento --> Conclusa : fineGara()
+
+'-------------------------
+' Conclusa
+'-------------------------
+state Conclusa
+Conclusa : entry / calcolaClassifiche()
+Conclusa : entry / generaPdfClassifica()
+Conclusa : entry / inviaNotifiche()
+
+'-------------------------
+' Annullata
+'-------------------------
+state Annullata
+Annullata : entry / avviaRimborsi()
+Annullata : entry / notificaAnnullamento()
+
+'-------------------------
+' Archiviata (fine vita)
+'-------------------------
+state Archiviata
+Archiviata : entry / aggiornaStoricoGare()
+
+Rifiutata --> Archiviata : archiviaGara()
+Conclusa  --> Archiviata : archiviaGara()
+Annullata --> Archiviata : archiviaGara()
+
+Archiviata --> [*]
+@enduml
