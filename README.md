@@ -34,7 +34,3 @@ Leggi [SECURITY.md](https://github.com/ABCLV/ABLV_IngSW/blob/main/.github/SECURI
 
 ## Licenza
 Leggi [LICENSE](https://github.com/ABCLV/ABLV_IngSW/blob/main/LICENSE).
-
-
-## Licenza
-Leggi [LICENSE](https://github.com/ABCLV/ABLV_IngSW/blob/main/LICENSE).
