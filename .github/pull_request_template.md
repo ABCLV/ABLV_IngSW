@@ -17,3 +17,5 @@ Breve riassunto di ciò che la PR fa e perché è necessaria.
 Issue collegate (scrivi qui sotto)
 
 Closes #
+
+# prima di confermare verificare la destinazione della pr
