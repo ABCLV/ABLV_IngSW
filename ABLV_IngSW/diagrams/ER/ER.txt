@@ -1,0 +1,168 @@
+@startchen
+title Schema ER
+
+entity SETTORE {
+  ID <<key>>
+  descrizione
+}
+
+entity TURNO {
+  ID <<key>>
+  numero
+}
+
+entity CAMPOGARA {
+  ID <<key>>
+  paese
+  cronologico
+  qualità
+}
+
+entity GARA {
+  codice <<key>>
+  data
+  ora
+  tipo
+  stato
+}
+
+entity CONCORRENTE {
+  CF <<key>>
+  nome
+  cognome
+}
+
+entity SPONSOR {
+  ID <<key>>
+  nome
+  logo
+  sito
+}
+
+entity SOCIETA {
+  nome <<key>>
+}
+
+entity SEDE {
+  ID <<key>>
+  via
+  civico
+  città
+  CAP
+}
+
+entity AMMINISTRATORE {
+  CF <<key>>
+  nome
+  cognome
+}
+
+entity ARBITRO {
+  CF <<key>>
+  nome
+  cognome
+  sezione
+}
+
+entity CAMPIONATO {
+  titolo <<key>>
+  categoria
+}
+
+relationship SVOLGE {
+}
+
+relationship COMPONE {
+}
+
+relationship POSSIEDE {
+}
+
+relationship CONTIENE {
+}
+
+relationship PARTECIPA {
+    numPunti
+    squalifica
+}
+
+relationship RECENSISCE {
+    voto
+    commento
+}
+
+relationship ISCRIVE {
+    data
+}
+
+relationship GESTISCE {
+}
+
+relationship PROPONE {
+}
+
+relationship UFFICIALIZZA {
+}
+
+relationship CONTRATTO {
+    dataFirma
+    dataScadenza
+    premio
+}
+
+relationship APPARTIENE {
+}
+
+relationship ALLOCA {
+}
+
+relationship EFFETTUA {
+}
+
+
+SETTORE -(1,1)- CONTIENE
+CAMPOGARA -(1,N)- CONTIENE
+
+SETTORE -(0,N)- SVOLGE
+TURNO -(1,1)- SVOLGE
+
+TURNO -(1,1)- COMPONE
+GARA -(1,N)- COMPONE
+
+GARA -(0,1)- POSSIEDE
+CAMPIONATO -(2,N)- POSSIEDE
+
+TURNO -(0,N)- PARTECIPA
+CONCORRENTE -(0,N)- PARTECIPA
+
+GARA -(0,N)- RECENSISCE
+CONCORRENTE -(0,N)- RECENSISCE
+
+GARA -(0,N)- ISCRIVE
+CONCORRENTE -(0,N)- ISCRIVE
+SOCIETA -(0,N)- ISCRIVE
+
+GARA -(1,1)- GESTISCE
+ARBITRO -(0,N)- GESTISCE
+
+GARA -(0,1)- PROPONE
+SOCIETA -(0,N)- PROPONE
+AMMINISTRATORE -(0,N)- PROPONE
+
+GARA -(0,1)- UFFICIALIZZA
+AMMINISTRATORE -(0,N)- UFFICIALIZZA
+
+SPONSOR -(0,N)- CONTRATTO
+CONCORRENTE -(0,N)- CONTRATTO
+
+SOCIETA -(0,N)- APPARTIENE
+CONCORRENTE -(1,1)- APPARTIENE
+
+SOCIETA -(1,1)- ALLOCA
+SEDE -(0,N)- ALLOCA
+
+GARA -(1,1)- EFFETTUA
+CAMPOGARA -(0,N)- EFFETTUA
+
+
+@endchen
