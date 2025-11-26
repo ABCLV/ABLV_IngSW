@@ -1,4 +1,4 @@
-# Progetto di Ingegneria del Software del gruppo: Algeri, Bertoli, Locatelli e Vitali" 
+# Progetto di Ingegneria del Software del gruppo: Algeri, Bertoli, Locatelli e Vitali
 
 # Gare di Pesca Bergamasca  
 Sistema di gestione delle gare agonistiche di pesca in provincia di Bergamo.
