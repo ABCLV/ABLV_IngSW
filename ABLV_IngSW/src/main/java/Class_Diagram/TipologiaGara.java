@@ -12,9 +12,9 @@ public enum TipologiaGara {
 	/**
 	 * 
 	 */
-	Singola,
+	SINGOLA,
 	/**
 	 * 
 	 */
-	Squadre;
+	SQUADRE;
 }

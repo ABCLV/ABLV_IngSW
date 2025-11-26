@@ -8,35 +8,17 @@ package Class_Diagram;
 /**
  * 
  */
-public class Campo gara
-{
+public enum StatoOrganizzazione {
 	/**
 	 * 
 	 */
-	public String idCampoGara;
+	CONFERMATA,
 	/**
 	 * 
 	 */
-	private String corpoIdrico;
+	IN_ATTESA,
 	/**
 	 * 
 	 */
-	private String paese;
-	/**
-	 * 
-	 */
-	private int lunghezza;
-
-	/**
-	 * 
-	 * @return 
-	 */
-	public String getCaratteristiche() {
-	}
-
-	/**
-	 * 
-	 */
-	public void setCaratteristiche() {
-	}
+	ANNULLATA;
 }

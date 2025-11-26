@@ -12,101 +12,141 @@ public class Gara {
 	/**
 	 * 
 	 */
-	public String CodiceGara;
+	public String codiceGara;
 	/**
 	 * 
 	 */
-	private int NProva;
+	private int nProva;
 	/**
 	 * 
 	 */
-	private String Organizzatore;
+	private String organizzatore;
 	/**
 	 * 
 	 */
-	private Tecnica TipoTecnica;
+	private Tecnica tipoTecnica;
 	/**
 	 * 
 	 */
-	private String CriterioPunti;
+	private String criterioPunti;
 	/**
 	 * 
 	 */
-	private EDate DataSvolgimento;
+	private EDate dataSvolgimento;
 	/**
 	 * 
 	 */
-	private int MaxPersone;
+	private int maxPersone;
 	/**
 	 * 
 	 */
-	private int MinPersone;
+	private int minPersone;
 	/**
 	 * 
 	 */
-	private StatoGara Stato;
+	private StatoOrganizzazione stato;
 	/**
 	 * 
 	 */
-	private TipologiaGara TipoGara;
+	private TipologiaGara tipoGara;
 	/**
 	 * 
 	 */
-	private EDate AnnoGara;
+	private EDate annoGara;
 
 	/**
 	 * 
+	 * @param stato 
 	 */
-	public void notifica(): void() {
+	public void cambiaStatoOrganizzazione(StatoOrganizzazione stato) {
+	}
+
+	/**
+	 * 
+	 * @param stato 
+	 */
+	public void cambiaStatoGara(StatoGara stato) {
+	}
+
+	/**
+	 * 
+	 * @param concorrente 
+	 * @param motivo 
+	 */
+	public void squalifica(Concorrente concorrente, String motivo) {
+	}
+
+	/**
+	 * 
+	 * @param concorrenti 
+	 */
+	public void preparaTurni(Concorrente[] concorrenti) {
+	}
+
+	/**
+	 * 
+	 * @param turno 
+	 * @param gruppo 
+	 */
+	private void assegnaTurno(Turno turno, Concorrente[] gruppo) {
+	}
+
+	/**
+	 * 
+	 * @param turno 
+	 * @param punteggi 
+	 */
+	public void classificaTurno(Turno turno, Punteggio[] punteggi) {
 	}
 
 	/**
 	 * 
 	 */
-	public void iscrivi(in CF: String): boolean() {
+	public void trovaArbitro() {
 	}
 
 	/**
 	 * 
+	 * @param cf 
+	 * @param numIscritti 
+	 * @return 
 	 */
-	public void annullaGara(in CodiceGara: String, out Stato: StatoGara): void() {
+	public boolean nuovaIscrizione(String cf, int numIscritti) {
 	}
 
 	/**
 	 * 
+	 * @return 
+	 * @param concorrentiPresenti 
 	 */
-	public void inviaClassifica(): void() {
+	public boolean iscrizioneMultipla(Concorrente[] concorrentiPresenti) {
 	}
 
 	/**
 	 * 
+	 * @return 
 	 */
-	public void cercaGara(in CodiceGara: String): List<Gara>() {
+	public boolean verificaData() {
 	}
 
 	/**
 	 * 
+	 * @return 
 	 */
-	public void cercaGara(in IdCampoGara: String): List<Gara>() {
+	public boolean verificaMax() {
 	}
 
 	/**
 	 * 
+	 * @return 
 	 */
-	public void cercaGara(in DataGara: Date): List<Gara>() {
+	public boolean verificaMin() {
 	}
 
 	/**
 	 * 
+	 * @return 
 	 */
-	public void cercaGara(in CF: String): List<Gara>() {
-	}
-
-	/**
-	 * 
-	 */
-	public void cercaMeteo(in CampoGara):
-
-	String() {
+	public Punteggio[] getClassifica() {
 	}
 }

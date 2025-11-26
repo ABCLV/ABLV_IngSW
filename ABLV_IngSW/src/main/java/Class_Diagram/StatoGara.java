@@ -12,13 +12,13 @@ public enum StatoGara {
 	/**
 	 * 
 	 */
-	Confermata,
+	IN_CORSO,
 	/**
 	 * 
 	 */
-	Sospesa,
+	INTERVALLO,
 	/**
 	 * 
 	 */
-	Annullata;
+	TERMINATA;
 }

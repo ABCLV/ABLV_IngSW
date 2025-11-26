@@ -12,49 +12,66 @@ public class Concorrente {
 	/**
 	 * 
 	 */
-	public String CF;
+	public String cf;
 	/**
 	 * 
 	 */
-	private String Cognome;
+	private String cognome;
 	/**
 	 * 
 	 */
-	private String Nome;
+	private String nome;
 	/**
 	 * 
 	 */
-	private EDate Nascita;
+	private EDate nascita;
 
 	/**
 	 * 
+	 * @return 
+	 * @param codice 
 	 */
-	public void cercaConcorrente(in CF: String):
+	public boolean iscriviGara(String codice) {
+	}
 
-	Concorrente() {
+	/**
+	 * 
+	 * @return 
+	 * @param codice 
+	 */
+	public boolean annullaIscrizione(String codice) {
 	}
 
 	/**
 	 * 
 	 */
-	public void cambiaSponsor(in CF: String, in Sp: Sponsor): void() {
+	public void visualizzaProfilo() {
 	}
 
 	/**
 	 * 
 	 */
-	public void cambiaSocieta(in CF: String, in Soc: Societa): void() {
+	public void carriera() {
 	}
 
 	/**
 	 * 
 	 */
-	public void recensisce(in CodiceGara: String): void() {
+	public void modificaProfilo() {
 	}
 
 	/**
 	 * 
 	 */
-	public void valutaArbitro(in CFArbitro: String): void() {
+	public void iscrizioni() {
+	}
+
+	/**
+	 * 
+	 * @return 
+	 * @param codice 
+	 * @param rec 
+	 */
+	public boolean aggiungiRecensione(String codice, Recensione rec) {
 	}
 }

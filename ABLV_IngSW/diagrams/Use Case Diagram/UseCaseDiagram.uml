@@ -15,7 +15,7 @@
   <packagedElement xmi:type="uml:Actor" xmi:id="_2lXuYLmxEfCjRPrfckFa_w" name="Società di Pesca">
     <generalization xmi:type="uml:Generalization" xmi:id="_hq2PoLqKEfCYQJk2O5vr8w" general="_HOvZsLqJEfCYQJk2O5vr8w"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Activity" xmi:id="_5vDcILmxEfCjRPrfckFa_w" name="Sistema gestione gare pesca" useCase="_FsCLgLmyEfCjRPrfckFa_w _JPBKELmyEfCjRPrfckFa_w _LZp1oLmyEfCjRPrfckFa_w _NSYR0LmyEfCjRPrfckFa_w _P4_uwLmyEfCjRPrfckFa_w _Q_Cw0LmyEfCjRPrfckFa_w _gbR1ULmyEfCjRPrfckFa_w _iU4bQLmyEfCjRPrfckFa_w _lSe00LmyEfCjRPrfckFa_w _oIsM8LmyEfCjRPrfckFa_w _r5CSELmyEfCjRPrfckFa_w _um-fALmyEfCjRPrfckFa_w _t5LBALm2EfCjRPrfckFa_w _nShp0LqKEfCYQJk2O5vr8w _9FeYwLqKEfCYQJk2O5vr8w _EPlPALqLEfCYQJk2O5vr8w _PO8fkLqLEfCYQJk2O5vr8w _TQ4D8LqLEfCYQJk2O5vr8w _UIMGcLqLEfCYQJk2O5vr8w _WTk_8LqLEfCYQJk2O5vr8w _fepBULqLEfCYQJk2O5vr8w _yVADULqLEfCYQJk2O5vr8w __hJUgLqLEfCYQJk2O5vr8w _Iup7ALqOEfCYQJk2O5vr8w _MakMELqOEfCYQJk2O5vr8w _dQtCwLqOEfCYQJk2O5vr8w _LWEzwLqPEfCYQJk2O5vr8w _M1f_ILqPEfCYQJk2O5vr8w _UJqJQLqPEfCYQJk2O5vr8w _VpXogLqPEfCYQJk2O5vr8w _qafRkLqQEfCYQJk2O5vr8w _0-7rQLqREfCYQJk2O5vr8w _-b8_ULqREfCYQJk2O5vr8w _smqG0LqTEfCYQJk2O5vr8w _xU5XkLqTEfCYQJk2O5vr8w _B0U-cLqUEfCYQJk2O5vr8w _FXBpILqUEfCYQJk2O5vr8w _U73QALqUEfCYQJk2O5vr8w _Y_SCILqUEfCYQJk2O5vr8w _bOfEoLqUEfCYQJk2O5vr8w _z4eSILqUEfCYQJk2O5vr8w _9r6gsLsZEfCk864s4-ESuw _UpOfELscEfCk864s4-ESuw">
+  <packagedElement xmi:type="uml:Activity" xmi:id="_5vDcILmxEfCjRPrfckFa_w" name="Sistema gestione gare pesca" useCase="_FsCLgLmyEfCjRPrfckFa_w _JPBKELmyEfCjRPrfckFa_w _LZp1oLmyEfCjRPrfckFa_w _NSYR0LmyEfCjRPrfckFa_w _P4_uwLmyEfCjRPrfckFa_w _Q_Cw0LmyEfCjRPrfckFa_w _gbR1ULmyEfCjRPrfckFa_w _iU4bQLmyEfCjRPrfckFa_w _lSe00LmyEfCjRPrfckFa_w _oIsM8LmyEfCjRPrfckFa_w _r5CSELmyEfCjRPrfckFa_w _um-fALmyEfCjRPrfckFa_w _t5LBALm2EfCjRPrfckFa_w _nShp0LqKEfCYQJk2O5vr8w _9FeYwLqKEfCYQJk2O5vr8w _EPlPALqLEfCYQJk2O5vr8w _PO8fkLqLEfCYQJk2O5vr8w _TQ4D8LqLEfCYQJk2O5vr8w _UIMGcLqLEfCYQJk2O5vr8w _WTk_8LqLEfCYQJk2O5vr8w _yVADULqLEfCYQJk2O5vr8w __hJUgLqLEfCYQJk2O5vr8w _Iup7ALqOEfCYQJk2O5vr8w _MakMELqOEfCYQJk2O5vr8w _dQtCwLqOEfCYQJk2O5vr8w _LWEzwLqPEfCYQJk2O5vr8w _M1f_ILqPEfCYQJk2O5vr8w _UJqJQLqPEfCYQJk2O5vr8w _VpXogLqPEfCYQJk2O5vr8w _qafRkLqQEfCYQJk2O5vr8w _0-7rQLqREfCYQJk2O5vr8w _-b8_ULqREfCYQJk2O5vr8w _smqG0LqTEfCYQJk2O5vr8w _xU5XkLqTEfCYQJk2O5vr8w _B0U-cLqUEfCYQJk2O5vr8w _FXBpILqUEfCYQJk2O5vr8w _U73QALqUEfCYQJk2O5vr8w _Y_SCILqUEfCYQJk2O5vr8w _bOfEoLqUEfCYQJk2O5vr8w _z4eSILqUEfCYQJk2O5vr8w _9r6gsLsZEfCk864s4-ESuw _UpOfELscEfCk864s4-ESuw">
     <ownedComment xmi:type="uml:Comment" xmi:id="_WI6GQLm1EfCjRPrfckFa_w">
       <body>Extension point:&#xD;
 Pubblicazione classifica&#xD;
@@ -41,6 +41,12 @@ cambio sponsor&#xD;
 Condition:&#xD;
 raggiungimento nuovo accordo&#xD;
 </body>
+    </ownedComment>
+    <ownedComment xmi:type="uml:Comment" xmi:id="_ab4t0MYrEfCZzeY4k_lzQQ">
+      <body>L'amministratore può &#xD;
+accettare/negare &#xD;
+solo proposte di altri&#xD;
+amministratori o società</body>
     </ownedComment>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_FsCLgLmyEfCjRPrfckFa_w" name="Autenticazione" subject="_5vDcILmxEfCjRPrfckFa_w"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_JPBKELmyEfCjRPrfckFa_w" name="Creare gara/campionato" subject="_5vDcILmxEfCjRPrfckFa_w">
@@ -83,7 +89,6 @@ raggiungimento nuovo accordo&#xD;
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_TQ4D8LqLEfCYQJk2O5vr8w" name="Filtra per anno" subject="_5vDcILmxEfCjRPrfckFa_w"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_UIMGcLqLEfCYQJk2O5vr8w" name="Filtra per pescatore" subject="_5vDcILmxEfCjRPrfckFa_w"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_WTk_8LqLEfCYQJk2O5vr8w" name="Filtra per campo gara" subject="_5vDcILmxEfCjRPrfckFa_w"/>
-    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_fepBULqLEfCYQJk2O5vr8w" name="Visualizzare mappa campi" subject="_5vDcILmxEfCjRPrfckFa_w"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_yVADULqLEfCYQJk2O5vr8w" name="Effetturare pagamento" subject="_5vDcILmxEfCjRPrfckFa_w"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="__hJUgLqLEfCYQJk2O5vr8w" name="Chiudere iscrizione al raggiungimento del max" subject="_5vDcILmxEfCjRPrfckFa_w">
       <extend xmi:type="uml:Extend" xmi:id="_CeOwsLqMEfCYQJk2O5vr8w" extendedCase="_t5LBALm2EfCjRPrfckFa_w" extensionLocation="_CeP-0LqMEfCYQJk2O5vr8w"/>
@@ -97,9 +102,7 @@ raggiungimento nuovo accordo&#xD;
     </ownedUseCase>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_dQtCwLqOEfCYQJk2O5vr8w" name="Effetturare rimborso" subject="_5vDcILmxEfCjRPrfckFa_w"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_LWEzwLqPEfCYQJk2O5vr8w" name="Sorteggiare gruppi" subject="_5vDcILmxEfCjRPrfckFa_w"/>
-    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_M1f_ILqPEfCYQJk2O5vr8w" name="Squalificare concorrenti" subject="_5vDcILmxEfCjRPrfckFa_w">
-      <include xmi:type="uml:Include" xmi:id="_XoCUoLqPEfCYQJk2O5vr8w" addition="_UJqJQLqPEfCYQJk2O5vr8w"/>
-    </ownedUseCase>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_M1f_ILqPEfCYQJk2O5vr8w" name="Squalificare concorrenti" subject="_5vDcILmxEfCjRPrfckFa_w"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_UJqJQLqPEfCYQJk2O5vr8w" name="Applicare penalità" subject="_5vDcILmxEfCjRPrfckFa_w"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_VpXogLqPEfCYQJk2O5vr8w" name="Modificare data gara" subject="_5vDcILmxEfCjRPrfckFa_w"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_qafRkLqQEfCYQJk2O5vr8w" name="Rinviare gara" subject="_5vDcILmxEfCjRPrfckFa_w">
@@ -145,13 +148,6 @@ raggiungimento nuovo accordo&#xD;
     </eAnnotations>
     <ownedEnd xmi:type="uml:Property" xmi:id="_fS1xIrmzEfCjRPrfckFa_w" name="calcolare classifiche" type="_NSYR0LmyEfCjRPrfckFa_w" association="_fS1KELmzEfCjRPrfckFa_w"/>
     <ownedEnd xmi:type="uml:Property" xmi:id="_fS1xI7mzEfCjRPrfckFa_w" name="amministratore" type="_CokS0LsYEfCk864s4-ESuw" association="_fS1KELmzEfCjRPrfckFa_w"/>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="_gxsUwLmzEfCjRPrfckFa_w" memberEnd="_gxs70rmzEfCjRPrfckFa_w _gxs707mzEfCjRPrfckFa_w">
-    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_gxs70LmzEfCjRPrfckFa_w" source="org.eclipse.papyrus">
-      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_gxs70bmzEfCjRPrfckFa_w" key="nature" value="UML_Nature"/>
-    </eAnnotations>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_gxs70rmzEfCjRPrfckFa_w" name="gestire storico gara" type="_Q_Cw0LmyEfCjRPrfckFa_w" association="_gxsUwLmzEfCjRPrfckFa_w"/>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_gxs707mzEfCjRPrfckFa_w" name="amministratore" type="_1dfgULmxEfCjRPrfckFa_w" association="_gxsUwLmzEfCjRPrfckFa_w"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_qNkZULmzEfCjRPrfckFa_w" memberEnd="_qNlAYrmzEfCjRPrfckFa_w _qNlAY7mzEfCjRPrfckFa_w">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_qNlAYLmzEfCjRPrfckFa_w" source="org.eclipse.papyrus">
@@ -209,13 +205,6 @@ raggiungimento nuovo accordo&#xD;
     </eAnnotations>
     <ownedEnd xmi:type="uml:Property" xmi:id="_RXDbkrqLEfCYQJk2O5vr8w" name="utente esterno" type="_HOvZsLqJEfCYQJk2O5vr8w" association="_RXC0gLqLEfCYQJk2O5vr8w"/>
     <ownedEnd xmi:type="uml:Property" xmi:id="_RXDbk7qLEfCYQJk2O5vr8w" name="ricerca nello storico" type="_PO8fkLqLEfCYQJk2O5vr8w" association="_RXC0gLqLEfCYQJk2O5vr8w"/>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="_hRSqsLqLEfCYQJk2O5vr8w" memberEnd="_hRTRwrqLEfCYQJk2O5vr8w _hRTRw7qLEfCYQJk2O5vr8w">
-    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_hRTRwLqLEfCYQJk2O5vr8w" source="org.eclipse.papyrus">
-      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_hRTRwbqLEfCYQJk2O5vr8w" key="nature" value="UML_Nature"/>
-    </eAnnotations>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_hRTRwrqLEfCYQJk2O5vr8w" name="visualizzare mappa campi" type="_fepBULqLEfCYQJk2O5vr8w" association="_hRSqsLqLEfCYQJk2O5vr8w"/>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_hRTRw7qLEfCYQJk2O5vr8w" name="utente esterno" type="_HOvZsLqJEfCYQJk2O5vr8w" association="_hRSqsLqLEfCYQJk2O5vr8w"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_xqnpkLqLEfCYQJk2O5vr8w" memberEnd="_xqoQoLqLEfCYQJk2O5vr8w _xqoQobqLEfCYQJk2O5vr8w">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_xqnpkbqLEfCYQJk2O5vr8w" source="org.eclipse.papyrus">
@@ -343,5 +332,19 @@ raggiungimento nuovo accordo&#xD;
     </eAnnotations>
     <ownedEnd xmi:type="uml:Property" xmi:id="_YRHy0rscEfCk864s4-ESuw" name="sistema" type="_CokS0LsYEfCk864s4-ESuw" association="_YRHLwLscEfCk864s4-ESuw"/>
     <ownedEnd xmi:type="uml:Property" xmi:id="_YRHy07scEfCk864s4-ESuw" name="suggerire gare simili" type="_UpOfELscEfCk864s4-ESuw" association="_YRHLwLscEfCk864s4-ESuw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_x6V8UMYrEfCZzeY4k_lzQQ" memberEnd="_x6Y_ocYrEfCZzeY4k_lzQQ _x6Y_osYrEfCZzeY4k_lzQQ">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_x6YYkMYrEfCZzeY4k_lzQQ" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_x6Y_oMYrEfCZzeY4k_lzQQ" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_x6Y_ocYrEfCZzeY4k_lzQQ" name="gestire storico gara" type="_Q_Cw0LmyEfCjRPrfckFa_w" association="_x6V8UMYrEfCZzeY4k_lzQQ"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_x6Y_osYrEfCZzeY4k_lzQQ" name="sistema" type="_CokS0LsYEfCk864s4-ESuw" association="_x6V8UMYrEfCZzeY4k_lzQQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_3oE7MMYrEfCZzeY4k_lzQQ" memberEnd="_3oGJUcYrEfCZzeY4k_lzQQ _3oGJUsYrEfCZzeY4k_lzQQ">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_3oFiQMYrEfCZzeY4k_lzQQ" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_3oGJUMYrEfCZzeY4k_lzQQ" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_3oGJUcYrEfCZzeY4k_lzQQ" name="applicare penalità" type="_UJqJQLqPEfCYQJk2O5vr8w" association="_3oE7MMYrEfCZzeY4k_lzQQ"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_3oGJUsYrEfCZzeY4k_lzQQ" type="_b1rc0LmqEfCFSvgadSq75w" association="_3oE7MMYrEfCZzeY4k_lzQQ"/>
   </packagedElement>
 </uml:Model>

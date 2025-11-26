@@ -12,15 +12,63 @@ public class Società {
 	/**
 	 * 
 	 */
-	public String IDSocieta;
+	private String nome;
+
 	/**
-				 * 
-				 */
-				private String Nome;
+	 * 
+	 * @param concorrenti 
+	 * @return 
+	 * @param codiceGara 
+	 */
+	public boolean iscrizioneGaraGruppi(Concorrente[] concorrenti, String codiceGara) {
+	}
+
+	/**
+	 * 
+	 * @return 
+	 * @param concorrente 
+	 * @param codiceGara 
+	 */
+	public boolean iscrizioneGaraSingolo(Concorrente concorrente, String codiceGara) {
+	}
 
 	/**
 	 * 
 	 */
-	public void proponiGara(in Descrizione: String): void() {
+	public void getProfilo() {
+	}
+
+	/**
+	 * 
+	 * @param concorrente 
+	 */
+	public void aggiungiSocio(Concorrente concorrente) {
+	}
+
+	/**
+	 * 
+	 * @param concorrente 
+	 */
+	public void abbandonoSocio(Concorrente concorrente) {
+	}
+
+	/**
+	 * 
+	 */
+	public void modificaProfilo() {
+	}
+
+	/**
+	 * 
+	 * @param gara 
+	 */
+	public void nuovaGara(Gara gara) {
+	}
+
+	/**
+	 * 
+	 * @return 
+	 */
+	public String regolamento() {
 	}
 }

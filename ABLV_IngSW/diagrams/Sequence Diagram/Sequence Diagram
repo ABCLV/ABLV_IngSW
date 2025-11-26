@@ -1,0 +1,116 @@
+/*
+*
+* Sequence diagram in cui si modella l'iscrizione ad una gara singola da 
+* parte di un concorrente già registrato ed autenticato che fa parte di
+* una squadra gestita in precedenza
+*
+* Il concorrente apre la pagina di iscrizione alle gare.
+* il sistema recupera le gare future ancora aperte e le relative previsioni meteo, e le mostra sulla pagina.
+* Il concorrente seleziona una gara singola; il sistema verifica che la gara sia ancora iscrivibile.
+* Se la gara è iscrivibile, viene offerta opzionalmente la possibilità di selezionare uno sponsor disponibile.
+* Successivamente il sistema calcola la quota di iscrizione, avvia il pagamento online e, in caso di esito positivo, 
+* registra l’iscrizione, aggiorna il numero di iscritti (eventualmente cambiando lo stato della gara quando si raggiunge il numero massimo).
+*
+* Sono previste le seguenti alternative:
+*   - Gara non disponibile (data non valida): il sistema mostra un messaggio di errore al concorrente.
+*   - Posti esauriti: il sistema segnala che non ci sono più posti disponibili.
+*   - Pagamento non riuscito: il flusso si interrompe con un messaggio di errore e l’iscrizione non viene registrata.
+*
+*/
+
+@startuml
+title Iscrizione gara
+
+participant Concorrente
+participant "PaginaIscrizioneGara" as Pagina
+participant "MainConcorrente" as Main
+participant Gara
+participant Contratto
+participant Sponsor
+participant "servizioMeteo" as Meteo
+participant "sistemaPagamenti" as Pag
+
+'------------------------------------------------------------------------
+' 1. Apertura pagina iscrizione + ricerca gare future + previsioni meteo
+'------------------------------------------------------------------------
+
+Concorrente -> Pagina : apriPaginaIscrizione()
+Pagina -> Main : richiediGareFuture()
+Main -> Main : cercaGareFuture()
+Main -> Gara : getGare()
+Main -> Meteo : cercaMeteo()
+Main -> Pagina : mostraGareEMeteo()
+
+'--------------------------------------------------------
+' 2. Selezione gara e richiesta di iscrizione
+'--------------------------------------------------------
+
+Concorrente -> Pagina : selezionaGara()
+Pagina -> Main : richiediIscrizione()
+
+'--------------------------------------------------------
+' 3. Verifica se la gara è iscrivibile
+'--------------------------------------------------------
+
+alt data valida e posti disponibili
+    Main -> Gara : verificaData()
+    Gara --> Main : dataOK
+    Main -> Gara : verificaMax()
+    Gara --> Main : postiDisponibili()
+    Main -> Contratto : getContrattiAttivi()
+    Contratto --> Main : elencoContratti()
+
+'--------------------------------------------------------
+' 4. Scelta (opzionale) dello sponsor - opt
+'--------------------------------------------------------
+
+opt esistono contratti disponibili
+    Main -> Pagina : mostraSponsorDisponibili()
+    Concorrente -> Pagina : selezionaSponsor()
+    Pagina -> Main : confermaSponsor()
+    Main -> Sponsor: getSponsor()
+    Sponsor --> Main : datiSponsor()
+end
+
+'--------------------------------------------------------
+' 5. Pagamento online (alt + break)
+'--------------------------------------------------------
+
+Main -> Gara : getQuotaIscrizione()
+Gara --> Main : quota()
+alt pagamento OK
+    '----------------------------------------------------
+    ' 6. Registrazione iscrizione
+    '----------------------------------------------------
+
+    Main -> Pag : effettuaPagamento()
+    Pag --> Main : esitoPagamento()
+    Main -> Gara : registraIscrizione()
+    Main -> Gara : contaIscritti()
+    Main -> Gara : verificaMax()
+    Gara --> Main : postiDisponibiliFinale()
+
+    opt raggiunto numero massimo di iscritti
+        Main -> Gara : cambiaStato(CONFERMATA)
+    end
+
+    Main -> Pagina : mostraConfermaIscrizione()
+    Pagina -> Concorrente : notificaConferma()
+
+else pagamento KO
+    break pagamento non riuscito
+        Main -> Pagina : mostraErrore("Pagamento non riuscito")
+        Pagina -> Concorrente : notificaErrore()
+    end
+end
+
+else data non valida
+    Main -> Pagina : mostraErrore("Gara non disponibile")
+    Pagina -> Concorrente : notificaErrore()
+
+else data valida e posti esauriti
+    Main -> Pagina : mostraErrore("Posti esauriti")
+    Pagina -> Concorrente : notificaErrore()
+end
+@enduml
+

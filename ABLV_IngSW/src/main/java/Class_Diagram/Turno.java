@@ -12,9 +12,23 @@ public class Turno {
 	/**
 	 * 
 	 */
-	public String CodiceTurno;
+	public String codiceTurno;
 	/**
 	 * 
 	 */
-	private String Durata;
+	private String durata;
+
+	/**
+	 * 
+	 * @param punteggi 
+	 */
+	public void calcolaClassifica(Punteggio[] punteggi) {
+	}
+
+	/**
+	 * 
+	 * @return 
+	 */
+	public Punteggio[] getClassifica() {
+	}
 }

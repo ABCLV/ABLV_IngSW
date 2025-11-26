@@ -1,4 +1,4 @@
-package unibg.it.ABLV_IngSW.test;
+package test;
 
 public enum TipologiaGara {
 	Singola,

@@ -12,9 +12,24 @@ public class Campionato {
 	/**
 	 * 
 	 */
-	public String Titolo;
+	public String titolo;
 	/**
 	 * 
 	 */
-	private String Categoria;
+	private String categoria;
+
+	/**
+	 * 
+	 * @return 
+	 */
+	public Punteggio[] getClassificaTotale() {
+	}
+
+	/**
+	 * 
+	 * @return 
+	 * @param numProva 
+	 */
+	public Punteggio[] classificaProva(int numProva) {
+	}
 }

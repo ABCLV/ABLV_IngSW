@@ -12,59 +12,85 @@ public class Arbitro {
 	/**
 	 * 
 	 */
-	public String CFArbitro;
+	public String cfArbitro;
 	/**
 	 * 
 	 */
-	private String Nome;
+	private String nome;
 	/**
 	 * 
 	 */
-	private String Cognome;
+	private String cognome;
 	/**
-				 * 
-				 */
-				private String Sezione;
+	 * 
+	 */
+	private String sezione;
 
 	/**
 	 * 
+	 * @param codice 
 	 */
-	public void assegnaGruppi(in concorrenti: List<Concorrente>): void() {
+	public void avviaGara(String codice) {
 	}
 
 	/**
 	 * 
+	 * @param codice 
 	 */
-	public void registraRisultati(in CodiceGara: String): boolean() {
+	public void rinuncia(String codice) {
 	}
 
 	/**
 	 * 
+	 * @param concorrenti 
 	 */
-	public void segnaPunteggio(in CodiceGara: String, in CF: String): boolean() {
+	public void segnaAssenze(Concorrente[] concorrenti) {
 	}
 
 	/**
 	 * 
+	 * @param concorrenti 
 	 */
-	public void rinviaGara(in CodiceGara): void() {
+	public void generaGruppi(Concorrente[] concorrenti) {
 	}
 
 	/**
 	 * 
+	 * @param concorrente 
 	 */
-	public void penalizza(in CF: String, in penalita: Float): void() {
+	public void segnaPunto(Concorrente concorrente) {
 	}
 
 	/**
 	 * 
+	 * @param concorrente 
+	 * @param punti 
 	 */
-	public void squalificaConcorrente(in CF: String): void() {
+	public void segnaPunto(Concorrente concorrente, int punti) {
 	}
 
 	/**
 	 * 
+	 * @param concorrente 
+	 * @param motivo 
 	 */
-	public void pubblicaRisultati(in CodiceGara: String): void() {
+	public void annullaConcorrente(Concorrente concorrente, String motivo) {
+	}
+
+	/**
+	 * 
+	 * @param concorrente 
+	 * @param quantita 
+	 * @param motivo 
+	 */
+	public void penalizzaConcorrente(Concorrente concorrente, int quantita, String motivo) {
+	}
+
+	/**
+	 * 
+	 * @param idSettore 
+	 * @param numTurno 
+	 */
+	public void salvaPunti(String idSettore, int numTurno) {
 	}
 }

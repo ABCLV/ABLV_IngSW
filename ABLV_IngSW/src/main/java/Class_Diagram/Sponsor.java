@@ -8,15 +8,15 @@ package Class_Diagram;
 /**
  * 
  */
-public class Sponsor {
+public class sponsor {
 	/**
 	 * 
 	 */
-	public String IDSponsor;
+	public String IdSponsor;
 	/**
 	 * 
 	 */
-	private String Nome;
+	private String nome;
 	/**
 	 * 
 	 */

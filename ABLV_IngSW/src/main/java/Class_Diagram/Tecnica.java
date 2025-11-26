@@ -12,13 +12,13 @@ public enum Tecnica {
 	/**
 	 * 
 	 */
-	Spinning,
+	SPINNING,
 	/**
 	 * 
 	 */
-	Passata,
+	PASSATA,
 	/**
 	 * 
 	 */
-	Mosca;
+	MOSCA;
 }

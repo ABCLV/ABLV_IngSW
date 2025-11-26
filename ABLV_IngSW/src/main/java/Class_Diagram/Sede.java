@@ -12,17 +12,17 @@ public class Sede {
 	/**
 	 * 
 	 */
-	public int IDSede;
+	public int idSede;
 	/**
 	 * 
 	 */
-	private String Indirizzo;
+	private String indirizzo;
 	/**
 	 * 
 	 */
-	private String Citta;
+	private String citta;
 	/**
 	 * 
 	 */
-	private String CAP;
+	private String cap;
 }

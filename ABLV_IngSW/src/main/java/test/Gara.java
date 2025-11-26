@@ -1,4 +1,4 @@
-package unibg.it.ABLV_IngSW.test;
+package test;
 
 import java.util.Date;
 

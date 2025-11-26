@@ -12,43 +12,54 @@ public class Amministratore {
 	/**
 	 * 
 	 */
-	public String CFAmministratore;
+	public String cfAmministratore;
 	/**
 	 * 
 	 */
-	private String Nome;
+	private String nome;
 	/**
-				 * 
-				 */
-				private String Cognome;
+	 * 
+	 */
+	private String cognome;
 
 	/**
 	 * 
+	 * @param gara 
 	 */
-	public void annunciaGara(): void() {
+	public void nuovaGara(Gara gara) {
+	}
+
+	/**
+	 * 
+	 * @param numGara 
+	 */
+	public void confermaProposta(int numGara) {
+	}
+
+	/**
+	 * 
+	 * @param numGara 
+	 * @param motivo 
+	 */
+	public void negaProposta(int numGara, String motivo) {
 	}
 
 	/**
 	 * 
 	 */
-	public void valutaProposte(): boolean() {
+	private void notificaSocieta() {
 	}
 
 	/**
 	 * 
 	 */
-	public void preparaGara(): void() {
+	private void notificaComune() {
 	}
 
 	/**
 	 * 
+	 * @return 
 	 */
-	public void sospendeArbitro(in CFArbitro: String): void() {
-	}
-
-	/**
-	 * 
-	 */
-	public void creaGara(in NP: Integer, in org: String, in t_tec: Tenica, in crPunti: String, in Data: Date, in n_max: Integer, in n_min: Integer, in stato: StatoGara, in tipo: TipologiaGara, in anno: Date): void () {
+	public String regolamento() {
 	}
 }

@@ -12,9 +12,22 @@ public class Settore {
 	/**
 	 * 
 	 */
-	public String IDSettore;
+	public String idSettore;
 	/**
 	 * 
 	 */
-	private String Descrizione;
+	private String descrizione;
+
+	/**
+	 * 
+	 * @return 
+	 */
+	public String getCaratteristiche() {
+	}
+
+	/**
+	 * 
+	 */
+	public void setCaratteristiche() {
+	}
 }
