@@ -1,37 +1,22 @@
+---
 name: Richiesta funzionalità
-description: Proponi una nuova idea per il gestore gare
-title: "[FEATURE] "
-labels: ["enhancement"]
-body:
-  - type: markdown
-    attributes:
-      value: "Grazie per il suggerimento!"
+about: Proponi una nuova funzione per il sistema di gestione gare
+title: "[FEATURE] <breve descrizione>"
+labels: enhancement
+assignees: ''
+---
 
-  - type: textarea
-    id: problema
-    attributes:
-      label: Problema attuale
-      description: "Quale fastidio incontri oggi?"
-      placeholder: "Devo compilare due volte l'iscrizione se cambio settore..."
-    validations:
-      required: true
+## Necessità
+Descrivi il problema o il bisogno attuale che la nuova funzione risolverebbe.
 
-  - type: textarea
-    id: soluzione
-    attributes:
-      label: Soluzione desiderata
-      description: "Cosa vorresti che il sistema facesse?"
-    validations:
-      required: true
+## Soluzione proposta
+Spiega chiaramente come dovrebbe funzionare la nuova funzione.
 
-  - type: textarea
-    id: alternative
-    attributes:
-      label: Alternative considerate
-      description: "Hai valutato altri modi per risolvere il problema?"
+## Alternative considerate
+Hai valutato altri modi per raggiungere lo stesso risultato? Descrivili.
 
-  - type: textarea
-    id: extra
-    attributes:
-      label: Ulteriori dettagli
-      description: "Screenshot, mock-up, link di riferimento..."
+## Benefici attesi
+Indica vantaggi per utenti, arbitri, società o amministratori.
+
+## Note aggiuntive
+Link, screenshot, esempi di altri sistemi o qualsiasi altro dettaglio utile.
