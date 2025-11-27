@@ -42,6 +42,12 @@ Condition:&#xD;
 raggiungimento nuovo accordo&#xD;
 </body>
     </ownedComment>
+    <ownedComment xmi:type="uml:Comment" xmi:id="_ab4t0MYrEfCZzeY4k_lzQQ">
+      <body>L'amministratore può &#xD;
+accettare/negare &#xD;
+solo proposte di altri&#xD;
+amministratori o società</body>
+    </ownedComment>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_FsCLgLmyEfCjRPrfckFa_w" name="Autenticazione" subject="_5vDcILmxEfCjRPrfckFa_w"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_JPBKELmyEfCjRPrfckFa_w" name="Creare gara/campionato" subject="_5vDcILmxEfCjRPrfckFa_w">
       <include xmi:type="uml:Include" xmi:id="_Q5AIULm0EfCjRPrfckFa_w" addition="_lSe00LmyEfCjRPrfckFa_w"/>
