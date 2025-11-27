@@ -1,20 +1,37 @@
----
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
+name: Richiesta funzionalità
+description: Proponi una nuova idea per il gestore gare
+title: "[FEATURE] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: "Grazie per il suggerimento!"
 
----
+  - type: textarea
+    id: problema
+    attributes:
+      label: Problema attuale
+      description: "Quale fastidio incontri oggi?"
+      placeholder: "Devo compilare due volte l'iscrizione se cambio settore..."
+    validations:
+      required: true
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+  - type: textarea
+    id: soluzione
+    attributes:
+      label: Soluzione desiderata
+      description: "Cosa vorresti che il sistema facesse?"
+    validations:
+      required: true
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+  - type: textarea
+    id: alternative
+    attributes:
+      label: Alternative considerate
+      description: "Hai valutato altri modi per risolvere il problema?"
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+  - type: textarea
+    id: extra
+    attributes:
+      label: Ulteriori dettagli
+      description: "Screenshot, mock-up, link di riferimento..."
