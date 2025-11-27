@@ -1,21 +1,31 @@
 # Security Policy
 
-## Supported Versions
+## Versioni supportate
+Attualmente forniamo aggiornamenti di sicurezza solo sull’ultima versione rilasciata nel branch `main`.
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+## Segnalazione di una vulnerabilità
+**Non aprire issue pubbliche.**  
+Invia una mail a **m.vitali24@studenti.unibg.it** contenendo i seguenti campi:
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+Oggetto: SECURITY &lt;breve titolo&gt;
 
-## Reporting a Vulnerability
+1. Descrizione della vulnerabilità:
+   &lt;testo&gt;
 
-Use this section to tell people how to report a vulnerability.
+2. Passi per riprodurre:
+   1. &lt;primo passo&gt;
+   2. &lt;secondo passo&gt;
+   3. &lt;terzo passo&gt;
+      
+3. Eventuale fix:
+   &lt;codice, patch, link&gt;
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+4. Informazioni di contatto (opzionale):
+   &lt;nome / alias / mail per aggiornamenti&gt;
+
+
+
+
+Riceverai una risposta entro **48 ore**.  
+Il team valuterà la segnalazione e, in caso di accettazione, provvederà a correggere la vulnerabilità **entro 90 giorni** dal ricevimento, coordinando la pubblicazione dell’avviso insieme a te.
+
