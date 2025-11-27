@@ -1,38 +1,29 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
+name: Segnalazione bug
+about: Segnala un malfunzionamento del sistema di gestione gare
+title: "[BUG] &lt;breve descrizione&gt;"
+labels: bug
 assignees: ''
-
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+## Descrivi il problema
+Una descrizione chiara e sintetica del bug.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+## Come riprodurre
+Passi per riprodurre il comportamento:
+1. Vai su '...'
+2. Clicca su '...'
+3. Osserva l'errore
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+## Comportamento atteso
+Descrivi cosa ti aspettavi che accadesse.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+## Comportamento attuale
+Descrivi cosa accade invece.
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+## Ambiente
+- Sistema operativo: (es. Windows 11, Ubuntu 22.04, macOS 13)
+- Versione del software: (es. v1.0.0)
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
-
-**Additional context**
-Add any other context about the problem here.
+## Note aggiuntive
+Ulteriori dettagli utili (log, messaggi di errore, screenshot).

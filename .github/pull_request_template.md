@@ -6,6 +6,8 @@ Breve riassunto di ciò che la PR fa e perché è necessaria.
 - [ ] Nuova funzionalità
 - [ ] Modifica di documentazione
 - [ ] Refactoring
+- [ ] Nuovo diagramma
+- [ ] Altro (Specifica cosa)
 
 # Checklist
 - [ ] Ho eseguito `mvn test` localmente senza errori
