@@ -333,18 +333,25 @@ amministratori o società</body>
     <ownedEnd xmi:type="uml:Property" xmi:id="_YRHy0rscEfCk864s4-ESuw" name="sistema" type="_CokS0LsYEfCk864s4-ESuw" association="_YRHLwLscEfCk864s4-ESuw"/>
     <ownedEnd xmi:type="uml:Property" xmi:id="_YRHy07scEfCk864s4-ESuw" name="suggerire gare simili" type="_UpOfELscEfCk864s4-ESuw" association="_YRHLwLscEfCk864s4-ESuw"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="_x6V8UMYrEfCZzeY4k_lzQQ" memberEnd="_x6Y_ocYrEfCZzeY4k_lzQQ _x6Y_osYrEfCZzeY4k_lzQQ">
-    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_x6YYkMYrEfCZzeY4k_lzQQ" source="org.eclipse.papyrus">
-      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_x6Y_oMYrEfCZzeY4k_lzQQ" key="nature" value="UML_Nature"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_PMpPEMU3EfCZGY9U84Ebtw" memberEnd="_PMxK4MU3EfCZGY9U84Ebtw _PMxK4cU3EfCZGY9U84Ebtw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PMuHkMU3EfCZGY9U84Ebtw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_PMuuoMU3EfCZGY9U84Ebtw" key="nature" value="UML_Nature"/>
     </eAnnotations>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_x6Y_ocYrEfCZzeY4k_lzQQ" name="gestire storico gara" type="_Q_Cw0LmyEfCjRPrfckFa_w" association="_x6V8UMYrEfCZzeY4k_lzQQ"/>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_x6Y_osYrEfCZzeY4k_lzQQ" name="sistema" type="_CokS0LsYEfCk864s4-ESuw" association="_x6V8UMYrEfCZzeY4k_lzQQ"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_PMxK4MU3EfCZGY9U84Ebtw" name="applicare penalità" type="_UJqJQLqPEfCYQJk2O5vr8w" association="_PMpPEMU3EfCZGY9U84Ebtw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_PMxK4cU3EfCZGY9U84Ebtw" type="_b1rc0LmqEfCFSvgadSq75w" association="_PMpPEMU3EfCZGY9U84Ebtw"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="_3oE7MMYrEfCZzeY4k_lzQQ" memberEnd="_3oGJUcYrEfCZzeY4k_lzQQ _3oGJUsYrEfCZzeY4k_lzQQ">
-    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_3oFiQMYrEfCZzeY4k_lzQQ" source="org.eclipse.papyrus">
-      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_3oGJUMYrEfCZzeY4k_lzQQ" key="nature" value="UML_Nature"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_XCpiAMU3EfCZGY9U84Ebtw" memberEnd="_XCqwIsU3EfCZGY9U84Ebtw _XCqwI8U3EfCZGY9U84Ebtw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XCqwIMU3EfCZGY9U84Ebtw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_XCqwIcU3EfCZGY9U84Ebtw" key="nature" value="UML_Nature"/>
     </eAnnotations>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_3oGJUcYrEfCZzeY4k_lzQQ" name="applicare penalità" type="_UJqJQLqPEfCYQJk2O5vr8w" association="_3oE7MMYrEfCZzeY4k_lzQQ"/>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_3oGJUsYrEfCZzeY4k_lzQQ" type="_b1rc0LmqEfCFSvgadSq75w" association="_3oE7MMYrEfCZzeY4k_lzQQ"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_XCqwIsU3EfCZGY9U84Ebtw" name="proporre nuova gara" type="_z4eSILqUEfCYQJk2O5vr8w" association="_XCpiAMU3EfCZGY9U84Ebtw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_XCqwI8U3EfCZGY9U84Ebtw" type="_1dfgULmxEfCjRPrfckFa_w" association="_XCpiAMU3EfCZGY9U84Ebtw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_gKLHMMU3EfCZGY9U84Ebtw" memberEnd="_gKLuQsU3EfCZGY9U84Ebtw _gKLuQ8U3EfCZGY9U84Ebtw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_gKLuQMU3EfCZGY9U84Ebtw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_gKLuQcU3EfCZGY9U84Ebtw" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_gKLuQsU3EfCZGY9U84Ebtw" name="gestire storico gara" type="_Q_Cw0LmyEfCjRPrfckFa_w" association="_gKLHMMU3EfCZGY9U84Ebtw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_gKLuQ8U3EfCZGY9U84Ebtw" type="_CokS0LsYEfCk864s4-ESuw" association="_gKLHMMU3EfCZGY9U84Ebtw"/>
   </packagedElement>
 </uml:Model>
