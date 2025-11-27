@@ -45,6 +45,7 @@ Partecipanti
 
 * Scelto PlantUML per fare lo schema ER  
 * Non usare mai più i file pdf, ma solo .org o .md
+* Provare ad automatizzare delle PR dai branch al dev e dal dev al main a mezzanotte tra martedì e mercoledì
 
  6\. Note dello Scrum Master
 
