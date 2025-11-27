@@ -1,6 +1,9 @@
 @startchen
 title Schema ER
 
+skinparam nodesep 12
+skinparam ranksep 250
+
 entity SETTORE {
   ID <<key>>
   descrizione
