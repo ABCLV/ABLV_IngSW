@@ -2,6 +2,9 @@
 *
 * Viene implementata la gestione dell'iscrizione alla gara di pesca con le regole descritte nel sequence diagram
 *
+* per visualizzare il diagramma in modo grafico si consiglia l'utilizzo di eclipse in quanto su plantUML non si può
+* formattare l'immagine e quindi risulta illeggibile da gitHub web.
+*
 */
 
 @startuml
