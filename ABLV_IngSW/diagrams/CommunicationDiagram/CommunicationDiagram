@@ -1,0 +1,89 @@
+/*
+*
+* Viene implementata la gestione dell'iscrizione alla gara di pesca con le regole descritte nel sequence diagram
+*
+*/
+
+@startuml
+title Iscrizione gara - Communication diagram
+
+
+
+rectangle Concorrente
+rectangle "PaginaIscrizioneGara" as Pagina
+rectangle "MainConcorrente" as Main
+rectangle "Gara" as Gara
+rectangle "Contratto" as Contratto
+rectangle "Sponsor" as Sponsor
+rectangle "servizioMeteo" as Meteo
+rectangle "sistemaPagamenti" as Pag
+
+'--------------------------------------------------------
+' 1. Apertura pagina iscrizione + ricerca gare future + meteo
+'--------------------------------------------------------
+
+Concorrente -right-> Pagina : 1: apriPaginaIscrizione()
+Pagina -down-> Main        : 1.1: richiediGareFuture()
+Main -down-> Gara          : 1.1.1: getGare()
+Main -right-> Meteo        : 1.1.2: cercaMeteo()
+Main -up-> Pagina          : 1.1.3: mostraGareEMeteo()
+
+'--------------------------------------------------------
+' 2. Selezione gara e richiesta di iscrizione
+'--------------------------------------------------------
+
+Concorrente -left-> Pagina : 2: selezionaGara()
+Pagina -down-> Main        : 2.1: richiediIscrizione()
+
+'--------------------------------------------------------
+' 3. Caso principale: data valida e posti disponibili
+'--------------------------------------------------------
+
+Main -down-> Gara : 3.1 [data valida]: verificaData()
+Main -down-> Gara : 3.1.1 [posti disponibili]: verificaMax()
+Main -right-> Contratto : 3.1.2: getContrattiAttivi()
+Contratto -left-> Main  : 3.1.3: elencoContratti()
+
+'--------------------------------------------------------
+' 4. Scelta opzionale dello sponsor (opt)
+'--------------------------------------------------------
+
+Main -up-> Pagina        : 4 [esistono contratti disponibili]: mostraSponsorDisponibili()
+Concorrente -left-> Pagina : 4.1: selezionaSponsor()
+Pagina -down-> Main      : 4.2: confermaSponsor()
+Main -down-> Sponsor     : 4.3: getSponsor()
+Sponsor -up-> Main       : 4.4: datiSponsor()
+
+'--------------------------------------------------------
+' 5. Calcolo quota e pagamento online
+'--------------------------------------------------------
+
+Main -down-> Gara : 5: getQuotaIscrizione()
+Gara -up-> Main   : 5.1: quota()
+
+'---------------------- pagamento OK ---------------------
+
+Main -down-> Pag        : 6.1 [pagamento OK]: effettuaPagamento()
+Pag -up-> Main          : 6.1.1: esitoPagamento()
+Main -down-> Gara       : 6.1.2: registraIscrizione()
+Main -down-> Gara       : 6.1.3: contaIscritti()
+Main -down-> Gara       : 6.1.4: verificaMax()
+Main -down-> Gara       : 6.1.5 [raggiunto numero massimo]: cambiaStato(CONFERMATA)
+Main -up-> Pagina       : 6.1.6: mostraConfermaIscrizione()
+Pagina -left-> Concorrente : 6.1.7: notificaConferma()
+
+'---------------------- pagamento KO (break) --------------
+
+Main -right-> Pagina       : 6.2 [pagamento KO]: mostraErrore("Pagamento non riuscito")
+Pagina -up-> Concorrente   : 6.2.1: notificaErrore()
+
+'--------------------------------------------------------
+' 6. Altre alternative: gara non disponibile / posti esauriti
+'--------------------------------------------------------
+
+Main -right-> Pagina      : 3.2 [data non valida]: mostraErrore("Gara non disponibile")
+Pagina -up-> Concorrente  : 3.2.1: notificaErrore()
+
+Main -right-> Pagina      : 3.3 [posti esauriti]: mostraErrore("Posti esauriti")
+Pagina -up-> Concorrente  : 3.3.1: notificaErrore()
+@enduml
