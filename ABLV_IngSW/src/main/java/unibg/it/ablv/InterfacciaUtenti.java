@@ -1,4 +1,4 @@
-package unibg.it.ABCLV_IngSW;
+package unibg.it.ablv;
 
 import java.util.Scanner;
 
