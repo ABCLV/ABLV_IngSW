@@ -110,7 +110,7 @@ Mentre per accettare funzionalità è stato deciso che prima di tutto deve esser
 Lo scopo di questa sezione è individuare i principali rischi del progetto, valutarne la probabilità e l’impatto e definire le azioni da intraprendere per ridurli o gestirli in modo efficace.
 
 * **Probabilità**: Bassa (B), Media (M), Alta (A)
-* **Rischio**: Bassa (B), Media (M), Alta (A)
+* **Impatto**: Bassa (B), Media (M), Alta (A)
 
 |                  Rischio                   |                                                                         Descrizione                                                                          | Probabilità | Impatto |                                                                                                      Strategia per diminuire il rischio                                                                                                      |
 |:------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------:|:-------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
