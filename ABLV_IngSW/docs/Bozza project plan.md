@@ -107,7 +107,19 @@ Mentre per accettare funzionalità è stato deciso che prima di tutto deve esser
 
 ## **6\. Analisi dei rischi**
 
-Da definire bene…
+Lo scopo di questa sezione è individuare i principali rischi del progetto, valutarne la probabilità e l’impatto e definire le azioni da intraprendere per ridurli o gestirli in modo efficace.
+
+* **Probabilità**: Bassa (B), Media (M), Alta (A)
+* **Rischio**: Bassa (B), Media (M), Alta (A)
+
+|                  Rischio                   |                                                                         Descrizione                                                                          | Probabilità | Impatto |                                                                                                      Strategia per diminuire il rischio                                                                                                      |
+|:------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------:|:-------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|       Scarsa disponibilità del team        |                    Impegni universitari o personali riducono il tempo dedicabile al progetto, causando ritardi nelle attività pianificate                    |     M       |    A    |                           Pianificare attività realistiche per ogni sprint; usare il weekly scrum per riallineare il carico; ridurre il numero di task paralleli e concentrarsi prima sulle funzionalità Must Have                           |
+|      Ritardi nella progettazione UML       |       I diagrammi UML (in particolare quelli più complessi) richiedono più tempo del previsto, rallentando l’avvio o l’evoluzione dell’implementazione       | M |    M    |                  Dare priorità ai diagrammi fondamentali (Use Case, Class, Sequence); coinvolgere altri membri a supporto dell’UML Designer quando hanno terminato i propri task; rivedere i diagrammi a piccoli incrementi                  |
+|      Errori nelle regole del dominio       |              Implementazione non corretta delle regole (penalità, gruppi, turni, limiti iscritti, rinvii), con rischio di classifiche sbagliate              | M |    A    |                          Coinvolgere il Product Owner (pescatore/esperto dominio) in fase di analisi e verifica; scrivere test di unità sui casi “critici”; rivedere insieme i casi d’uso relativi alle classifiche                          |
+|    Conflitti o uso errato di Git/GitHub    |                           Merge conflict frequenti, commit non chiari o modifiche sul branch sbagliato che rallentano lo sviluppo                            | M |    B    |                   Definire regole chiare di branching (es. `dev` + branch per feature); usare sempre Pull Request con almeno 2 review; discutere nel weekly scrum eventuali problemi ricorrenti di gestione del repository                   |
+| Mancato rispetto delle scadenze intermedie | Alcuni sprint non portano a una release funzionante o alcune funzionalità rimangono a metà, accumulando debito tecnico e ritardi vicini alla consegna finale | M |    A    |                                Limitare il numero di funzionalità per sprint e concentrarsi su incrementi piccoli ma completi; il Product Owner e lo Scrum Master adeguano il backlog durante il weekly scrum                                |
+|  Problemi hardware / ambiente di sviluppo  |         Malfunzionamenti del PC personale, IDE non configurato correttamente, problemi con librerie o versioni di Java che bloccano uno sviluppatore         | B |    M    |                                     Usare strumenti e versioni il più possibile uniformi nel team; in caso di problemi, affiancare temporaneamente un altro membro per non bloccare un’attività critica                                      |
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
@@ -221,6 +233,8 @@ Gli strumenti e canali di comunicazione preferiti per discutere e proporre sono:
 Avendo iniziato a lavorare al progetto ad inizio ottobre e considerando la fine verso la meta di gennaio, si prevede circa 100 giorni di lavoro per 4 uomini = 400 Giorni, supponendo circa 1h di lavoro al giorno medio per ognuno:
 
 TOTALE: 400 ore di sviluppo
+
+Il lavoro è svolto interamente a scopo didattico, per questo motivo non sono previsti costi economici.
 
 costo orario = 0€/h
 
