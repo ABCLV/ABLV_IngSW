@@ -11,7 +11,7 @@
 
 Questo documento rappresenta il Project Plan del gruppo ABLV per il progetto “Gare di pesca della bergamasca”.  
 In particolare verrà descritto come e cosa verrà sviluppato dal nostro team ed è utile per chi volesse farsi una prima idea di come vengono gestiti i vari compiti nella nostra organizzazione.  
-Nota per il team: Tutti devono leggere e comprendere questo Project Plan, chiunque avesse domande o non avesse capito bene qualcosa apra pure una discussion su github dove si provvederà a spiegare al meglio i concetti.
+Nota per il team: TUTTI devono leggere e comprendere questo Project Plan, chiunque avesse domande o non avesse capito bene qualcosa apra pure una discussion su github dove si provvederà a spiegare al meglio i concetti.
 
 ### **1.2 Scopo del progetto**
 
@@ -23,7 +23,7 @@ In particolare però si concentra sulla gestione a livello organizzativo delle g
 Il progetto consiste nello sviluppo di un sistema software per la gestione completa delle gare agonistiche di pesca nella provincia di Bergamo.  
  Il sistema deve supportare sia gare singole sia campionati composti da più prove, gestendo l’intero ciclo di vita della competizione: creazione dell’evento, gestione dei concorrenti e delle società, organizzazione dei turni e dei gruppi, raccolta dei risultati e generazione delle classifiche finali.  
 L’applicazione prevede funzionalità differenziate in base al ruolo dell’utente (concorrente, società, arbitro, amministratore) e permette di effettuare operazioni come iscrizioni alle gare, assegnazione dei gruppi, registrazione delle catture, calcolo delle penalità, rinvio di una gara, pubblicazione delle classifiche e consultazione dello storico delle edizioni passate.  
-Il progetto sarà sviluppato come applicazione desktop utilizzando Java per la logica applicativa e un framework Model-View-Controller per la gestione del flusso; la persistenza dei dati invece sarà gestita tramite database relazionale (es. MySQL o PostgreSQL).  
+Il progetto è basato su un'architettura a 3-tier che separa chiaramente le componenti di presentazione, logica di business e accesso ai dati, garantendo una gestione efficiente del flusso delle richieste e delle risposte.  
  Il sistema dovrà garantire sicurezza dei dati, autenticazione differenziata per ruolo e una interfaccia chiara e accessibile.  
 Tra i principali vincoli si includono:
 
@@ -67,7 +67,7 @@ Le scelte prese sono le seguenti:
 
 ### **3.1 Struttura del team**
 
-E’ stato deciso, in base ai ruoli ovviamente, che ogni partecipante farà:
+E’ stato deciso che:
 
 * **Product Owne**r: sceglierà e controllerà sia a livello di codice che concettualmente che vengano implementate le funzionalità richieste e in modo corretto indicando eventuali migliorie alle stesse (viste ovviamente dal lato user).  
 * **Scrum Master**: verificherà che nel team i compiti vengano svolti in modo organizzato e conforme al Piano della Gestione della Configurazione. Inoltre si impegnerà ogni settimana a redigere il weekly scrum e quindi gestire, assegnare e ottenere feedback sugli obiettivi e compiti del team.
@@ -100,7 +100,7 @@ Per il nostro progetto è stato deciso di seguire i seguenti standard e linee gu
 ## **5\. Gestione degli obiettivi e priorità**
 
 Il nostro team si pone come obiettivi principali quello di offrire ai nostri utenti un esperienza semplice e veloce adatta a tutti; in particolare ci impegniamo ad offrire un prodotto di ottima qualità, affidabilità e correttezza nell’offrire le informazioni richieste.  
-Per seguire ciò abbiamo stilato una lista MOSCOW dei requisiti con le loro priorità consultabile a questo link: *link\_al\_file\_moscow*.  
+Per seguire ciò abbiamo stilato una lista MOSCOW dei requisiti con le loro priorità consultabile a questo: [link](https://github.com/ABCLV/ABLV_IngSW/tree/dev/ABLV_IngSW/docs/Proposta%20gare%20di%20pesca.pdf) (in fondo al pdf).
 Mentre per accettare funzionalità è stato deciso che prima di tutto deve essere proposta e discussa al weekly scrum e poi, solo dopo un’approvazione da parte del team, si deve aprire l’issue come spiegato al punto 5; nel corso della sua implementazione o al termine si esegue una PR su github e almeno 2 persone del team devono approvare il codice scritto (si raccomanda ai componenti del team di controllare in modo rigoroso le implementazioni e non approvare “ad occhi chiusi”).
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
@@ -113,12 +113,12 @@ Da definire bene…
 
 ## **7\. Personale**
 
-| Componente | Ruolo | Competenze | Disponibilità | Durata coinvolgimento |
-| :---: | :---: | :---: | :---: | :---: |
-| Locatelli Celeste | Product Owner, Dummy Client, Sviluppatore |  | Giornaliera | Tutta la durata del progetto |
-| Vitali Michele | Scrum Master, Sviluppatore, Repository Admin | Organizzazione del team, sviluppo Java | Giornaliera | Tutta la durata del progetto |
-| Algeri Nicola | Sviluppatore, Repository Admin |  | Giornaliera | Tutta la durata del progetto |
-| Bertoli Marco | Sviluppatore, UML Designer |  | Giornaliera | Tutta la durata del progetto |
+| Componente |                      Ruolo                       |                      Competenze                      | Disponibilità | Durata coinvolgimento |
+| :---: |:------------------------------------------------:|:----------------------------------------------------:| :---: | :---: |
+| Locatelli Celeste |    Product Owner, Dummy Client, Sviluppatore     | pescatore(quindi esperto nel settore), sviluppo java | Giornaliera | Tutta la durata del progetto |
+| Vitali Michele |   Scrum Master, Sviluppatore, Repository Admin   |        Organizzazione del team, sviluppo Java        | Giornaliera | Tutta la durata del progetto |
+| Algeri Nicola |          Sviluppatore, Repository Admin          |             Esperto Git, sviluppo Java              | Giornaliera | Tutta la durata del progetto |
+| Bertoli Marco |           Sviluppatore, UML Designer |       sviluppo java, plantUML/Papyrus designer       | Giornaliera | Tutta la durata del progetto |
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
@@ -126,8 +126,7 @@ Da definire bene…
 
 ### **8.1 Ingegneria dei requisiti** 
 
-Per consultare le user stories, use cases e i vari diagrammi UML controllare la cartella apposita nella repository (*link\_alla\_cartella\_docs*).
-
+Per consultare le user stories, use cases e i vari diagrammi UML controllare la [cartella](https://github.com/ABCLV/ABLV_IngSW/tree/dev/ABLV_IngSW/docs/)  apposita nella repository
 ### **8.2 Progettazione**
 
 E’ stato scelto di creare tutti i diagrammi UML visti a lezione, ecco qui la lista: 
@@ -144,11 +143,12 @@ E’ stato scelto di creare tutti i diagrammi UML visti a lezione, ecco qui la l
 
 
 Mentre sul lato dell’implementazione i design patterns utilizzati sono i seguenti:  
-*lista dei pattern utilizzati*
+* Abstraction-Occurrence pattern
+* Delegation pattern (se sarà necessario)
 
 ### **8.3 Implementazione**
 
-Per l’implementazione del nostro codice è stato usato unicamente il linguaggio Java.
+Per l’implementazione del nostro codice è stato usato unicamente il linguaggio Java. Le query sql, come consigliato a lezione, non sono state scritte il SQL puro tramite strighe bensì tramite ...****LOCATELLI COMPLETA****
 
 ### **8.4 Test**
 
@@ -163,25 +163,25 @@ Inoltre per controllare la struttura del nostro codice come per esempio dipenden
 
 ## **9\. Garanzia di qualità (Quality Assurance)**
 
-Per assicurare ai nostri utenti una garanzia di qualità ottimale del nostro progetto si seguiranno queste regole:
+Per assicurare ai nostri utenti una garanzia di qualità ottimale del nostro progetto si è scelta la tecnica di qualità del prodotto, essendo questo il nostro primo e probabilmente ultimo software non aveva senso puntare sulla qualità del processo.
+Per farlo si seguiranno queste regole:
 
 * **Code review**: per approvare modifiche/implementazione di medio/alto impatto è obbligatorio eseguire PR che per essere integrate nel codice principale devono venire approvate da almeno 2 persone nel team (così come specificato prima, si ricorda al personale di controllare veramente il codice e non approvare modifiche senza guardarle).  
 * **Analisi statica**: come specificato al punto precedente verranno usati dei tool per l'analisi statica del codice (Stan4J, PMD e SonarQube).  
 * **Verifica dei requisiti**: ogni settimana il Product Owner insieme allo Scrum Master  
   durante il weekly scrum discutono se il team sta rispettando i requisiti prestabiliti e programma i prossimi passi (a livello organizzativo, poi verrà ovviamente discusso tutto con il team).  
 * **Rispetto degli standard**: ogni cosa che viene fatta deve seguire le linee guida e standard indicati al punto apposito ed inoltre per il codice è stato creato un workflow automatico di Github per verificare il rispetto delle convenzioni java che indica se ci sono punti in cui non sono state seguite.  
-* **Metrica della qualità**: come metrica per controllare la qualità del nostro progetto verranno ovviamente usate tutte quelle fornite dai tool di Analisi Statica precedentemente citati *(ed in più quelle studiate a lezione? ce ne sono altre?*).
+* **Metrica della qualità**: come metrica per controllare la qualità del nostro progetto verranno ovviamente usate tutte quelle fornite dai tool di Analisi Statica precedentemente citati 
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
-## **10\. Pacchetti di lavoro (Work Breakdown Structure –** 
-
-## **WBS)**
-
+## **10\. Pacchetti di lavoro (Work Breakdown Structure)
 Il nostro progetto si divide in questi macro-pacchetti di lavoro:
 
 * **Analisi dei requisiti**: svolta in prima parte dal Product Owner che compila un file dove annota tutti i requisiti necessari e cosa dovrà fare la nostra applicazione.  
 * **Progettazione UML**: inizialmente svolta da un po’ tutto il team (così da velocizzare l’avanzamento) causa assenza di altri compiti significativi, ma che poi verrà portata avanti principalmente dal nostro UML Designer con l’eventuale aiuto di altri qualora abbiano terminato i propri compiti o ritengano opportuno (previo accordo con il team) finire prima un altro compito.
+* **Sviluppo**, fatto da tutto il team (product owner compreso)
+* **Rilascio**, ogni mercoledì prima del nuovo weekly scrum 
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
@@ -189,8 +189,7 @@ Il nostro progetto si divide in questi macro-pacchetti di lavoro:
 
 ### **11.1 Hardware**
 
-(Pc, prestazioni minime, server, eventuali dispositivi.)  
-*Non so cosa scrivere??? Che risorse HW abbiamo ahaha*
+PC con prestazioni minime 
 
 ### **11.2 Software**
 
@@ -201,7 +200,7 @@ Le risorse software principali del nostro team sono:
 * **PlantUML**: altro tool per lo sviluppo di alcuni diagrammi UML (preferito in corso d’opera a Papyrus in quanto quest’ultimo molte volte da’ problemi e si blocca).  
 * **Markdown**: formato di file (preferito in corso d’opera ai pdf) per la documentazione e stesura di documenti in linguaggio naturale.  
 * **Tool di Analisi Statica**: come Stan4J, PMD e SonarQube (vedi punto apposito).  
-* **Librerie**: *useremo delle librerie strane immagino (soprattutto per la parte grafica…*)  
+* **Librerie**: JavaFX  per la grafica, per il DB **LOCATELLI COMPILA TU**
 * **Testing**: useremo principalmente JUnit.  
 * **Strumenti di build e package managing**: useremo Maven (infatti il nostro progetto sarà un progetto Maven in eclipse).
 
@@ -219,8 +218,13 @@ Gli strumenti e canali di comunicazione preferiti per discutere e proporre sono:
 
 ## **12\. Budget**
 
-*Dovrei mettere un budget stimato dei mesi/uomo come visto a lezione? stimo anche risorse e licenze ooo?*  
-\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+Avendo iniziato a lavorare al progetto ad inizio ottobre e considerando la fine verso la meta di gennaio, si prevede circa 100 giorni di lavoro per 4 uomini = 400 Giorni, supponendo circa 1h di lavoro al giorno medio per ognuno:
+
+TOTALE: 400 ore di sviluppo
+
+costo orario = 0€/h
+
+TOTALE Costo: 400h*0€/h = 0€.
 
 ## **13\. Gestione dei cambiamenti**
 
@@ -241,7 +245,7 @@ Ad ogni cambiamento che sarà necessario seguire per le volontà utente o adegua
 
 ## **14\. Consegna**
 
-La consegna del progetto finale avverrà in data dell’esposizione del progetto all’esame orale tramite, oltre ovviamente alla repository Github, una presentazione PowerPoint del progetto, una panoramica dei dati dei vari tool di analisi statica e una simulazione della nostra applicazione.  
-Inoltre ci impegniamo ogni settimana a rilasciare una nuova versione del progetto in cui le modifiche sostanziali potrebbero essere solo di codice, solo di documentazione (si prevede molto raro una volta iniziata l’implementazione, ma per ora possibile con le versioni 0.X) oppure entrambi.
+La consegna del progetto finale avverrà 5 giorni prima della data dell’esposizione del progetto all’esame orale tramite, oltre ovviamente alla repository Github, una presentazione PowerPoint del progetto, una panoramica dei dati dei vari tool di analisi statica e una simulazione della nostra applicazione.  
+Inoltre ci impegniamo ogni settimana a rilasciare una nuova versione del progetto.
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
