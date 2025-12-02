@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Random;
 
-import static dbconSQLJOOQ.generated.tables.STUDENTE; // importa la tabella generata
+import static dbconSQLJOOQ.generated.Tables.STUDENTE; // importa la tabella generata
 
 public class PopolaDB {
 
