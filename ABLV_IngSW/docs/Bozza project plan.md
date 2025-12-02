@@ -83,7 +83,7 @@ E’ stato deciso in presenza di tutto il team che i canali e metodi di comunica
 
 ### **3.3 Relazioni esterne**
 
-Al momento non è stata programmata nessuna relazione con terzi, solamente la condivisione per revisione del progetto con il professor Angelo Gargantini.  
+Al momento non è stata programmata nessuna relazione con terzi, solamente la condivisione per revisione del progetto con il professor Angelo Gargantini e la professoressa Silvia Bonfanti.  
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 ## **4\. Standard, linee guida e procedure**
