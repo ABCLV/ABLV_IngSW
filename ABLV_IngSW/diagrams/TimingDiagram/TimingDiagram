@@ -1,0 +1,133 @@
+/*
+*
+* Viene modellato il sistema di gestione del rinvio e annullamento di una gara di pesca su decisione dell'arbitro.
+* 
+* Le linee temporali sono:
+* Arbitro (AR): prende decisioni di approvazione, annullamento e rinvio della gara.
+* Sistema di gestione gare (SI): riceve comandi dall'arbitro e aggiorna i sottositemi.
+* Stato gara (SG): descrive l'evoluzione della gara.
+* Iscrizioni (IS): isrizioni aperte/chiuse/bloccate rispettando il numero max di partecipanti.
+* Meteo (ME): rappresenta le condizioni meteo.
+* Pagamenti (PA): gestisce i pagamenti e il rimborso agli iscritti.
+* Notifiche (NO): raccoglie i messaggi inviati in automatico a concorrenti e società.
+*
+* Le frecce verticali tra linee temporali modellano i messaggi scambiati tra gli attori.
+*
+* Ci sono tre fasi principali:
+* Gara normale (0-20): creazione gara, apertura e chiusura iscrizioni, conferma gara appena raggiunto il minimo.
+* Rinvio (25-40): allerta meteo, decisione rinvio blocco iscrizioni e notifica ai partecipanti.
+* Annullamento definitivo (60-90): nuova allerta il giorno della gara, annullamento, blocco definitivo delle iscrizioni, 
+*                                  rimborsi a tutti gli iscritti e ivio email di conferma.
+*
+*/
+
+@startuml
+title Timing diagram - gestione rinvio/annullamento gara di pesca
+
+scale 1.9
+
+skinparam TimingDiagram {
+    ParticipantMargin 70
+    TimeScale 1.6
+    LifeLineStrategy 4
+}
+
+' Attori / segnali
+concise "Arbitro" as AR
+concise "Sistema\ngestione gare" as SI
+robust "Stato gara" as SG
+robust "Iscrizioni" as IS
+robust "Meteo" as ME
+robust "Pagamenti" as PA
+robust "Notifiche" as NO
+
+' Stati iniziali
+@0
+AR is "Inattivo"
+SI is "In attesa"
+SG is "Proposta"
+IS is "Chiuse"
+ME is "Normale"
+PA is "Nessun pagamento"
+NO is "Nessuna"
+
+' L’arbitro approva la proposta e il sistema apre le iscrizioni
+@5
+AR -> SI : approvaProposta()
+SI -> SG : impostaProgrammato()
+SI -> IS : apriIscrizioni()
+AR is "Ha approvato"
+SI is "Aggiornamento gara"
+SG is "Programmato"
+IS is "Aperte"
+
+' I concorrenti pagano la quota di iscrizione
+@10
+SI -> PA : registraPagamento()
+PA is "Pagato"
+
+' Chiusura iscrizioni e controllo min/max
+@20
+SI -> IS : chiudiIscrizioni()
+SI -> SG : verificaMinMax()
+IS is "Chiuse"
+SG is "Confermata"
+SI is "In attesa"
+
+' Arriva un’allerta meteo prima della prima data
+@25
+ME -> AR : inviaAllertaMeteo()
+ME is "Allerta meteo"
+AR is "Valuta rinvio"
+AR -> SI : richiediRinvio()
+SI -> SG : impostaRinviata()
+SI -> IS : bloccaIscrizioni()
+SI -> NO : notificaRinvio()
+SG is "Rinviata"
+IS is "Bloccate"
+NO is "Comunicazione rinvio"
+
+' Nuova data: condizioni tornano normali e si ripianifica
+@40
+ME is "Normale"
+AR -> SI : confermaNuovaData()
+SI -> SG : impostaRipianificata()
+SI -> IS : riapriIscrizioni()
+SG is "Ripianificata"
+IS is "Aperte"
+NO is "Nessuna"
+
+' Seconda chiusura iscrizioni sulla nuova data
+@50
+SI -> IS : chiudiIscrizioni()
+SI -> SG : confermaGara()
+IS is "Chiuse"
+SG is "Confermata"
+
+' Il giorno della gara arriva una nuova allerta meteo grave
+@60
+ME -> AR : allertaGiornoGara()
+ME is "Allerta meteo"
+AR is "Valuta annullamento"
+
+' L’arbitro decide l’annullamento definitivo
+@65
+AR -> SI : annullaGara()
+SI -> SG : impostaAnnullata()
+SI -> IS : bloccaIscrizioni()
+SI -> PA : avviaRimborsi()
+SI -> NO : notificaAnnullamento()
+SG is "Annullata"
+IS is "Bloccate"
+PA is "Rimborso in corso"
+NO is "Avviso annullamento"
+
+' Completamento dei rimborsi
+@90
+PA -> NO : confermaRimborsi()
+PA is "Rimborsato"
+NO is "Email rimborso inviata"
+SI is "In attesa"
+AR is "Inattivo"
+
+@enduml
