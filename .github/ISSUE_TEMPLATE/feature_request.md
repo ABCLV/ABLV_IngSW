@@ -1,20 +1,22 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
+name: Richiesta funzionalità
+about: Proponi una nuova funzione per il sistema di gestione gare
+title: "[FEATURE] <breve descrizione>"
+labels: enhancement
 assignees: ''
-
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+## Necessità
+Descrivi il problema o il bisogno attuale che la nuova funzione risolverebbe.
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+## Soluzione proposta
+Spiega chiaramente come dovrebbe funzionare la nuova funzione.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+## Alternative considerate
+Hai valutato altri modi per raggiungere lo stesso risultato? Descrivili.
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+## Benefici attesi
+Indica vantaggi per utenti, arbitri, società o amministratori.
+
+## Note aggiuntive
+Link, screenshot, esempi di altri sistemi o qualsiasi altro dettaglio utile.

@@ -5,17 +5,17 @@ Sistema di gestione delle gare agonistiche di pesca in provincia di Bergamo.
 
 ## Panoramica
 - Tecnologie: Eclipse (Java), GitHub, Papyrus, PlantUML  
-- Team: 4 sviluppatori universitari – ruoli SCM definiti nel “Piano Gestione della Configurazione”  
+- Team: 4 sviluppatori universitari – ruoli SCM definiti nel [Piano Gestione della Configurazione.pdf](https://github.com/ABCLV/ABLV_IngSW/blob/dev/ABLV_IngSW/docs/Piano%20Gestione%20della%20Configurazione.pdf). 
 - Metodologia: Scrum settimanale, sprint 1 settimana  
 
 ## Documentazione di progetto
 nella cartella docs/
 | File | Descrizione |
 |------|-------------|
-| Piano-Gestione-Configurazione.pdf | Processo SCM, branching model, ruoli e responsabilità |
-| Proposta-gare-di-pesca.pdf | Requisiti funzionali, regole di business, attori e casi d’uso |
-| scrumsebacklogs/ | Sprint backlog, stato avanzamento, decisioni prese |
-| diagrams/ | Diagrammi UML: classi, casi d’uso, stato, sequenza |
+| [Piano Gestione della Configurazione.pdf](https://github.com/ABCLV/ABLV_IngSW/blob/dev/ABLV_IngSW/docs/Piano%20Gestione%20della%20Configurazione.pdf). | Processo SCM, branching model, ruoli e responsabilità |
+| [Proposta gare di pesca.pdf](https://github.com/ABCLV/ABLV_IngSW/blob/dev/ABLV_IngSW/docs/Proposta%20gare%20di%20pesca.pdf) | Requisiti funzionali, regole di business, attori e casi d’uso |
+| [scrumsebacklogs/](https://github.com/ABCLV/ABLV_IngSW/tree/dev/ABLV_IngSW/docs/scrumsebacklogs) | Sprint backlog, stato avanzamento, decisioni prese |
+| [diagrams/](https://github.com/ABCLV/ABLV_IngSW/tree/dev/ABLV_IngSW/docs/diagrams) | Diagrammi UML: classi, casi d’uso, stato, sequenza |
 ## Quick start
 ```bash
 git clone https://github.com/ABCLV/ABLV_IngSW/
