@@ -13,21 +13,21 @@ public class PopolaDB {
     public static void main(String[] args) {
         
         try {
-            importCampoGara();
-            importSede();
-            importSocieta();
-            importCampionato();
-            importArbitro();
-            importAmministratore();
-            importConcorrente();
-            importSponsor();
+            //importCampoGara();
+            //importSede();
+            //importSocieta();
+            //importCampionato();
+            //importArbitro();
+            //importAmministratore();
+            //importConcorrente();
+            //importSponsor();
             importSettore();
-            importGara();
-            importTurno();
-            importPartecipa();
-            importRecensisce();
-            importIscrive();
-            importContratto();
+            //importGara();
+            //importTurno();
+            //importPartecipa();
+            //importRecensisce();
+            //importIscrive();
+            //importContratto();
             
             
             System.out.println("Tutti i CSV importati con successo!");
@@ -57,8 +57,8 @@ public class PopolaDB {
     }
     
     private static void importCampoGara() throws Exception {
-        String sql = "INSERT INTO CAMPOGARA(ID, Paese, CorpoIdrico, Lunghezza) VALUES (?, ?, ?, ?)";
-        importCSV("database/csv/CAMPOGARA.csv", sql, 4);
+        String sql = "INSERT INTO CAMPOGARA(ID, Paese, CorpoIdrico, Lunghezza, Descrizione) VALUES (?, ?, ?, ?, ?)";
+        importCSV("database/csv/CAMPOGARA.csv", sql, 5);
     }
 
     private static void importSede() throws Exception {

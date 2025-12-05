@@ -1,3 +1,25 @@
 ID,Lunghezza,Descrizione,CampoGara
-ST001,200,Settore centrale,C001
-ST002,150,Settore nord,C002
+ST001,1300,unico settore,C001
+ST002,800,unico settore,C002
+ST003,0,unico settore,C003
+ST004,1300,unico settore,C004
+ST005,0,Sett. A – dal ponte di Ambria a monte dell’Allevamento ittico,C005
+ST006,0,Sett. B – dall’Allevamento ittico alla località Tre Fontane,C005
+ST007,0,Sett. C – dalla località Tre Fontane al ponte Nuovo,C005
+ST008,0,Sett. D – dal ponte Nuovo al ponte Vecchio,C005
+ST009,0,Sett. E – dal ponte Vecchio fino a 100 m a valle della passerella pedonale,C005
+ST010,0,Sett. A – dal ponte della ditta Piazzalunga sino al ponte nuovo in zona frana,C006
+ST011,0,Sett. B – dalla curva a valle della “Segheria” sino alla scala del Ristorante Fonte Bracca,C006
+ST012,0,Sett. C – dalla scala del Ristorante Fonte Bracca al ponte del Vento,C006
+ST013,0,Sett. D – dalla cascata a valle dell’orrido fino allo sfocio nel fiume Brembo,C006
+ST014,0,Sett. A – dalle fucine al depuratore,C007
+ST015,0,Sett. B – dal depuratore al ponte Ca' Prospero,C007
+ST016,0,Sett. C – dal ponte Ca’ Prospero alla località Piazzola,C007
+ST017,0,Sett. D – dal ponte La Grate al ponte Gallo,C007
+ST018,0,Sett. E – dal ponte Gallo alla briglia del Mulino,C007
+ST019,0,Sett. F – dalla briglia del Mulino alla località Cornone,C007
+ST020,0,Sett. G – dalla località Cornone al ponte del Chitò,C007
+ST021,0,Sett. A – dalla cabina del metano al pozzo dell’Acqua bianca,C008
+ST022,0,Sett. B – dal pozzo dell’Acqua bianca alla località Mulinetto (fabbrica catrame),C008
+ST023,0,Sett. C – dalla località Mulinetto alla buca della cava in località Corea,C008
+ST024,0,Sett. D – dalla località Corea alla località Corna Gogia,C008
