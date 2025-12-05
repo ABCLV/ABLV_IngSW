@@ -40,9 +40,9 @@
 - **trovaArbitro(): void**
 - **nuovaIscrizione(cf: String, out numIscritti: Integer): boolean**
 - **iscrizioneMultipla(concorrentiPresenti: List<Concorrente>): boolean**
-  - `verificaData(): boolean`
-  - `verificaMax(): boolean`
-  - `verificaMin(): boolean`
+- **verificaData(): boolean**
+- **verificaMax(): boolean**
+- **verificaMin(): boolean**
 - **getClassifica(): List<Punteggio>**
 
 ## CAMPIONATO
