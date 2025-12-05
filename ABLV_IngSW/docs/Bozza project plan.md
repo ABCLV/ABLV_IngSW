@@ -45,7 +45,7 @@ Tra i principali vincoli si includono:
 
 ### **1.5 Glossario e riferimenti**
 
-Per il glossario e i riferimenti guardare il Piano della Gestione della Configurazione su github.  
+Per il glossario e i riferimenti guardare il [Piano della Gestione della Configurazione](<./Piano Gestione della Configurazione.pdf>) su github.  
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 ## **2\. Modello di processo**
@@ -78,7 +78,7 @@ E’ stato deciso che:
 E’ stato deciso in presenza di tutto il team che i canali e metodi di comunicazione saranno i seguenti:
 
 * 1 volta a settimana (idealmente il mercoledì) ci sarà una riunione per discutere della settimana passata (utile soprattutto ad indicare eventuali difficoltà e migliorie nell’organizzazione/flusso di lavoro) e per compilare in presenza di tutti il weekly scrum e quindi, dato che è stato scelto di far coincidere i due documenti in uno, anche lo sprint backlog.  
-* Come canali di comunicazione invece sono stati scelti principalmente il gruppo whatsapp del gruppo anche se è fortemente consigliato preferire le *discussions* su github in quanto più facili da reperire ed è più difficile perdere eventuali messaggi importanti.  
+* Come canali di comunicazione invece sono stati scelti principalmente il gruppo whatsapp del gruppo anche se è fortemente consigliato preferire le [discussions](https://https://github.com/ABCLV/ABLV_IngSW/discussions) su github in quanto più facili da reperire ed è più difficile perdere eventuali messaggi importanti.  
 * Le decisioni che verranno prese durante la settimana da chiunque verranno indicate tutte nel weekly scrum della stessa.
 
 ### **3.3 Relazioni esterne**
@@ -90,18 +90,18 @@ Al momento non è stata programmata nessuna relazione con terzi, solamente la co
 
 Per il nostro progetto è stato deciso di seguire i seguenti standard e linee guida:
 
-* **Convenzioni**: sia per la parte di implementazione che documentazione è stato deciso di seguire le convenzioni java comunemente usate da tutti i programmatori (reperibili qui [https://www.oracle.com/docs/tech/java/codeconventions.pdf](https://www.oracle.com/docs/tech/java/codeconventions.pdf)), mentre per la parte di progettazione UML sono state usate le convenzioni e sintassi studiate a lezione.  
+* **Convenzioni**: sia per la parte di implementazione che documentazione è stato deciso di seguire le convenzioni java comunemente usate da tutti i programmatori (reperibili qui [convenzioni java](https://www.oracle.com/docs/tech/java/codeconventions.pdf)), mentre per la parte di progettazione UML sono state usate le convenzioni e sintassi studiate a lezione.  
 * **Regole di utilizzo Github**: vedi il Piano della Gestione della Configurazione.  
-* **Formati dei documenti**: per semplicità nel modificare i documenti dopo il loro caricamento è stato deciso nel weekly scrum \#2 che si useranno solo i file con estensione .md (preferiti) o .org in quanto possono essere facilmente modificati direttamente su github online.  
+* **Formati dei documenti**: per semplicità nel modificare i documenti dopo il loro caricamento è stato deciso nel [Weekly Scrum #2](./scrumsebacklogs/weekly_scrum_26_novembre.md) che si useranno solo i file con estensione .md (preferiti) o .org in quanto possono essere facilmente modificati direttamente su github online.  
 * **Funzionalità**: per richiedere l’implementazione di nuove funzionalità o correzioni alle stesse si deve aprire un issue con un nome descrittivo di ciò che si vuole/non va bene.
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 ## **5\. Gestione degli obiettivi e priorità**
 
-Il nostro team si pone come obiettivi principali quello di offrire ai nostri utenti un esperienza semplice e veloce adatta a tutti; in particolare ci impegniamo ad offrire un prodotto di ottima qualità, affidabilità e correttezza nell’offrire le informazioni richieste.  
-Per seguire ciò abbiamo stilato una lista MOSCOW dei requisiti con le loro priorità consultabile a questo: [link](https://github.com/ABCLV/ABLV_IngSW/tree/dev/ABLV_IngSW/docs/Proposta%20gare%20di%20pesca.pdf) (in fondo al pdf).
-Mentre per accettare funzionalità è stato deciso che prima di tutto deve essere proposta e discussa al weekly scrum e poi, solo dopo un’approvazione da parte del team, si deve aprire l’issue come spiegato al punto 5; nel corso della sua implementazione o al termine si esegue una PR su github e almeno 2 persone del team devono approvare il codice scritto (si raccomanda ai componenti del team di controllare in modo rigoroso le implementazioni e non approvare “ad occhi chiusi”).
+Il nostro team si pone come obiettivi principali quello di offrire ai nostri utenti un esperienza semplice e veloce adatta a tutti; in particolare ci impegniamo a fornire un prodotto di ottima qualità, affidabilità e correttezza nel recuperare le informazioni richieste.  
+Per seguire ciò abbiamo stilato una classificazione Kano dei requisiti con le loro priorità consultabile [qui](<./Proposta gare di pesca.pdf>) (in fondo al file).
+Mentre per accettare funzionalità è stato deciso che prima di tutto deve essere proposta e discussa al weekly scrum e poi, solo dopo un’approvazione da parte del team, si deve aprire l’issue come spiegato al [punto 4](#4-standard-linee-guida-e-procedure); nel corso della sua implementazione o al termine si esegue una PR su github e almeno 2 persone del team devono approvare il codice scritto (si raccomanda ai componenti del team di controllare in modo rigoroso le implementazioni e non approvare “ad occhi chiusi”).
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
@@ -127,10 +127,10 @@ Lo scopo di questa sezione è individuare i principali rischi del progetto, valu
 
 | Componente |                      Ruolo                       |                      Competenze                      | Disponibilità | Durata coinvolgimento |
 | :---: |:------------------------------------------------:|:----------------------------------------------------:| :---: | :---: |
-| Locatelli Celeste |    Product Owner, Dummy Client, Sviluppatore     | pescatore(quindi esperto nel settore), sviluppo java | Giornaliera | Tutta la durata del progetto |
+| Locatelli Celeste |    Product Owner, Dummy Client, Sviluppatore     | Pescatore(quindi esperto nel settore), sviluppo java | Giornaliera | Tutta la durata del progetto |
 | Vitali Michele |   Scrum Master, Sviluppatore, Repository Admin   |        Organizzazione del team, sviluppo Java        | Giornaliera | Tutta la durata del progetto |
-| Algeri Nicola |          Sviluppatore, Repository Admin          |             Esperto Git, sviluppo Java              | Giornaliera | Tutta la durata del progetto |
-| Bertoli Marco |           Sviluppatore, UML Designer |       sviluppo java, plantUML/Papyrus designer       | Giornaliera | Tutta la durata del progetto |
+| Algeri Nicola |          Sviluppatore, Repository Admin          |             Sviluppo Java, Manutenzione github              | Giornaliera | Tutta la durata del progetto |
+| Bertoli Marco |           Sviluppatore, UML Designer |       Sviluppo java, plantUML/Papyrus designer       | Giornaliera | Tutta la durata del progetto |
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
@@ -138,7 +138,7 @@ Lo scopo di questa sezione è individuare i principali rischi del progetto, valu
 
 ### **8.1 Ingegneria dei requisiti** 
 
-Per consultare le user stories, use cases e i vari diagrammi UML controllare la [cartella](https://github.com/ABCLV/ABLV_IngSW/tree/dev/ABLV_IngSW/docs/)  apposita nella repository
+Per consultare le user stories, use cases e i vari diagrammi UML controllare la [cartella](./)  apposita nella repository
 ### **8.2 Progettazione**
 
 E’ stato scelto di creare tutti i diagrammi UML visti a lezione, ecco qui la lista: 
@@ -147,10 +147,10 @@ E’ stato scelto di creare tutti i diagrammi UML visti a lezione, ecco qui la l
 * Class Diagram  
 * State Machine Diagram, sul ciclo di vita di una gara di pesca  
 * Sequence Diagram, sullo scambio di messaggi tra componenti per l’iscrizione ad una gara  
-* Communication Diagram  
-* Timing Diagram  
-* Activity Diagram  
-* Componenti Diagram  
+* Communication Diagram, sulle iscrizione alle gare
+* Timing Diagram, sul rinvio/annullamento delle gare 
+* Activity Diagram, sulle iscrizione alle gare da parte degli utenti
+* Component Diagram  
 * Package Diagram
 
 
@@ -160,7 +160,7 @@ Mentre sul lato dell’implementazione i design patterns utilizzati sono i segue
 
 ### **8.3 Implementazione**
 
-Per l’implementazione del nostro codice è stato usato unicamente il linguaggio Java. Le query sql, come consigliato a lezione, non sono state scritte il SQL puro tramite strighe bensì tramite il DSL type safe fornito da JOOQ, che permette di costruire le query in modo strutturato e sicuro a livello di compilazione evitando errori sintattici, injection e problemi tipici delle stringhe SQL scritte a mano
+Per l’implementazione del nostro codice è stato usato unicamente il linguaggio Java. Le query sql, come consigliato a lezione, non sono state scritte il SQL puro tramite stringhe bensì tramite il DSL type safe fornito da JOOQ, che permette di costruire le query in modo strutturato e sicuro a livello di compilazione evitando errori sintattici, injection e problemi tipici delle stringhe SQL scritte a mano
 
 ### **8.4 Test**
 
@@ -179,11 +179,10 @@ Per assicurare ai nostri utenti una garanzia di qualità ottimale del nostro pro
 Per farlo si seguiranno queste regole:
 
 * **Code review**: per approvare modifiche/implementazione di medio/alto impatto è obbligatorio eseguire PR che per essere integrate nel codice principale devono venire approvate da almeno 2 persone nel team (così come specificato prima, si ricorda al personale di controllare veramente il codice e non approvare modifiche senza guardarle).  
-* **Analisi statica**: come specificato al punto precedente verranno usati dei tool per l'analisi statica del codice (Stan4J, PMD e SonarQube).  
-* **Verifica dei requisiti**: ogni settimana il Product Owner insieme allo Scrum Master  
-  durante il weekly scrum discutono se il team sta rispettando i requisiti prestabiliti e programma i prossimi passi (a livello organizzativo, poi verrà ovviamente discusso tutto con il team).  
-* **Rispetto degli standard**: ogni cosa che viene fatta deve seguire le linee guida e standard indicati al punto apposito ed inoltre per il codice è stato creato un workflow automatico di Github per verificare il rispetto delle convenzioni java che indica se ci sono punti in cui non sono state seguite.  
-* **Metrica della qualità**: come metrica per controllare la qualità del nostro progetto verranno ovviamente usate tutte quelle fornite dai tool di Analisi Statica precedentemente citati 
+* **Analisi statica**: come specificato al [punto 8.4](#84-test) verranno usati dei tool per l'analisi statica del codice (Stan4J, PMD e SonarQube).  
+* **Verifica dei requisiti**: ogni settimana il Product Owner insieme allo Scrum Master durante il weekly scrum discutono se il team sta rispettando i requisiti prestabiliti e programma i prossimi passi (a livello organizzativo, poi verrà ovviamente discusso tutto con il team).  
+* **Rispetto degli standard**: ogni cosa che viene fatta deve seguire le linee guida e standard indicati al [punto 4](#4-standard-linee-guida-e-procedure) ed inoltre per il codice è stato creato un workflow automatico di Github per verificare il rispetto delle convenzioni java che indica se ci sono punti in cui non sono state seguite.  
+* **Metrica della qualità**: come metriche per controllare la qualità del nostro progetto verranno prima di tutto usate tutte quelle fornite dai tool di Analisi Statica precedentemente citati, poi se venissero ritenute utili si useranno ulteriori metriche viste a lezione.
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
@@ -212,7 +211,7 @@ Le risorse software principali del nostro team sono:
 * **PlantUML**: altro tool per lo sviluppo di alcuni diagrammi UML (preferito in corso d’opera a Papyrus in quanto quest’ultimo molte volte da’ problemi e si blocca).  
 * **Markdown**: formato di file (preferito in corso d’opera ai pdf) per la documentazione e stesura di documenti in linguaggio naturale.  
 * **Tool di Analisi Statica**: come Stan4J, PMD e SonarQube (vedi punto apposito).  
-* **Librerie**: JavaFX  per la grafica, per il DB usate java.sql e org.jooq
+* **Librerie**: JavaFX  per la grafica, per il DB java.sql e org.jooq
 * **Testing**: useremo principalmente JUnit.  
 * **Strumenti di build e package managing**: useremo Maven (infatti il nostro progetto sarà un progetto Maven in eclipse).
 
@@ -221,7 +220,7 @@ Le risorse software principali del nostro team sono:
 Gli strumenti e canali di comunicazione preferiti per discutere e proporre sono:
 
 * **Whatsapp**: gruppo principale dove si discutono problemi “informali” del progetto.  
-* **Github discussions**: canale preferito al primo per problemi o proposte riguardanti direttamente il progetto e la sua documentazione/organizzazione/implementazione.  
+* **Github discussions**: canale preferito al primo per problemi o proposte riguardanti direttamente il progetto e la sua documentazione, organizzazione e implementazione.  
 * **Github Kanban Board**: usata per condividere gli step da completare per l’avanzamento del progetto e l’assegnazione dei singoli agli individui.
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
@@ -236,20 +235,35 @@ TOTALE: 400 ore di sviluppo
 
 Il lavoro è svolto interamente a scopo didattico, per questo motivo non sono previsti costi economici.
 
-costo orario = 0€/h
+Costo orario = 0€/h.  
+Costo **totale**: 400h * 0€/h = 0€.
 
-TOTALE Costo: 400h*0€/h = 0€.
+Ma ipotizzando uno stipendio medio di uno sviluppatore software in Italia (circa 15€/h).
+
+Costo orario = 15€/h.  
+Costo **per sviluppatore** = 100h * 15€/h = 1.500€.  
+Costo **totale** = 1.500€ * 4 = 6.000€. (Solo per rientrare con gli stipendi!)
+
+Inoltre consideriamo la metrica di sforzo mese/uomo.
+Solitamente si assume 1 mese/uomo = 160h (20gg * 8h).  
+
+Mese/uomo **totali** = 400h /160h = 2,5 mese/uomo.  
+Mese/uomo **per persona** = 100h /160h = 0,625 mese/uomo.  
+
+Questo significa che se venisse sviluppato da un singolo (come lavoro a tempo pieno, ovvero 40h settimanali) il progetto impiegherebbe 2,5 mesi per essere completato.
+Mentre se venisse sviluppato dal nostro team a tempo pieno impiegheremmo solo 0,625 mesi ovvero circa 18-20gg lavorativi.  
+A causa però di altri impegni e materie da portare avanti abbiamo deciso di fare una media di 1h al giorno e spalmare il lavoro su circa 100 giorni.
 
 ## **13\. Gestione dei cambiamenti**
 
 Ad ogni cambiamento che sarà necessario seguire per le volontà utente o adeguarsi agli standard e linee guida è stato deciso di seguire il seguente protocollo:
 
-1. Prima di tutto, se è un cambiamento volontario (quindi non fondamentale ma solo per scelta tecnica), proporlo al weekly scrum. Se invece fosse un cambiamento involontario (ovvero non programmato e neanche controllato ma ottimale per il progetto) farlo notare al weekly scrum.  
-2. In entrambi i casi citati al punto precedente è poi fondamentale discuterne con il team al primo weekly scrum disponibile così da effettuare eventuali cambi di rotta nello sviluppo il prima possibile senza rischiare di poi dover cambiare gran parte del lavoro già svolto.   
+1. Prima di tutto, se è un cambiamento volontario (quindi non fondamentale ma solo per scelta tecnica), proporlo al weekly scrum. Se invece fosse un cambiamento involontario (ovvero non programmato e neanche controllato ma ottimale per il progetto) farlo notare appena ci si rende conto.  
+2. In entrambi i casi citati al punto precedente è fondamentale discuterne con il team al primo weekly scrum disponibile così da effettuare eventuali cambi di rotta nello sviluppo il prima possibile senza rischiare di poi dover cambiare gran parte del lavoro già svolto.   
    In particolare si deve consultare:   
 * **Rischi**, che possono derivare dall’adozione del cambiamento.  
 * **Modifiche**, che si dovrebbero apportare al progetto per mettersi in linea con il cambiamento.  
-* **Alternative**, che si possono adottare invece del cambiamento in discussione (SEMPRE utili, così da avere una visione totale delle possibiità di avanzamento del progetto).  
+* **Alternative**, che si possono adottare invece del cambiamento in discussione (**SEMPRE** utili, così da avere una visione totale delle possibiità di avanzamento del progetto).  
 3. Dopo aver discusso con il team il Product Owner e lo Scrum Master danno un’ultima occhiata alla proposta di cambiamento così da delucidare ancora eventuali concetti non chiari o ambigui.  
    Se il consulto avrà esito positivo si passa al prossimo punto del protocollo, se invece avrà esito negativo o non chiaro, allora si può tornare al punto precedente di stesura del cambiamento o rifiutare la proposta.  
 4. Se il cambiamento viene accettato lo Scrum Master deve modificare il backlog, correggere gli issue nella repository Github e ricordarsi di annotare le decisioni prese nel weekly scrum.  
