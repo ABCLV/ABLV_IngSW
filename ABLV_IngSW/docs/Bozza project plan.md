@@ -160,7 +160,7 @@ Mentre sul lato dell’implementazione i design patterns utilizzati sono i segue
 
 ### **8.3 Implementazione**
 
-Per l’implementazione del nostro codice è stato usato unicamente il linguaggio Java. Le query sql, come consigliato a lezione, non sono state scritte il SQL puro tramite strighe bensì tramite ...****LOCATELLI COMPLETA****
+Per l’implementazione del nostro codice è stato usato unicamente il linguaggio Java. Le query sql, come consigliato a lezione, non sono state scritte il SQL puro tramite strighe bensì tramite il DSL type safe fornito da JOOQ, che permette di costruire le query in modo strutturato e sicuro a livello di compilazione evitando errori sintattici, injection e problemi tipici delle stringhe SQL scritte a mano
 
 ### **8.4 Test**
 
@@ -212,7 +212,7 @@ Le risorse software principali del nostro team sono:
 * **PlantUML**: altro tool per lo sviluppo di alcuni diagrammi UML (preferito in corso d’opera a Papyrus in quanto quest’ultimo molte volte da’ problemi e si blocca).  
 * **Markdown**: formato di file (preferito in corso d’opera ai pdf) per la documentazione e stesura di documenti in linguaggio naturale.  
 * **Tool di Analisi Statica**: come Stan4J, PMD e SonarQube (vedi punto apposito).  
-* **Librerie**: JavaFX  per la grafica, per il DB **LOCATELLI COMPILA TU**
+* **Librerie**: JavaFX  per la grafica, per il DB usate java.sql e org.jooq
 * **Testing**: useremo principalmente JUnit.  
 * **Strumenti di build e package managing**: useremo Maven (infatti il nostro progetto sarà un progetto Maven in eclipse).
 
