@@ -1,4 +1,4 @@
-ID,Paese,CorpoIdrico,Lunghezza
-C001,Italia,Po,1000
-C002,Francia,Rodano,800
-C003,Germania,Reno,950
+ID,Indirizzo,Citta,Cap
+1,Via Roma 10,Roma,00100
+2,Champs Elysees 20,Parigi,75008
+3,Berliner Str. 5,Berlino,10115

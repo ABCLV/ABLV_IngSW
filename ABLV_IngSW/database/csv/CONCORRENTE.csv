@@ -1,4 +1,4 @@
-ID,Paese,CorpoIdrico,Lunghezza
-C001,Italia,Po,1000
-C002,Francia,Rodano,800
-C003,Germania,Reno,950
+CF,Nome,Cognome,Email,Nascita,Societa
+CF001,Alessio,Rossi,alessio@email.com,2000-05-10,SocietaA
+CF002,Martina,Bianchi,martina@email.com,2002-07-15,SocietaB
+CF003,Luca,Verdi,luca@email.com,2001-03-20,SocietaC

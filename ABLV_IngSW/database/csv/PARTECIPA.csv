@@ -1,4 +1,3 @@
-ID,Paese,CorpoIdrico,Lunghezza
-C001,Italia,Po,1000
-C002,Francia,Rodano,800
-C003,Germania,Reno,950
+IdPunteggio,IdTurno,Concorrente,NumPunti,Squalifica
+P001,T001,CF001,10,0
+P002,T002,CF002,8,0

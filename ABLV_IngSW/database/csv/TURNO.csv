@@ -1,4 +1,3 @@
-ID,Paese,CorpoIdrico,Lunghezza
-C001,Italia,Po,1000
-C002,Francia,Rodano,800
-C003,Germania,Reno,950
+Codice,Numero,Durata,Settore,Gara
+T001,1,60,ST001,G001
+T002,2,45,ST002,G002

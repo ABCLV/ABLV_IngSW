@@ -1,4 +1,3 @@
-ID,Paese,CorpoIdrico,Lunghezza
-C001,Italia,Po,1000
-C002,Francia,Rodano,800
-C003,Germania,Reno,950
+IdRecensione,CodiceGara,Concorrente,Titolo,Voto,Commento
+R001,G001,CF001,Ottima Gara,9,Ben organizzata
+R002,G002,CF002,Buona,8,Qualche ritardo
