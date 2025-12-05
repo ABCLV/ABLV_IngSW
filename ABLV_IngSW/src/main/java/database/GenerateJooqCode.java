@@ -7,7 +7,7 @@ public class GenerateJooqCode {
 
     public static void main(String[] args) throws Exception {
 
-        String dbUrl = "jdbc:sqlite:database/miodb2.db"; // il tuo DB SQLite
+        String dbUrl = "jdbc:sqlite:database/gare.db"; // il tuo DB SQLite
 
         Configuration configuration = new Configuration()
             .withJdbc(new Jdbc()
@@ -19,11 +19,11 @@ public class GenerateJooqCode {
                     .withIncludes(".*") // tutte le tabelle
                     .withExcludes("")) // nessuna esclusa
                 .withTarget(new Target()
-                    .withPackageName("dbconSQLJOOQ.generated") // pacchetto per le classi generate
+                    .withPackageName("db-jooq") // pacchetto per le classi generate
                     .withDirectory("database"))); // dove salvare i file
 
         GenerationTool.generate(configuration);
 
-        System.out.println("✅ Classi jOOQ generate in dbconSQLJOOQ/generated");
+        System.out.println("✅ Classi jOOQ generate in db-jooq");
     }
 }
