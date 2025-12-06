@@ -22,11 +22,9 @@ public class PopolaDB {
         	//importSocieta();
         	//importConcorrente();
         	//importCampionato();
+        	//importGara();
         	
             
-        	importGara();
-        	
-            
         	
             
             
@@ -34,7 +32,7 @@ public class PopolaDB {
             
             
             
-            //importTurno();
+            importTurno();
             //importPartecipa();
             //importRecensisce();
             //importIscrive();
