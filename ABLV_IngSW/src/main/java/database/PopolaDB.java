@@ -14,14 +14,21 @@ public class PopolaDB {
         
         try {
             //importCampoGara();
-            //importSede();
-            //importSocieta();
+        	//importArbitro();
+        	//importSettore();
+        	//importAmministratore();
+        	//importSponsor();
+        	//importSede();
+        	//importSocieta();
+        	importConcorrente();
+            
+            
             //importCampionato();
-            //importArbitro();
-            //importAmministratore();
-            //importConcorrente();
-            //importSponsor();
-            importSettore();
+            
+            
+            
+            
+            
             //importGara();
             //importTurno();
             //importPartecipa();
