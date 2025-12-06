@@ -20,16 +20,20 @@ public class PopolaDB {
         	//importSponsor();
         	//importSede();
         	//importSocieta();
-        	importConcorrente();
+        	//importConcorrente();
+        	//importCampionato();
+        	
+            
+        	importGara();
+        	
+            
+        	
             
             
-            //importCampionato();
             
             
             
             
-            
-            //importGara();
             //importTurno();
             //importPartecipa();
             //importRecensisce();
