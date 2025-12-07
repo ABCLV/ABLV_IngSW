@@ -23,19 +23,16 @@ public class PopolaDB {
         	//importConcorrente();
         	//importCampionato();
         	//importGara();
-        	
-            
-        	
-            
+        	//importTurno();
+        	//importIscrive();
             
             
             
             
             
-            importTurno();
-            //importPartecipa();
+            importPartecipa();
             //importRecensisce();
-            //importIscrive();
+            
             //importContratto();
             
             

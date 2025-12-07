@@ -1,3 +1,56 @@
 IdPunteggio,IdTurno,Concorrente,NumPunti,Squalifica
-P001,T001,CF001,10,0
-P002,T002,CF002,8,0
+prima prova
+//primo turno
+//primo settore
+P001,T001,CF001,6,0
+P002,T001,CF002,10,0
+
+//secondo settore
+P003,T002,CF003,6,0
+P004,T002,CF008,10,0
+
+//terzo settore
+P001,T003,CF009,6,0
+P002,T003,CF010,10,0
+
+//quarto settore
+P003,T004,CF015,6,0
+P004,T004,CF036,10,0
+
+//secondo turno
+//primo settore
+P001,T005,CF001,6,0
+P002,T005,CF002,10,0
+
+//secondo settore
+P003,T006,CF003,6,0
+P004,T006,CF008,10,0
+
+//terzo settore
+P001,T007,CF009,6,0
+P002,T007,CF010,10,0
+
+//quarto settore
+P003,T008,CF015,6,0
+P004,T008,CF036,10,0
+
+//terzo turno
+//primo settore
+P001,T009,CF001,6,0
+P002,T009,CF002,10,0
+
+//secondo settore
+P003,T010,CF003,6,0
+P004,T010,CF008,10,0
+
+//terzo settore
+P001,T011,CF009,6,0
+P002,T011,CF010,10,0
+
+//quarto settore
+P003,T012,CF015,6,0
+P004,T012,CF036,10,0
+
+
+
+
