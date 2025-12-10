@@ -23,7 +23,6 @@ Partecipanti
     - Utente esterno (chi visualizza ma non interagisce direttamente con il sistema).
 * Implementare auto-merge settimanale dei branch nella notte tra martedì e mercoledì. (V)
 * Component Diagram. (B)
-* Package Diagram. (B)
 
 2\. Lavoro completato (Done)
 
