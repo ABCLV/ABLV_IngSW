@@ -1,0 +1,76 @@
+/*
+*
+* Si implementa un activity diagram nel quale un concorrente autenticato al sistema seleziona una gara a cui vuole partecipare.
+* Il sistema verifica che il concorrente sia registrato, appartenga a una società e abbia indicato l’eventuale sponsor;
+* in caso contrario rifiuta l’iscrizione e ne mostra il motivo.
+* Successivamente il sistema controlla che le iscrizioni alla gara siano aperte e che il numero massimo di partecipanti non sia stato raggiunto, altrimenti rifiuta l’iscrizione.
+* Se la gara è individuale, il concorrente conferma l’iscrizione e il sistema registra l’iscrizione a seguito del pagamento della quota.
+* Se la gara è a squadra, il sistema richiede alla società del concorrente di selezionare i membri della squadra tutti appartenenti alla stessa società;
+* se i componenti non sono validi l’iscrizione è rifiutata e motivata.
+* La società conferma l’iscrizione multipla; il sistema registra le iscrizioni, applica lo sconto se sono iscritti più di cinque concorrenti e gestisce il pagamento complessivo.
+*
+*/
+
+
+@startuml
+title Iscrizioni alle gare da parte dei concorrenti
+
+start
+
+partition "Concorrente" {
+  :Effettua login;
+  :Seleziona gara;
+  :Richiede iscrizione;
+}
+
+partition "Sistema" {
+
+  if (Concorrente valido e\nappartenenza a società?) then (sì)
+  else (no)
+    :Notifica rifiuto\n(es. dati mancanti);
+    end
+  endif
+
+  if (Iscrizioni aperte e\nlimite non raggiunto?) then (sì)
+  else (no)
+    :Notifica rifiuto\n(es. gara chiusa o piena);
+    end
+  endif
+
+  ' --- Scelta tipo di gara ---
+  if (Gara a squadra?) then (sì)
+
+    partition "Società" {
+      :Seleziona membri squadra\ndella stessa società;
+      :Conferma iscrizione squadra;
+    }
+
+    :Verifica membri della stessa società;
+    :Calcola eventuale sconto (>5 iscritti);
+
+    ' Registrazione e pagamento in parallelo (gara a squadra)
+    fork
+      :Registra iscrizioni multiple;
+    fork again
+      :Gestisce pagamento complessivo;
+    end fork
+
+  else (no)
+
+    fork
+      :Registra iscrizione singola;
+    fork again
+      :Gestisce pagamento quota singola;
+    end fork
+
+  endif
+
+  if (Iscrizione completata?) then (sì)
+    :Conferma iscrizione;
+  else (no)
+    end
+  endif
+}
+
+stop
+@enduml
