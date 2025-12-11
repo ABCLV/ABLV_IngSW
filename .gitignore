@@ -1,1 +1,28 @@
-/.metadata/
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Maven
+target/
+
+# Gradle
+.gradle/
+build/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Files temporanei
+*.tmp
+*.swp
