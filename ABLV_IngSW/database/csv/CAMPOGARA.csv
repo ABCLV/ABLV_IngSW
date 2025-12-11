@@ -1,0 +1,14 @@
+ID,Paese,CorpoIdrico,Lunghezza,Descrizione
+C001,Carona,Lago di Carona,1300, Tutto il bacino idroelettrico
+C002,Isola di Fondra,Brembo,800, dal ponte nei pressi della Taverna della Valle sino al ponte per il Camping San Simone in località Trabuchello
+C003,Averara,Torrente Valmora,0,dal campo sportivo alla vecchia presa idroelettrica della Ditta Siga
+C004,San Giovanni Bianco,Brembo,1300, nel tratto compreso fra lo sbarramento ENEL a monte sino al ponte ex ferrovia a valle di circa 1.300 m. in Comune di San Giovanni Bianco
+C005,Zogno,Brembo,0,dal ponte di Ambria fino a 100 m a valle della passerella pedonale
+C006,Bracca,Torrente Serina,0,dal ponte della ditta Piazzalunga in Comune di Bracca allo sfocio del Torrente Serina nel Fiume Brembo in Comune di Zogno. 
+C007,Locatello-Capizzone-Strozza,Torrente Imagna,0,dalle fucine al ponte del chitò
+C008,Brembilla,Torrente Brembilla,0,dalla cabina del metano alla località Corna Gogia
+C009,Ardesio e Gromo,Serio,0,dalla località Valle Glera in Comune di Gromo al confine comunale a valle.
+C010,Ponte Nossa e Casnigo,Serio,0,dall’attraversamento del metanodotto in Comune di Ponte Nossa al Ponte del Costone in Comune di Casnigo.
+C011,Albino e Cene,Serio,0,dall’opera di presa della derivazione Honegger a monte sino alla passerella della pista ciclopedonale a valle.
+C012,Albino,Serio,0,dall’inizio dell’isola del Serio allo scolmatore alla confluenza del Torrente Albina.
+C013,Alzano Lombardo,Serio,0,Dalla briglia in Comune di Alzano Lombardo a monte sino al Ponte della SP 35 Bergamo-Nembro a valle.
