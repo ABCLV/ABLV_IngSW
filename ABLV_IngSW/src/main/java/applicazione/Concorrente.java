@@ -10,6 +10,7 @@ public class Concorrente {
     public String cf;
     private String cognome;
     private String nome;
+    private String email;
     private LocalDate  nascita;
 
     /**
@@ -19,14 +20,21 @@ public class Concorrente {
      * @param nome     nome del concorrente
      * @param nascita  data di nascita del concorrente
      */
-    public Concorrente(String cf, String cognome, String nome, LocalDate nascita) {
+    public Concorrente(String cf, String cognome, String nome, String email, LocalDate nascita) {
         this.cf = cf;
         this.cognome = cognome;
         this.nome = nome;
+        this.email = email;
         this.nascita = nascita;
     }
 
-    /**
+    @Override
+	public String toString() {
+		return "Concorrente [cf=" + cf + ", cognome=" + cognome + ", nome=" + nome + ", email=" + email + ", nascita="
+				+ nascita + "]";
+	}
+
+	/**
      * Iscrive il concorrente a una gara.
      * @param codice codice identificativo della gara
      * @return true se l'iscrizione è andata a buon fine, false altrimenti

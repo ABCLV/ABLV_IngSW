@@ -27,11 +27,7 @@ public class PopolaDB {
         	
         	//importTurno();
         	//importIscrive();
-            
-            
-            
-            
-            
+
             //importPartecipa();
             //importRecensisce();
             

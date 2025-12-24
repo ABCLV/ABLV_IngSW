@@ -4,17 +4,101 @@
 package dbconSQLJOOQ.generated;
 
 
-import dbconSQLJOOQ.generated.tables.Studente;
+import dbconSQLJOOQ.generated.tables.Amministratore;
+import dbconSQLJOOQ.generated.tables.Arbitro;
+import dbconSQLJOOQ.generated.tables.Campionato;
+import dbconSQLJOOQ.generated.tables.Campogara;
+import dbconSQLJOOQ.generated.tables.Concorrente;
+import dbconSQLJOOQ.generated.tables.Contratto;
+import dbconSQLJOOQ.generated.tables.Gara;
+import dbconSQLJOOQ.generated.tables.Iscrive;
+import dbconSQLJOOQ.generated.tables.Partecipa;
+import dbconSQLJOOQ.generated.tables.Recensisce;
+import dbconSQLJOOQ.generated.tables.Sede;
+import dbconSQLJOOQ.generated.tables.Settore;
+import dbconSQLJOOQ.generated.tables.Societa;
+import dbconSQLJOOQ.generated.tables.Sponsor;
+import dbconSQLJOOQ.generated.tables.Turno;
 
 
 /**
  * Convenience access to all tables in the default schema.
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Tables {
 
     /**
-     * The table <code>Studente</code>.
+     * The table <code>AMMINISTRATORE</code>.
      */
-    public static final Studente STUDENTE = Studente.STUDENTE;
+    public static final Amministratore AMMINISTRATORE = Amministratore.AMMINISTRATORE;
+
+    /**
+     * The table <code>ARBITRO</code>.
+     */
+    public static final Arbitro ARBITRO = Arbitro.ARBITRO;
+
+    /**
+     * The table <code>CAMPIONATO</code>.
+     */
+    public static final Campionato CAMPIONATO = Campionato.CAMPIONATO;
+
+    /**
+     * The table <code>CAMPOGARA</code>.
+     */
+    public static final Campogara CAMPOGARA = Campogara.CAMPOGARA;
+
+    /**
+     * The table <code>CONCORRENTE</code>.
+     */
+    public static final Concorrente CONCORRENTE = Concorrente.CONCORRENTE;
+
+    /**
+     * The table <code>CONTRATTO</code>.
+     */
+    public static final Contratto CONTRATTO = Contratto.CONTRATTO;
+
+    /**
+     * The table <code>GARA</code>.
+     */
+    public static final Gara GARA = Gara.GARA;
+
+    /**
+     * The table <code>ISCRIVE</code>.
+     */
+    public static final Iscrive ISCRIVE = Iscrive.ISCRIVE;
+
+    /**
+     * The table <code>PARTECIPA</code>.
+     */
+    public static final Partecipa PARTECIPA = Partecipa.PARTECIPA;
+
+    /**
+     * The table <code>RECENSISCE</code>.
+     */
+    public static final Recensisce RECENSISCE = Recensisce.RECENSISCE;
+
+    /**
+     * The table <code>SEDE</code>.
+     */
+    public static final Sede SEDE = Sede.SEDE;
+
+    /**
+     * The table <code>SETTORE</code>.
+     */
+    public static final Settore SETTORE = Settore.SETTORE;
+
+    /**
+     * The table <code>SOCIETA</code>.
+     */
+    public static final Societa SOCIETA = Societa.SOCIETA;
+
+    /**
+     * The table <code>SPONSOR</code>.
+     */
+    public static final Sponsor SPONSOR = Sponsor.SPONSOR;
+
+    /**
+     * The table <code>TURNO</code>.
+     */
+    public static final Turno TURNO = Turno.TURNO;
 }

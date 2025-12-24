@@ -19,11 +19,11 @@ public class GenerateJooqCode {
                     .withIncludes(".*") // tutte le tabelle
                     .withExcludes("")) // nessuna esclusa
                 .withTarget(new Target()
-                    .withPackageName("db-jooq") // pacchetto per le classi generate
-                    .withDirectory("database"))); // dove salvare i file
+                    .withPackageName("dbconSQLJOOQ.generated") // pacchetto per le classi generate
+                    .withDirectory("src/generated/"))); // dove salvare i file
 
         GenerationTool.generate(configuration);
 
-        System.out.println("✅ Classi jOOQ generate in db-jooq");
+        System.out.println("✅ Classi jOOQ generate in src/generated/dbconSQLJOOQ/generated");
     }
 }
