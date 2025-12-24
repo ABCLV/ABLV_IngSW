@@ -15,7 +15,7 @@ public class PopolaDB {
         try {
             //importCampoGara();
         	//importArbitro();
-        	//importSettore();
+        	importSettore();
         	//importAmministratore();
         	//importSponsor();
         	//importSede();
@@ -30,7 +30,7 @@ public class PopolaDB {
             
             
             
-            importPartecipa();
+            //importPartecipa();
             //importRecensisce();
             
             //importContratto();
@@ -44,8 +44,7 @@ public class PopolaDB {
     
     private static void importCSV(String filePath, String sqlInsert, int numColumns) throws Exception {
         
-    	String url = "jdbc:sqlite:database/gare.db";
-    	try (Connection conn = DriverManager.getConnection(url);
+    	try (Connection conn = SQLiteConnectionManager.getConnection();
             CSVReader reader = new CSVReader(new FileReader(filePath))) {
 
             String[] line;

@@ -8,8 +8,6 @@ import java.sql.Statement;
 public class AddTable {
 
     public static void main(String[] args) {
-        // Percorso del database (uguale a quello creato prima)
-        String url = "jdbc:sqlite:database/gare.db";
 
         
         String[] sqlStatements = {
@@ -31,7 +29,7 @@ public class AddTable {
         	};
             
 
-        try (Connection conn = DriverManager.getConnection(url);
+        try (Connection conn = SQLiteConnectionManager.getConnection();
              Statement stmt = conn.createStatement()) {
 
         	for (String sql : sqlStatements) {
