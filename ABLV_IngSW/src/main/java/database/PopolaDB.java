@@ -26,7 +26,7 @@ public class PopolaDB {
         	//importGara();
         	
         	//importTurno();
-        	importIscrive();
+        	//importIscrive();
             
             
             
