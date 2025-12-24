@@ -47,8 +47,7 @@ prospettiva dedicata al database.
 
 1.  Clicca su **Database Navigator**.
 2.  Premi **New Connection**.
-3.  Scegli il tipo di database (ad esempio MySQL, PostgreSQL, Oracle,
-    SQLite, ecc.).
+3.  Scegli il tipo di database (solo SQLite)
 4.  Inserisci hostname, porta, nome database, username e password.
 5.  Se i driver non sono presenti, DBeaver ti chiederà di scaricarli
     automaticamente.
@@ -80,6 +79,7 @@ prospettiva dedicata al database.
 -   Passa alla vista **Data**
 -   Modifica le celle direttamente
 -   Conferma con **Ctrl + S**
+-   Evitare modifiche dall'interfaccia in quanto non vengono rispettati i vincoli chiave esterna (li gestiamo solo su codice, è importante ricordarsi di utilizzare la classe apposita per le connessioni al db, il controllo viene attivato qui)
 
 ### 5.4 Esportare dati
 
