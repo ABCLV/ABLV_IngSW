@@ -23,10 +23,10 @@ public class PopolaDB {
         	//importConcorrente();
         	
         	//importCampionato();
-        	importGara();
+        	//importGara();
         	
         	//importTurno();
-        	//importIscrive();
+        	importIscrive();
             
             
             
@@ -133,8 +133,8 @@ public class PopolaDB {
     }
 
     private static void importIscrive() throws Exception {
-        String sql = "INSERT INTO ISCRIVE(IdIscrizione, CodiceGara, Concorrente, DataIscrizione, NumIscrizione, Societa) VALUES (?, ?, ?, ?, ?, ?)";
-        importCSV("database/csv/ISCRIVE.csv", sql, 6);
+        String sql = "INSERT INTO ISCRIVE(IdIscrizione, CodiceGara, Concorrente, DataIscrizione, NumIscrizione) VALUES (?, ?, ?, ?, ?)";
+        importCSV("database/csv/ISCRIVE.csv", sql, 5);
     }
 
     private static void importContratto() throws Exception {
