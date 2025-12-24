@@ -15,14 +15,16 @@ public class PopolaDB {
         try {
             //importCampoGara();
         	//importArbitro();
-        	importSettore();
+        	//importSettore();
         	//importAmministratore();
         	//importSponsor();
         	//importSede();
         	//importSocieta();
         	//importConcorrente();
+        	
         	//importCampionato();
-        	//importGara();
+        	importGara();
+        	
         	//importTurno();
         	//importIscrive();
             
@@ -43,23 +45,27 @@ public class PopolaDB {
     }
     
     private static void importCSV(String filePath, String sqlInsert, int numColumns) throws Exception {
-        
-    	try (Connection conn = SQLiteConnectionManager.getConnection();
-            CSVReader reader = new CSVReader(new FileReader(filePath))) {
+
+        try (Connection conn = SQLiteConnectionManager.getConnection();
+             CSVReader reader = new CSVReader(new FileReader(filePath))) {
 
             String[] line;
             reader.readNext(); // Salta header
+
             while ((line = reader.readNext()) != null) {
-                if (line.length != numColumns) continue; // evita errori
+                if (line.length != numColumns) continue;
+
                 try (PreparedStatement pstmt = conn.prepareStatement(sqlInsert)) {
                     for (int i = 0; i < numColumns; i++) {
-                        pstmt.setString(i + 1, line[i]);
+                        String value = line[i];
+                        pstmt.setObject(i + 1, value == null || value.isBlank() ? null : value);
                     }
                     pstmt.executeUpdate();
                 }
             }
         }
     }
+
     
     private static void importCampoGara() throws Exception {
         String sql = "INSERT INTO CAMPOGARA(ID, Paese, CorpoIdrico, Lunghezza, Descrizione) VALUES (?, ?, ?, ?, ?)";
