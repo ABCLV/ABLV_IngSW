@@ -3,7 +3,7 @@ package applicazione;
 /**
  * Stato organizzativo di una gara.
  */
-public enum StatoOrganizzazione {
+public enum StatoConferma {
     /**
      * La gara è stata confermata e si svolgerà.
      */

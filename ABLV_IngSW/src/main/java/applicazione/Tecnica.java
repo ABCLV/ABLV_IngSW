@@ -17,5 +17,10 @@ public enum Tecnica {
     /**
      * Tecnica mosca.
      */
-    MOSCA;
+    MOSCA,
+	
+	TENKARA,
+	
+	GALLEGGIANTE;
+	
 }

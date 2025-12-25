@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import applicazione.CampoGara;
 import applicazione.Concorrente;
+import applicazione.Gara;
+import applicazione.Settore;
 import database.Consultazioni;
 
 public class Main {
@@ -53,14 +56,12 @@ public class Main {
                 case "1":
                     
                     break;
-
                 case "2":
                 	ricercaConcorrenti();
-                	
                     break;
 
                 case "3":
-                    
+                    ricercaSpot();
                     break;
 
                 default:
@@ -69,14 +70,69 @@ public class Main {
         }
 	}
 	
+	public static void ricercaSpot() {
+		List<CampoGara> spot = new ArrayList<CampoGara>();
+		spot = Consultazioni.getCampoGara();
+		
+		System.out.println(spot.toString());
+		
+		
+		while (true) {
+            System.out.println("\n===== MENU CAMPOGARA =====");
+            System.out.println("Cosa ti interessa?");
+            System.out.println("1) esplora settori");
+            System.out.println("2) vedi gare");
+            System.out.println("n per uscire");
+
+            String scelta = input.nextLine().trim().toLowerCase();
+            String dato;
+            CampoGara c;
+            switch (scelta) {
+                case "n": return;
+
+                case "1":
+                	System.out.println("inserisci id campo gara da esplorare: ");
+                	dato = input.nextLine().trim();
+                	c = Consultazioni.trovaCampoGara(dato);
+                	System.out.println(c.toString());
+                	List<Settore> settori = new ArrayList<Settore>();
+                	settori = Consultazioni.esploraSettori(c);
+                    System.out.println(settori.toString());
+                    break;
+
+                case "2":
+                	System.out.println("inserisci id campo gara di cui vuoi vedere le gare organizzate: ");
+                	dato = input.nextLine().trim();
+                	c = Consultazioni.trovaCampoGara(dato);
+                	System.out.println(c.toString());
+                	List<Gara> gare = new ArrayList<Gara>();
+                	gare = Consultazioni.esploraGare(c);
+                    System.out.println(gare.toString());
+                    break;
+
+                case "3":
+                   
+                    break;
+
+                default:
+                	System.out.println("comando non riconosciuto");
+            }
+        }
+		
+		
+	}
+	
+	
 	public static void ricercaConcorrenti() {
 		List<Concorrente> concorrenti = new ArrayList<Concorrente>();
 		concorrenti = Consultazioni.getConcorrenti();
 		
-		System.out.println(concorrenti.toString());
-		
+		System.out.println(concorrenti.toString());		
 		
 	}
+	
+	
+	
 	
 	
 	

@@ -7,17 +7,19 @@ import java.time.LocalDate;
  */
 public class Gara {
 
-    public String codiceGara;
-    private int nProva;
-    private String organizzatore;
-    private Tecnica tipoTecnica;
+	
+
+
+	private String codice;
+    private int numProva;
+    private Tecnica tecnica;
     private String criterioPunti;
-    private LocalDate dataSvolgimento;
+    private LocalDate data;
     private int maxPersone;
     private int minPersone;
-    private StatoOrganizzazione stato;
+    private StatoGara statoGara;
+    private StatoConferma statoConferma;
     private TipologiaGara tipoGara;
-    private LocalDate annoGara;
 
     /**
      * Costruttore completo.
@@ -35,25 +37,28 @@ public class Gara {
      */
     public Gara(String codiceGara, int nProva, String organizzatore, Tecnica tipoTecnica,
                 String criterioPunti, LocalDate dataSvolgimento, int maxPersone, int minPersone,
-                StatoOrganizzazione stato, TipologiaGara tipoGara, LocalDate annoGara) {
-        this.codiceGara = codiceGara;
-        this.nProva = nProva;
-        this.organizzatore = organizzatore;
-        this.tipoTecnica = tipoTecnica;
+                StatoConferma statoConferma, StatoGara statoGara, TipologiaGara tipoGara, LocalDate annoGara) {
+        this.codice = codiceGara;
+        this.numProva = nProva;
+        this.tecnica = tipoTecnica;
         this.criterioPunti = criterioPunti;
-        this.dataSvolgimento = dataSvolgimento;
-        this.maxPersone = maxPersone;
         this.minPersone = minPersone;
-        this.stato = stato;
+        this.maxPersone = maxPersone;
+        this.statoGara = statoGara;
+        this.statoConferma = statoConferma;
         this.tipoGara = tipoGara;
-        this.annoGara = annoGara;
+        this.data = dataSvolgimento;
+    }
+    
+    public Gara() {
+    	
     }
 
     /**
      * Cambia lo stato organizzativo della gara.
      * @param stato nuovo stato organizzativo
      */
-    public void cambiaStatoOrganizzazione(StatoOrganizzazione stato) {
+    public void cambiaStatoOrganizzazione(StatoConferma stato) {
     }
 
     /**
@@ -150,4 +155,32 @@ public class Gara {
     public Punteggio[] getClassifica() {
         return null;
     }
+    
+    public void setCodice(String setCodice) { this.codice = setCodice;}
+    public void setNumProva(int numProva) { this.numProva = numProva; }
+    public void setTecnica(Tecnica tecnica) { this.tecnica = tecnica; }
+    public void setCriterioPunti(String criterioPunti) { this.criterioPunti = criterioPunti; }
+    public void setData(LocalDate data) { this.data = data; }
+    public void setMaxPersone(int maxPersone) { this.maxPersone = maxPersone; }
+    public void setMinPersone(int minPersone) { this.minPersone = minPersone; }
+    public void setStatoGara(StatoGara statoGara) { this.statoGara = statoGara; }
+    public void setStatoConferma(StatoConferma statoConferma) { this.statoConferma = statoConferma; }
+    public void setTipoGara(TipologiaGara tipoGara) { this.tipoGara = tipoGara; }
+
+    
+    @Override
+	public String toString() {
+	    return "Gara {\n" +
+	           "  codiceGara      = " + codice + ",\n" +
+	           "  nProva          = " + numProva + ",\n" +
+	           "  tipoTecnica     = " + tecnica + ",\n" +
+	           "  criterioPunti   = " + criterioPunti + ",\n" +
+	           "  dataSvolgimento = " + data + ",\n" +
+	           "  maxPersone      = " + maxPersone + ",\n" +
+	           "  minPersone      = " + minPersone + ",\n" +
+	           "  statoGara       = " + statoGara + ",\n" +
+	           "  statoConferma   = " + statoConferma + ",\n" +
+	           "  tipoGara        = " + tipoGara + "\n" +
+	           "}";
+	}
 }
