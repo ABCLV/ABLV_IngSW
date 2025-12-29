@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21" 
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="client.HomeController"
+      alignment="CENTER"
+      spacing="20.0"
+      prefWidth="600.0" prefHeight="400.0"
+      style="-fx-background-color: #e6f7ff;">
+
+    <!-- Titolo -->
+    <Label text="Orobic Fishing Race" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #005f5f;" />
+
+	<Label fx:id="pescatoriLabel" text="Calcolo..." style="-fx-font-size: 16px; -fx-text-fill: #005f5f;"/>
+    <!-- Pulsante Login -->
+    <Button text="Login" fx:id="loginButton" onAction="#handleLogin" prefWidth="200" />
+
+	<Button text="Registrati" fx:id="registraBtn" onAction="#handleRegistra" prefWidth="200"/>
+    <!-- Pulsante Exit -->
+    <Button text="Exit" fx:id="exitButton" onAction="#handleExit" prefWidth="200" />
+
+</VBox>

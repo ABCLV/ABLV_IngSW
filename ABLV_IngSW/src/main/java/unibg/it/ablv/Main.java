@@ -1,4 +1,4 @@
-package client;
+package unibg.it.ablv;
 
 import java.util.ArrayList;
 import java.util.List;
