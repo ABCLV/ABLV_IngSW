@@ -4,9 +4,38 @@
 package dbconSQLJOOQ.generated;
 
 
-import dbconSQLJOOQ.generated.tables.Studente;
-import dbconSQLJOOQ.generated.tables.records.StudenteRecord;
+import dbconSQLJOOQ.generated.tables.Amministratore;
+import dbconSQLJOOQ.generated.tables.Arbitro;
+import dbconSQLJOOQ.generated.tables.Campionato;
+import dbconSQLJOOQ.generated.tables.Campogara;
+import dbconSQLJOOQ.generated.tables.Concorrente;
+import dbconSQLJOOQ.generated.tables.Contratto;
+import dbconSQLJOOQ.generated.tables.Gara;
+import dbconSQLJOOQ.generated.tables.Iscrive;
+import dbconSQLJOOQ.generated.tables.Partecipa;
+import dbconSQLJOOQ.generated.tables.Recensisce;
+import dbconSQLJOOQ.generated.tables.Sede;
+import dbconSQLJOOQ.generated.tables.Settore;
+import dbconSQLJOOQ.generated.tables.Societa;
+import dbconSQLJOOQ.generated.tables.Sponsor;
+import dbconSQLJOOQ.generated.tables.Turno;
+import dbconSQLJOOQ.generated.tables.records.AmministratoreRecord;
+import dbconSQLJOOQ.generated.tables.records.ArbitroRecord;
+import dbconSQLJOOQ.generated.tables.records.CampionatoRecord;
+import dbconSQLJOOQ.generated.tables.records.CampogaraRecord;
+import dbconSQLJOOQ.generated.tables.records.ConcorrenteRecord;
+import dbconSQLJOOQ.generated.tables.records.ContrattoRecord;
+import dbconSQLJOOQ.generated.tables.records.GaraRecord;
+import dbconSQLJOOQ.generated.tables.records.IscriveRecord;
+import dbconSQLJOOQ.generated.tables.records.PartecipaRecord;
+import dbconSQLJOOQ.generated.tables.records.RecensisceRecord;
+import dbconSQLJOOQ.generated.tables.records.SedeRecord;
+import dbconSQLJOOQ.generated.tables.records.SettoreRecord;
+import dbconSQLJOOQ.generated.tables.records.SocietaRecord;
+import dbconSQLJOOQ.generated.tables.records.SponsorRecord;
+import dbconSQLJOOQ.generated.tables.records.TurnoRecord;
 
+import org.jooq.ForeignKey;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
@@ -17,12 +46,49 @@ import org.jooq.impl.Internal;
  * A class modelling foreign key relationships and constraints of tables in the
  * default schema.
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Keys {
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final UniqueKey<StudenteRecord> STUDENTE__PK_STUDENTE = Internal.createUniqueKey(Studente.STUDENTE, DSL.name("pk_Studente"), new TableField[] { Studente.STUDENTE.ID }, true);
+    public static final UniqueKey<AmministratoreRecord> AMMINISTRATORE__PK_AMMINISTRATORE = Internal.createUniqueKey(Amministratore.AMMINISTRATORE, DSL.name("pk_AMMINISTRATORE"), new TableField[] { Amministratore.AMMINISTRATORE.CF }, true);
+    public static final UniqueKey<ArbitroRecord> ARBITRO__PK_ARBITRO = Internal.createUniqueKey(Arbitro.ARBITRO, DSL.name("pk_ARBITRO"), new TableField[] { Arbitro.ARBITRO.CF }, true);
+    public static final UniqueKey<CampionatoRecord> CAMPIONATO__PK_CAMPIONATO = Internal.createUniqueKey(Campionato.CAMPIONATO, DSL.name("pk_CAMPIONATO"), new TableField[] { Campionato.CAMPIONATO.TITOLO }, true);
+    public static final UniqueKey<CampogaraRecord> CAMPOGARA__PK_CAMPOGARA = Internal.createUniqueKey(Campogara.CAMPOGARA, DSL.name("pk_CAMPOGARA"), new TableField[] { Campogara.CAMPOGARA.ID }, true);
+    public static final UniqueKey<ConcorrenteRecord> CONCORRENTE__PK_CONCORRENTE = Internal.createUniqueKey(Concorrente.CONCORRENTE, DSL.name("pk_CONCORRENTE"), new TableField[] { Concorrente.CONCORRENTE.CF }, true);
+    public static final UniqueKey<ContrattoRecord> CONTRATTO__PK_CONTRATTO = Internal.createUniqueKey(Contratto.CONTRATTO, DSL.name("pk_CONTRATTO"), new TableField[] { Contratto.CONTRATTO.IDCONTRATTO }, true);
+    public static final UniqueKey<GaraRecord> GARA__PK_GARA = Internal.createUniqueKey(Gara.GARA, DSL.name("pk_GARA"), new TableField[] { Gara.GARA.CODICE }, true);
+    public static final UniqueKey<IscriveRecord> ISCRIVE__ISCRIVE_PK = Internal.createUniqueKey(Iscrive.ISCRIVE, DSL.name("ISCRIVE_PK"), new TableField[] { Iscrive.ISCRIVE.IDISCRIZIONE }, true);
+    public static final UniqueKey<PartecipaRecord> PARTECIPA__PK_PARTECIPA = Internal.createUniqueKey(Partecipa.PARTECIPA, DSL.name("pk_PARTECIPA"), new TableField[] { Partecipa.PARTECIPA.IDPUNTEGGIO }, true);
+    public static final UniqueKey<RecensisceRecord> RECENSISCE__PK_RECENSISCE = Internal.createUniqueKey(Recensisce.RECENSISCE, DSL.name("pk_RECENSISCE"), new TableField[] { Recensisce.RECENSISCE.IDRECENSIONE }, true);
+    public static final UniqueKey<SedeRecord> SEDE__PK_SEDE = Internal.createUniqueKey(Sede.SEDE, DSL.name("pk_SEDE"), new TableField[] { Sede.SEDE.ID }, true);
+    public static final UniqueKey<SettoreRecord> SETTORE__PK_SETTORE = Internal.createUniqueKey(Settore.SETTORE, DSL.name("pk_SETTORE"), new TableField[] { Settore.SETTORE.ID }, true);
+    public static final UniqueKey<SocietaRecord> SOCIETA__PK_SOCIETA = Internal.createUniqueKey(Societa.SOCIETA, DSL.name("pk_SOCIETA"), new TableField[] { Societa.SOCIETA.NOME }, true);
+    public static final UniqueKey<SponsorRecord> SPONSOR__PK_SPONSOR = Internal.createUniqueKey(Sponsor.SPONSOR, DSL.name("pk_SPONSOR"), new TableField[] { Sponsor.SPONSOR.ID }, true);
+    public static final UniqueKey<TurnoRecord> TURNO__PK_TURNO = Internal.createUniqueKey(Turno.TURNO, DSL.name("pk_TURNO"), new TableField[] { Turno.TURNO.CODICE }, true);
+
+    // -------------------------------------------------------------------------
+    // FOREIGN KEY definitions
+    // -------------------------------------------------------------------------
+
+    public static final ForeignKey<ConcorrenteRecord, SocietaRecord> CONCORRENTE__FK_CONCORRENTE_PK_SOCIETA = Internal.createForeignKey(Concorrente.CONCORRENTE, DSL.name("fk_CONCORRENTE_pk_SOCIETA"), new TableField[] { Concorrente.CONCORRENTE.SOCIETA }, Keys.SOCIETA__PK_SOCIETA, new TableField[] { Societa.SOCIETA.NOME }, true);
+    public static final ForeignKey<ContrattoRecord, ConcorrenteRecord> CONTRATTO__FK_CONTRATTO_PK_CONCORRENTE = Internal.createForeignKey(Contratto.CONTRATTO, DSL.name("fk_CONTRATTO_pk_CONCORRENTE"), new TableField[] { Contratto.CONTRATTO.CONCORRENTE }, Keys.CONCORRENTE__PK_CONCORRENTE, new TableField[] { Concorrente.CONCORRENTE.CF }, true);
+    public static final ForeignKey<ContrattoRecord, SponsorRecord> CONTRATTO__FK_CONTRATTO_PK_SPONSOR = Internal.createForeignKey(Contratto.CONTRATTO, DSL.name("fk_CONTRATTO_pk_SPONSOR"), new TableField[] { Contratto.CONTRATTO.SPONSOR }, Keys.SPONSOR__PK_SPONSOR, new TableField[] { Sponsor.SPONSOR.ID }, true);
+    public static final ForeignKey<GaraRecord, AmministratoreRecord> GARA__FK_GARA_PK_AMMINISTRATORE = Internal.createForeignKey(Gara.GARA, DSL.name("fk_GARA_pk_AMMINISTRATORE"), new TableField[] { Gara.GARA.AMMINISTRATOREACCETTAZIONE, Gara.GARA.AMMINISTRATOREPROPOSTA }, Keys.AMMINISTRATORE__PK_AMMINISTRATORE, new TableField[] { Amministratore.AMMINISTRATORE.CF, Amministratore.AMMINISTRATORE.CF }, true);
+    public static final ForeignKey<GaraRecord, ArbitroRecord> GARA__FK_GARA_PK_ARBITRO = Internal.createForeignKey(Gara.GARA, DSL.name("fk_GARA_pk_ARBITRO"), new TableField[] { Gara.GARA.ARBITRO }, Keys.ARBITRO__PK_ARBITRO, new TableField[] { Arbitro.ARBITRO.CF }, true);
+    public static final ForeignKey<GaraRecord, CampionatoRecord> GARA__FK_GARA_PK_CAMPIONATO = Internal.createForeignKey(Gara.GARA, DSL.name("fk_GARA_pk_CAMPIONATO"), new TableField[] { Gara.GARA.CAMPIONATO }, Keys.CAMPIONATO__PK_CAMPIONATO, new TableField[] { Campionato.CAMPIONATO.TITOLO }, true);
+    public static final ForeignKey<GaraRecord, CampogaraRecord> GARA__FK_GARA_PK_CAMPOGARA = Internal.createForeignKey(Gara.GARA, DSL.name("fk_GARA_pk_CAMPOGARA"), new TableField[] { Gara.GARA.CAMPOGARA }, Keys.CAMPOGARA__PK_CAMPOGARA, new TableField[] { Campogara.CAMPOGARA.ID }, true);
+    public static final ForeignKey<GaraRecord, SocietaRecord> GARA__FK_GARA_PK_SOCIETA = Internal.createForeignKey(Gara.GARA, DSL.name("fk_GARA_pk_SOCIETA"), new TableField[] { Gara.GARA.SOCIETA }, Keys.SOCIETA__PK_SOCIETA, new TableField[] { Societa.SOCIETA.NOME }, true);
+    public static final ForeignKey<IscriveRecord, ConcorrenteRecord> ISCRIVE__FK_ISCRIVE_CONCORRENTE = Internal.createForeignKey(Iscrive.ISCRIVE, DSL.name("FK_ISCRIVE_CONCORRENTE"), new TableField[] { Iscrive.ISCRIVE.CONCORRENTE }, Keys.CONCORRENTE__PK_CONCORRENTE, new TableField[] { Concorrente.CONCORRENTE.CF }, true);
+    public static final ForeignKey<IscriveRecord, GaraRecord> ISCRIVE__FK_ISCRIVE_GARA_2 = Internal.createForeignKey(Iscrive.ISCRIVE, DSL.name("FK_ISCRIVE_GARA_2"), new TableField[] { Iscrive.ISCRIVE.CODICEGARA }, Keys.GARA__PK_GARA, new TableField[] { Gara.GARA.CODICE }, true);
+    public static final ForeignKey<PartecipaRecord, ConcorrenteRecord> PARTECIPA__FK_PARTECIPA_PK_CONCORRENTE = Internal.createForeignKey(Partecipa.PARTECIPA, DSL.name("fk_PARTECIPA_pk_CONCORRENTE"), new TableField[] { Partecipa.PARTECIPA.CONCORRENTE }, Keys.CONCORRENTE__PK_CONCORRENTE, new TableField[] { Concorrente.CONCORRENTE.CF }, true);
+    public static final ForeignKey<PartecipaRecord, TurnoRecord> PARTECIPA__FK_PARTECIPA_PK_TURNO = Internal.createForeignKey(Partecipa.PARTECIPA, DSL.name("fk_PARTECIPA_pk_TURNO"), new TableField[] { Partecipa.PARTECIPA.IDTURNO }, Keys.TURNO__PK_TURNO, new TableField[] { Turno.TURNO.CODICE }, true);
+    public static final ForeignKey<RecensisceRecord, ConcorrenteRecord> RECENSISCE__FK_RECENSISCE_PK_CONCORRENTE = Internal.createForeignKey(Recensisce.RECENSISCE, DSL.name("fk_RECENSISCE_pk_CONCORRENTE"), new TableField[] { Recensisce.RECENSISCE.CONCORRENTE }, Keys.CONCORRENTE__PK_CONCORRENTE, new TableField[] { Concorrente.CONCORRENTE.CF }, true);
+    public static final ForeignKey<RecensisceRecord, GaraRecord> RECENSISCE__FK_RECENSISCE_PK_GARA = Internal.createForeignKey(Recensisce.RECENSISCE, DSL.name("fk_RECENSISCE_pk_GARA"), new TableField[] { Recensisce.RECENSISCE.CODICEGARA }, Keys.GARA__PK_GARA, new TableField[] { Gara.GARA.CODICE }, true);
+    public static final ForeignKey<SettoreRecord, CampogaraRecord> SETTORE__FK_SETTORE_PK_CAMPOGARA = Internal.createForeignKey(Settore.SETTORE, DSL.name("fk_SETTORE_pk_CAMPOGARA"), new TableField[] { Settore.SETTORE.CAMPOGARA }, Keys.CAMPOGARA__PK_CAMPOGARA, new TableField[] { Campogara.CAMPOGARA.ID }, true);
+    public static final ForeignKey<SocietaRecord, SedeRecord> SOCIETA__FK_SOCIETA_PK_SEDE = Internal.createForeignKey(Societa.SOCIETA, DSL.name("fk_SOCIETA_pk_SEDE"), new TableField[] { Societa.SOCIETA.SEDE }, Keys.SEDE__PK_SEDE, new TableField[] { Sede.SEDE.ID }, true);
+    public static final ForeignKey<TurnoRecord, GaraRecord> TURNO__FK_TURNO_PK_GARA = Internal.createForeignKey(Turno.TURNO, DSL.name("fk_TURNO_pk_GARA"), new TableField[] { Turno.TURNO.GARA }, Keys.GARA__PK_GARA, new TableField[] { Gara.GARA.CODICE }, true);
+    public static final ForeignKey<TurnoRecord, SettoreRecord> TURNO__FK_TURNO_PK_SETTORE = Internal.createForeignKey(Turno.TURNO, DSL.name("fk_TURNO_pk_SETTORE"), new TableField[] { Turno.TURNO.SETTORE }, Keys.SETTORE__PK_SETTORE, new TableField[] { Settore.SETTORE.ID }, true);
 }

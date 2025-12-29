@@ -1,0 +1,141 @@
+/*
+*
+* Il component diagram rappresenta il sottosistema “Gestione risultati di gara”, focalizzato sulle funzionalità utilizzate dall’arbitro durante e dopo una gara. 
+* Il sottosistema include componenti dedicati all’assegnazione dei gruppi e settori, alla registrazione delle catture (sia in modalità live sia a fine turno), al calcolo delle penalità e delle classifiche intermedie e finali, e alla pubblicazione dei risultati.
+* L’interazione con l’arbitro avviene tramite il componente Arbitro, che richiede le interfacce esposte dai servizi applicativi. 
+* La logica di calcolo è separata nei componenti Penalties & Scoring Service e Ranking Service, evidenziando una chiara divisione delle responsabilità.
+* L’accesso ai dati persistenti è contenuto in specifici repository, che rappresentano l’unico punto di accesso ai database di gara e dei punteggi. 
+* Infine, la pubblicazione dei risultati e l’invio delle notifiche sono delegati a un servizio esterno di PDF/Email, mantenendo il sottosistema indipendente dai dettagli infrastrutturali.
+*
+*/
+
+@startuml
+
+left to right direction
+skinparam componentStyle uml2
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 50
+skinparam ranksep 80
+
+title Component Diagram - Gestione risultati di gara
+
+
+component "Arbitro UI\n(Web/Mobile)" as UI
+component "PDF / Email Service" as PDF
+database  "DB Gare" as DBGare
+database  "DB Punteggi" as DBPunt
+
+
+package "Subsystem\nGestione risultati di gara" as SUB {
+
+  '--- Servizi (colonna centrale)
+  component "Group Assignment\nService" as GAS
+  component "Catch Recording\nService" as CRS
+  component "Penalties & Scoring\nService" as PSS
+  component "Ranking\nService" as RS
+  component "Results Publication\nService" as RPub
+
+  '--- Persistenza (colonna destra interna)
+  component "GaraRepository" as GaraRepo
+  component "IscrizioniRepository" as IscrRepo
+  component "PunteggiRepository" as PuntRepo
+}
+
+
+() "IGroupAssignment"      as IGroup
+() "ICatchRecording"       as ICatch
+() "IScoring"              as IScore
+() "IRanking"              as IRank
+() "IResultsPublication"   as IPub
+
+() "IGaraRepo"             as IGaraRepo
+() "IIscrizioniRepo"       as IIscrRepo
+() "IPunteggiRepo"         as IPuntRepo
+
+() "IPdfEmailGateway"      as IPdf
+
+
+GAS  -right- IGroup
+CRS  -right- ICatch
+PSS  -right- IScore
+RS   -right- IRank
+RPub -right- IPub
+
+GaraRepo -right- IGaraRepo
+IscrRepo -right- IIscrRepo
+PuntRepo -right- IPuntRepo
+
+PDF -right- IPdf
+
+
+GAS  -- IGroup
+CRS  -- ICatch
+PSS  -- IScore
+RS   -- IRank
+RPub -- IPub
+
+GaraRepo -- IGaraRepo
+IscrRepo -- IIscrRepo
+PuntRepo -- IPuntRepo
+
+PDF -- IPdf
+
+'========================
+' REQUIRED (pallino a metà "logico"): dipendenza tratteggiata verso l'interfaccia
+' (poche e corte: solo quelle che servono davvero)
+'========================
+UI  ..> IGroup : requires
+UI  ..> ICatch : requires
+UI  ..> IPub   : requires
+
+
+GAS ..> IIscrRepo : requires
+GAS ..> IGaraRepo : requires
+
+CRS ..> IPuntRepo : requires
+CRS ..> IGaraRepo : requires
+
+PSS ..> IPuntRepo : requires
+PSS ..> IGaraRepo : requires
+
+' servizi -> servizi
+RS  ..> IScore    : requires
+RPub ..> IRank    : requires
+
+' pubblicazione -> gateway esterno
+RPub ..> IPdf     : requires
+
+
+GaraRepo ..> DBGare : <<dbAccess>>
+IscrRepo ..> DBGare : <<dbAccess>>
+PuntRepo ..> DBPunt : <<dbAccess>>
+
+
+note right of CRS
+Inserimento catture:
+- live
+- fine turno
+end note
+
+note right of PSS
+Parità di punteggio
+→ penalità 0.5
+end note
+
+
+UI -[hidden]-> SUB
+GAS -[hidden]-> CRS
+CRS -[hidden]-> PSS
+PSS -[hidden]-> RS
+RS  -[hidden]-> RPub
+
+RPub -[hidden]-> GaraRepo
+GaraRepo -[hidden]-> IscrRepo
+IscrRepo -[hidden]-> PuntRepo
+
+PuntRepo -[hidden]-> DBGare
+DBGare -[hidden]-> DBPunt
+DBPunt -[hidden]-> PDF
+
+@enduml

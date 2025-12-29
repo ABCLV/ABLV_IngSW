@@ -8,8 +8,6 @@ import java.sql.Statement;
 public class AddTable {
 
     public static void main(String[] args) {
-        // Percorso del database (uguale a quello creato prima)
-        String url = "jdbc:sqlite:database/gare.db";
 
         
         String[] sqlStatements = {
@@ -26,12 +24,12 @@ public class AddTable {
         	    "CREATE TABLE IF NOT EXISTS TURNO (Codice VARCHAR(50) PRIMARY KEY NOT NULL, Numero INT NOT NULL, Durata INT, Settore VARCHAR(50) NOT NULL, Gara VARCHAR(50) NOT NULL, FOREIGN KEY (Settore) REFERENCES SETTORE(ID), FOREIGN KEY (Gara) REFERENCES GARA(Codice));",
         	    "CREATE TABLE IF NOT EXISTS PARTECIPA (IdPunteggio VARCHAR(50) PRIMARY KEY NOT NULL, IdTurno VARCHAR(50) NOT NULL, Concorrente VARCHAR(16) NOT NULL, NumPunti INT NOT NULL, Squalifica BOOLEAN NOT NULL DEFAULT 0, FOREIGN KEY (IdTurno) REFERENCES TURNO(Codice), FOREIGN KEY (Concorrente) REFERENCES CONCORRENTE(CF));",
         	    "CREATE TABLE IF NOT EXISTS RECENSISCE (IdRecensione VARCHAR(50) PRIMARY KEY NOT NULL, CodiceGara VARCHAR(50) NOT NULL, Concorrente VARCHAR(16) NOT NULL, Titolo VARCHAR(100) NOT NULL, Voto INT NOT NULL, Commento TEXT, FOREIGN KEY (CodiceGara) REFERENCES GARA(Codice), FOREIGN KEY (Concorrente) REFERENCES CONCORRENTE(CF));",
-        	    "CREATE TABLE IF NOT EXISTS ISCRIVE (IdIscrizione INT PRIMARY KEY NOT NULL, CodiceGara VARCHAR(50) NOT NULL, Concorrente VARCHAR(16) NOT NULL, DataIscrizione DATE NOT NULL, NumIscrizione INT NOT NULL, Societa VARCHAR(100) NOT NULL, FOREIGN KEY (CodiceGara) REFERENCES GARA(Codice), FOREIGN KEY (Concorrente) REFERENCES CONCORRENTE(CF), FOREIGN KEY (Societa) REFERENCES SOCIETA(Nome));",
+        	    "CREATE TABLE IF NOT EXISTS ISCRIVE (IdIscrizione INT PRIMARY KEY NOT NULL, CodiceGara VARCHAR(50) NOT NULL, Concorrente VARCHAR(16) NOT NULL, DataIscrizione DATE NOT NULL, NumIscrizione INT NOT NULL, FOREIGN KEY (CodiceGara) REFERENCES GARA(Codice), FOREIGN KEY (Concorrente) REFERENCES CONCORRENTE(CF), FOREIGN KEY (Societa));",
         	    "CREATE TABLE IF NOT EXISTS CONTRATTO (IdContratto INT PRIMARY KEY NOT NULL, Sponsor VARCHAR(50) NOT NULL, Concorrente VARCHAR(16) NOT NULL, DataFirma DATE NOT NULL, DataScadenza DATE NOT NULL, Premio VARCHAR(100), FOREIGN KEY (Sponsor) REFERENCES SPONSOR(ID), FOREIGN KEY (Concorrente) REFERENCES CONCORRENTE(CF));"
         	};
             
 
-        try (Connection conn = DriverManager.getConnection(url);
+        try (Connection conn = SQLiteConnectionManager.getConnection();
              Statement stmt = conn.createStatement()) {
 
         	for (String sql : sqlStatements) {

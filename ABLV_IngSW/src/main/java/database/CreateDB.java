@@ -7,9 +7,8 @@ import java.sql.SQLException;
 public class CreateDB {
 
     public static void main(String[] args) {
-        String url = "jdbc:sqlite:database/gare.db"; // nome del file del database
 
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = SQLiteConnectionManager.getConnection()) {
             if (conn != null) {
                 System.out.println("Database creato o già esistente: gare.db");
             }

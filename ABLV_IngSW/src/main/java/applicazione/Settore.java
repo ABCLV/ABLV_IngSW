@@ -5,7 +5,8 @@ package applicazione;
  */
 public class Settore {
 
-    public String idSettore;
+	private String idSettore;
+    private int lunghezza;
     private String descrizione;
 
     /**
@@ -13,8 +14,9 @@ public class Settore {
      * @param idSettore   identificativo del settore
      * @param descrizione descrizione del settore
      */
-    public Settore(String idSettore, String descrizione) {
+    public Settore(String idSettore, int lunghezza, String descrizione) {
         this.idSettore = idSettore;
+        this.lunghezza = lunghezza;
         this.descrizione = descrizione;
     }
 
@@ -31,4 +33,15 @@ public class Settore {
      */
     public void setCaratteristiche() {
     }
+    
+    
+    @Override
+    public String toString() {
+        return "Settore {\n" +
+               "  idSettore   = " + idSettore + ",\n" +
+               "  lunghezza   = " + lunghezza + ",\n" +
+               "  descrizione = " + descrizione + "\n" +
+               "}";
+    }
+
 }
