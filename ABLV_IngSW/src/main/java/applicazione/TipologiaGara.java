@@ -7,7 +7,7 @@ public enum TipologiaGara {
     /**
      * Gara individuale.
      */
-    SINGOLA,
+    INDIVIDUALE,
 
     /**
      * Gara a squadre.
