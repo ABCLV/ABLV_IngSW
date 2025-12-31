@@ -45,7 +45,7 @@ Tra i principali vincoli si includono:
 
 ### **1.5 Glossario e riferimenti**
 
-Per il glossario e i riferimenti guardare il [Piano della Gestione della Configurazione](<./Piano Gestione della Configurazione.pdf>) su github.  
+Per il glossario e i riferimenti guardare il [Piano della Gestione della Configurazione](<./Piano Gestione della Configurazione.md>) su github.  
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 ## **2\. Modello di processo**
@@ -78,7 +78,7 @@ E’ stato deciso che:
 E’ stato deciso in presenza di tutto il team che i canali e metodi di comunicazione saranno i seguenti:
 
 * 1 volta a settimana (idealmente il mercoledì) ci sarà una riunione per discutere della settimana passata (utile soprattutto ad indicare eventuali difficoltà e migliorie nell’organizzazione/flusso di lavoro) e per compilare in presenza di tutti il weekly scrum e quindi, dato che è stato scelto di far coincidere i due documenti in uno, anche lo sprint backlog.  
-* Come canali di comunicazione invece sono stati scelti principalmente il gruppo whatsapp del gruppo anche se è fortemente consigliato preferire le [discussions](https://https://github.com/ABCLV/ABLV_IngSW/discussions) su github in quanto più facili da reperire ed è più difficile perdere eventuali messaggi importanti.  
+* Come canali di comunicazione invece sono stati scelti principalmente il gruppo whatsapp del gruppo anche se è fortemente consigliato preferire le [discussions](https://github.com/ABCLV/ABLV_IngSW/discussions) su github in quanto più facili da reperire ed è più difficile perdere eventuali messaggi importanti.  
 * Le decisioni che verranno prese durante la settimana da chiunque verranno indicate tutte nel weekly scrum della stessa.
 
 ### **3.3 Relazioni esterne**
@@ -100,7 +100,7 @@ Per il nostro progetto è stato deciso di seguire i seguenti standard e linee gu
 ## **5\. Gestione degli obiettivi e priorità**
 
 Il nostro team si pone come obiettivi principali quello di offrire ai nostri utenti un esperienza semplice e veloce adatta a tutti; in particolare ci impegniamo a fornire un prodotto di ottima qualità, affidabilità e correttezza nel recuperare le informazioni richieste.  
-Per seguire ciò abbiamo stilato una classificazione Kano dei requisiti con le loro priorità consultabile [qui](<./Proposta gare di pesca.pdf>) (in fondo al file).
+Per seguire ciò abbiamo stilato una classificazione Kano dei requisiti con le loro priorità consultabile [qui](<./Proposta.md>) (in fondo al file).
 Mentre per accettare funzionalità è stato deciso che prima di tutto deve essere proposta e discussa al weekly scrum e poi, solo dopo un’approvazione da parte del team, si deve aprire l’issue come spiegato al [punto 4](#4-standard-linee-guida-e-procedure); nel corso della sua implementazione o al termine si esegue una PR su github e almeno 2 persone del team devono approvare il codice scritto (si raccomanda ai componenti del team di controllare in modo rigoroso le implementazioni e non approvare “ad occhi chiusi”).
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
@@ -138,7 +138,7 @@ Lo scopo di questa sezione è individuare i principali rischi del progetto, valu
 
 ### **8.1 Ingegneria dei requisiti** 
 
-Per consultare le user stories, use cases e i vari diagrammi UML controllare la [cartella](./)  apposita nella repository
+Per consultare le user stories, use cases e i vari diagrammi UML controllare la [cartella dei diagrammi](./exported_diagrams) nella repository
 ### **8.2 Progettazione**
 
 E’ stato scelto di creare tutti i diagrammi UML visti a lezione, ecco qui la lista: 
