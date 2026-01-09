@@ -1,4 +1,4 @@
-package client;
+package unibg.it.ablv;
 
 public class Rettangolo {
 	private int base;

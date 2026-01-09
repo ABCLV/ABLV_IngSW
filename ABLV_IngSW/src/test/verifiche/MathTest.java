@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import client.MyMath;
-import client.Rettangolo;
+import unibg.it.ablv.MyMath;
+import unibg.it.ablv.Rettangolo;
 
 public class MathTest {
 	@Test

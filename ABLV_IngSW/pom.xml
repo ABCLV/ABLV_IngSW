@@ -14,6 +14,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.release>17</maven.compiler.release>
+		<javafx.version>21.0.1</javafx.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -44,7 +45,20 @@
 			<artifactId>sqlite-jdbc</artifactId>
 			<version>3.50.3.0</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>${javafx.version}</version>
+			<classifier>win</classifier>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+			<version>${javafx.version}</version>
+			<classifier>win</classifier>
+		</dependency>
+
 		
 		<dependency>
 			<groupId>org.jooq</groupId>
@@ -71,7 +85,18 @@ manually for code generation -->
         <scope>runtime</scope>
     </dependency>
 	</dependencies>
+	
 	<build>
+		<plugins>
+	        <plugin>
+	            <groupId>org.openjfx</groupId>
+	            <artifactId>javafx-maven-plugin</artifactId>
+	            <version>0.0.8</version>
+	            <configuration>
+	                <mainClass>applicazione.MainApp</mainClass>
+	            </configuration>
+	        </plugin>
+	    </plugins>
 		<testSourceDirectory>src/integration-test/java</testSourceDirectory>
 		<pluginManagement>
 			<!-- lock down plugins versions to avoid using Maven defaults (may
@@ -105,6 +130,7 @@ manually for code generation -->
 					<artifactId>maven-install-plugin</artifactId>
 					<version>3.1.2</version>
 				</plugin>
+				
 				<plugin>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>3.1.2</version>

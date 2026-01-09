@@ -145,6 +145,16 @@ public abstract class Consultazioni {
 	    }
 	}
 
-
+	public static long countPescatori() {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	        return ctx.fetchCount(
+	                ctx.selectFrom(CONCORRENTE)
+	        );
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return -1;
+	    }
+	}
 
 }
