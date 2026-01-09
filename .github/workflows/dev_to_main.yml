@@ -1,0 +1,57 @@
+name: Dev to Main Auto PR
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - dev
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  dev-main-pr:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check open PRs to dev
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          OPEN_PRS=$(gh pr list --base dev --state open --json number --jq length)
+
+          if [ "$OPEN_PRS" -ne 0 ]; then
+            echo "There are still open PRs to dev"
+            exit 0
+          fi
+
+      - name: Create dev to main PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat <<EOF > pr_body.md
+🤖 **Pull Request di rilascio automatica**
+
+Tutti i branch sono stati integrati in \`dev\`.
+Questa PR avvia il merge finale verso \`main\`.
+
+---
+
+⚠️ **PR automatica**
+Non è stata aperta manualmente dal team.
+EOF
+
+          gh pr create \
+            --head dev \
+            --base main \
+            --title "[PR AUTO] main <- dev | release" \
+            --body-file pr_body.md \
+            --label "release" \
+            || echo "PR dev -> main già esistente"
+
+          gh pr merge dev \
+            --auto \
+            --merge \
+            || true
