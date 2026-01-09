@@ -2,7 +2,7 @@ name: Nightly Branch to Dev PRs
 
 on:
   schedule:
-    - cron: '14 12 * * *' # Mercoledì 00:30 (diverso per testing)
+    - cron: '30 12 * * *' # Mercoledì 00:30 (diverso per testing)
   workflow_dispatch:
 
 permissions:
@@ -39,8 +39,8 @@ jobs:
               continue
             fi
 
-            COMMITS=$(git log dev..origin/$branch \
-              --pretty=format:"- %s (%an)")
+            # Prendi i commit non ancora in dev
+            COMMITS=$(git log dev..origin/$branch --pretty=format="- %s (%an)")
 
             if [ -z "$COMMITS" ]; then
               continue
@@ -48,31 +48,24 @@ jobs:
 
             FOUND=true
 
-            cat <<EOF > pr_body.md
-🤖 **Pull Request generata automaticamente**
+            # Creo il file per il body della PR
+            echo "🤖 **Pull Request generata automaticamente**" > pr_body.md
+            echo "" >> pr_body.md
+            echo "Questa PR è stata creata da una GitHub Action schedulata." >> pr_body.md
+            echo "" >> pr_body.md
+            echo "### 🔀 Branch" >> pr_body.md
+            echo "\`$branch\`" >> pr_body.md
+            echo "" >> pr_body.md
+            echo "### 🎯 Integrazione" >> pr_body.md
+            echo "\`dev <- $branch\`" >> pr_body.md
+            echo "" >> pr_body.md
+            echo "### 📦 Modifiche incluse" >> pr_body.md
+            echo "$COMMITS" >> pr_body.md
+            echo "" >> pr_body.md
+            echo "⚠️ **PR automatica**" >> pr_body.md
+            echo "Non è stata aperta manualmente dal team." >> pr_body.md
 
-Questa PR è stata creata da una GitHub Action schedulata.
-
----
-
-### 🔀 Branch
-\`$branch\`
-
-### 🎯 Integrazione
-\`dev <- $branch\`
-
----
-
-### 📦 Modifiche incluse
-
-$COMMITS
-
----
-
-⚠️ **PR automatica**
-Non è stata aperta manualmente dal team.
-EOF
-
+            # Crea la PR
             gh pr create \
               --head "$branch" \
               --base dev \
@@ -81,6 +74,7 @@ EOF
               --label "auto-pr" \
               || echo "PR già esistente per $branch"
 
+            # Auto-merge se possibile
             gh pr merge "$branch" \
               --auto \
               --merge \
