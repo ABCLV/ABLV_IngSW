@@ -2,7 +2,7 @@ name: Nightly Branch to Dev PRs
 
 on:
   schedule:
-    - cron: '30 0 * * 3' # Mercoledì 00:30
+    - cron: '14 12 * * *' # Mercoledì 00:30 (diverso per testing)
   workflow_dispatch:
 
 permissions:
