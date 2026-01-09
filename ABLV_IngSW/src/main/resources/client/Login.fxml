@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="client.LoginController"
+      alignment="CENTER"
+      spacing="10"
+      prefWidth="400"
+      prefHeight="320"
+      style="-fx-background-color: #e6f7ff;">
+
+    <!-- Titolo -->
+    <Label text="Login" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #005f5f;"/>
+
+    <!-- Username -->
+    <Label text="Utente:"/>
+    <TextField fx:id="userField" maxWidth="250"/>
+
+    <!-- Password -->
+    <Label text="Password:"/>
+    <PasswordField fx:id="passField" maxWidth="250"/>
+
+    <!-- Messaggio errore (inizialmente nascosto) -->
+    <Label fx:id="errLabel" text="Password non valida" textFill="RED" visible="false"/>
+
+    <!-- Pulsanti -->
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Accedi" fx:id="loginBtn" onAction="#handleLogin"/>
+        <Button text="Accedi come utente esterno" fx:id="guestBtn" onAction="#handleGuest"/>
+        <Button text="Torna alla Home" fx:id="backBtn" onAction="#handleBack"/>
+    </HBox>
+</VBox>
