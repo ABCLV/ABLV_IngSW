@@ -1,10 +1,9 @@
-name: Dev to Main Auto PR
+name: Weekly Dev to Main PR
 
 on:
-  pull_request:
-    types: [closed]
-    branches:
-      - dev
+  schedule:
+    - cron: '15 12 * * *' # Mercoledì 00:35 (diverso per testing)
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -12,30 +11,42 @@ permissions:
 
 jobs:
   dev-main-pr:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check open PRs to dev
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          OPEN_PRS=$(gh pr list --base dev --state open --json number --jq length)
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-          if [ "$OPEN_PRS" -ne 0 ]; then
-            echo "There are still open PRs to dev"
-            exit 0
+      - name: Fetch dev branch
+        run: git fetch origin dev
+
+      - name: Check recent activity on dev
+        id: activity
+        run: |
+          LAST_COMMIT_TS=$(git log origin/dev -1 --format=%ct)
+          NOW_TS=$(date +%s)
+          DIFF_DAYS=$(( (NOW_TS - LAST_COMMIT_TS) / 86400 ))
+
+          echo "Days since last dev commit: $DIFF_DAYS"
+
+          if [ "$DIFF_DAYS" -le 7 ]; then
+            echo "active=true" >> $GITHUB_OUTPUT
+          else
+            echo "active=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Create dev to main PR
+        if: steps.activity.outputs.active == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cat <<EOF > pr_body.md
 🤖 **Pull Request di rilascio automatica**
 
-Tutti i branch sono stati integrati in \`dev\`.
-Questa PR avvia il merge finale verso \`main\`.
+Il branch \`dev\` ha ricevuto modifiche nell’ultima settimana.
+Questa PR avvia il merge settimanale verso \`main\`.
 
 ---
 
@@ -46,7 +57,7 @@ EOF
           gh pr create \
             --head dev \
             --base main \
-            --title "[PR AUTO] main <- dev | release" \
+            --title "[PR AUTO] main <- dev | weekly release" \
             --body-file pr_body.md \
             --label "release" \
             || echo "PR dev -> main già esistente"
@@ -55,3 +66,8 @@ EOF
             --auto \
             --merge \
             || true
+
+      - name: No changes on dev
+        if: steps.activity.outputs.active == 'false'
+        run: |
+          echo "No changes on dev in the last week"

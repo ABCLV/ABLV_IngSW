@@ -2,7 +2,7 @@ name: Nightly Branch to Dev PRs
 
 on:
   schedule:
-    - cron: '50 10 * * *' # Mettere mercoledì alle 00.30 dopo, ora solo per testing lo ho cambiato...
+    - cron: '14 12 * * *' # Mercoledì 00:30 (diverso per testing)
   workflow_dispatch:
 
 permissions:
@@ -22,14 +22,20 @@ jobs:
       - name: Fetch all branches
         run: git fetch --all
 
-      - name: Create PRs from branches to dev
+      - name: Create PRs from dev-based branches
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           DATE=$(date +'%Y-%m-%d')
+          FOUND=false
 
           for branch in $(git branch -r | grep origin/ | sed 's|origin/||'); do
             if [[ "$branch" == "dev" || "$branch" == "main" ]]; then
+              continue
+            fi
+
+            # Verifica che il branch derivi da dev
+            if ! git merge-base --is-ancestor dev origin/$branch; then
               continue
             fi
 
@@ -39,6 +45,8 @@ jobs:
             if [ -z "$COMMITS" ]; then
               continue
             fi
+
+            FOUND=true
 
             cat <<EOF > pr_body.md
 🤖 **Pull Request generata automaticamente**
@@ -78,3 +86,7 @@ EOF
               --merge \
               || true
           done
+
+          if [ "$FOUND" = false ]; then
+            echo "No dev-based branches to process"
+          fi
