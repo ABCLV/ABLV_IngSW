@@ -2,7 +2,7 @@ name: Weekly Dev to Main PR
 
 on:
   schedule:
-    - cron: '15 12 * * *' # Mercoledì 00:35 (diverso per testing)
+    - cron: '31 12 * * 3' # Mercoledì 01:00 (diverso per testing)
   workflow_dispatch:
 
 permissions:
@@ -28,7 +28,6 @@ jobs:
           LAST_COMMIT_TS=$(git log origin/dev -1 --format=%ct)
           NOW_TS=$(date +%s)
           DIFF_DAYS=$(( (NOW_TS - LAST_COMMIT_TS) / 86400 ))
-
           echo "Days since last dev commit: $DIFF_DAYS"
 
           if [ "$DIFF_DAYS" -le 7 ]; then
@@ -42,17 +41,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cat <<EOF > pr_body.md
-🤖 **Pull Request di rilascio automatica**
-
-Il branch \`dev\` ha ricevuto modifiche nell’ultima settimana.
-Questa PR avvia il merge settimanale verso \`main\`.
-
----
-
-⚠️ **PR automatica**
-Non è stata aperta manualmente dal team.
-EOF
+          echo "🤖 **Pull Request di rilascio automatica**" > pr_body.md
+          echo "" >> pr_body.md
+          echo "Il branch \`dev\` ha ricevuto modifiche nell’ultima settimana." >> pr_body.md
+          echo "Questa PR avvia il merge settimanale verso \`main\`." >> pr_body.md
+          echo "" >> pr_body.md
+          echo "⚠️ **PR automatica**" >> pr_body.md
+          echo "Non è stata aperta manualmente dal team." >> pr_body.md
 
           gh pr create \
             --head dev \
@@ -69,5 +64,4 @@ EOF
 
       - name: No changes on dev
         if: steps.activity.outputs.active == 'false'
-        run: |
-          echo "No changes on dev in the last week"
+        run: echo "No changes on dev in the last week"
