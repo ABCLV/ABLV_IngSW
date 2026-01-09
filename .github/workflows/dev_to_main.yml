@@ -2,7 +2,7 @@ name: Weekly Dev to Main PR
 
 on:
   schedule:
-    - cron: '0 1 * * 3' # Mercoledì 01:00
+    - cron: '15 12 * * *' # Mercoledì 00:35 (diverso per testing)
   workflow_dispatch:
 
 permissions:
