@@ -3,7 +3,7 @@ package applicazione;
 /**
  * Classe che rappresenta l'amministratore del sistema.
  */
-public class Amministratore implements ProposteIF {
+public class Amministratore {
 
     public String cfAmministratore;
     private String nome;
@@ -61,9 +61,5 @@ public class Amministratore implements ProposteIF {
      */
     public String regolamento() {
         return null;
-    }
-    
-    public void nuovaGara(Gara g) {
-    	
     }
 }
