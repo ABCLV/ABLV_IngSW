@@ -3,7 +3,7 @@ package applicazione;
 /**
  * Rappresenta una società di pesca partecipante alle gare.
  */
-public class Società {
+public class Società implements ProposteIF {
 
     private String nome;
 
@@ -12,7 +12,11 @@ public class Società {
      * @param nome nome della società
      */
     public Società(String nome) {
-        this.nome = nome;
+        if(nome != null) {
+        	this.nome = nome;
+        } else {
+        	throw new IllegalArgumentException("Nome della società non valido!");
+        }
     }
 
     /**
@@ -66,6 +70,7 @@ public class Società {
      * @param gara oggetto gara da proporre
      */
     public void nuovaGara(Gara gara) {
+    	
     }
 
     /**
