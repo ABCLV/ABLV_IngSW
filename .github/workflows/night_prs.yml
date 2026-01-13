@@ -21,9 +21,13 @@ jobs:
         git config user.email "github-actions[bot]@users.noreply.github.com"
 
     - name: Generate PRs from feature branches
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         DATE=$(date +'%Y-%m-%d')
         FOUND=false
+        ...
+
 
         # Ciclo su tutti i branch remoti tranne dev e main
         for branch in $(git branch -r | grep origin/ | sed 's|origin/||'); do
