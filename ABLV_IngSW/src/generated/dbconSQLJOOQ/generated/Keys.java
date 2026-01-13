@@ -14,7 +14,6 @@ import dbconSQLJOOQ.generated.tables.Gara;
 import dbconSQLJOOQ.generated.tables.Iscrive;
 import dbconSQLJOOQ.generated.tables.Partecipa;
 import dbconSQLJOOQ.generated.tables.Recensisce;
-import dbconSQLJOOQ.generated.tables.Sede;
 import dbconSQLJOOQ.generated.tables.Settore;
 import dbconSQLJOOQ.generated.tables.Societa;
 import dbconSQLJOOQ.generated.tables.Sponsor;
@@ -29,7 +28,6 @@ import dbconSQLJOOQ.generated.tables.records.GaraRecord;
 import dbconSQLJOOQ.generated.tables.records.IscriveRecord;
 import dbconSQLJOOQ.generated.tables.records.PartecipaRecord;
 import dbconSQLJOOQ.generated.tables.records.RecensisceRecord;
-import dbconSQLJOOQ.generated.tables.records.SedeRecord;
 import dbconSQLJOOQ.generated.tables.records.SettoreRecord;
 import dbconSQLJOOQ.generated.tables.records.SocietaRecord;
 import dbconSQLJOOQ.generated.tables.records.SponsorRecord;
@@ -63,7 +61,6 @@ public class Keys {
     public static final UniqueKey<IscriveRecord> ISCRIVE__ISCRIVE_PK = Internal.createUniqueKey(Iscrive.ISCRIVE, DSL.name("ISCRIVE_PK"), new TableField[] { Iscrive.ISCRIVE.IDISCRIZIONE }, true);
     public static final UniqueKey<PartecipaRecord> PARTECIPA__PK_PARTECIPA = Internal.createUniqueKey(Partecipa.PARTECIPA, DSL.name("pk_PARTECIPA"), new TableField[] { Partecipa.PARTECIPA.IDPUNTEGGIO }, true);
     public static final UniqueKey<RecensisceRecord> RECENSISCE__PK_RECENSISCE = Internal.createUniqueKey(Recensisce.RECENSISCE, DSL.name("pk_RECENSISCE"), new TableField[] { Recensisce.RECENSISCE.IDRECENSIONE }, true);
-    public static final UniqueKey<SedeRecord> SEDE__PK_SEDE = Internal.createUniqueKey(Sede.SEDE, DSL.name("pk_SEDE"), new TableField[] { Sede.SEDE.ID }, true);
     public static final UniqueKey<SettoreRecord> SETTORE__PK_SETTORE = Internal.createUniqueKey(Settore.SETTORE, DSL.name("pk_SETTORE"), new TableField[] { Settore.SETTORE.ID }, true);
     public static final UniqueKey<SocietaRecord> SOCIETA__PK_SOCIETA = Internal.createUniqueKey(Societa.SOCIETA, DSL.name("pk_SOCIETA"), new TableField[] { Societa.SOCIETA.NOME }, true);
     public static final UniqueKey<SponsorRecord> SPONSOR__PK_SPONSOR = Internal.createUniqueKey(Sponsor.SPONSOR, DSL.name("pk_SPONSOR"), new TableField[] { Sponsor.SPONSOR.ID }, true);
@@ -88,7 +85,6 @@ public class Keys {
     public static final ForeignKey<RecensisceRecord, ConcorrenteRecord> RECENSISCE__FK_RECENSISCE_PK_CONCORRENTE = Internal.createForeignKey(Recensisce.RECENSISCE, DSL.name("fk_RECENSISCE_pk_CONCORRENTE"), new TableField[] { Recensisce.RECENSISCE.CONCORRENTE }, Keys.CONCORRENTE__PK_CONCORRENTE, new TableField[] { Concorrente.CONCORRENTE.CF }, true);
     public static final ForeignKey<RecensisceRecord, GaraRecord> RECENSISCE__FK_RECENSISCE_PK_GARA = Internal.createForeignKey(Recensisce.RECENSISCE, DSL.name("fk_RECENSISCE_pk_GARA"), new TableField[] { Recensisce.RECENSISCE.CODICEGARA }, Keys.GARA__PK_GARA, new TableField[] { Gara.GARA.CODICE }, true);
     public static final ForeignKey<SettoreRecord, CampogaraRecord> SETTORE__FK_SETTORE_PK_CAMPOGARA = Internal.createForeignKey(Settore.SETTORE, DSL.name("fk_SETTORE_pk_CAMPOGARA"), new TableField[] { Settore.SETTORE.CAMPOGARA }, Keys.CAMPOGARA__PK_CAMPOGARA, new TableField[] { Campogara.CAMPOGARA.ID }, true);
-    public static final ForeignKey<SocietaRecord, SedeRecord> SOCIETA__FK_SOCIETA_PK_SEDE = Internal.createForeignKey(Societa.SOCIETA, DSL.name("fk_SOCIETA_pk_SEDE"), new TableField[] { Societa.SOCIETA.SEDE }, Keys.SEDE__PK_SEDE, new TableField[] { Sede.SEDE.ID }, true);
     public static final ForeignKey<TurnoRecord, GaraRecord> TURNO__FK_TURNO_PK_GARA = Internal.createForeignKey(Turno.TURNO, DSL.name("fk_TURNO_pk_GARA"), new TableField[] { Turno.TURNO.GARA }, Keys.GARA__PK_GARA, new TableField[] { Gara.GARA.CODICE }, true);
     public static final ForeignKey<TurnoRecord, SettoreRecord> TURNO__FK_TURNO_PK_SETTORE = Internal.createForeignKey(Turno.TURNO, DSL.name("fk_TURNO_pk_SETTORE"), new TableField[] { Turno.TURNO.SETTORE }, Keys.SETTORE__PK_SETTORE, new TableField[] { Settore.SETTORE.ID }, true);
 }
