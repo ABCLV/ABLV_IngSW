@@ -1,9 +1,9 @@
 name: Auto PR from feature branches to dev
 
 on:
-  workflow_dispatch:  # per esecuzione manuale
+  workflow_dispatch:  # permette di far partire manualmente
   schedule:
-    - cron: '0 0 * * *'  # Tra martedì e mercoledì a mezzanotte
+    - cron: '0 0 * * 3'  # Tra martedì e mercoledì a mezzanotte
 
 jobs:
   create-prs:
@@ -31,14 +31,10 @@ jobs:
             continue
           fi
 
-          # Controllo che il branch derivi da dev
-          if ! git merge-base --is-ancestor dev origin/$branch; then
-            continue
-          fi
-
-          # Recupero i commit non ancora in dev
+          # Prendi i commit non ancora in dev
           COMMITS=$(git log dev..origin/$branch --pretty=format="- %s (%an)")
 
+          # Se non ci sono commit nuovi, salta il branch
           if [ -z "$COMMITS" ]; then
             continue
           fi
@@ -79,5 +75,5 @@ jobs:
         done
 
         if [ "$FOUND" = false ]; then
-          echo "No dev-based branches to process"
+          echo "No branches with new commits to create PRs for"
         fi
