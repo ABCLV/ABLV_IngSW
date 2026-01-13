@@ -26,8 +26,6 @@ jobs:
       run: |
         DATE=$(date +'%Y-%m-%d')
         FOUND=false
-        ...
-
 
         # Ciclo su tutti i branch remoti tranne dev e main
         for branch in $(git branch -r | grep origin/ | sed 's|origin/||'); do
