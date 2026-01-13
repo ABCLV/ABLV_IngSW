@@ -1,11 +1,13 @@
 package applicazione;
 
+import database.Consultazioni;
+
 /**
  * Rappresenta una società di pesca partecipante alle gare.
  */
-public class Società implements ProposteIF {
+public class Società implements PropositoreIF {
 
-    private String nome;
+	private String nome;
 
     /**
      * Costruttore completo.
@@ -69,8 +71,11 @@ public class Società implements ProposteIF {
      * Propone una nuova gara all’amministratore.
      * @param gara oggetto gara da proporre
      */
-    public void nuovaGara(Gara gara) {
-    	
+    public void proponiGara(Gara gara) {
+    	if(gara.getPropositore().getNome().isEmpty()) {
+    		gara.setPropositore(this);
+    	}
+    	Consultazioni.insertGara(gara);
     }
 
     /**
@@ -80,4 +85,16 @@ public class Società implements ProposteIF {
     public String regolamento() {
         return null;
     }
+    
+    public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	public String getIdentificatore() {
+		return this.getNome();
+	}
 }

@@ -8,9 +8,6 @@ import java.util.Objects;
  */
 public class Gara {
 
-	
-
-
 	private String codice;
     private int numProva;
     private Tecnica tecnica;
@@ -21,6 +18,12 @@ public class Gara {
     private StatoGara statoGara;
     private StatoConferma statoConferma;
     private TipologiaGara tipoGara;
+    /*
+     * In posizione:
+     *  - 0, abbiamo il propositore
+     *  - 1, abbiamo l'accettatore
+     */
+    private PropositoreIF[] autori = new PropositoreIF[2]; 
 
     /**
      * Costruttore completo.
@@ -38,7 +41,8 @@ public class Gara {
      */
     public Gara(String codiceGara, int nProva, String organizzatore, Tecnica tipoTecnica,
                 String criterioPunti, LocalDate dataSvolgimento, int maxPersone, int minPersone,
-                StatoConferma statoConferma, StatoGara statoGara, TipologiaGara tipoGara, LocalDate annoGara) {
+                StatoConferma statoConferma, StatoGara statoGara, TipologiaGara tipoGara, LocalDate annoGara,
+                PropositoreIF propositore, Amministratore accettatore) {
     	try {
     		this.setCodice(codiceGara);
             this.setNumProva(nProva);
@@ -50,10 +54,20 @@ public class Gara {
             this.setStatoConferma(statoConferma);
             this.setTipoGara(tipoGara);
             this.setData(annoGara);
+            this.setPropositore(propositore);
+            this.setAccettatore(accettatore);
     	} catch(Exception e) {
     		System.out.println("Errore: " + e.getMessage());
     	}
         
+    }
+    
+    public Gara(String c) {
+    	try {
+    		this.setCodice(c);
+    	} catch(Exception e) {
+    		System.out.println("Errore: " + e.getMessage());
+    	}
     }
     
     public Gara() {
@@ -184,26 +198,22 @@ public class Gara {
     	return true;
     }
     
-    private void setCodice(String codice) throws IllegalArgumentException{
-		if(this.checkNull(codice, "Codice Gara non valido!")) {
-			this.codice = codice;
-		}
+    public void setCodice(String codice) throws IllegalArgumentException{
+		this.checkNull(codice, "Codice Gara non valido!");
+		this.codice = codice;
     }
     
     public void setNumProva(int numProva) throws IllegalArgumentException {
-    	if(this.checkNum(numProva, "Numero di prove non valido! Deve essere positivo...")){
-    		this.numProva = numProva;
-    	}
+    	this.checkNum(numProva, "Numero di prove non valido! Deve essere positivo...");
+    	this.numProva = numProva;
     }
     public void setTecnica(Tecnica tecnica) {
-    	if(this.checkNull(tecnica, "Tipo di tecnica non valido!")) {
-    		this.tecnica = tecnica;
-    	}
+    	this.checkNull(tecnica, "Tipo di tecnica non valido!");
+    	this.tecnica = tecnica;
     }
     public void setCriterioPunti(String criterioPunti) {
-    	if(this.checkNull(criterioPunti, "Criterio punti non valido!")) {
-    		this.criterioPunti = criterioPunti;
-    	}
+    	this.checkNull(criterioPunti, "Criterio punti non valido!");
+    	this.criterioPunti = criterioPunti;
     }
     public void setData(LocalDate data) {
     	LocalDate current = LocalDate.now();
@@ -215,39 +225,95 @@ public class Gara {
     }
     
     public void setMinPersone(int minPersone) {
-    	if(this.checkNum(minPersone, "Numero di persone minime della gara non valido! Deve essere positivo...")) {
-    		this.minPersone = minPersone;
-    	}
+    	this.checkNum(minPersone, "Numero di persone minime della gara non valido! Deve essere positivo...");
+    	this.minPersone = minPersone;
     }
     
     public void setMaxPersone(int maxPersone) {
-    	if(this.checkNum(maxPersone, "Numero di persone massime della gara non valido!"
-    			+ " Deve essere positivo...")) {
-    		if(this.minPersone > maxPersone) {
-    			throw new IllegalArgumentException("Numero di persone massime della gara "
-    					+ "non valido! Deve essere strettamente maggiore del numero minimo di persone...");
-    		}
-    		this.maxPersone = maxPersone;
+    	this.checkNum(maxPersone, "Numero di persone massime della gara non valido! Deve essere positivo...");
+    	if(this.minPersone > maxPersone) {
+    		throw new IllegalArgumentException("Numero di persone massime della gara "
+    				+ "non valido! Deve essere strettamente maggiore del numero minimo di persone...");
     	}
+    	this.maxPersone = maxPersone;
     }
     public void setStatoGara(StatoGara statoGara) {
-    	if(this.checkNull(statoGara, "Stato gara non valido!")) {
-    		this.statoGara = statoGara;
-    	}
+    	this.checkNull(statoGara, "Stato gara non valido!");
+    	this.statoGara = statoGara;    	
     }
     public void setStatoConferma(StatoConferma statoConferma) {
-    	if(this.checkNull(statoConferma, "Stato conferma della gara non valido!")) {
-    		 this.statoConferma = statoConferma; 
-    	}
+    	this.checkNull(statoConferma, "Stato conferma della gara non valido!");
+    	this.statoConferma = statoConferma; 
     }
     public void setTipoGara(TipologiaGara tipoGara) {
-    	if(this.checkNull(tipoGara, "Tipologia di gara non valida!")) {
-    		 this.tipoGara = tipoGara; 
-    	}
+    	this.checkNull(tipoGara, "Tipologia di gara non valida!");
+    	this.tipoGara = tipoGara; 
+    }
+    
+    public void setPropositore(PropositoreIF p) {
+    	this.checkNull(p, "Propositore non valido!");
+    	this.autori[0] = p;
+    }
+    
+    public void setAccettatore(Amministratore a) {
+    	this.checkNull(a, "Accettatore non valido!");
+    	this.autori[1] = a;
     }
 
     
-    @Override
+    public String getCodice() {
+		return this.codice;
+	}
+
+	public int getNumProva() {
+		return this.numProva;
+	}
+
+	public Tecnica getTecnica() {
+		return this.tecnica;
+	}
+
+	public String getCriterioPunti() {
+		return this.criterioPunti;
+	}
+
+	public LocalDate getData() {
+		return this.data;
+	}
+
+	public int getMaxPersone() {
+		return this.maxPersone;
+	}
+
+	public int getMinPersone() {
+		return this.minPersone;
+	}
+
+	public StatoGara getStatoGara() {
+		return this.statoGara;
+	}
+
+	public StatoConferma getStatoConferma() {
+		return this.statoConferma;
+	}
+
+	public TipologiaGara getTipoGara() {
+		return this.tipoGara;
+	}
+
+	public PropositoreIF[] getAutori() {
+		return this.autori;
+	}
+	
+	public PropositoreIF getPropositore() {
+		return this.autori[0];
+	}
+
+	public Amministratore getAccettatore() {
+		return (Amministratore) this.autori[1];
+	}
+
+	@Override
 	public String toString() {
 	    return "Gara {\n" +
 	           "  codiceGara      : " + codice + "\n" +
