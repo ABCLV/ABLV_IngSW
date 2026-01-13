@@ -1,7 +1,7 @@
 name: Auto PR from feature branches to dev
 
 on:
-  workflow_dispatch:  # esecuzione manuale
+  workflow_dispatch:  # per esecuzione manuale
   schedule:
     - cron: '0 0 * * *'  # Tra martedì e mercoledì a mezzanotte
 
@@ -19,9 +19,6 @@ jobs:
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
-
-    - name: Install GitHub CLI
-      uses: actions/setup-gh-cli@v2
 
     - name: Generate PRs from feature branches
       run: |
