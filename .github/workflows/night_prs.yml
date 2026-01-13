@@ -1,9 +1,9 @@
 name: Auto PR from feature branches to dev
 
 on:
-  workflow_dispatch:  # permette di eseguire manualmente
+  workflow_dispatch:  # esecuzione manuale
   schedule:
-    - cron: '0 0 * * 3'  # Tra martedì e mercoledì a mezzanotte
+    - cron: '0 0 * * *'  # Tra martedì e mercoledì a mezzanotte
 
 jobs:
   create-prs:
@@ -13,15 +13,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
-        fetch-depth: 0  # necessario per avere tutti i branch remoti
+        fetch-depth: 0  # serve per avere tutti i branch remoti e la storia completa
 
-    - name: Set up Git
+    - name: Configure Git
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
 
     - name: Install GitHub CLI
-      uses: cli/cli-action@v2
+      uses: actions/setup-gh-cli@v2
 
     - name: Generate PRs from feature branches
       run: |
