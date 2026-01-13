@@ -1,86 +1,86 @@
-name: Nightly Branch to Dev PRs
+name: Auto PR from feature branches to dev
 
 on:
+  workflow_dispatch:  # permette di eseguire manualmente
   schedule:
-    - cron: '30 12 * * *' # Mercoledì 00:30 (diverso per testing)
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pull-requests: write
+    - cron: '0 0 * * 3'  # Tra martedì e mercoledì a mezzanotte
 
 jobs:
   create-prs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # necessario per avere tutti i branch remoti
 
-      - name: Fetch all branches
-        run: git fetch --all
+    - name: Set up Git
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Create PRs from dev-based branches
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          DATE=$(date +'%Y-%m-%d')
-          FOUND=false
+    - name: Install GitHub CLI
+      uses: cli/cli-action@v2
 
-          for branch in $(git branch -r | grep origin/ | sed 's|origin/||'); do
-            if [[ "$branch" == "dev" || "$branch" == "main" ]]; then
-              continue
-            fi
+    - name: Generate PRs from feature branches
+      run: |
+        DATE=$(date +'%Y-%m-%d')
+        FOUND=false
 
-            # Verifica che il branch derivi da dev
-            if ! git merge-base --is-ancestor dev origin/$branch; then
-              continue
-            fi
-
-            # Prendi i commit non ancora in dev
-            COMMITS=$(git log dev..origin/$branch --pretty=format="- %s (%an)")
-
-            if [ -z "$COMMITS" ]; then
-              continue
-            fi
-
-            FOUND=true
-
-            # Creo il file per il body della PR
-            echo "🤖 **Pull Request generata automaticamente**" > pr_body.md
-            echo "" >> pr_body.md
-            echo "Questa PR è stata creata da una GitHub Action schedulata." >> pr_body.md
-            echo "" >> pr_body.md
-            echo "### 🔀 Branch" >> pr_body.md
-            echo "\`$branch\`" >> pr_body.md
-            echo "" >> pr_body.md
-            echo "### 🎯 Integrazione" >> pr_body.md
-            echo "\`dev <- $branch\`" >> pr_body.md
-            echo "" >> pr_body.md
-            echo "### 📦 Modifiche incluse" >> pr_body.md
-            echo "$COMMITS" >> pr_body.md
-            echo "" >> pr_body.md
-            echo "⚠️ **PR automatica**" >> pr_body.md
-            echo "Non è stata aperta manualmente dal team." >> pr_body.md
-
-            # Crea la PR
-            gh pr create \
-              --head "$branch" \
-              --base dev \
-              --title "[PR AUTO] dev <- $branch | $DATE" \
-              --body-file pr_body.md \
-              --label "auto-pr" \
-              || echo "PR già esistente per $branch"
-
-            # Auto-merge se possibile
-            gh pr merge "$branch" \
-              --auto \
-              --merge \
-              || true
-          done
-
-          if [ "$FOUND" = false ]; then
-            echo "No dev-based branches to process"
+        # Ciclo su tutti i branch remoti tranne dev e main
+        for branch in $(git branch -r | grep origin/ | sed 's|origin/||'); do
+          if [[ "$branch" == "dev" || "$branch" == "main" ]]; then
+            continue
           fi
+
+          # Controllo che il branch derivi da dev
+          if ! git merge-base --is-ancestor dev origin/$branch; then
+            continue
+          fi
+
+          # Recupero i commit non ancora in dev
+          COMMITS=$(git log dev..origin/$branch --pretty=format="- %s (%an)")
+
+          if [ -z "$COMMITS" ]; then
+            continue
+          fi
+
+          FOUND=true
+
+          # Creo il file per il body della PR
+          echo "🤖 **Pull Request generata automaticamente**" > pr_body.md
+          echo "" >> pr_body.md
+          echo "Questa PR è stata creata da una GitHub Action schedulata." >> pr_body.md
+          echo "" >> pr_body.md
+          echo "### 🔀 Branch" >> pr_body.md
+          echo "\`$branch\`" >> pr_body.md
+          echo "" >> pr_body.md
+          echo "### 🎯 Integrazione" >> pr_body.md
+          echo "\`dev <- $branch\`" >> pr_body.md
+          echo "" >> pr_body.md
+          echo "### 📦 Modifiche incluse" >> pr_body.md
+          echo "$COMMITS" >> pr_body.md
+          echo "" >> pr_body.md
+          echo "⚠️ **PR automatica**" >> pr_body.md
+          echo "Non è stata aperta manualmente dal team." >> pr_body.md
+
+          # Creo la PR, ignoro se già esistente
+          gh pr create \
+            --head "$branch" \
+            --base dev \
+            --title "[PR AUTO] dev <- $branch | $DATE" \
+            --body-file pr_body.md \
+            --label "auto-pr" \
+            || echo "PR già esistente per $branch"
+
+          # Auto-merge se possibile, ignoro errori
+          gh pr merge "$branch" \
+            --auto \
+            --merge \
+            || true
+        done
+
+        if [ "$FOUND" = false ]; then
+          echo "No dev-based branches to process"
+        fi
