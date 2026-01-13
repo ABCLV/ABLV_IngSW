@@ -5,6 +5,11 @@ on:
   schedule:
     - cron: '0 0 * * 3'  # Tra martedì e mercoledì a mezzanotte
 
+permissions:
+  contents: read       # per fare checkout
+  pull-requests: write # serve per creare PR
+
+
 jobs:
   create-prs:
     runs-on: ubuntu-latest
