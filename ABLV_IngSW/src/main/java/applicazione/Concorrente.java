@@ -28,7 +28,47 @@ public class Concorrente {
         this.nascita = nascita;
     }
 
-    @Override
+    public String getCf() {
+		return cf;
+	}
+
+	public void setCf(String cf) {
+		this.cf = cf;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public LocalDate getNascita() {
+		return nascita;
+	}
+
+	public void setNascita(LocalDate nascita) {
+		this.nascita = nascita;
+	}
+
+	@Override
 	public String toString() {
 		return "Concorrente [cf=" + cf + ", cognome=" + cognome + ", nome=" + nome + ", email=" + email + ", nascita="
 				+ nascita + "]";

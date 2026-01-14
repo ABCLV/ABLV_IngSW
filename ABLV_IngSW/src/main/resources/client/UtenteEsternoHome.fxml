@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -7,13 +6,16 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="client.UtenteEsternoHomeController"
       alignment="CENTER"
-      spacing="20"
+      spacing="15"
       prefWidth="400"
-      prefHeight="200"
+      prefHeight="300"
       style="-fx-background-color: #e6f7ff;">
 
-    <Label text="Utente esterno benvenuto"
-           style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #005f5f;"/>
+    <Label text="Ricerche"
+           style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #005f5f;" />
 
-    <Button text="Torna alla Home" onAction="#handleBack"/>
+    <Button text="Gare" onAction="#handleGare" maxWidth="250"/>
+    <Button text="Concorrenti" onAction="#handleConcorrenti" maxWidth="250"/>
+    <Button text="Campo Gara" onAction="#handleCampoGara" maxWidth="250"/>
+    <Button text="Indietro" onAction="#handleBack" maxWidth="250"/>
 </VBox>
