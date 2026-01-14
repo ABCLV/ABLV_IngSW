@@ -4,7 +4,6 @@ import org.jooq.tools.csv.CSVReader;
 
 import java.io.FileReader;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
 

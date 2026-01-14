@@ -14,7 +14,6 @@ import dbconSQLJOOQ.generated.tables.Gara;
 import dbconSQLJOOQ.generated.tables.Iscrive;
 import dbconSQLJOOQ.generated.tables.Partecipa;
 import dbconSQLJOOQ.generated.tables.Recensisce;
-import dbconSQLJOOQ.generated.tables.Sede;
 import dbconSQLJOOQ.generated.tables.Settore;
 import dbconSQLJOOQ.generated.tables.Societa;
 import dbconSQLJOOQ.generated.tables.Sponsor;
@@ -76,11 +75,6 @@ public class Tables {
      * The table <code>RECENSISCE</code>.
      */
     public static final Recensisce RECENSISCE = Recensisce.RECENSISCE;
-
-    /**
-     * The table <code>SEDE</code>.
-     */
-    public static final Sede SEDE = Sede.SEDE;
 
     /**
      * The table <code>SETTORE</code>.

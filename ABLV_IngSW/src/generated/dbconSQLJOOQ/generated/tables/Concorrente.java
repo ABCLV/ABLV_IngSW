@@ -15,11 +15,11 @@ import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Function6;
+import org.jooq.Function7;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Records;
-import org.jooq.Row6;
+import org.jooq.Row7;
 import org.jooq.Schema;
 import org.jooq.SelectField;
 import org.jooq.Table;
@@ -81,6 +81,11 @@ public class Concorrente extends TableImpl<ConcorrenteRecord> {
      * The column <code>CONCORRENTE.Societa</code>.
      */
     public final TableField<ConcorrenteRecord, String> SOCIETA = createField(DSL.name("Societa"), SQLDataType.VARCHAR(100).nullable(false), this, "");
+
+    /**
+     * The column <code>CONCORRENTE.password_hash</code>.
+     */
+    public final TableField<ConcorrenteRecord, String> PASSWORD_HASH = createField(DSL.name("password_hash"), SQLDataType.CLOB, this, "");
 
     private Concorrente(Name alias, Table<ConcorrenteRecord> aliased) {
         this(alias, aliased, null);
@@ -182,18 +187,18 @@ public class Concorrente extends TableImpl<ConcorrenteRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row6 type methods
+    // Row7 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row6<String, String, String, String, LocalDate, String> fieldsRow() {
-        return (Row6) super.fieldsRow();
+    public Row7<String, String, String, String, LocalDate, String, String> fieldsRow() {
+        return (Row7) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function6<? super String, ? super String, ? super String, ? super String, ? super LocalDate, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function7<? super String, ? super String, ? super String, ? super String, ? super LocalDate, ? super String, ? super String, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -201,7 +206,7 @@ public class Concorrente extends TableImpl<ConcorrenteRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function6<? super String, ? super String, ? super String, ? super String, ? super LocalDate, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function7<? super String, ? super String, ? super String, ? super String, ? super LocalDate, ? super String, ? super String, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

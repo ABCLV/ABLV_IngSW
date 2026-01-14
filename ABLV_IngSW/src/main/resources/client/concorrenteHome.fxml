@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="client.ConcorrenteHomeController"
+            style="-fx-background-color: #e6f7ff;">
+
+    <!-- TOP -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10;">
+            <Label fx:id="welcomeLabel" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #005f5f;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Torna alla Home" onAction="#handleBack"/>
+        </HBox>
+    </top>
+
+    <!-- CENTER -->
+    <center>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <Label text="Le mie gare" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+            <TableView fx:id="gareTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colCodice" text="Codice Gara" prefWidth="100"/>
+                    <TableColumn fx:id="colData" text="Data" prefWidth="100"/>
+                    <TableColumn fx:id="colTecnica" text="Tecnica" prefWidth="150"/>
+                    <TableColumn fx:id="colCampo" text="Campo" prefWidth="150"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+    <!-- LEFT -->
+    <left>
+        <VBox spacing="10" style="-fx-padding: 10;" prefWidth="220">
+            <Label text="Dati personali" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+            <Label fx:id="lblCF"/>
+            <Label fx:id="lblNome"/>
+            <Label fx:id="lblCognome"/>
+            <Label fx:id="lblEmail"/>
+            <Label fx:id="lblNascita"/>
+            <Label fx:id="lblSocieta"/>
+        </VBox>
+    </left>
+
+    <!-- RIGHT -->
+    <right>
+        <VBox spacing="10" style="-fx-padding: 10;" prefWidth="220">
+            <Label text="Società di appartenenza" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+            <Label fx:id="lblSocNome"/>
+            <Label fx:id="lblSocIndirizzo"/>
+            <Label fx:id="lblSocCitta"/>
+            <Label fx:id="lblSocCap"/>
+            <Label fx:id="lblSocEmail"/>
+        </VBox>
+    </right>
+</BorderPane>

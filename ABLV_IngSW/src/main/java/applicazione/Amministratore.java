@@ -1,9 +1,11 @@
 package applicazione;
 
+import database.Consultazioni;
+
 /**
  * Classe che rappresenta l'amministratore del sistema.
  */
-public class Amministratore {
+public class Amministratore implements PropositoreIF {
 
     public String cfAmministratore;
     private String nome;
@@ -22,10 +24,14 @@ public class Amministratore {
     }
 
     /**
-     * Crea e pubblica una nuova gara.
+     * Crea e proponi una nuova gara.
      * @param gara oggetto gara da inserire nel sistema
      */
-    public void nuovaGara(Gara gara) {
+    public void proponiGara(Gara gara) {
+    	if(gara.getPropositore().getNome().isEmpty()) {
+    		gara.setPropositore(this);
+    	}
+    	Consultazioni.insertGara(gara);
     }
 
     /**
@@ -62,4 +68,32 @@ public class Amministratore {
     public String regolamento() {
         return null;
     }
+
+	public String getCfAmministratore() {
+		return cfAmministratore;
+	}
+
+	public void setCfAmministratore(String cfAmministratore) {
+		this.cfAmministratore = cfAmministratore;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+	
+	public String getIdentificatore() {
+		return this.getCfAmministratore();
+	}
 }

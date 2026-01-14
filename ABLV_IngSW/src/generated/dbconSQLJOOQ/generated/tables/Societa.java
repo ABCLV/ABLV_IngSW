@@ -8,17 +8,15 @@ import dbconSQLJOOQ.generated.DefaultSchema;
 import dbconSQLJOOQ.generated.Keys;
 import dbconSQLJOOQ.generated.tables.records.SocietaRecord;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Function3;
+import org.jooq.Function6;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Records;
-import org.jooq.Row3;
+import org.jooq.Row6;
 import org.jooq.Schema;
 import org.jooq.SelectField;
 import org.jooq.Table;
@@ -54,17 +52,32 @@ public class Societa extends TableImpl<SocietaRecord> {
     /**
      * The column <code>SOCIETA.Nome</code>.
      */
-    public final TableField<SocietaRecord, String> NOME = createField(DSL.name("Nome"), SQLDataType.VARCHAR(100).nullable(false), this, "");
+    public final TableField<SocietaRecord, String> NOME = createField(DSL.name("Nome"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>SOCIETA.Email</code>.
      */
-    public final TableField<SocietaRecord, String> EMAIL = createField(DSL.name("Email"), SQLDataType.VARCHAR(100).nullable(false), this, "");
+    public final TableField<SocietaRecord, String> EMAIL = createField(DSL.name("Email"), SQLDataType.CLOB, this, "");
 
     /**
-     * The column <code>SOCIETA.Sede</code>.
+     * The column <code>SOCIETA.password_hash</code>.
      */
-    public final TableField<SocietaRecord, Integer> SEDE = createField(DSL.name("Sede"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<SocietaRecord, String> PASSWORD_HASH = createField(DSL.name("password_hash"), SQLDataType.CLOB, this, "");
+
+    /**
+     * The column <code>SOCIETA.CAP</code>.
+     */
+    public final TableField<SocietaRecord, String> CAP = createField(DSL.name("CAP"), SQLDataType.CLOB, this, "");
+
+    /**
+     * The column <code>SOCIETA.Citta</code>.
+     */
+    public final TableField<SocietaRecord, String> CITTA = createField(DSL.name("Citta"), SQLDataType.CLOB, this, "");
+
+    /**
+     * The column <code>SOCIETA.Indirizzo</code>.
+     */
+    public final TableField<SocietaRecord, String> INDIRIZZO = createField(DSL.name("Indirizzo"), SQLDataType.CLOB, this, "");
 
     private Societa(Name alias, Table<SocietaRecord> aliased) {
         this(alias, aliased, null);
@@ -110,23 +123,6 @@ public class Societa extends TableImpl<SocietaRecord> {
     }
 
     @Override
-    public List<ForeignKey<SocietaRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.SOCIETA__FK_SOCIETA_PK_SEDE);
-    }
-
-    private transient Sede _sede;
-
-    /**
-     * Get the implicit join path to the <code>SEDE</code> table.
-     */
-    public Sede sede() {
-        if (_sede == null)
-            _sede = new Sede(this, Keys.SOCIETA__FK_SOCIETA_PK_SEDE);
-
-        return _sede;
-    }
-
-    @Override
     public Societa as(String alias) {
         return new Societa(DSL.name(alias), this);
     }
@@ -166,18 +162,18 @@ public class Societa extends TableImpl<SocietaRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row3 type methods
+    // Row6 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row3<String, String, Integer> fieldsRow() {
-        return (Row3) super.fieldsRow();
+    public Row6<String, String, String, String, String, String> fieldsRow() {
+        return (Row6) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function3<? super String, ? super String, ? super Integer, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function6<? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -185,7 +181,7 @@ public class Societa extends TableImpl<SocietaRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function3<? super String, ? super String, ? super Integer, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function6<? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

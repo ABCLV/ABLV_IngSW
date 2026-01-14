@@ -14,7 +14,6 @@ import dbconSQLJOOQ.generated.tables.Gara;
 import dbconSQLJOOQ.generated.tables.Iscrive;
 import dbconSQLJOOQ.generated.tables.Partecipa;
 import dbconSQLJOOQ.generated.tables.Recensisce;
-import dbconSQLJOOQ.generated.tables.Sede;
 import dbconSQLJOOQ.generated.tables.Settore;
 import dbconSQLJOOQ.generated.tables.Societa;
 import dbconSQLJOOQ.generated.tables.Sponsor;
@@ -92,11 +91,6 @@ public class DefaultSchema extends SchemaImpl {
     public final Recensisce RECENSISCE = Recensisce.RECENSISCE;
 
     /**
-     * The table <code>SEDE</code>.
-     */
-    public final Sede SEDE = Sede.SEDE;
-
-    /**
      * The table <code>SETTORE</code>.
      */
     public final Settore SETTORE = Settore.SETTORE;
@@ -142,7 +136,6 @@ public class DefaultSchema extends SchemaImpl {
             Iscrive.ISCRIVE,
             Partecipa.PARTECIPA,
             Recensisce.RECENSISCE,
-            Sede.SEDE,
             Settore.SETTORE,
             Societa.SOCIETA,
             Sponsor.SPONSOR,
