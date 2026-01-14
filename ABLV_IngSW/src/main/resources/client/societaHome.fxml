@@ -22,6 +22,7 @@
     <left>
         <VBox spacing="15" style="-fx-padding: 15;">
             <Button text="Registra Concorrente" onAction="#apriRegistraConcorrente" maxWidth="Infinity"/>
+            <Button text="Proponi Gara" onAction="#apriProponiGara"/>
         </VBox>
     </left>
 

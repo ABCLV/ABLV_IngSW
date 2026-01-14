@@ -36,6 +36,9 @@ import client.GaraRow;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import applicazione.*;
+
+
 public abstract class Consultazioni {
 
 	public static List<Concorrente> getConcorrenti() {
@@ -219,7 +222,7 @@ public abstract class Consultazioni {
 	public record SocietaDto(String nome, String indirizzo, String citta, String cap, String email) {
 	}
 
-	public static SocietaDto getSocieta(String nome) throws SQLException {
+	public static Societa getSocieta(String nome) throws SQLException {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 			Record5<String, String, String, String, String> r = ctx
@@ -227,7 +230,7 @@ public abstract class Consultazioni {
 					.where(SOCIETA.NOME.eq(nome)).fetchOne();
 			if (r == null)
 				throw new IllegalArgumentException("Società non trovata");
-			return new SocietaDto(r.value1(), r.value2(), r.value3(), r.value4(), r.value5());
+			return new Societa(r.value1(), r.value2(), r.value3(), r.value4(), r.value5());
 		}
 	}
 
@@ -319,6 +322,25 @@ public abstract class Consultazioni {
 	        return false;
 	    }
 	}
+	
+	public static String getUltimoCodiceGara() {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+	        return ctx
+	                .select(GARA.CODICE)
+	                .from(GARA)
+	                .orderBy(GARA.CODICE.desc())
+	                .limit(1)
+	                .fetchOneInto(String.class);
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
+
+
 
 
 }

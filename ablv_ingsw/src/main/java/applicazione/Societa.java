@@ -5,19 +5,27 @@ import database.Consultazioni;
 /**
  * Rappresenta una società di pesca partecipante alle gare.
  */
-public class Società implements PropositoreIF {
+public class Societa implements PropositoreIF {
 
 	private String nome;
+	private String email;
+	private String cap;
+	private String citta;
+	private String indirizzo;
 
     /**
      * Costruttore completo.
      * @param nome nome della società
      */
-    public Società(String nome) {
-        if(nome != null) {
-        	this.nome = nome;
-        } else {
-        	throw new IllegalArgumentException("Nome della società non valido!");
+    public Societa(String nome, String email, String cap, String citta, String indirizzo) {
+        try {
+        	this.setNome(nome);
+        	this.setEmail(email);
+        	this.setCap(cap);
+        	this.setCitta(citta);
+        	this.setIndirizzo(indirizzo);
+        } catch(Exception e) {
+        	System.out.println("Errore: " + e.getMessage());
         }
     }
 
@@ -89,11 +97,55 @@ public class Società implements PropositoreIF {
     public String getNome() {
 		return nome;
 	}
+    
+    private boolean checkString(String s) {
+    	if(s.isEmpty() || s.isBlank()) {
+			throw new IllegalArgumentException("Nome della società non valido!");
+		}
+    	return true;
+    }
 
 	public void setNome(String nome) {
+		this.checkString(nome);
 		this.nome = nome;
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.checkString(email);
+		this.email = email;
+	}
+
+	public String getCap() {
+		return cap;
+	}
+
+	public void setCap(String cap) {
+		this.checkString(cap);
+		this.cap = cap;
+	}
+
+	public String getCitta() {
+		return citta;
+	}
+
+	public void setCitta(String citta) {
+		this.checkString(citta);
+		this.citta = citta;
+	}
+
+	public String getIndirizzo() {
+		return indirizzo;
+	}
+
+	public void setIndirizzo(String indirizzo) {
+		this.checkString(indirizzo);
+		this.indirizzo = indirizzo;
+	}
+
 	public String getIdentificatore() {
 		return this.getNome();
 	}

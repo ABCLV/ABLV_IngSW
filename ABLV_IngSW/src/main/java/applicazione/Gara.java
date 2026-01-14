@@ -29,7 +29,6 @@ public class Gara {
      * Costruttore completo.
      * @param codiceGara      codice identificativo della gara
      * @param nProva          numero della prova (per campionati)
-     * @param organizzatore   società organizzatrice
      * @param tipoTecnica     tecnica di pesca ammessa
      * @param criterioPunti   criterio di assegnazione punti
      * @param dataSvolgimento data in cui si svolge la gara
@@ -39,10 +38,10 @@ public class Gara {
      * @param tipoGara        tipologia (singola, campionato, ecc.)
      * @param annoGara        anno di edizione
      */
-    public Gara(String codiceGara, int nProva, String organizzatore, Tecnica tipoTecnica,
+    public Gara(String codiceGara, int nProva, Tecnica tipoTecnica,
                 String criterioPunti, LocalDate dataSvolgimento, int maxPersone, int minPersone,
                 StatoConferma statoConferma, StatoGara statoGara, TipologiaGara tipoGara, LocalDate annoGara,
-                PropositoreIF propositore, Amministratore accettatore) {
+                PropositoreIF propositore, PropositoreIF accettatore) {
     	try {
     		this.setCodice(codiceGara);
             this.setNumProva(nProva);
@@ -55,12 +54,34 @@ public class Gara {
             this.setTipoGara(tipoGara);
             this.setData(annoGara);
             this.setPropositore(propositore);
-            this.setAccettatore(accettatore);
+            this.setAccettatore((Amministratore) accettatore);
     	} catch(Exception e) {
     		System.out.println("Errore: " + e.getMessage());
     	}
         
     }
+    
+    public Gara(String codiceGara, int nProva, Tecnica tipoTecnica,
+            String criterioPunti, LocalDate dataSvolgimento, int maxPersone, int minPersone,
+            StatoConferma statoConferma, StatoGara statoGara, TipologiaGara tipoGara,
+            PropositoreIF propositore) {
+		try {
+			this.setCodice(codiceGara);
+	        this.setNumProva(nProva);
+	        this.setTecnica(tipoTecnica);
+	        this.setCriterioPunti(criterioPunti);
+	        this.setMinPersone(minPersone);
+	        this.setMaxPersone(maxPersone);
+	        this.setStatoGara(statoGara);
+	        this.setStatoConferma(statoConferma);
+	        this.setTipoGara(tipoGara);
+	        this.setData(dataSvolgimento);
+	        this.setPropositore(propositore);
+		} catch(Exception e) {
+			System.out.println("Errore: " + e.getMessage());
+		}
+    
+}
     
     public Gara(String c) {
     	try {
