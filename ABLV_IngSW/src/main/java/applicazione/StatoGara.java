@@ -19,4 +19,13 @@ public enum StatoGara {
      * La gara è terminata.
      */
     TERMINATA;
+	
+	
+	public static StatoGara fromString(String s) {
+        for (StatoGara t : values()) {
+            if (t.name().equalsIgnoreCase(s)) return t;
+        }
+        return null; // oppure lancia eccezione
+    }
+	
 }

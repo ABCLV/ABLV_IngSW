@@ -56,7 +56,7 @@ public class RicercaConcorrentiController {
 
     @FXML
     private void handleBack(ActionEvent event) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/Ricerche.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/UtenteEsternoHome.fxml"));
         Scene scene = new Scene(loader.load());
         Stage stage = (Stage) backBtn.getScene().getWindow();
         stage.setScene(scene);
