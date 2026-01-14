@@ -277,5 +277,48 @@ public abstract class Consultazioni {
 			return ctx.fetchExists(ctx.selectFrom(SOCIETA).where(SOCIETA.NOME.eq(nome)));
 		}
 	}
+	
+	public static boolean insertGara(Gara gara) {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+	        ctx.insertInto(GARA,
+	                GARA.CODICE,
+	                GARA.NUMPROVA,
+	                GARA.TECNICA,
+	                GARA.CRITERIOPUNTI,
+	                GARA.DATA,
+	                GARA.MAXPERSONE,
+	                GARA.MINPERSONE,
+	                GARA.STATOGARA,
+	                GARA.STATOCONFERMA,
+	                GARA.TIPOGARA/*,
+	                GARA.PROPOSITORE,
+	                GARA.ACCETTATORE*/
+	        )
+	        .values(
+	                gara.getCodice(),
+	                gara.getNumProva(),
+	                gara.getTecnica().name(),          // se Tecnica è enum, salvo come stringa
+	                gara.getCriterioPunti(),
+	                gara.getData(), // LocalDate -> java.sql.Date
+	                gara.getMaxPersone(),
+	                gara.getMinPersone(),
+	                gara.getStatoGara().name(),       // enum -> stringa
+	                gara.getStatoConferma().name(),   // enum -> stringa
+	                gara.getTipoGara().name()/*,         enum -> stringa
+	                gara.getPropositore().getIdentificatore(),
+	                gara.getAccettatore().getIdentificatore(),*/
+	        )
+	        .execute();
+	        
+	        return true;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
 
 }

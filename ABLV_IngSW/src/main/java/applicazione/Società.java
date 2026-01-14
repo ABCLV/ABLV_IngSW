@@ -1,18 +1,24 @@
 package applicazione;
 
+import database.Consultazioni;
+
 /**
  * Rappresenta una società di pesca partecipante alle gare.
  */
-public class Società {
+public class Società implements PropositoreIF {
 
-    private String nome;
+	private String nome;
 
     /**
      * Costruttore completo.
      * @param nome nome della società
      */
     public Società(String nome) {
-        this.nome = nome;
+        if(nome != null) {
+        	this.nome = nome;
+        } else {
+        	throw new IllegalArgumentException("Nome della società non valido!");
+        }
     }
 
     /**
@@ -65,7 +71,11 @@ public class Società {
      * Propone una nuova gara all’amministratore.
      * @param gara oggetto gara da proporre
      */
-    public void nuovaGara(Gara gara) {
+    public void proponiGara(Gara gara) {
+    	if(gara.getPropositore().getNome().isEmpty()) {
+    		gara.setPropositore(this);
+    	}
+    	Consultazioni.insertGara(gara);
     }
 
     /**
@@ -75,4 +85,16 @@ public class Società {
     public String regolamento() {
         return null;
     }
+    
+    public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	public String getIdentificatore() {
+		return this.getNome();
+	}
 }
