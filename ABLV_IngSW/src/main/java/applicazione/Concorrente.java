@@ -12,7 +12,8 @@ public class Concorrente {
     private String nome;
     private String email;
     private LocalDate  nascita;
-
+    private String societa;
+    
     /**
      * Costruttore completo.
      * @param cf       codice fiscale del concorrente
@@ -20,12 +21,13 @@ public class Concorrente {
      * @param nome     nome del concorrente
      * @param nascita  data di nascita del concorrente
      */
-    public Concorrente(String cf, String cognome, String nome, String email, LocalDate nascita) {
+    public Concorrente(String cf, String cognome, String nome, String email, LocalDate nascita, String nomeSocieta) {
         this.cf = cf;
         this.cognome = cognome;
         this.nome = nome;
         this.email = email;
         this.nascita = nascita;
+        this.societa = nomeSocieta;
     }
 
     public String getCf() {
@@ -125,4 +127,12 @@ public class Concorrente {
     public boolean aggiungiRecensione(String codice, Recensione rec) {
         return false;
     }
+
+	public String getSocieta() {
+		return societa;
+	}
+
+	public void setSocieta(String societa) {
+		this.societa = societa;
+	}
 }

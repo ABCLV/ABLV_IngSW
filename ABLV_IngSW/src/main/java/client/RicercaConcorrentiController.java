@@ -36,6 +36,9 @@ public class RicercaConcorrentiController {
     private TableColumn<Concorrente, String> nascitaCol;
 
     @FXML
+    private TableColumn<Concorrente, String> societa;
+    
+    @FXML
     private Button backBtn;
 
     
@@ -47,11 +50,28 @@ public class RicercaConcorrentiController {
         cognomeCol.setCellValueFactory(new PropertyValueFactory<>("cognome"));
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
         nascitaCol.setCellValueFactory(new PropertyValueFactory<>("nascita"));
+        societa.setCellValueFactory(new PropertyValueFactory<>("societa"));
 
         // Carica dati dal DB
         ObservableList<Concorrente> dati = FXCollections.observableArrayList(Consultazioni.getConcorrenti());
         table.setItems(dati);
+        
     }
+    
+    
+    private void apriGareConcorrente(Concorrente concorrente) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/client/concorrenteHome.fxml")
+            );
+
+            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     @FXML

@@ -20,7 +20,8 @@
             <TableColumn fx:id="nomeCol" text="Nome" prefWidth="120"/>
             <TableColumn fx:id="cognomeCol" text="Cognome" prefWidth="120"/>
             <TableColumn fx:id="emailCol" text="Email" prefWidth="150"/>
-            <TableColumn fx:id="nascitaCol" text="Data Nascita" prefWidth="140"/>
+            <TableColumn fx:id="nascitaCol" text="Data Nascita" prefWidth="80"/>
+	    <TableColumn fx:id="societa" text="Societa'" prefWidth="100"/>
         </columns>
     </TableView>
 

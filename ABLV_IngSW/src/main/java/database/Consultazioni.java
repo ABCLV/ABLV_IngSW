@@ -44,8 +44,19 @@ public abstract class Consultazioni {
 
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-			return ctx.select(CONCORRENTE.CF, CONCORRENTE.NOME, CONCORRENTE.COGNOME, CONCORRENTE.EMAIL,
-					CONCORRENTE.NASCITA).from(CONCORRENTE).fetchInto(Concorrente.class);
+			return ctx.select(
+			        CONCORRENTE.CF,
+			        CONCORRENTE.NOME,
+			        CONCORRENTE.COGNOME,
+			        CONCORRENTE.EMAIL,
+			        CONCORRENTE.NASCITA,
+			        SOCIETA.NOME.as("societa")   
+			    )
+			    .from(CONCORRENTE)
+			    .join(SOCIETA)
+			        .on(CONCORRENTE.SOCIETA.eq(SOCIETA.NOME))
+			    .fetchInto(Concorrente.class);
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
