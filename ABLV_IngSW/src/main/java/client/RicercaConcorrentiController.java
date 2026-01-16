@@ -40,9 +40,16 @@ public class RicercaConcorrentiController {
     
     @FXML
     private Button backBtn;
+    
+    private static Concorrente selezionato;
 
     
-    @FXML
+    public static Concorrente getSelezionato() {
+		return selezionato;
+	}
+
+
+	@FXML
     private void initialize() {
         // Associa le colonne ai getter della classe Concorrente
         cfCol.setCellValueFactory(new PropertyValueFactory<>("cf"));
@@ -56,16 +63,32 @@ public class RicercaConcorrentiController {
         ObservableList<Concorrente> dati = FXCollections.observableArrayList(Consultazioni.getConcorrenti());
         table.setItems(dati);
         
+        
+        table.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                selezionato = table.getSelectionModel().getSelectedItem();
+                if (selezionato != null) {
+                	System.out.println("ciao");
+                    apriGareConcorrente();
+                }
+            }
+        });
     }
     
     
-    private void apriGareConcorrente(Concorrente concorrente) {
+    private void apriGareConcorrente() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/client/concorrenteHome.fxml")
+                    getClass().getResource("/client/ricercaConcorrenteGare.fxml")
             );
 
+            Scene scene = new Scene(loader.load());
+
             
+
+            Stage stage = (Stage) table.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Profilo concorrente");
 
         } catch (Exception e) {
             e.printStackTrace();

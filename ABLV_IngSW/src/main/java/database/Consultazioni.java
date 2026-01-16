@@ -327,6 +327,7 @@ public abstract class Consultazioni {
 			for (Record4<String, LocalDate, String, String> r : rs) {
 				out.add(new GaraRow(r.value1(), r.value2().toString(), r.value3(), r.value4()));
 			}
+			System.out.println(out.toString());
 			return out;
 		}
 	}
