@@ -1,6 +1,7 @@
 package applicazione;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -24,6 +25,9 @@ public class Gara {
      *  - 1, abbiamo l'accettatore
      */
     private PropositoreIF[] autori = new PropositoreIF[2]; 
+    private Campionato campionato;
+    private Arbitro arbitro;
+    private CampoGara campoGara;
 
     /**
      * Costruttore completo.
@@ -41,7 +45,8 @@ public class Gara {
     public Gara(String codiceGara, int nProva, Tecnica tipoTecnica,
                 String criterioPunti, LocalDate dataSvolgimento, int maxPersone, int minPersone,
                 StatoConferma statoConferma, StatoGara statoGara, TipologiaGara tipoGara, LocalDate annoGara,
-                PropositoreIF propositore, PropositoreIF accettatore) {
+                PropositoreIF propositore, PropositoreIF accettatore, Campionato campionato, Arbitro arbitro,
+                CampoGara campoGara) {
     	try {
     		this.setCodice(codiceGara);
             this.setNumProva(nProva);
@@ -55,6 +60,9 @@ public class Gara {
             this.setData(annoGara);
             this.setPropositore(propositore);
             this.setAccettatore((Amministratore) accettatore);
+            this.setCampionato(campionato);
+            this.setArbitro(arbitro);
+            this.setCampoGara(campoGara);
     	} catch(Exception e) {
     		System.out.println("Errore: " + e.getMessage());
     	}
@@ -64,7 +72,7 @@ public class Gara {
     public Gara(String codiceGara, int nProva, Tecnica tipoTecnica,
             String criterioPunti, LocalDate dataSvolgimento, int maxPersone, int minPersone,
             StatoConferma statoConferma, StatoGara statoGara, TipologiaGara tipoGara,
-            PropositoreIF propositore) {
+            PropositoreIF propositore, Campionato campionato, Arbitro arbitro, CampoGara campoGara) {
 		try {
 			this.setCodice(codiceGara);
 	        this.setNumProva(nProva);
@@ -77,6 +85,9 @@ public class Gara {
 	        this.setTipoGara(tipoGara);
 	        this.setData(dataSvolgimento);
 	        this.setPropositore(propositore);
+	        this.setCampionato(campionato);
+            this.setArbitro(arbitro);
+            this.setCampoGara(campoGara);
 		} catch(Exception e) {
 			System.out.println("Errore: " + e.getMessage());
 		}
@@ -277,12 +288,23 @@ public class Gara {
     }
     
     public void setAccettatore(Amministratore a) {
-    	this.checkNull(a, "Accettatore non valido!");
     	this.autori[1] = a;
     }
-
     
-    public String getCodice() {
+    public void setCampionato(Campionato campionato) {
+		this.campionato = campionato;
+	}
+
+    public void setArbitro(Arbitro arbitro) {
+		this.arbitro = arbitro;
+	}
+    
+    public void setCampoGara(CampoGara campoGara) {
+    	this.checkNull(campoGara, "Campo gara non valido!");
+		this.campoGara = campoGara;
+	}
+
+	public String getCodice() {
 		return this.codice;
 	}
 
@@ -333,20 +355,25 @@ public class Gara {
 	public Amministratore getAccettatore() {
 		return (Amministratore) this.autori[1];
 	}
+	
+	public Campionato getCampionato() {
+		return campionato;
+	}
+	
+	public Arbitro getArbitro() {
+		return arbitro;
+	}
+
+	public CampoGara getCampoGara() {
+		return campoGara;
+	}
 
 	@Override
 	public String toString() {
-	    return "Gara {\n" +
-	           "  codiceGara      : " + codice + "\n" +
-	           "  nProva          : " + numProva + "\n" +
-	           "  tipoTecnica     : " + tecnica + "\n" +
-	           "  criterioPunti   : " + criterioPunti + "\n" +
-	           "  dataSvolgimento : " + data + "\n" +
-	           "  maxPersone      : " + maxPersone + "\n" +
-	           "  minPersone      : " + minPersone + "\n" +
-	           "  statoGara       : " + statoGara + "\n" +
-	           "  statoConferma   : " + statoConferma + "\n" +
-	           "  tipoGara        : " + tipoGara + "\n" +
-	           "}";
+		return "Gara [codice=" + codice + ", numProva=" + numProva + ", tecnica=" + tecnica + ", criterioPunti="
+				+ criterioPunti + ", data=" + data + ", maxPersone=" + maxPersone + ", minPersone=" + minPersone
+				+ ", statoGara=" + statoGara + ", statoConferma=" + statoConferma + ", tipoGara=" + tipoGara
+				+ ", autori=" + Arrays.toString(autori) + ", campionato=" + campionato + ", arbitro=" + arbitro
+				+ ", campoGara=" + campoGara + "]";
 	}
 }

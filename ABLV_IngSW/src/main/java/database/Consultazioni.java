@@ -8,6 +8,7 @@ import static dbconSQLJOOQ.generated.Tables.SOCIETA;
 import static dbconSQLJOOQ.generated.Tables.ARBITRO;
 import static dbconSQLJOOQ.generated.Tables.AMMINISTRATORE;
 import static dbconSQLJOOQ.generated.Tables.ISCRIVE;
+import static dbconSQLJOOQ.generated.Tables.CAMPIONATO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -295,31 +296,55 @@ public abstract class Consultazioni {
 	                GARA.MINPERSONE,
 	                GARA.STATOGARA,
 	                GARA.STATOCONFERMA,
-	                GARA.TIPOGARA/*,
-	                GARA.PROPOSITORE,
-	                GARA.ACCETTATORE*/
-	        )
+	                GARA.TIPOGARA,
+	                GARA.AMMINISTRATOREPROPOSTA,
+	                GARA.AMMINISTRATOREACCETTAZIONE,
+	                GARA.CAMPIONATO,
+	                GARA.ARBITRO,
+	                GARA.CAMPOGARA)
 	        .values(
 	                gara.getCodice(),
 	                gara.getNumProva(),
-	                gara.getTecnica().name(),          // se Tecnica è enum, salvo come stringa
+	                gara.getTecnica().name(),
 	                gara.getCriterioPunti(),
-	                gara.getData(), // LocalDate -> java.sql.Date
+	                gara.getData(),
 	                gara.getMaxPersone(),
 	                gara.getMinPersone(),
-	                gara.getStatoGara().name(),       // enum -> stringa
-	                gara.getStatoConferma().name(),   // enum -> stringa
-	                gara.getTipoGara().name()/*,         enum -> stringa
+	                gara.getStatoGara().name(),
+	                gara.getStatoConferma().name(),
+	                gara.getTipoGara().name(),
 	                gara.getPropositore().getIdentificatore(),
-	                gara.getAccettatore().getIdentificatore(),*/
+	                gara.getAccettatore() != null ? gara.getAccettatore().getIdentificatore() : null,
+	                gara.getCampionato() != null ? gara.getCampionato().getTitolo() : null,
+	                gara.getArbitro() != null ? gara.getArbitro().getCfArbitro() : null,
+	                gara.getCampoGara().getId()
 	        )
 	        .execute();
-	        
+
 	        return true;
 
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        return false;
+	    }
+	}
+	
+	public static boolean esisteGaraInCampionato(Campionato campionato, int numeroProva) {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	        
+	        Integer count = ctx.selectCount()
+	                .from(GARA)
+	                .where(GARA.CAMPIONATO.eq(campionato.getTitolo()))
+	                .and(GARA.NUMPROVA.eq(numeroProva))
+	                .fetchOne(0, int.class);
+	        
+	        return count != null && count > 0;
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false; // In caso di errore, assume che non esista per sicurezza
 	    }
 	}
 	
@@ -340,7 +365,53 @@ public abstract class Consultazioni {
 	    }
 	}
 
+	public static List<Campionato> getCampionati() {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	        
+	        return ctx.select(CAMPIONATO.TITOLO, CAMPIONATO.CATEGORIA)
+	                .from(CAMPIONATO)
+	                .fetchInto(Campionato.class);
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return List.of();
+	    }
+	}
 
+	public static List<Arbitro> getArbitri() {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	        
+	        return ctx.select(ARBITRO.CF, ARBITRO.NOME, ARBITRO.COGNOME, ARBITRO.SEZIONE)
+	                .from(ARBITRO)
+	                .orderBy(ARBITRO.CF)
+	                .fetchInto(Arbitro.class);
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return List.of();
+	    }
+	}
+
+	public static List<CampoGara> getCampiGara() {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	        
+	        return ctx.select(CAMPOGARA.ID, CAMPOGARA.PAESE, CAMPOGARA.CORPOIDRICO, CAMPOGARA.LUNGHEZZA, 
+	        		CAMPOGARA.DESCRIZIONE)
+	                .from(CAMPOGARA)
+	                .orderBy(CAMPOGARA.ID)
+	                .fetchInto(CampoGara.class);
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return List.of();
+	    }
+	}
 
 
 }

@@ -48,15 +48,7 @@ public class CampoGara {
 
     @Override
     public String toString() {
-        return "CampoGara {\n" +
-               "  idCampoGara = " + idCampoGara + ",\n" +
-               "  corpoIdrico = " + corpoIdrico + ",\n" +
-               "  paese       = " + paese + ",\n" +
-               "  lunghezza   = " + lunghezza + ",\n" +
-               "  descrizione = " + descrizione + "\n" +
-               "}";
+        return this.idCampoGara + ", " + this.corpoIdrico +", " + this.paese + ", " + this.descrizione;
     }
-
-
 	
 }

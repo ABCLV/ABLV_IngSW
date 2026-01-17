@@ -10,7 +10,7 @@
       alignment="CENTER"
       spacing="10"
       prefWidth="500"
-      prefHeight="450"
+      prefHeight="600"
       style="-fx-background-color: #e6f7ff;">
 
     <Label text="Proponi Gara" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #005f5f;"/>
@@ -59,6 +59,18 @@
         <!-- Data -->
         <Label text="Data Gara:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
         <DatePicker fx:id="dataPicker" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+
+        <!-- Campionato (opzionale) -->
+        <Label text="Campionato (opz.):" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="campionatoBox" GridPane.rowIndex="9" GridPane.columnIndex="1" prefWidth="200" promptText="Seleziona o lascia vuoto"/>
+
+        <!-- Arbitro (opzionale) -->
+        <Label text="Arbitro (opz.):" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="arbitroBox" GridPane.rowIndex="10" GridPane.columnIndex="1" prefWidth="200" promptText="Seleziona o lascia vuoto"/>
+
+        <!-- Campo Gara (obbligatorio) -->
+        <Label text="Campo Gara:" GridPane.rowIndex="11" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="campoGaraBox" GridPane.rowIndex="11" GridPane.columnIndex="1" prefWidth="200" promptText="Seleziona campo gara"/>
     </GridPane>
 
     <HBox spacing="10" alignment="CENTER">
