@@ -25,10 +25,6 @@ public class ProponiGaraController {
     private ComboBox<Tecnica> tecnicaBox = new ComboBox<Tecnica>();
     @FXML
     private ComboBox<TipologiaGara> tipologiaBox = new ComboBox<TipologiaGara>();
-    @FXML
-    private ComboBox<StatoGara> statoGaraBox = new ComboBox<StatoGara>();
-    @FXML
-    private ComboBox<StatoConferma> statoConfermaBox = new ComboBox<StatoConferma>();
     
     // Nuove ComboBox
     @FXML
@@ -72,8 +68,6 @@ public class ProponiGaraController {
         // ComboBox ENUM
         tecnicaBox.getItems().setAll(Tecnica.values());
         tipologiaBox.getItems().setAll(TipologiaGara.values());
-        statoGaraBox.getItems().setAll(StatoGara.values());
-        statoConfermaBox.getItems().setAll(StatoConferma.values());
 
         // Carica dati dal database per le nuove ComboBox
         caricaDatiDatabase();
@@ -230,7 +224,7 @@ public class ProponiGaraController {
             String id = text.split(",")[0].trim();
             
             for (CampoGara cg : campiGaraList) {
-                if (cg.getId().equals(id)) {
+                if (cg.getIdCampoGara().equals(id)) {
                     return cg;
                 }
             }
@@ -249,8 +243,6 @@ public class ProponiGaraController {
         int minPersone = minPersoneSpinner.getValue();
         int maxPersone = maxPersoneSpinner.getValue();
         TipologiaGara tipo = tipologiaBox.getValue();
-        StatoGara statoGara = statoGaraBox.getValue();
-        StatoConferma statoConferma = statoConfermaBox.getValue();
         
         // Nuovi campi - recupero oggetti dalle liste
         Campionato campionato = getSelectedCampionato();
@@ -258,8 +250,7 @@ public class ProponiGaraController {
         CampoGara campoGara = getSelectedCampoGara();
 
         if (tecnica == null || criterio.isEmpty() || data == null ||
-                tipo == null || statoGara == null || statoConferma == null ||
-                campoGara == null) {
+                tipo == null || campoGara == null) {
 
             Alert alert = new Alert(Alert.AlertType.WARNING, "Compilare tutti i campi obbligatori!");
             alert.showAndWait();
@@ -287,7 +278,11 @@ public class ProponiGaraController {
             // [0] propositore = società corrente
             // [1] accettatore = null
             PropositoreIF[] autori = new PropositoreIF[2];
-            autori[0] = Consultazioni.getSocieta(Session.userName);
+            if(Session.userType.equals("Societa")) {
+                autori[0] = Consultazioni.getSocieta(Session.userName);
+            } else if(Session.userType.equals("Amministratore")) {
+            	autori[0] = Consultazioni.getAmministratore(Session.userName);
+            }
             autori[1] = null;
             
             String ultimoCodice = Consultazioni.getUltimoCodiceGara();
@@ -295,8 +290,22 @@ public class ProponiGaraController {
             numero++;
             String nuovoCodice = String.format("G%03d", numero);
 
-            Gara g = new Gara(nuovoCodice, numProva, tecnica, criterio, data, maxPersone, minPersone,
-            		statoConferma, statoGara, tipo, autori[0], campionato, arbitro, campoGara);
+            Gara g = new Gara();
+            g.setCodice(nuovoCodice);
+            g.setNumProva(numProva);
+            g.setTecnica(tecnica);
+            g.setCriterioPunti(criterio);
+            g.setData(data);
+            g.setMaxPersone(maxPersone);
+            g.setMinPersone(minPersone);
+            g.setStatoConferma(StatoConferma.IN_ATTESA);
+            g.setStatoGara(StatoGara.NON_INIZIATA);
+            g.setTipoGara(tipo);
+            g.setPropositore(autori[0]);
+            g.setCampionato(campionato);
+            g.setArbitro(arbitro);
+            g.setCampoGara(campoGara);
+            
             Consultazioni.insertGara(g);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Gara proposta con successo!");

@@ -25,26 +25,48 @@ public class CampoGara {
         this.lunghezza = lunghezza;
         this.descrizione = descrizione;
     }
+    
+    public CampoGara() {}
 
-    /**
-     * Restituisce le caratteristiche del campo gara.
-     * @return descrizione testuale delle caratteristiche
-     */
-    public String getCaratteristiche() {
-        return null;
-    }
-    
-    
-    public String getId() {
-    	return this.idCampoGara;
-    }
-    
+    public String getIdCampoGara() {
+		return idCampoGara;
+	}
 
-    /**
-     * Imposta o aggiorna le caratteristiche del campo gara.
-     */
-    public void setCaratteristiche() {
-    }
+	public void setIdCampoGara(String idCampoGara) {
+		this.idCampoGara = idCampoGara;
+	}
+
+	public String getCorpoIdrico() {
+		return corpoIdrico;
+	}
+
+	public void setCorpoIdrico(String corpoIdrico) {
+		this.corpoIdrico = corpoIdrico;
+	}
+
+	public String getPaese() {
+		return paese;
+	}
+
+	public void setPaese(String paese) {
+		this.paese = paese;
+	}
+
+	public int getLunghezza() {
+		return lunghezza;
+	}
+
+	public void setLunghezza(int lunghezza) {
+		this.lunghezza = lunghezza;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
 
     @Override
     public String toString() {

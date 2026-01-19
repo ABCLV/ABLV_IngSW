@@ -28,6 +28,8 @@ public class Societa implements PropositoreIF {
         	System.out.println("Errore: " + e.getMessage());
         }
     }
+    
+    public Societa() {}
 
     /**
      * Iscrive un gruppo di concorrenti a una gara.

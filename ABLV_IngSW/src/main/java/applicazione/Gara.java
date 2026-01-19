@@ -69,42 +69,7 @@ public class Gara {
         
     }
     
-    public Gara(String codiceGara, int nProva, Tecnica tipoTecnica,
-            String criterioPunti, LocalDate dataSvolgimento, int maxPersone, int minPersone,
-            StatoConferma statoConferma, StatoGara statoGara, TipologiaGara tipoGara,
-            PropositoreIF propositore, Campionato campionato, Arbitro arbitro, CampoGara campoGara) {
-		try {
-			this.setCodice(codiceGara);
-	        this.setNumProva(nProva);
-	        this.setTecnica(tipoTecnica);
-	        this.setCriterioPunti(criterioPunti);
-	        this.setMinPersone(minPersone);
-	        this.setMaxPersone(maxPersone);
-	        this.setStatoGara(statoGara);
-	        this.setStatoConferma(statoConferma);
-	        this.setTipoGara(tipoGara);
-	        this.setData(dataSvolgimento);
-	        this.setPropositore(propositore);
-	        this.setCampionato(campionato);
-            this.setArbitro(arbitro);
-            this.setCampoGara(campoGara);
-		} catch(Exception e) {
-			System.out.println("Errore: " + e.getMessage());
-		}
-    
-}
-    
-    public Gara(String c) {
-    	try {
-    		this.setCodice(c);
-    	} catch(Exception e) {
-    		System.out.println("Errore: " + e.getMessage());
-    	}
-    }
-    
-    public Gara() {
-    	
-    }
+    public Gara() {}
 
     /**
      * Cambia lo stato organizzativo della gara.

@@ -23,6 +23,8 @@ public class Campionato {
         this.prove = new ArrayList<>();
         this.classificaTotale = new ArrayList<>();
     }
+    
+    public Campionato() {};
 
     public String getTitolo() {
 		return titolo;
