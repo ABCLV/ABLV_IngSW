@@ -141,6 +141,27 @@ Lo scopo di questa sezione è individuare i principali rischi del progetto, valu
 Per consultare le user stories, use cases e i vari diagrammi UML controllare la [cartella dei diagrammi](./exported_diagrams) nella repository
 ### **8.2 Progettazione**
 
+**Principi di progettazione adottati**
+
+Il progetto adotta principi di progettazione orientati alla gestione della complessità, come previsto dall’ingegneria del software.
+In particolare vengono applicati:
+
+* scomposizione del sistema in componenti (presentazione, dominio applicativo, accesso ai dati); 
+* Separation of Concerns, per isolare responsabilità diverse;
+* Single Responsibility Principle (SRP), per aumentare coesione e manutenibilità.
+
+Le decisioni architetturali iniziali sono state successivamente raffinate in modo iterativo, in accordo con il processo Agile adottato.
+
+**Coesione e accoppiamento**
+
+La progettazione mira a massimizzare la coesione e minimizzare l’accoppiamento, che sono attributi interni di qualità del software.
+
+* L’alta coesione è ottenuta raggruppando classi con responsabilità omogenee all’interno degli stessi package.
+* Il basso accoppiamento è reso possibile dalla limitazione delle dipendenze tra livelli architetturali e impedendo che la GUI introduca dipendenze tecnologiche nel dominio applicativo.
+
+Queste scelte migliorano la manutenibilità e supportano l’evoluzione del sistema nel tempo.
+
+
 E’ stato scelto di creare tutti i diagrammi UML visti a lezione, ecco qui la lista: 
 
 * Use Case Diagram  
@@ -154,9 +175,18 @@ E’ stato scelto di creare tutti i diagrammi UML visti a lezione, ecco qui la l
 * Package Diagram
 
 
-Mentre sul lato dell’implementazione i design patterns utilizzati sono i seguenti:  
+Mentre sul lato dell’implementazione i design patterns utilizzati sono i seguenti:
 * Abstraction-Occurrence pattern
-* Delegation pattern (se sarà necessario)
+* Wrapper / Adapter per JavaFX (FX Wrapper pattern)
+* Delegation pattern (se necessario)
+
+**Uso del Wrapper per la GUI**
+
+Per mantenere la coerenza tra modello concettuale e implementazione, la GUI non utilizza classi di dominio modificate o replicate.
+La visualizzazione delle gare avviene tramite la classe `GaraFxWrapper`, che contiene al suo interno un’istanza della classe di dominio `Gara` ed espone le proprietà necessarie al binding JavaFX.
+
+Questo approccio consente di preservare l’integrità del dominio applicativo, ridurre l’accoppiamento tra modello e interfaccia grafica e migliorare la manutenibilità del sistema.
+
 
 ### **8.3 Implementazione**
 
@@ -171,18 +201,32 @@ Inoltre per controllare la struttura del nostro codice come per esempio dipenden
 * **PMD**: utile per individuare eventuali copia/incolla nel codice che potrebbero portare ad errori.  
 * **SonarQube**: utile per individuare duplicazioni nel codice che possono venire astratte o comunque modificate per migliorare la manutenibilità del nostro progetto.
 
+**Test nelle prime fasi di sviluppo** 
+
+Nelle prime fasi di sviluppo sono stati introdotti unit test preliminari su classi semplici e isolate, con l’obiettivo di verificare l’infrastruttura di testing e applicare il principio secondo cui gli errori vanno individuati il prima possibile.
+
+Questa attività è coerente con l’approccio Agile adottato (SCRUM), che prevede l’introduzione dei test fin dalle prime iterazioni per ottenere feedback rapido, individuare tempestivamente gli errori e supportare l’evoluzione incrementale del software.
+
+
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 ## **9\. Garanzia di qualità (Quality Assurance)**
 
-Per assicurare ai nostri utenti una garanzia di qualità ottimale del nostro progetto si è scelta la tecnica di qualità del prodotto, essendo questo il nostro primo e probabilmente ultimo software non aveva senso puntare sulla qualità del processo.
+Per assicurare ai nostri utenti una garanzia di qualità ottimale del progetto si è scelto di concentrarsi principalmente sulla qualità del prodotto, ritenuta più rilevante nel contesto di un progetto didattico di dimensioni contenute.
 Per farlo si seguiranno queste regole:
 
 * **Code review**: per approvare modifiche/implementazione di medio/alto impatto è obbligatorio eseguire PR che per essere integrate nel codice principale devono venire approvate da almeno 2 persone nel team (così come specificato prima, si ricorda al personale di controllare veramente il codice e non approvare modifiche senza guardarle).  
 * **Analisi statica**: come specificato al [punto 8.4](#84-test) verranno usati dei tool per l'analisi statica del codice (Stan4J, PMD e SonarQube).  
 * **Verifica dei requisiti**: ogni settimana il Product Owner insieme allo Scrum Master durante il weekly scrum discutono se il team sta rispettando i requisiti prestabiliti e programma i prossimi passi (a livello organizzativo, poi verrà ovviamente discusso tutto con il team).  
 * **Rispetto degli standard**: ogni cosa che viene fatta deve seguire le linee guida e standard indicati al [punto 4](#4-standard-linee-guida-e-procedure) ed inoltre per il codice è stato creato un workflow automatico di Github per verificare il rispetto delle convenzioni java che indica se ci sono punti in cui non sono state seguite.  
-* **Metrica della qualità**: come metriche per controllare la qualità del nostro progetto verranno prima di tutto usate tutte quelle fornite dai tool di Analisi Statica precedentemente citati, poi se venissero ritenute utili si useranno ulteriori metriche viste a lezione.
+* **Metrica della qualità**: come metriche per controllare la qualità del nostro progetto verranno prima di tutto usate tutte quelle fornite dai tool di Analisi Statica precedentemente citati.
+Le metriche adottate misurano attributi interni di qualità del software.
+In particolare vengono considerate:
+    * numero di duplicazioni nel codice; 
+    * complessità ciclomatica di classi e metodi; 
+    * numero di code smells;
+    * numero di bug e vulnerabilità; 
+    * accoppiamento e dipendenze tra package.
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
