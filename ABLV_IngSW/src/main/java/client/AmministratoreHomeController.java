@@ -135,7 +135,7 @@ public class AmministratoreHomeController {
     @FXML
     private void apriProponiGara() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ProponiGara.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/ProponiGara.fxml"));
             Parent root = loader.load();
             
             Stage stage = new Stage();

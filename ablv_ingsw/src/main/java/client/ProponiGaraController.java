@@ -26,7 +26,6 @@ public class ProponiGaraController {
     @FXML
     private ComboBox<TipologiaGara> tipologiaBox = new ComboBox<TipologiaGara>();
     
-    // Nuove ComboBox
     @FXML
     private ComboBox<Campionato> campionatoBox = new ComboBox<Campionato>();
     @FXML

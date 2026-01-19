@@ -44,33 +44,25 @@
         <Label text="Tipologia Gara:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
         <ComboBox fx:id="tipologiaBox" GridPane.rowIndex="4" GridPane.columnIndex="1" prefWidth="200"/>
 
-        <!-- Stato Gara -->
-        <Label text="Stato Gara:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="statoGaraBox" GridPane.rowIndex="5" GridPane.columnIndex="1" prefWidth="200"/>
-
-        <!-- Stato Conferma -->
-        <Label text="Stato Conferma:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="statoConfermaBox" GridPane.rowIndex="6" GridPane.columnIndex="1" prefWidth="200"/>
-
         <!-- Criterio Punti -->
-        <Label text="Criterio Punti:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-        <TextField fx:id="criterioField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+        <Label text="Criterio Punti:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <TextField fx:id="criterioField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
         <!-- Data -->
-        <Label text="Data Gara:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-        <DatePicker fx:id="dataPicker" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+        <Label text="Data Gara:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dataPicker" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
         <!-- Campionato (opzionale) -->
-        <Label text="Campionato (opz.):" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="campionatoBox" GridPane.rowIndex="9" GridPane.columnIndex="1" prefWidth="200" promptText="Seleziona o lascia vuoto"/>
+        <Label text="Campionato (opz.):" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="campionatoBox" GridPane.rowIndex="7" GridPane.columnIndex="1" prefWidth="200" promptText="Seleziona o lascia vuoto"/>
 
         <!-- Arbitro (opzionale) -->
-        <Label text="Arbitro (opz.):" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="arbitroBox" GridPane.rowIndex="10" GridPane.columnIndex="1" prefWidth="200" promptText="Seleziona o lascia vuoto"/>
+        <Label text="Arbitro (opz.):" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="arbitroBox" GridPane.rowIndex="8" GridPane.columnIndex="1" prefWidth="200" promptText="Seleziona o lascia vuoto"/>
 
         <!-- Campo Gara (obbligatorio) -->
-        <Label text="Campo Gara:" GridPane.rowIndex="11" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="campoGaraBox" GridPane.rowIndex="11" GridPane.columnIndex="1" prefWidth="200" promptText="Seleziona campo gara"/>
+        <Label text="Campo Gara:" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="campoGaraBox" GridPane.rowIndex="9" GridPane.columnIndex="1" prefWidth="200" promptText="Seleziona campo gara"/>
     </GridPane>
 
     <HBox spacing="10" alignment="CENTER">

@@ -35,7 +35,7 @@
         <Label text="Le mie proposte di gara" 
                style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #005f5f;"/>
         
-        <TableView fx:id="garePropostosteTable" VBox.vgrow="ALWAYS">
+        <TableView fx:id="gareProposteTable" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="colCodiceProposte" text="Codice" prefWidth="80"/>
                 <TableColumn fx:id="colNumProvaProposte" text="N. Prova" prefWidth="80"/>
