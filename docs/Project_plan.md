@@ -212,7 +212,7 @@ Questa attività è coerente con l’approccio Agile adottato (SCRUM), che preve
 
 ## **9\. Garanzia di qualità (Quality Assurance)**
 
-Per assicurare ai nostri utenti una garanzia di qualità ottimale del progetto si è scelto di concentrarsi principalmente sulla qualità del prodotto, ritenuta più rilevante nel contesto di un progetto didattico di dimensioni contenute.
+Per garantire che gli utenti che utilizzeranno il nostro software abbiamo la miglior esperienza possibile abbiamo scelto di concentrarci principalmente sulla qualità del prodotto, che è più rilevante per un lavoro didattico e di dimensioni ridotte.
 Per farlo si seguiranno queste regole:
 
 * **Code review**: per approvare modifiche/implementazione di medio/alto impatto è obbligatorio eseguire PR che per essere integrate nel codice principale devono venire approvate da almeno 2 persone nel team (così come specificato prima, si ricorda al personale di controllare veramente il codice e non approvare modifiche senza guardarle).  
@@ -298,6 +298,8 @@ Questo significa che se venisse sviluppato da un singolo (come lavoro a tempo pi
 Mentre se venisse sviluppato dal nostro team a tempo pieno impiegheremmo solo 0,625 mesi ovvero circa 18-20gg lavorativi.  
 A causa però di altri impegni e materie da portare avanti abbiamo deciso di fare una media di 1h al giorno e spalmare il lavoro su circa 100 giorni.
 
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
 ## **13\. Gestione dei cambiamenti**
 
 Ad ogni cambiamento che sarà necessario seguire per le volontà utente o adeguarsi agli standard e linee guida è stato deciso di seguire il seguente protocollo:
@@ -319,9 +321,9 @@ Ad ogni cambiamento che sarà necessario seguire per le volontà utente o adegua
 
 ### **14.1 Obiettivi della manutenzione**
 
-La manutenzione del software ha lo scopo di garantire che il sistema "Gare di pesca nella bergamasca" rimanga corretto, utilizzabile, affidabile ed evolvibile anche dopo il rilascio delle versioni incrementali previste durante lo sviluppo.
+La manutenzione del software serve per garantire che il software da noi progettato rimanga affidabile anche dopo che avremo rilasciato le varie versioni incrementali dello sviluppo.
 
-Dato che il progetto adotta un processo Agile (SCRUM) che prevede rilasci frequenti, la manutenzione è un'attività continua che accompagna l'intero ciclo di vita del software.
+Siccome abbiamo adottato il metodo agile SCRUM con cadenza settimanale la manutenzione avrà un ruolo fondamentale e riguarderà tutte le parti del progetto accompagnandolo per tutta la durata del ciclo di vita del software.
 In particolare, la manutenzione mira a:
 - correggere eventuali difetti dopo i rilasci;
 - adattare il sistema a cambiamenti dell'ambiente o delle tecnologie utilizzate;
