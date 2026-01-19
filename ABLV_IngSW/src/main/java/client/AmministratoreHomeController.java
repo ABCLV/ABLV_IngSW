@@ -120,10 +120,16 @@ public class AmministratoreHomeController {
     }
         
 
-    @FXML
-    private void apriRegistraAmministratore() {
-        // Codice esistente
-    }
+    /* ---------- REGISTRA NUOVO AMMINISTRATORE ---------- */
+	@FXML
+	private void apriRegistraAmministratore(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/RegistraAmministratore.fxml"));
+		Scene scene = new Scene(loader.load());
+		Stage stage = new Stage();
+		stage.setTitle("Registra Amministratore");
+		stage.setScene(scene);
+		stage.show();
+	}
 
     @FXML
     private void apriProponiGara() {
