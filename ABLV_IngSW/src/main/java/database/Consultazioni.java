@@ -31,8 +31,6 @@ import applicazione.StatoConferma;
 import applicazione.StatoGara;
 import applicazione.Tecnica;
 import applicazione.TipologiaGara;
-import client.ConcorrenteRow;
-import client.GaraRow;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -232,36 +230,41 @@ public abstract class Consultazioni {
 	}
 
 	/* ---------- elenco gare a cui è iscritto il concorrente ---------- */
-	public static List<GaraRow> getGareConcorrente(String cf) throws SQLException {
+	public static List<Record4<String, LocalDate, String, String>> getGareConcorrenteRecord(String cf)
+			throws SQLException {
+
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-			Result<Record4<String, LocalDate, String, String>> rs = ctx
+			Result<Record4<String, LocalDate, String, String>> result = ctx
 					.select(GARA.CODICE, GARA.DATA, GARA.TECNICA, CAMPOGARA.DESCRIZIONE).from(GARA).join(ISCRIVE)
 					.on(GARA.CODICE.eq(ISCRIVE.CODICEGARA)).join(CAMPOGARA).on(GARA.CAMPOGARA.eq(CAMPOGARA.ID))
-					.where(ISCRIVE.CONCORRENTE.eq(cf)).fetch();
-
-			List<GaraRow> out = new ArrayList<>();
-			for (Record4<String, LocalDate, String, String> r : rs) {
-				out.add(new GaraRow(r.value1(), r.value2().toString(), r.value3(), r.value4()));
-			}
-			return out;
+					.where(ISCRIVE.CONCORRENTE.eq(cf)).fetch(); 
+			return result;
 		}
 	}
 
 	/* --- elenco concorrenti di una data società --- */
-	public static List<ConcorrenteRow> getConcorrentiPerSocieta(String nomeSocieta) throws SQLException {
-		try (Connection conn = SQLiteConnectionManager.getConnection()) {
-			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-			var rs = ctx.select(CONCORRENTE.CF, CONCORRENTE.NOME, CONCORRENTE.COGNOME, CONCORRENTE.EMAIL,
-					CONCORRENTE.NASCITA).from(CONCORRENTE).where(CONCORRENTE.SOCIETA.eq(nomeSocieta)).fetch();
+	public static List<Concorrente> getConcorrentiPerSocieta(String nomeSocieta) throws SQLException {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	        var rs = ctx.select(CONCORRENTE.CF, CONCORRENTE.COGNOME, CONCORRENTE.NOME,
+	                            CONCORRENTE.EMAIL, CONCORRENTE.NASCITA)
+	                    .from(CONCORRENTE)
+	                    .where(CONCORRENTE.SOCIETA.eq(nomeSocieta))
+	                    .fetch();
 
-			List<ConcorrenteRow> out = new ArrayList<>();
-			for (var r : rs) {
-				out.add(new ConcorrenteRow(r.get(CONCORRENTE.CF), r.get(CONCORRENTE.NOME), r.get(CONCORRENTE.COGNOME),
-						r.get(CONCORRENTE.EMAIL), r.get(CONCORRENTE.NASCITA).toString()));
-			}
-			return out;
-		}
+	        List<Concorrente> out = new ArrayList<>();
+	        for (var r : rs) {
+	            out.add(new Concorrente(
+	                    r.get(CONCORRENTE.CF),
+	                    r.get(CONCORRENTE.COGNOME),
+	                    r.get(CONCORRENTE.NOME),
+	                    r.get(CONCORRENTE.EMAIL),
+	                    r.get(CONCORRENTE.NASCITA)
+	            ));
+	        }
+	        return out;
+	    }
 	}
 
 	public static boolean esisteArbitro(String cf) throws SQLException {
@@ -277,48 +280,33 @@ public abstract class Consultazioni {
 			return ctx.fetchExists(ctx.selectFrom(SOCIETA).where(SOCIETA.NOME.eq(nome)));
 		}
 	}
-	
+
 	public static boolean insertGara(Gara gara) {
-	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
-	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+		try (Connection conn = SQLiteConnectionManager.getConnection()) {
+			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-	        ctx.insertInto(GARA,
-	                GARA.CODICE,
-	                GARA.NUMPROVA,
-	                GARA.TECNICA,
-	                GARA.CRITERIOPUNTI,
-	                GARA.DATA,
-	                GARA.MAXPERSONE,
-	                GARA.MINPERSONE,
-	                GARA.STATOGARA,
-	                GARA.STATOCONFERMA,
-	                GARA.TIPOGARA/*,
-	                GARA.PROPOSITORE,
-	                GARA.ACCETTATORE*/
-	        )
-	        .values(
-	                gara.getCodice(),
-	                gara.getNumProva(),
-	                gara.getTecnica().name(),          // se Tecnica è enum, salvo come stringa
-	                gara.getCriterioPunti(),
-	                gara.getData(), // LocalDate -> java.sql.Date
-	                gara.getMaxPersone(),
-	                gara.getMinPersone(),
-	                gara.getStatoGara().name(),       // enum -> stringa
-	                gara.getStatoConferma().name(),   // enum -> stringa
-	                gara.getTipoGara().name()/*,         enum -> stringa
-	                gara.getPropositore().getIdentificatore(),
-	                gara.getAccettatore().getIdentificatore(),*/
-	        )
-	        .execute();
-	        
-	        return true;
+			ctx.insertInto(GARA, GARA.CODICE, GARA.NUMPROVA, GARA.TECNICA, GARA.CRITERIOPUNTI, GARA.DATA,
+					GARA.MAXPERSONE, GARA.MINPERSONE, GARA.STATOGARA, GARA.STATOCONFERMA,
+					GARA.TIPOGARA/*
+									 * , GARA.PROPOSITORE, GARA.ACCETTATORE
+									 */
+			).values(gara.getCodice(), gara.getNumProva(), gara.getTecnica().name(), // se Tecnica è enum, salvo come
+																						// stringa
+					gara.getCriterioPunti(), gara.getData(), // LocalDate -> java.sql.Date
+					gara.getMaxPersone(), gara.getMinPersone(), gara.getStatoGara().name(), // enum -> stringa
+					gara.getStatoConferma().name(), // enum -> stringa
+					gara.getTipoGara().name()/*
+												 * , enum -> stringa gara.getPropositore().getIdentificatore(),
+												 * gara.getAccettatore().getIdentificatore(),
+												 */
+			).execute();
 
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        return false;
-	    }
+			return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
-
 
 }

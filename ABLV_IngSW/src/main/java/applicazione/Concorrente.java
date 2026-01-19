@@ -28,11 +28,6 @@ public class Concorrente {
         this.nascita = nascita;
     }
 
-    @Override
-	public String toString() {
-		return "Concorrente [cf=" + cf + ", cognome=" + cognome + ", nome=" + nome + ", email=" + email + ", nascita="
-				+ nascita + "]";
-	}
 
 	/**
      * Iscrive il concorrente a una gara.
@@ -84,5 +79,56 @@ public class Concorrente {
      */
     public boolean aggiungiRecensione(String codice, Recensione rec) {
         return false;
+    }
+    /* ---------- GETTER ---------- */
+
+    public String getCf() {
+        return cf;
+    }
+
+    public String getCognome() {
+        return cognome;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public LocalDate getNascita() {
+        return nascita;
+    }
+
+    /* ---------- SETTER ---------- */
+
+    public void setCf(String cf) {
+        this.cf = cf;
+    }
+
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setNascita(LocalDate nascita) {
+        this.nascita = nascita;
+    }
+
+    /* ---------- ALTRO ---------- */
+
+    @Override
+    public String toString() {
+        return "Concorrente [cf=" + cf + ", cognome=" + cognome + ", nome=" + nome + ", email=" + email + ", nascita="
+                + nascita + "]";
     }
 }
