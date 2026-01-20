@@ -1,7 +1,6 @@
 package client;
 
 import applicazione.*;
-import database.Consultazioni;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -69,12 +68,13 @@ public class AmministratoreHomeController {
 		// Configura colonne tabella gare da confermare
 		setupColonneGareDaConfermare();
 
-		this.amministratoreCorrente = Consultazioni.getAmministratoreByCF(Session.userName);
-
-		// Carica i dati
-		caricaDati();
 	}
 
+	public void setAmministratore(Amministratore amministratore) {
+	    this.amministratoreCorrente = amministratore;
+	    caricaDati(); 
+	}
+	
 	private void setupColonneGareProposte() {
 		colCodiceProposte.setCellValueFactory(new PropertyValueFactory<>("codice"));
 		colNumProvaProposte.setCellValueFactory(new PropertyValueFactory<>("numProva"));
@@ -102,19 +102,17 @@ public class AmministratoreHomeController {
 	}
 
 	private void caricaDati() {
-		try {
-			// Carica le gare proposte dall'amministratore corrente
-			ObservableList<Gara> mieProposte = FXCollections
-					.observableArrayList(Consultazioni.getGareProposteDaAmministratore(Session.userName));
-			gareProposteTable.setItems(mieProposte);
+	    try {
+	        ObservableList<Gara> mieProposte = 
+	            FXCollections.observableArrayList(amministratoreCorrente.mieProposte());
+	        gareProposteTable.setItems(mieProposte);
 
-			// Carica le gare in attesa di conferma
-			ObservableList<Gara> gareDaConf = FXCollections
-					.observableArrayList(Consultazioni.getGareDaConfermare(Session.userName));
-			gareDaConfermare.setItems(gareDaConf);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	        ObservableList<Gara> gareDaConf = 
+	            FXCollections.observableArrayList(amministratoreCorrente.gareDaConfermare());
+	        gareDaConfermare.setItems(gareDaConf);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 
 	/* ---------- REGISTRA NUOVO AMMINISTRATORE ---------- */

@@ -80,11 +80,18 @@ public class LoginController {
 		/* --- salva sessione --- */
 		Session.userName = id;
 		Session.userType = tipo;
+		
+		
+		
 
 		/* --- carica pagina dedicata --- */
 		String fxml = "/client/" + tipo + "Home.fxml";
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
 		Scene scene = new Scene(loader.load());
+		if (tipo.equals("Amministratore")) {
+		    AmministratoreHomeController ctrl = loader.getController();
+		    ctrl.setAmministratore(Consultazioni.getAmministratoreByCF(id));
+		}
 		Stage stage = (Stage) tipoCombo.getScene().getWindow();
 		stage.setScene(scene);
 		stage.setTitle(tipo + " Home");

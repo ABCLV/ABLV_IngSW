@@ -1,6 +1,7 @@
 package applicazione;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import client.Session;
 import database.Consultazioni;
@@ -10,71 +11,88 @@ import database.Consultazioni;
  */
 public class Amministratore implements PropositoreIF {
 
-    public String cfAmministratore;
-    private String nome;
-    private String cognome;
+	public String cfAmministratore;
+	private String nome;
+	private String cognome;
 
-    /**
-     * Costruttore completo.
-     * @param cfAmministratore codice fiscale dell'amministratore
-     * @param nome nome dell'amministratore
-     * @param cognome cognome dell'amministratore
-     */
-    public Amministratore(String cfAmministratore, String nome, String cognome) {
-        this.cfAmministratore = cfAmministratore;
-        this.nome = nome;
-        this.cognome = cognome;
-    }
-    
-    public Amministratore() {}
+	/**
+	 * Costruttore completo.
+	 * 
+	 * @param cfAmministratore codice fiscale dell'amministratore
+	 * @param nome             nome dell'amministratore
+	 * @param cognome          cognome dell'amministratore
+	 */
+	public Amministratore(String cfAmministratore, String nome, String cognome) {
+		this.cfAmministratore = cfAmministratore;
+		this.nome = nome;
+		this.cognome = cognome;
+	}
 
-    /**
-     * Crea e proponi una nuova gara.
-     * @param gara oggetto gara da inserire nel sistema
-     */
-    public void proponiGara(Gara gara) {
-    	if(gara.getPropositore().getNome().isEmpty()) {
-    		gara.setPropositore(this);
-    	}
-    	Consultazioni.insertGara(gara);
-    }
+	public Amministratore() {
+	}
 
-    /**
-     * Approva una proposta di gara.
-     * @param numGara numero identificativo della gara
-     * @throws SQLException 
-     */
-    public boolean confermaProposta(String numGara) throws SQLException {
-    	return Consultazioni.accettaGara(numGara, this.cfAmministratore);
-    }
+	/**
+	 * Crea e proponi una nuova gara.
+	 * 
+	 * @param gara oggetto gara da inserire nel sistema
+	 */
+	public void proponiGara(Gara gara) {
+		if (gara.getPropositore().getNome().isEmpty()) {
+			gara.setPropositore(this);
+		}
+		Consultazioni.insertGara(gara);
+	}
+	
+	
 
-    /**
-     * Rifiuta una proposta di gara inviando il motivo.
-     * @param numGara numero identificativo della gara
-     * @param motivo motivazione del rifiuto
-     */
-    public boolean negaProposta(String codiceGara) throws SQLException {
-        return Consultazioni.rifiutaGara(codiceGara, this.cfAmministratore);
-    }
-    /**
-     * Invia notifica alle società interessate.
-     */
-    private void notificaSocieta() {
-    }
+	/**
+	 * Approva una proposta di gara.
+	 * 
+	 * @param numGara numero identificativo della gara
+	 * @throws SQLException
+	 */
+	public boolean confermaProposta(String numGara) throws SQLException {
+		return Consultazioni.accettaGara(numGara, this.cfAmministratore);
+	}
 
-    /**
-     * Invia notifica al comune competente.
-     */
-    private void notificaComune() {
-    }
+	/**
+	 * Rifiuta una proposta di gara inviando il motivo.
+	 * 
+	 * @param numGara numero identificativo della gara
+	 * @param motivo  motivazione del rifiuto
+	 */
+	public boolean negaProposta(String codiceGara) throws SQLException {
+		return Consultazioni.rifiutaGara(codiceGara, this.cfAmministratore);
+	}
 
-    /**
-     * Restituisce il testo del regolamento aggiornato.
-     * @return testo completo del regolamento
-     */
-    public String regolamento() {
-        return null;
-    }
+	public List<Gara> mieProposte() throws SQLException {
+		return Consultazioni.getGareProposteDaAmministratore(this.cfAmministratore);
+	}
+
+	public List<Gara> gareDaConfermare() throws SQLException {
+		return Consultazioni.getGareDaConfermare(this.cfAmministratore);
+	}
+
+	/**
+	 * Invia notifica alle società interessate.
+	 */
+	private void notificaSocieta() {
+	}
+
+	/**
+	 * Invia notifica al comune competente.
+	 */
+	private void notificaComune() {
+	}
+
+	/**
+	 * Restituisce il testo del regolamento aggiornato.
+	 * 
+	 * @return testo completo del regolamento
+	 */
+	public String regolamento() {
+		return null;
+	}
 
 	public String getCfAmministratore() {
 		return cfAmministratore;
@@ -99,15 +117,13 @@ public class Amministratore implements PropositoreIF {
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
-	
+
 	public String getIdentificatore() {
 		return this.getCfAmministratore();
 	}
-	
+
 	@Override
 	public String toString() {
-		return this.cfAmministratore + ":"
-				+ "\n - " + this.cognome
-				+ "\n - " + this.nome;
+		return this.cfAmministratore + ":" + "\n - " + this.cognome + "\n - " + this.nome;
 	}
 }
