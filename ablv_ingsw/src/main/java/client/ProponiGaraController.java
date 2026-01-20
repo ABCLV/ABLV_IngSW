@@ -286,7 +286,7 @@ public class ProponiGaraController {
 
         try {
             // Autori:
-            // [0] propositore = società corrente
+            // [0] propositore = società/amministratore corrente
             // [1] accettatore = null
             PropositoreIF[] autori = new PropositoreIF[2];
             if(Session.userType.equals("Societa")) {

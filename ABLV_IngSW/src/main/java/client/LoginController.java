@@ -28,7 +28,7 @@ public class LoginController {
 	/* ---------- inizializza ---------- */
 	@FXML
 	private void initialize() {
-		tipoCombo.getItems().addAll("Concorrente", "Società", "Amministratore", "Arbitro");
+		tipoCombo.getItems().addAll("Concorrente", "Societa", "Amministratore", "Arbitro");
 		tipoCombo.getSelectionModel().selectFirst();
 		mostraCampi();
 	}
@@ -44,7 +44,7 @@ public class LoginController {
 		idLabel.setVisible(true);
 		switch (tipo) {
 		case "Concorrente" -> idLabel.setText("Codice Fiscale:");
-		case "Società" -> idLabel.setText("Nome:");
+		case "Societa" -> idLabel.setText("Nome:");
 		case "Amministratore" -> idLabel.setText("Codice Fiscale:");
 		case "Arbitro" -> idLabel.setText("Codice Fiscale:");
 		}
@@ -82,7 +82,7 @@ public class LoginController {
 		Session.userType = tipo;
 
 		/* --- carica pagina dedicata --- */
-		String fxml = "/client/" + tipo.replace("à", "a") + "Home.fxml";
+		String fxml = "/client/" + tipo + "Home.fxml";
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
 		Scene scene = new Scene(loader.load());
 		Stage stage = (Stage) tipoCombo.getScene().getWindow();

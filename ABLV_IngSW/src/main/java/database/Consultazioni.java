@@ -169,7 +169,7 @@ public abstract class Consultazioni {
 			switch (tipo) {
 			case "Concorrente" -> cnt = ctx.fetchCount(
 					ctx.selectFrom(CONCORRENTE).where(CONCORRENTE.CF.eq(id)).and(CONCORRENTE.PASSWORD_HASH.eq(hash)));
-			case "Società" -> cnt = ctx
+			case "Societa" -> cnt = ctx
 					.fetchCount(ctx.selectFrom(SOCIETA).where(SOCIETA.NOME.eq(id)).and(SOCIETA.PASSWORD_HASH.eq(hash)));
 			case "Amministratore" -> cnt = ctx.fetchCount(ctx.selectFrom(AMMINISTRATORE).where(AMMINISTRATORE.CF.eq(id))
 					.and(AMMINISTRATORE.PASSWORD_HASH.eq(hash)));
