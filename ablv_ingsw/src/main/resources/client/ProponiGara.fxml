@@ -46,7 +46,7 @@
 
         <!-- Criterio Punti -->
         <Label text="Criterio Punti:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-        <TextField fx:id="criterioField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        <ComboBox fx:id="criterioBox" GridPane.rowIndex="5" GridPane.columnIndex="1" prefWidth="200"/>
 
         <!-- Data -->
         <Label text="Data Gara:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>

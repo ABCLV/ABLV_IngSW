@@ -12,7 +12,7 @@ public class Gara {
 	private String codice;
     private int numProva;
     private Tecnica tecnica;
-    private String criterioPunti;
+    private CriterioPunti criterioPunti;
     private LocalDate data;
     private int maxPersone;
     private int minPersone;
@@ -43,7 +43,7 @@ public class Gara {
      * @param annoGara        anno di edizione
      */
     public Gara(String codiceGara, int nProva, Tecnica tipoTecnica,
-                String criterioPunti, LocalDate dataSvolgimento, int maxPersone, int minPersone,
+                CriterioPunti criterioPunti, LocalDate dataSvolgimento, int maxPersone, int minPersone,
                 StatoConferma statoConferma, StatoGara statoGara, TipologiaGara tipoGara, LocalDate annoGara,
                 PropositoreIF propositore, PropositoreIF accettatore, Campionato campionato, Arbitro arbitro,
                 CampoGara campoGara) {
@@ -208,7 +208,7 @@ public class Gara {
     	this.checkNull(tecnica, "Tipo di tecnica non valido!");
     	this.tecnica = tecnica;
     }
-    public void setCriterioPunti(String criterioPunti) {
+    public void setCriterioPunti(CriterioPunti criterioPunti) {
     	this.checkNull(criterioPunti, "Criterio punti non valido!");
     	this.criterioPunti = criterioPunti;
     }
@@ -281,7 +281,7 @@ public class Gara {
 		return this.tecnica;
 	}
 
-	public String getCriterioPunti() {
+	public CriterioPunti getCriterioPunti() {
 		return this.criterioPunti;
 	}
 

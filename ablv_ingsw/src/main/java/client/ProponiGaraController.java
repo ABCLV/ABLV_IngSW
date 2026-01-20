@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import applicazione.*;
 
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.util.List;
 
 public class ProponiGaraController {
 
+	IntegerStringConverter converter = new IntegerStringConverter();
     @FXML
     private Spinner<Integer> numProvaSpinner = new Spinner<Integer>();
     @FXML
@@ -34,7 +36,7 @@ public class ProponiGaraController {
     private ComboBox<CampoGara> campoGaraBox = new ComboBox<CampoGara>();
 
     @FXML
-    private TextField criterioField = new TextField();
+    private ComboBox<CriterioPunti> criterioBox = new ComboBox<CriterioPunti>();
     @FXML
     private DatePicker dataPicker = new DatePicker();
 
@@ -50,6 +52,16 @@ public class ProponiGaraController {
     
     @FXML
     public void initialize() {
+
+    	// Rendo editabili gli spinner
+    	numProvaSpinner.setEditable(true);
+    	minPersoneSpinner.setEditable(true);
+    	maxPersoneSpinner.setEditable(true);
+    	
+    	// Valido l'input degli spinner
+    	numProvaSpinner.getEditor().setTextFormatter(new TextFormatter<>(converter));
+    	minPersoneSpinner.getEditor().setTextFormatter(new TextFormatter<>(converter));
+    	maxPersoneSpinner.getEditor().setTextFormatter(new TextFormatter<>(converter));
 
         // Spinner numerici
         numProvaSpinner.setValueFactory(
@@ -67,6 +79,7 @@ public class ProponiGaraController {
         // ComboBox ENUM
         tecnicaBox.getItems().setAll(Tecnica.values());
         tipologiaBox.getItems().setAll(TipologiaGara.values());
+        criterioBox.getItems().setAll(CriterioPunti.values());
 
         // Carica dati dal database per le nuove ComboBox
         caricaDatiDatabase();
@@ -237,18 +250,17 @@ public class ProponiGaraController {
 
         int numProva = numProvaSpinner.getValue();
         Tecnica tecnica = tecnicaBox.getValue();
-        String criterio = criterioField.getText().trim();
+        CriterioPunti criterio = criterioBox.getValue();
         LocalDate data = dataPicker.getValue();
         int minPersone = minPersoneSpinner.getValue();
         int maxPersone = maxPersoneSpinner.getValue();
         TipologiaGara tipo = tipologiaBox.getValue();
         
-        // Nuovi campi - recupero oggetti dalle liste
         Campionato campionato = getSelectedCampionato();
         Arbitro arbitro = getSelectedArbitro();
         CampoGara campoGara = getSelectedCampoGara();
 
-        if (tecnica == null || criterio.isEmpty() || data == null ||
+        if (tecnica == null || criterio == null || data == null ||
                 tipo == null || campoGara == null) {
 
             Alert alert = new Alert(Alert.AlertType.WARNING, "Compilare tutti i campi obbligatori!");

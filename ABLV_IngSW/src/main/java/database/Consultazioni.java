@@ -100,8 +100,8 @@ public abstract class Consultazioni {
 						Gara g = new Gara();
 						g.setCodice(record.get(GARA.CODICE));
 						g.setNumProva(record.get(GARA.NUMPROVA));
-						g.setTecnica(Tecnica.valueOf(record.get(GARA.TECNICA).toUpperCase())); // enum
-						g.setCriterioPunti(record.get(GARA.CRITERIOPUNTI));
+						g.setTecnica(Tecnica.valueOf(record.get(GARA.TECNICA).toUpperCase()));
+						g.setCriterioPunti(CriterioPunti.valueOf(record.get(GARA.CRITERIOPUNTI).toUpperCase()));
 						g.setData(record.get(GARA.DATA));
 						g.setMaxPersone(record.get(GARA.MAXPERSONE));
 						g.setMinPersone(record.get(GARA.MINPERSONE));
@@ -325,7 +325,7 @@ public abstract class Consultazioni {
 	                gara.getCodice(),
 	                gara.getNumProva(),
 	                gara.getTecnica().name(),
-	                gara.getCriterioPunti(),
+	                gara.getCriterioPunti().name(),
 	                gara.getMinPersone(),
 	                gara.getMaxPersone(),
 	                gara.getStatoGara().name(),
@@ -421,11 +421,14 @@ public abstract class Consultazioni {
 	        
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 	        
-	        return ctx.select(CAMPOGARA.ID, CAMPOGARA.PAESE, CAMPOGARA.CORPOIDRICO, CAMPOGARA.LUNGHEZZA, 
+	        List<CampoGara> list = ctx.select(CAMPOGARA.ID.as("idCampoGara"), CAMPOGARA.PAESE, CAMPOGARA.CORPOIDRICO, CAMPOGARA.LUNGHEZZA, 
 	        		CAMPOGARA.DESCRIZIONE)
 	                .from(CAMPOGARA)
 	                .orderBy(CAMPOGARA.ID)
 	                .fetchInto(CampoGara.class);
+	        
+	        System.out.println(list);
+	        return list;
 	        
 	    } catch (SQLException e) {
 	        e.printStackTrace();
