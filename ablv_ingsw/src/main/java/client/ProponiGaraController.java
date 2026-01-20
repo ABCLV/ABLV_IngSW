@@ -1,7 +1,6 @@
 package client;
 
 import database.Consultazioni;
-import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,7 +10,6 @@ import javafx.util.converter.IntegerStringConverter;
 import applicazione.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class ProponiGaraController {
 

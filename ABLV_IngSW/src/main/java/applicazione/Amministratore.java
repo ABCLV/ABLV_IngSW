@@ -103,4 +103,11 @@ public class Amministratore implements PropositoreIF {
 	public String getIdentificatore() {
 		return this.getCfAmministratore();
 	}
+	
+	@Override
+	public String toString() {
+		return this.cfAmministratore + ":"
+				+ "\n - " + this.cognome
+				+ "\n - " + this.nome;
+	}
 }

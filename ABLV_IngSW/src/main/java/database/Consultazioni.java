@@ -244,10 +244,10 @@ public abstract class Consultazioni {
 	public static Amministratore getAmministratore(String cf) throws SQLException {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-			Amministratore amm = ctx.select(AMMINISTRATORE.CF, AMMINISTRATORE.NOME, AMMINISTRATORE.COGNOME)
+			Amministratore amm = ctx.select(AMMINISTRATORE.CF.as("cfAmministratore"), AMMINISTRATORE.NOME, AMMINISTRATORE.COGNOME)
 					.from(AMMINISTRATORE).where(AMMINISTRATORE.CF.eq(cf)).fetchOneInto(Amministratore.class);
 			if (amm == null)
-				throw new IllegalArgumentException("Amministratore non trovat0");
+				throw new IllegalArgumentException("Amministratore non trovato");
 			return amm;
 		}
 	}
@@ -312,8 +312,7 @@ public abstract class Consultazioni {
 							gara.getStatoGara().name(), gara.getStatoConferma().name(), gara.getTipoGara().name(),
 							gara.getData(), gara.getCampionato() != null ? gara.getCampionato().getTitolo() : null,
 							gara.getArbitro() != null ? gara.getArbitro().getCfArbitro() : null,
-							gara.getPropositore() instanceof Amministratore ? gara.getPropositore().getIdentificatore()
-									: null,
+							gara.getPropositore() instanceof Amministratore ? gara.getPropositore().getIdentificatore() : null,
 							gara.getAccettatore() != null ? gara.getAccettatore().getIdentificatore() : null,
 							gara.getPropositore() instanceof Societa ? gara.getPropositore().getIdentificatore() : null,
 							gara.getCampoGara().getIdCampoGara())
@@ -387,12 +386,9 @@ public abstract class Consultazioni {
 
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-			List<CampoGara> list = ctx.select(CAMPOGARA.ID.as("idCampoGara"), CAMPOGARA.PAESE, CAMPOGARA.CORPOIDRICO,
+			return ctx.select(CAMPOGARA.ID.as("idCampoGara"), CAMPOGARA.PAESE, CAMPOGARA.CORPOIDRICO,
 					CAMPOGARA.LUNGHEZZA, CAMPOGARA.DESCRIZIONE).from(CAMPOGARA).orderBy(CAMPOGARA.ID)
 					.fetchInto(CampoGara.class);
-
-			System.out.println(list);
-			return list;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -435,7 +431,6 @@ public abstract class Consultazioni {
 					g.setCampionato(campionato);
 				}
 
-				System.out.println(g);
 				out.add(g);
 			}
 
