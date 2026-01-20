@@ -1,5 +1,8 @@
 package applicazione;
 
+import java.sql.SQLException;
+
+import client.Session;
 import database.Consultazioni;
 
 /**
@@ -39,8 +42,10 @@ public class Amministratore implements PropositoreIF {
     /**
      * Approva una proposta di gara.
      * @param numGara numero identificativo della gara
+     * @throws SQLException 
      */
-    public void confermaProposta(int numGara) {
+    public boolean confermaProposta(String numGara) throws SQLException {
+    	return Consultazioni.accettaGara(numGara, this.cfAmministratore);
     }
 
     /**
@@ -48,9 +53,9 @@ public class Amministratore implements PropositoreIF {
      * @param numGara numero identificativo della gara
      * @param motivo motivazione del rifiuto
      */
-    public void negaProposta(int numGara, String motivo) {
+    public boolean negaProposta(String codiceGara) throws SQLException {
+        return Consultazioni.rifiutaGara(codiceGara, this.cfAmministratore);
     }
-
     /**
      * Invia notifica alle società interessate.
      */
