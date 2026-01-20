@@ -443,21 +443,22 @@ public abstract class Consultazioni {
 
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-			Result<Record7<String, Integer, String, LocalDate, String, String, String>> rs = ctx
+			Result<Record8<String, Integer, String, LocalDate, String, String, String, String>> rs = ctx
 					.select(GARA.CODICE, GARA.NUMPROVA, GARA.TECNICA, GARA.DATA, GARA.CAMPOGARA, CAMPIONATO.TITOLO,
-							CAMPIONATO.CATEGORIA)
+							CAMPIONATO.CATEGORIA, GARA.STATOCONFERMA)
 					.from(GARA).leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
 					.where(GARA.AMMINISTRATOREPROPOSTA.eq(amm)).fetch();
 
 			List<Gara> out = new ArrayList<>();
 
-			for (Record7<String, Integer, String, LocalDate, String, String, String> r : rs) {
+			for (Record8<String, Integer, String, LocalDate, String, String, String, String> r : rs) {
 
 				Gara g = new Gara();
 				g.setCodice(r.value1());
 				g.setNumProva(r.value2());
 				g.setTecnica(Tecnica.valueOf(r.value3().toUpperCase()));
 				g.setData(r.value4());
+				g.setStatoConferma(StatoConferma.valueOf(r.value8().toUpperCase()));
 
 				// CampoGara con setter
 				CampoGara campo = new CampoGara();
@@ -479,6 +480,49 @@ public abstract class Consultazioni {
 		}
 	}
 
+	public static List<Gara> getGareProposteDaSocieta(String soc) throws SQLException {
+
+		try (Connection conn = SQLiteConnectionManager.getConnection()) {
+
+			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+			Result<Record8<String, Integer, String, LocalDate, String, String, String, String>> rs = ctx
+					.select(GARA.CODICE, GARA.NUMPROVA, GARA.TECNICA, GARA.DATA, GARA.CAMPOGARA, CAMPIONATO.TITOLO,
+							CAMPIONATO.CATEGORIA, GARA.STATOCONFERMA)
+					.from(GARA).leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
+					.where(GARA.SOCIETA.eq(soc)).fetch();
+
+			List<Gara> out = new ArrayList<>();
+
+			for (Record8<String, Integer, String, LocalDate, String, String, String, String> r : rs) {
+
+				Gara g = new Gara();
+				g.setCodice(r.value1());
+				g.setNumProva(r.value2());
+				g.setTecnica(Tecnica.valueOf(r.value3().toUpperCase()));
+				g.setData(r.value4());
+				g.setStatoConferma(StatoConferma.valueOf(r.value8().toUpperCase()));
+
+				// CampoGara con setter
+				CampoGara campo = new CampoGara();
+				campo.setIdCampoGara(r.value5());
+				g.setCampoGara(campo);
+
+				// Campionato (se non è null)
+				Campionato campionato = new Campionato();
+				if (r.value6() != null) {
+					campionato.setTitolo(r.value6());
+					campionato.setCategoria(r.value7());
+					g.setCampionato(campionato);
+				}
+
+				out.add(g);
+			}
+
+			return out;
+		}
+	}
+	
 	public static List<Gara> getGareDaConfermare(String amm) throws SQLException {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);

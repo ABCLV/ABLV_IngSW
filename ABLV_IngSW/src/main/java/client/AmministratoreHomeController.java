@@ -22,38 +22,24 @@ public class AmministratoreHomeController {
 	private Label welcomeLabel;
 
 	// Tabella gare proposte da me
-	@FXML
-	private TableView<Gara> gareProposteTable = new TableView<Gara>();
-	@FXML
-	private TableColumn<Gara, String> colCodiceProposte;
-	@FXML
-	private TableColumn<Gara, Integer> colNumProvaProposte;
-	@FXML
-	private TableColumn<Gara, String> colTecnicaProposte;
-	@FXML
-	private TableColumn<Gara, LocalDate> colDataProposte;
-	@FXML
-	private TableColumn<Gara, String> colCampionatoProposte;
-	@FXML
-	private TableColumn<Gara, String> colCampoGaraProposte;
+	@FXML private TableView<Gara> gareProposteTable = new TableView<Gara>();
+	@FXML private TableColumn<Gara, String> colCodiceProposte;
+	@FXML private TableColumn<Gara, Integer> colNumProvaProposte;
+	@FXML private TableColumn<Gara, String> colTecnicaProposte;
+	@FXML private TableColumn<Gara, LocalDate> colDataProposte;
+	@FXML private TableColumn<Gara, String> colCampionatoProposte;
+	@FXML private TableColumn<Gara, String> colCampoGaraProposte;
+	@FXML private TableColumn<Gara, String> colStatoConfermaProposte;
 
 	// Tabella gare da confermare
-	@FXML
-	private TableView<Gara> gareDaConfermare = new TableView<Gara>();
-	@FXML
-	private TableColumn<Gara, String> colCodiceConferma;
-	@FXML
-	private TableColumn<Gara, Integer> colNumProvaConferma;
-	@FXML
-	private TableColumn<Gara, String> colTecnicaConferma;
-	@FXML
-	private TableColumn<Gara, LocalDate> colDataConferma;
-	@FXML
-	private TableColumn<Gara, String> colCampionatoConferma;
-	@FXML
-	private TableColumn<Gara, String> colPropositoreConferma;
-	@FXML
-	private TableColumn<Gara, String> colCampoGaraConferma;
+	@FXML private TableView<Gara> gareDaConfermare = new TableView<Gara>();
+	@FXML private TableColumn<Gara, String> colCodiceConferma;
+	@FXML private TableColumn<Gara, Integer> colNumProvaConferma;
+	@FXML private TableColumn<Gara, String> colTecnicaConferma;
+	@FXML private TableColumn<Gara, LocalDate> colDataConferma;
+	@FXML private TableColumn<Gara, String> colCampionatoConferma;
+	@FXML private TableColumn<Gara, String> colPropositoreConferma;
+	@FXML private TableColumn<Gara, String> colCampoGaraConferma;
 
 	private Amministratore amministratoreCorrente;
 
@@ -85,6 +71,8 @@ public class AmministratoreHomeController {
 				cellData.getValue().getCampionato() != null ? cellData.getValue().getCampionato().getTitolo() : "N/A"));
 		colCampoGaraProposte.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
 				cellData.getValue().getCampoGara().getIdCampoGara()));
+		colStatoConfermaProposte.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
+				cellData.getValue().getStatoConferma().name()));
 	}
 
 	private void setupColonneGareDaConfermare() {
