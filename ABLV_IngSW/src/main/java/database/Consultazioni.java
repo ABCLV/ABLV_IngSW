@@ -562,7 +562,7 @@ public abstract class Consultazioni {
 					.set(GARA.AMMINISTRATOREACCETTAZIONE, amm)
 					.where(GARA.CODICE.eq(codice).and(GARA.STATOCONFERMA.eq(StatoConferma.IN_ATTESA.name()))
 							.and(GARA.AMMINISTRATOREACCETTAZIONE.isNull()) // Solo se non è già stata rifiutata
-							.and(GARA.AMMINISTRATOREPROPOSTA.notEqual(amm)))
+							.and(GARA.AMMINISTRATOREPROPOSTA.notEqual(amm).or(GARA.AMMINISTRATOREPROPOSTA.isNull())))
 					.execute();
 
 			return rowsAffected > 0;
