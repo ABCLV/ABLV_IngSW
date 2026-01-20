@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="client.ProponiGaraController"
+      alignment="CENTER"
+      spacing="10"
+      prefWidth="500"
+      prefHeight="600"
+      style="-fx-background-color: #e6f7ff;">
+
+    <Label text="Proponi Gara" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #005f5f;"/>
+
+    <GridPane hgap="10" vgap="10">
+	    <padding>
+	        <Insets top="10" right="10" bottom="10" left="10"/>
+	    </padding>
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" percentWidth="40"/>
+            <ColumnConstraints halignment="LEFT" percentWidth="60"/>
+        </columnConstraints>
+
+        <!-- Numero Prova -->
+        <Label text="Numero Prova:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <Spinner fx:id="numProvaSpinner" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <!-- Min Persone -->
+        <Label text="Min Persone:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <Spinner fx:id="minPersoneSpinner" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <!-- Max Persone -->
+        <Label text="Max Persone:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <Spinner fx:id="maxPersoneSpinner" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <!-- Tecnica -->
+        <Label text="Tecnica:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="tecnicaBox" GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="200"/>
+
+        <!-- Tipologia Gara -->
+        <Label text="Tipologia Gara:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="tipologiaBox" GridPane.rowIndex="4" GridPane.columnIndex="1" prefWidth="200"/>
+
+        <!-- Criterio Punti -->
+        <Label text="Criterio Punti:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="criterioBox" GridPane.rowIndex="5" GridPane.columnIndex="1" prefWidth="200"/>
+
+        <!-- Data -->
+        <Label text="Data Gara:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dataPicker" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+        <!-- Campionato (opzionale) -->
+        <Label text="Campionato (opz.):" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="campionatoBox" GridPane.rowIndex="7" GridPane.columnIndex="1" prefWidth="200" promptText="Seleziona o lascia vuoto"/>
+
+        <!-- Arbitro (opzionale) -->
+        <Label text="Arbitro (opz.):" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="arbitroBox" GridPane.rowIndex="8" GridPane.columnIndex="1" prefWidth="200" promptText="Seleziona o lascia vuoto"/>
+
+        <!-- Campo Gara (obbligatorio) -->
+        <Label text="Campo Gara:" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="campoGaraBox" GridPane.rowIndex="9" GridPane.columnIndex="1" prefWidth="200" promptText="Seleziona campo gara"/>
+    </GridPane>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="proponiButton" text="Proponi" onAction="#proponiGara" prefWidth="100"/>
+        <Button text="Annulla" onAction="#chiudi" prefWidth="100"/>
+    </HBox>
+
+</VBox>

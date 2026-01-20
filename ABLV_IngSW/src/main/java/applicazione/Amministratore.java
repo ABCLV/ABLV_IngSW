@@ -22,6 +22,8 @@ public class Amministratore implements PropositoreIF {
         this.nome = nome;
         this.cognome = cognome;
     }
+    
+    public Amministratore() {}
 
     /**
      * Crea e proponi una nuova gara.

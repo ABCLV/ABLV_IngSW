@@ -55,11 +55,11 @@ public class SocietaHomeController {
 		/* --- carica dati società --- */
 		try {
 			var soc = Consultazioni.getSocieta(Session.userName);
-			lblSocNome.setText("Nome: " + soc.nome());
-			lblSocIndirizzo.setText("Indirizzo: " + soc.indirizzo());
-			lblSocCitta.setText("Città: " + soc.citta());
-			lblSocCap.setText("CAP: " + soc.cap());
-			lblSocEmail.setText("Email: " + soc.email());
+			lblSocNome.setText("Nome: " + soc.getNome());
+			lblSocIndirizzo.setText("Indirizzo: " + soc.getIndirizzo());
+			lblSocCitta.setText("Città: " + soc.getCitta());
+			lblSocCap.setText("CAP: " + soc.getCap());
+			lblSocEmail.setText("Email: " + soc.getEmail());
 
 			/* --- carica pescatori iscritti alla società --- */
 			pescatoriObs.setAll(Consultazioni.getConcorrentiPerSocieta(Session.userName));
@@ -94,6 +94,18 @@ public class SocietaHomeController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/* ---------- PROPONI GARA ---------- */
+	@FXML
+	private void apriProponiGara(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/ProponiGara.fxml"));
+		Scene scene = new Scene(loader.load());
+		Stage stage = new Stage();
+		stage.setTitle("Proponi gara");
+		stage.setScene(scene);
+		stage.showAndWait(); // aspetta che chiuda
+		ricaricaTabella(); // aggiorna lista
 	}
 
 	/* ---------- TORNA HOME ---------- */
