@@ -8,11 +8,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
 
+import applicazione.Gara;
 import database.Consultazioni;
 
 public class ConcorrenteHomeController {
@@ -48,17 +50,17 @@ public class ConcorrenteHomeController {
 
 	/* --- tabella gare --- */
 	@FXML
-	private TableView<GaraRow> gareTable;
+	private TableView<Gara> gareTable;
 	@FXML
-	private TableColumn<GaraRow, String> colCodice;
+	private TableColumn<Gara, String> colCodice;
 	@FXML
-	private TableColumn<GaraRow, String> colData;
+	private TableColumn<Gara, String> colData;
 	@FXML
-	private TableColumn<GaraRow, String> colTecnica;
+	private TableColumn<Gara, String> colTecnica;
 	@FXML
-	private TableColumn<GaraRow, String> colCampo;
+	private TableColumn<Gara, String> colCampo;
 
-	private final ObservableList<GaraRow> gareObs = FXCollections.observableArrayList();
+	private final ObservableList<Gara> gareObs = FXCollections.observableArrayList();
 
 	@FXML
 	private void initialize() {
@@ -83,14 +85,16 @@ public class ConcorrenteHomeController {
 			lblSocEmail.setText("Email: " + soc.getEmail());
 
 			/* --- elenco gare --- */
-			List<GaraRow> gare = Consultazioni.getGareConcorrente(me.cf());
+			List<Gara> gare = Consultazioni.getGareConcorrente(me.cf());
 			gareObs.setAll(gare);
 			gareTable.setItems(gareObs);
 
-			colCodice.setCellValueFactory(d -> d.getValue().codiceProperty());
-			colData.setCellValueFactory(d -> d.getValue().dataProperty());
-			colTecnica.setCellValueFactory(d -> d.getValue().tecnicaProperty());
-			colCampo.setCellValueFactory(d -> d.getValue().campoProperty());
+			colCodice.setCellValueFactory(new PropertyValueFactory<>("codice"));
+			colData.setCellValueFactory(new PropertyValueFactory<>("data"));
+			colTecnica.setCellValueFactory(
+			    cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTecnica().name()));
+			colCampo.setCellValueFactory(
+			    cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getCampoGara().getIdCampoGara()));
 
 		} catch (Exception e) {
 			e.printStackTrace();

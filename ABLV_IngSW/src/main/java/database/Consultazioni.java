@@ -34,8 +34,6 @@ import applicazione.StatoConferma;
 import applicazione.StatoGara;
 import applicazione.Tecnica;
 import applicazione.TipologiaGara;
-import client.ConcorrenteRow;
-import client.GaraRow;
 import dbconSQLJOOQ.generated.tables.records.AmministratoreRecord;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -253,36 +251,73 @@ public abstract class Consultazioni {
 	}
 
 	/* ---------- elenco gare a cui è iscritto il concorrente ---------- */
-	public static List<GaraRow> getGareConcorrente(String cf) throws SQLException {
-		try (Connection conn = SQLiteConnectionManager.getConnection()) {
-			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-			Result<Record4<String, LocalDate, String, String>> rs = ctx
-					.select(GARA.CODICE, GARA.DATA, GARA.TECNICA, CAMPOGARA.DESCRIZIONE).from(GARA).join(ISCRIVE)
-					.on(GARA.CODICE.eq(ISCRIVE.CODICEGARA)).join(CAMPOGARA).on(GARA.CAMPOGARA.eq(CAMPOGARA.ID))
-					.where(ISCRIVE.CONCORRENTE.eq(cf)).fetch();
+	public static List<Gara> getGareConcorrente(String cf) throws SQLException {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-			List<GaraRow> out = new ArrayList<>();
-			for (Record4<String, LocalDate, String, String> r : rs) {
-				out.add(new GaraRow(r.value1(), r.value2().toString(), r.value3(), r.value4()));
-			}
-			return out;
-		}
+	        Result<Record6<String, Integer, String, LocalDate, String, String>> rs = ctx
+	                .select(
+	                        GARA.CODICE,
+	                        GARA.NUMPROVA,
+	                        GARA.TECNICA,
+	                        GARA.DATA,
+	                        CAMPOGARA.ID,
+	                        CAMPOGARA.DESCRIZIONE
+	                )
+	                .from(GARA)
+	                .join(ISCRIVE).on(GARA.CODICE.eq(ISCRIVE.CODICEGARA))
+	                .join(CAMPOGARA).on(GARA.CAMPOGARA.eq(CAMPOGARA.ID))
+	                .where(ISCRIVE.CONCORRENTE.eq(cf))
+	                .fetch();
+
+	        List<Gara> out = new ArrayList<>();
+	        for (Record6<String, Integer, String, LocalDate, String, String> r : rs) {
+	            CampoGara campo = new CampoGara();
+	            campo.setIdCampoGara(r.value5());
+	            campo.setDescrizione(r.value6());
+
+	            Gara g = new Gara();
+	            g.setCodice(r.value1());
+	            g.setNumProva(r.value2());
+	            g.setTecnica(Tecnica.valueOf(r.value3().toUpperCase()));
+	            g.setData(r.value4());
+	            g.setCampoGara(campo);
+
+	            out.add(g);
+	        }
+	        return out;
+	    }
 	}
 
 	/* --- elenco concorrenti di una data società --- */
-	public static List<ConcorrenteRow> getConcorrentiPerSocieta(String nomeSocieta) throws SQLException {
-		try (Connection conn = SQLiteConnectionManager.getConnection()) {
-			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-			var rs = ctx.select(CONCORRENTE.CF, CONCORRENTE.NOME, CONCORRENTE.COGNOME, CONCORRENTE.EMAIL,
-					CONCORRENTE.NASCITA).from(CONCORRENTE).where(CONCORRENTE.SOCIETA.eq(nomeSocieta)).fetch();
+	public static List<Concorrente> getConcorrentiPerSocieta(String nomeSocieta) throws SQLException {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-			List<ConcorrenteRow> out = new ArrayList<>();
-			for (var r : rs) {
-				out.add(new ConcorrenteRow(r.get(CONCORRENTE.CF), r.get(CONCORRENTE.NOME), r.get(CONCORRENTE.COGNOME),
-						r.get(CONCORRENTE.EMAIL), r.get(CONCORRENTE.NASCITA).toString()));
-			}
-			return out;
-		}
+	        var rs = ctx
+	                .select(
+	                        CONCORRENTE.CF,
+	                        CONCORRENTE.COGNOME,
+	                        CONCORRENTE.NOME,
+	                        CONCORRENTE.EMAIL,
+	                        CONCORRENTE.NASCITA
+	                )
+	                .from(CONCORRENTE)
+	                .where(CONCORRENTE.SOCIETA.eq(nomeSocieta))
+	                .fetch();
+
+	        List<Concorrente> out = new ArrayList<>();
+	        for (var r : rs) {
+	            out.add(new Concorrente(
+	                    r.get(CONCORRENTE.CF),
+	                    r.get(CONCORRENTE.COGNOME),
+	                    r.get(CONCORRENTE.NOME),
+	                    r.get(CONCORRENTE.EMAIL),
+	                    r.get(CONCORRENTE.NASCITA)
+	            ));
+	        }
+	        return out;
+	    }
 	}
 
 	public static boolean esisteArbitro(String cf) throws SQLException {

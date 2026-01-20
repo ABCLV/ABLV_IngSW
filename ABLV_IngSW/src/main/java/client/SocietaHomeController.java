@@ -8,11 +8,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
+import applicazione.Concorrente;
 import database.Consultazioni;
 
 public class SocietaHomeController {
@@ -22,17 +24,17 @@ public class SocietaHomeController {
 
 	/* --- tabella pescatori --- */
 	@FXML
-	private TableView<ConcorrenteRow> pescatoriTable;
+	private TableView<Concorrente> pescatoriTable;
 	@FXML
-	private TableColumn<ConcorrenteRow, String> colCF;
+	private TableColumn<Concorrente, String> colCF;
 	@FXML
-	private TableColumn<ConcorrenteRow, String> colNome;
+	private TableColumn<Concorrente, String> colNome;
 	@FXML
-	private TableColumn<ConcorrenteRow, String> colCognome;
+	private TableColumn<Concorrente, String> colCognome;
 	@FXML
-	private TableColumn<ConcorrenteRow, String> colEmail;
+	private TableColumn<Concorrente, String> colEmail;
 	@FXML
-	private TableColumn<ConcorrenteRow, String> colNascita;
+	private TableColumn<Concorrente, String> colNascita;
 
 	/* --- dati società --- */
 	@FXML
@@ -46,7 +48,7 @@ public class SocietaHomeController {
 	@FXML
 	private Label lblSocEmail;
 
-	private final ObservableList<ConcorrenteRow> pescatoriObs = FXCollections.observableArrayList();
+	private final ObservableList<Concorrente> pescatoriObs = FXCollections.observableArrayList();
 
 	@FXML
 	private void initialize() {
@@ -65,11 +67,11 @@ public class SocietaHomeController {
 			pescatoriObs.setAll(Consultazioni.getConcorrentiPerSocieta(Session.userName));
 			pescatoriTable.setItems(pescatoriObs);
 
-			colCF.setCellValueFactory(d -> d.getValue().cfProperty());
-			colNome.setCellValueFactory(d -> d.getValue().nomeProperty());
-			colCognome.setCellValueFactory(d -> d.getValue().cognomeProperty());
-			colEmail.setCellValueFactory(d -> d.getValue().emailProperty());
-			colNascita.setCellValueFactory(d -> d.getValue().nascitaProperty());
+			colCF.setCellValueFactory(new PropertyValueFactory<>("cf"));
+			colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+			colCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+			colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+			colNascita.setCellValueFactory(new PropertyValueFactory<>("nascita"));
 
 		} catch (SQLException e) {
 			e.printStackTrace();
