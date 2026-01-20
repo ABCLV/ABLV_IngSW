@@ -1,5 +1,8 @@
 package applicazione;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import database.Consultazioni;
 
 /**
@@ -150,5 +153,12 @@ public class Societa implements PropositoreIF {
 
 	public String getIdentificatore() {
 		return this.getNome();
+	}
+	public static Societa fromUsername(String nome) throws SQLException {
+	    return Consultazioni.getSocieta(nome);
+	}
+
+	public List<Concorrente> getConcorrentiIscritti() throws SQLException {
+	    return Consultazioni.getConcorrentiPerSocieta(this.nome);
 	}
 }

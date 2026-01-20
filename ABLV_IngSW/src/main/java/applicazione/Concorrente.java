@@ -1,6 +1,10 @@
 package applicazione;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
+
+import database.Consultazioni;
 
 /**
  * Rappresenta un concorrente alle gare di pesca.
@@ -11,6 +15,7 @@ public class Concorrente {
 	private String cognome;
 	private String nome;
 	private String email;
+	private String societa;
 	private LocalDate nascita;
 
 	/**
@@ -21,12 +26,13 @@ public class Concorrente {
 	 * @param nome    nome del concorrente
 	 * @param nascita data di nascita del concorrente
 	 */
-	public Concorrente(String cf, String cognome, String nome, String email, LocalDate nascita) {
+	public Concorrente(String cf, String cognome, String nome, String email, LocalDate nascita, String societa) {
 		this.cf = cf;
 		this.cognome = cognome;
 		this.nome = nome;
 		this.email = email;
 		this.nascita = nascita;
+		this.societa = societa;
 	}
 
 	@Override
@@ -109,4 +115,22 @@ public class Concorrente {
 	public LocalDate getNascita() {
 		return nascita;
 	}
+	
+	
+	public String getSocieta() {
+	    return this.societa; // campo già presente o da aggiungere
+	}
+
+	public List<Gara> getGareIscritte() throws SQLException {
+	    return Consultazioni.getGareConcorrente(this.cf);
+	}
+
+	public Societa getDettagliSocieta() throws SQLException {
+	    return Consultazioni.getSocieta(this.societa);
+	}
+	
+	public static Concorrente fromUsername(String cf) throws SQLException {
+	    return Consultazioni.getConcorrente(cf);
+	}
+	
 }

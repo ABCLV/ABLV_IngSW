@@ -1,6 +1,9 @@
 package client;
 
-import database.Consultazioni;
+import applicazione.Amministratore;
+import applicazione.Autenticazione;
+import applicazione.Concorrente;
+import applicazione.Societa;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -67,7 +70,7 @@ public class LoginController {
 
 		boolean ok = false;
 		try {
-			ok = Consultazioni.checkPassword(tipo, id, pwd);
+			ok = Autenticazione.verifica(tipo, id, pwd);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -90,8 +93,18 @@ public class LoginController {
 		Scene scene = new Scene(loader.load());
 		if (tipo.equals("Amministratore")) {
 		    AmministratoreHomeController ctrl = loader.getController();
-		    ctrl.setAmministratore(Consultazioni.getAmministratoreByCF(id));
+		    ctrl.setAmministratore(Amministratore.fromUsername(id));
 		}
+		else if (tipo.equals("Concorrente")) {
+		    ConcorrenteHomeController ctrl = loader.getController();
+		    Concorrente c = Concorrente.fromUsername(id);
+		    ctrl.setConcorrente(c);
+		}
+		else if (tipo.equals("Societa")) {
+			SocietaHomeController ctrl = loader.getController();
+			ctrl.setSocieta(Societa.fromUsername(Session.userName));
+				}
+		
 		Stage stage = (Stage) tipoCombo.getScene().getWindow();
 		stage.setScene(scene);
 		stage.setTitle(tipo + " Home");

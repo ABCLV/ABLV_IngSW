@@ -12,13 +12,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
+import applicazione.Concorrente;
 import applicazione.Gara;
-import database.Consultazioni;
-
+import applicazione.Societa;
 public class ConcorrenteHomeController {
 
+	private Concorrente concorrenteCorrente;
 	@FXML
 	private Label welcomeLabel;
 
@@ -62,32 +64,40 @@ public class ConcorrenteHomeController {
 
 	private final ObservableList<Gara> gareObs = FXCollections.observableArrayList();
 
+	public void setConcorrente(Concorrente c) {
+	    this.concorrenteCorrente = c;
+	    try {
+			caricaDati();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	private void caricaDati() throws SQLException {
+	    welcomeLabel.setText("Benvenuto Concorrente " + concorrenteCorrente.getNome());
+
+	    lblCF.setText("CF: " + concorrenteCorrente.getCf());
+	    lblNome.setText("Nome: " + concorrenteCorrente.getNome());
+	    lblCognome.setText("Cognome: " + concorrenteCorrente.getCognome());
+	    lblEmail.setText("Email: " + concorrenteCorrente.getEmail());
+	    lblNascita.setText("Nascita: " + concorrenteCorrente.getNascita());
+	    lblSocieta.setText("Società: " + concorrenteCorrente.getSocieta());
+
+	    Societa s = concorrenteCorrente.getDettagliSocieta();
+	    lblSocNome.setText("Nome: " + s.getNome());
+	    lblSocIndirizzo.setText("Indirizzo: " + s.getIndirizzo());
+	    lblSocCitta.setText("Città: " + s.getCitta());
+	    lblSocCap.setText("CAP: " + s.getCap());
+	    lblSocEmail.setText("Email: " + s.getEmail());
+
+	    List<Gara> gare = concorrenteCorrente.getGareIscritte();
+	    gareObs.setAll(gare);
+	    gareTable.setItems(gareObs);
+	}
+	
 	@FXML
 	private void initialize() {
-		welcomeLabel.setText("Benvenuto Concorrente " + Session.userName);
-
-		/* --- carica dati personali --- */
-		try {
-			var me = Consultazioni.getConcorrente(Session.userName);
-			lblCF.setText("CF: " + me.cf());
-			lblNome.setText("Nome: " + me.nome());
-			lblCognome.setText("Cognome: " + me.cognome());
-			lblEmail.setText("Email: " + me.email());
-			lblNascita.setText("Nascita: " + me.nascita());
-			lblSocieta.setText("Società: " + me.societa());
-
-			/* --- dati società --- */
-			var soc = Consultazioni.getSocieta(me.societa());
-			lblSocNome.setText("Nome: " + soc.getNome());
-			lblSocIndirizzo.setText("Indirizzo: " + soc.getIndirizzo());
-			lblSocCitta.setText("Città: " + soc.getCitta());
-			lblSocCap.setText("CAP: " + soc.getCitta());
-			lblSocEmail.setText("Email: " + soc.getEmail());
-
-			/* --- elenco gare --- */
-			List<Gara> gare = Consultazioni.getGareConcorrente(me.cf());
-			gareObs.setAll(gare);
-			gareTable.setItems(gareObs);
+	
 
 			colCodice.setCellValueFactory(new PropertyValueFactory<>("codice"));
 			colData.setCellValueFactory(new PropertyValueFactory<>("data"));
@@ -96,9 +106,6 @@ public class ConcorrenteHomeController {
 			colCampo.setCellValueFactory(
 			    cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getCampoGara().getIdCampoGara()));
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	@FXML

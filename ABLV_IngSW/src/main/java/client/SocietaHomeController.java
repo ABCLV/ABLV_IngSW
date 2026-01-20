@@ -15,10 +15,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import applicazione.Concorrente;
-import database.Consultazioni;
+import applicazione.Societa;
 
 public class SocietaHomeController {
 
+	private Societa societaCorrente;
 	@FXML
 	private Label welcomeLabel;
 
@@ -50,37 +51,37 @@ public class SocietaHomeController {
 
 	private final ObservableList<Concorrente> pescatoriObs = FXCollections.observableArrayList();
 
+	public void setSocieta(Societa s) throws SQLException {
+		this.societaCorrente = s;
+		caricaDati();
+	}
+
+	private void caricaDati() throws SQLException {
+		welcomeLabel.setText("Benvenuta Società " + societaCorrente.getNome());
+
+		lblSocNome.setText("Nome: " + societaCorrente.getNome());
+		lblSocIndirizzo.setText("Indirizzo: " + societaCorrente.getIndirizzo());
+		lblSocCitta.setText("Città: " + societaCorrente.getCitta());
+		lblSocCap.setText("CAP: " + societaCorrente.getCap());
+		lblSocEmail.setText("Email: " + societaCorrente.getEmail());
+
+		pescatoriObs.setAll(societaCorrente.getConcorrentiIscritti());
+		pescatoriTable.setItems(pescatoriObs);
+	}
+
 	@FXML
 	private void initialize() {
-		welcomeLabel.setText("Benvenuta Società " + Session.userName);
 
-		/* --- carica dati società --- */
-		try {
-			var soc = Consultazioni.getSocieta(Session.userName);
-			lblSocNome.setText("Nome: " + soc.getNome());
-			lblSocIndirizzo.setText("Indirizzo: " + soc.getIndirizzo());
-			lblSocCitta.setText("Città: " + soc.getCitta());
-			lblSocCap.setText("CAP: " + soc.getCap());
-			lblSocEmail.setText("Email: " + soc.getEmail());
-
-			/* --- carica pescatori iscritti alla società --- */
-			pescatoriObs.setAll(Consultazioni.getConcorrentiPerSocieta(Session.userName));
-			pescatoriTable.setItems(pescatoriObs);
-
-			colCF.setCellValueFactory(new PropertyValueFactory<>("cf"));
-			colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-			colCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
-			colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-			colNascita.setCellValueFactory(new PropertyValueFactory<>("nascita"));
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		colCF.setCellValueFactory(new PropertyValueFactory<>("cf"));
+		colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+		colCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+		colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+		colNascita.setCellValueFactory(new PropertyValueFactory<>("nascita"));
 	}
 
 	/* ---------- REGISTRA CONCORRENTE ---------- */
 	@FXML
-	private void apriRegistraConcorrente(ActionEvent event) throws IOException {
+	private void apriRegistraConcorrente(ActionEvent event) throws IOException, SQLException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/RegistraConcorrente.fxml"));
 		Scene scene = new Scene(loader.load());
 		Stage stage = new Stage();
@@ -90,17 +91,13 @@ public class SocietaHomeController {
 		ricaricaTabella(); // aggiorna lista
 	}
 
-	private void ricaricaTabella() {
-		try {
-			pescatoriObs.setAll(Consultazioni.getConcorrentiPerSocieta(Session.userName));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	private void ricaricaTabella() throws SQLException {
+	    pescatoriObs.setAll(societaCorrente.getConcorrentiIscritti());
 	}
-	
+
 	/* ---------- PROPONI GARA ---------- */
 	@FXML
-	private void apriProponiGara(ActionEvent event) throws IOException {
+	private void apriProponiGara(ActionEvent event) throws IOException, SQLException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/ProponiGara.fxml"));
 		Scene scene = new Scene(loader.load());
 		Stage stage = new Stage();

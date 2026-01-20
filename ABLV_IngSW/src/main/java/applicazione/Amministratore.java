@@ -126,4 +126,8 @@ public class Amministratore implements PropositoreIF {
 	public String toString() {
 		return this.cfAmministratore + ":" + "\n - " + this.cognome + "\n - " + this.nome;
 	}
+	
+	public static Amministratore fromUsername(String cf) {
+	    return Consultazioni.getAmministratoreByCF(cf);
+	}
 }

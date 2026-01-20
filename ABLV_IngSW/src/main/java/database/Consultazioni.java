@@ -201,22 +201,29 @@ public abstract class Consultazioni {
 		}
 	}
 
-	/* ---------- dati concorrente ---------- */
-	public record ConcorrenteDto(String cf, String nome, String cognome, String email, String nascita, String societa) {
-	}
 
-	public static ConcorrenteDto getConcorrente(String cf) throws SQLException {
-		try (Connection conn = SQLiteConnectionManager.getConnection()) {
-			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-			Record6<String, String, String, String, LocalDate, String> r = ctx
-					.select(CONCORRENTE.CF, CONCORRENTE.NOME, CONCORRENTE.COGNOME, CONCORRENTE.EMAIL,
-							CONCORRENTE.NASCITA, CONCORRENTE.SOCIETA)
-					.from(CONCORRENTE).where(CONCORRENTE.CF.eq(cf)).fetchOne();
-			if (r == null)
-				throw new IllegalArgumentException("Concorrente non trovato");
-			return new ConcorrenteDto(r.value1(), r.value2(), r.value3(), r.value4(), r.value5().toString(),
-					r.value6());
-		}
+	public static Concorrente getConcorrente(String cf) throws SQLException {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+	        Record6<String, String, String, String, LocalDate, String> r = ctx
+	                .select(CONCORRENTE.CF, CONCORRENTE.COGNOME, CONCORRENTE.NOME,
+	                        CONCORRENTE.EMAIL, CONCORRENTE.NASCITA, CONCORRENTE.SOCIETA)
+	                .from(CONCORRENTE)
+	                .where(CONCORRENTE.CF.eq(cf))
+	                .fetchOne();
+
+	        if (r == null) return null;
+
+	        return new Concorrente(
+	                r.get(CONCORRENTE.CF),
+	                r.get(CONCORRENTE.COGNOME),
+	                r.get(CONCORRENTE.NOME),
+	                r.get(CONCORRENTE.EMAIL),
+	                r.get(CONCORRENTE.NASCITA),
+	                r.get(CONCORRENTE.SOCIETA)
+	        );
+	    }
 	}
 
 	/* ---------- dati società ---------- */
@@ -300,7 +307,8 @@ public abstract class Consultazioni {
 	                        CONCORRENTE.COGNOME,
 	                        CONCORRENTE.NOME,
 	                        CONCORRENTE.EMAIL,
-	                        CONCORRENTE.NASCITA
+	                        CONCORRENTE.NASCITA,
+	                        CONCORRENTE.SOCIETA
 	                )
 	                .from(CONCORRENTE)
 	                .where(CONCORRENTE.SOCIETA.eq(nomeSocieta))
@@ -313,7 +321,8 @@ public abstract class Consultazioni {
 	                    r.get(CONCORRENTE.COGNOME),
 	                    r.get(CONCORRENTE.NOME),
 	                    r.get(CONCORRENTE.EMAIL),
-	                    r.get(CONCORRENTE.NASCITA)
+	                    r.get(CONCORRENTE.NASCITA),
+	                    r.get(CONCORRENTE.SOCIETA)
 	            ));
 	        }
 	        return out;

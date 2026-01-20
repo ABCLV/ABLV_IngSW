@@ -1,6 +1,6 @@
 package client;
 
-import database.Consultazioni;
+import applicazione.RegistrazioneService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -37,7 +37,7 @@ public class RegistraConcorrenteController {
 		}
 
 		try {
-			Consultazioni.registraConcorrente(cf, nome, cognome, email, nascita, Session.userName, pwd);
+			RegistrazioneService.registraConcorrente(cf, nome, cognome, email, nascita, Session.userName, pwd);
 			Alert alert = new Alert(Alert.AlertType.INFORMATION, "Concorrente registrato!");
 			alert.showAndWait();
 			chiudi();
