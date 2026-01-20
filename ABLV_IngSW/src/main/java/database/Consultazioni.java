@@ -227,9 +227,7 @@ public abstract class Consultazioni {
 	}
 
 	/* ---------- dati società ---------- */
-	public record SocietaDto(String nome, String indirizzo, String citta, String cap, String email) {
-	}
-
+	
 	public static Societa getSocieta(String nome) throws SQLException {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
@@ -243,8 +241,7 @@ public abstract class Consultazioni {
 	}
 
 	/* ---------- dati amministratore ---------- */
-	public record AmministratoreDto(String cf, String nome, String cognome) {
-	}
+	
 
 	public static Amministratore getAmministratore(String cf) throws SQLException {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
