@@ -8,15 +8,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
-import database.Consultazioni;
-
+import applicazione.Concorrente;
+import applicazione.Gara;
+import applicazione.Societa;
 public class ConcorrenteHomeController {
 
+	private Concorrente concorrenteCorrente;
 	@FXML
 	private Label welcomeLabel;
 
@@ -48,53 +52,60 @@ public class ConcorrenteHomeController {
 
 	/* --- tabella gare --- */
 	@FXML
-	private TableView<GaraRow> gareTable;
+	private TableView<Gara> gareTable;
 	@FXML
-	private TableColumn<GaraRow, String> colCodice;
+	private TableColumn<Gara, String> colCodice;
 	@FXML
-	private TableColumn<GaraRow, String> colData;
+	private TableColumn<Gara, String> colData;
 	@FXML
-	private TableColumn<GaraRow, String> colTecnica;
+	private TableColumn<Gara, String> colTecnica;
 	@FXML
-	private TableColumn<GaraRow, String> colCampo;
+	private TableColumn<Gara, String> colCampo;
 
-	private final ObservableList<GaraRow> gareObs = FXCollections.observableArrayList();
+	private final ObservableList<Gara> gareObs = FXCollections.observableArrayList();
 
-	@FXML
-	private void initialize() {
-		welcomeLabel.setText("Benvenuto Concorrente " + Session.userName);
-
-		/* --- carica dati personali --- */
-		try {
-			var me = Consultazioni.getConcorrente(Session.userName);
-			lblCF.setText("CF: " + me.cf());
-			lblNome.setText("Nome: " + me.nome());
-			lblCognome.setText("Cognome: " + me.cognome());
-			lblEmail.setText("Email: " + me.email());
-			lblNascita.setText("Nascita: " + me.nascita());
-			lblSocieta.setText("Società: " + me.societa());
-
-			/* --- dati società --- */
-			var soc = Consultazioni.getSocieta(me.societa());
-			lblSocNome.setText("Nome: " + soc.nome());
-			lblSocIndirizzo.setText("Indirizzo: " + soc.indirizzo());
-			lblSocCitta.setText("Città: " + soc.citta());
-			lblSocCap.setText("CAP: " + soc.cap());
-			lblSocEmail.setText("Email: " + soc.email());
-
-			/* --- elenco gare --- */
-			List<GaraRow> gare = Consultazioni.getGareConcorrente(me.cf());
-			gareObs.setAll(gare);
-			gareTable.setItems(gareObs);
-
-			colCodice.setCellValueFactory(d -> d.getValue().codiceProperty());
-			colData.setCellValueFactory(d -> d.getValue().dataProperty());
-			colTecnica.setCellValueFactory(d -> d.getValue().tecnicaProperty());
-			colCampo.setCellValueFactory(d -> d.getValue().campoProperty());
-
-		} catch (Exception e) {
+	public void setConcorrente(Concorrente c) {
+	    this.concorrenteCorrente = c;
+	    try {
+			caricaDati();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	private void caricaDati() throws SQLException {
+	    welcomeLabel.setText("Benvenuto Concorrente " + concorrenteCorrente.getNome());
+
+	    lblCF.setText("CF: " + concorrenteCorrente.getCf());
+	    lblNome.setText("Nome: " + concorrenteCorrente.getNome());
+	    lblCognome.setText("Cognome: " + concorrenteCorrente.getCognome());
+	    lblEmail.setText("Email: " + concorrenteCorrente.getEmail());
+	    lblNascita.setText("Nascita: " + concorrenteCorrente.getNascita());
+	    lblSocieta.setText("Società: " + concorrenteCorrente.getSocieta());
+
+	    Societa s = concorrenteCorrente.getDettagliSocieta();
+	    lblSocNome.setText("Nome: " + s.getNome());
+	    lblSocIndirizzo.setText("Indirizzo: " + s.getIndirizzo());
+	    lblSocCitta.setText("Città: " + s.getCitta());
+	    lblSocCap.setText("CAP: " + s.getCap());
+	    lblSocEmail.setText("Email: " + s.getEmail());
+
+	    List<Gara> gare = concorrenteCorrente.getGareIscritte();
+	    gareObs.setAll(gare);
+	    gareTable.setItems(gareObs);
+	}
+	
+	@FXML
+	private void initialize() {
+	
+
+			colCodice.setCellValueFactory(new PropertyValueFactory<>("codice"));
+			colData.setCellValueFactory(new PropertyValueFactory<>("data"));
+			colTecnica.setCellValueFactory(
+			    cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTecnica().name()));
+			colCampo.setCellValueFactory(
+			    cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getCampoGara().getIdCampoGara()));
+
 	}
 
 	@FXML

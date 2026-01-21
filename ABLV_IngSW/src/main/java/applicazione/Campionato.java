@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class Campionato {
 
-    public String titolo;
+    private String titolo;
     private String categoria;
     private ArrayList<Gara> prove;
     private ArrayList<Punteggio> classificaTotale;
@@ -23,8 +23,38 @@ public class Campionato {
         this.prove = new ArrayList<>();
         this.classificaTotale = new ArrayList<>();
     }
+    
+    public Campionato() {};
 
-    /**
+    public String getTitolo() {
+		return titolo;
+	}
+
+	public void setTitolo(String titolo) {
+		this.titolo = titolo;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+
+	public ArrayList<Gara> getProve() {
+		return prove;
+	}
+
+	public void setProve(ArrayList<Gara> prove) {
+		this.prove = prove;
+	}
+
+	public void setClassificaTotale(ArrayList<Punteggio> classificaTotale) {
+		this.classificaTotale = classificaTotale;
+	}
+
+	/**
      * Restituisce la classifica generale finale del campionato.
      * @return lista dei punteggi totali ordinati per posizione
      */
@@ -39,5 +69,10 @@ public class Campionato {
      */
     public ArrayList<Punteggio> classificaProva(int numProva) {
     	return null;
+    }
+    
+    @Override
+    public String toString() {
+        return this.titolo;
     }
 }
