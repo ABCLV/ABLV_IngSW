@@ -14,13 +14,6 @@ public enum TipologiaGara {
      */
     SQUADRE;
 	
-	
-	public static TipologiaGara fromString(String s) {
-        for (TipologiaGara t : values()) {
-            if (t.name().equalsIgnoreCase(s)) return t;
-        }
-        return null; // oppure lancia eccezione
-    }
 	@Override
 	public String toString() {
 	    String s = name().toLowerCase().replace("_", " ");

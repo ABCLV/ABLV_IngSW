@@ -20,14 +20,6 @@ public enum StatoGara {
      */
     TERMINATA;
 	
-	
-	public static StatoGara fromString(String s) {
-        for (StatoGara t : values()) {
-            if (t.name().equalsIgnoreCase(s)) return t;
-        }
-        return null; // oppure lancia eccezione
-    }
-	
 	@Override
 	public String toString() {
 	    String s = name().toLowerCase().replace("_", " ");

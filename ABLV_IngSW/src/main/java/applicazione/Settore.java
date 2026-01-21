@@ -5,19 +5,6 @@ package applicazione;
  */
 public class Settore {
 
-	public String getIdSettore() {
-		return idSettore;
-	}
-
-	public int getLunghezza() {
-		return lunghezza;
-	}
-
-	public String getDescrizione() {
-		return descrizione;
-	}
-
-
 	private String idSettore;
     private int lunghezza;
     private String descrizione;
