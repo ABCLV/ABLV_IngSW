@@ -2,7 +2,7 @@ package client;
 
 import java.io.IOException;
 
-import database.Consultazioni;
+import applicazione.Statistiche;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -24,7 +24,7 @@ public class HomeController {
 
 	@FXML
 	private void initialize() { // viene chiamato automaticamente
-		long tot = Consultazioni.countPescatori();
+		long tot = Statistiche.getTotalePescatori();
 		if (tot >= 0)
 			pescatoriLabel.setText("La nostra app è già usata da " + tot + " pescatori");
 		else
