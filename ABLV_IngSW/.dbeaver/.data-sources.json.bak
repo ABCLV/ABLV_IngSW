@@ -7,8 +7,8 @@
 			"name": "gare.db",
 			"save-password": true,
 			"configuration": {
-				"database": "C:\\Users\\Mikyv\\Desktop\\ABLV_IngSW\\ABLV_IngSW\\database\\gare.db",
-				"url": "jdbc:sqlite:C:\\Users\\Mikyv\\Desktop\\ABLV_IngSW\\ABLV_IngSW\\database\\gare.db",
+				"database": "./gare.db",
+				"url": "jdbc:sqlite:./gare.db",
 				"configurationType": "MANUAL",
 				"type": "dev",
 				"closeIdleConnection": true
