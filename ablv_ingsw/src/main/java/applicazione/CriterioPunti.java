@@ -1,18 +1,9 @@
 package applicazione;
 
-/**
- * Tipologie di gara gestite dal sistema.
- */
-public enum TipologiaGara {
-    /**
-     * Gara individuale.
-     */
-    INDIVIDUALE,
-
-    /**
-     * Gara a squadre.
-     */
-    SQUADRE;
+public enum CriterioPunti {
+	QUANTITA,
+	PESO,
+	BIG_ONE;
 	
 	@Override
 	public String toString() {
@@ -20,5 +11,4 @@ public enum TipologiaGara {
 	    if (s.isEmpty()) return s;
 	    return Character.toUpperCase(s.charAt(0)) + s.substring(1);
 	}
-
 }
