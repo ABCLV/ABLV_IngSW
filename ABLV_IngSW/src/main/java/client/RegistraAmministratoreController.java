@@ -1,6 +1,6 @@
 package client;
 
-import applicazione.RegistrazioneService;
+import database.Consultazioni;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -33,7 +33,7 @@ public class RegistraAmministratoreController {
 		}
 
 		try {
-			RegistrazioneService.registraAmministratore(cf, nome, cognome, email, pwd);
+			Consultazioni.registraAmministratore(cf, nome, cognome, email, pwd);
 			Alert alert = new Alert(Alert.AlertType.INFORMATION, "Amministratore registrato!");
 			alert.showAndWait();
 			chiudi();

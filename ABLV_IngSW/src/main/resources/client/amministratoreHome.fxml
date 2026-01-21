@@ -42,6 +42,7 @@
                 <TableColumn fx:id="colTecnicaProposte" text="Tecnica" prefWidth="100"/>
                 <TableColumn fx:id="colDataProposte" text="Data" prefWidth="100"/>
                 <TableColumn fx:id="colCampionatoProposte" text="Campionato" prefWidth="150"/>
+                <TableColumn fx:id="colStatoGaraProposte" text="Stato Gara" prefWidth="120"/>
                 <TableColumn fx:id="colStatoConfermaProposte" text="Stato Conferma" prefWidth="120"/>
                 <TableColumn fx:id="colCampoGaraProposte" text="Campo Gara" prefWidth="150"/>
             </columns>
