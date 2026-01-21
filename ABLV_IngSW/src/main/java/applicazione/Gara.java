@@ -1,6 +1,7 @@
 package applicazione;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -11,7 +12,7 @@ public class Gara {
 	private String codice;
     private int numProva;
     private Tecnica tecnica;
-    private String criterioPunti;
+    private CriterioPunti criterioPunti;
     private LocalDate data;
     private int maxPersone;
     private int minPersone;
@@ -24,12 +25,14 @@ public class Gara {
      *  - 1, abbiamo l'accettatore
      */
     private PropositoreIF[] autori = new PropositoreIF[2]; 
+    private Campionato campionato;
+    private Arbitro arbitro;
+    private CampoGara campoGara;
 
     /**
      * Costruttore completo.
      * @param codiceGara      codice identificativo della gara
      * @param nProva          numero della prova (per campionati)
-     * @param organizzatore   società organizzatrice
      * @param tipoTecnica     tecnica di pesca ammessa
      * @param criterioPunti   criterio di assegnazione punti
      * @param dataSvolgimento data in cui si svolge la gara
@@ -39,10 +42,11 @@ public class Gara {
      * @param tipoGara        tipologia (singola, campionato, ecc.)
      * @param annoGara        anno di edizione
      */
-    public Gara(String codiceGara, int nProva, String organizzatore, Tecnica tipoTecnica,
-                String criterioPunti, LocalDate dataSvolgimento, int maxPersone, int minPersone,
+    public Gara(String codiceGara, int nProva, Tecnica tipoTecnica,
+                CriterioPunti criterioPunti, LocalDate dataSvolgimento, int maxPersone, int minPersone,
                 StatoConferma statoConferma, StatoGara statoGara, TipologiaGara tipoGara, LocalDate annoGara,
-                PropositoreIF propositore, Amministratore accettatore) {
+                PropositoreIF propositore, PropositoreIF accettatore, Campionato campionato, Arbitro arbitro,
+                CampoGara campoGara) {
     	try {
     		this.setCodice(codiceGara);
             this.setNumProva(nProva);
@@ -55,24 +59,17 @@ public class Gara {
             this.setTipoGara(tipoGara);
             this.setData(annoGara);
             this.setPropositore(propositore);
-            this.setAccettatore(accettatore);
+            this.setAccettatore((Amministratore) accettatore);
+            this.setCampionato(campionato);
+            this.setArbitro(arbitro);
+            this.setCampoGara(campoGara);
     	} catch(Exception e) {
     		System.out.println("Errore: " + e.getMessage());
     	}
         
     }
     
-    public Gara(String c) {
-    	try {
-    		this.setCodice(c);
-    	} catch(Exception e) {
-    		System.out.println("Errore: " + e.getMessage());
-    	}
-    }
-    
-    public Gara() {
-    	
-    }
+    public Gara() {}
 
     /**
      * Cambia lo stato organizzativo della gara.
@@ -211,7 +208,7 @@ public class Gara {
     	this.checkNull(tecnica, "Tipo di tecnica non valido!");
     	this.tecnica = tecnica;
     }
-    public void setCriterioPunti(String criterioPunti) {
+    public void setCriterioPunti(CriterioPunti criterioPunti) {
     	this.checkNull(criterioPunti, "Criterio punti non valido!");
     	this.criterioPunti = criterioPunti;
     }
@@ -256,12 +253,23 @@ public class Gara {
     }
     
     public void setAccettatore(Amministratore a) {
-    	this.checkNull(a, "Accettatore non valido!");
     	this.autori[1] = a;
     }
-
     
-    public String getCodice() {
+    public void setCampionato(Campionato campionato) {
+		this.campionato = campionato;
+	}
+
+    public void setArbitro(Arbitro arbitro) {
+		this.arbitro = arbitro;
+	}
+    
+    public void setCampoGara(CampoGara campoGara) {
+    	this.checkNull(campoGara, "Campo gara non valido!");
+		this.campoGara = campoGara;
+	}
+
+	public String getCodice() {
 		return this.codice;
 	}
 
@@ -273,7 +281,7 @@ public class Gara {
 		return this.tecnica;
 	}
 
-	public String getCriterioPunti() {
+	public CriterioPunti getCriterioPunti() {
 		return this.criterioPunti;
 	}
 
@@ -312,20 +320,25 @@ public class Gara {
 	public Amministratore getAccettatore() {
 		return (Amministratore) this.autori[1];
 	}
+	
+	public Campionato getCampionato() {
+		return campionato;
+	}
+	
+	public Arbitro getArbitro() {
+		return arbitro;
+	}
+
+	public CampoGara getCampoGara() {
+		return campoGara;
+	}
 
 	@Override
 	public String toString() {
-	    return "Gara {\n" +
-	           "  codiceGara      : " + codice + "\n" +
-	           "  nProva          : " + numProva + "\n" +
-	           "  tipoTecnica     : " + tecnica + "\n" +
-	           "  criterioPunti   : " + criterioPunti + "\n" +
-	           "  dataSvolgimento : " + data + "\n" +
-	           "  maxPersone      : " + maxPersone + "\n" +
-	           "  minPersone      : " + minPersone + "\n" +
-	           "  statoGara       : " + statoGara + "\n" +
-	           "  statoConferma   : " + statoConferma + "\n" +
-	           "  tipoGara        : " + tipoGara + "\n" +
-	           "}";
+		return "Gara [codice=" + codice + ", numProva=" + numProva + ", tecnica=" + tecnica + ", criterioPunti="
+				+ criterioPunti + ", data=" + data + ", maxPersone=" + maxPersone + ", minPersone=" + minPersone
+				+ ", statoGara=" + statoGara + ", statoConferma=" + statoConferma + ", tipoGara=" + tipoGara
+				+ ", autori=" + Arrays.toString(autori) + ", campionato=" + campionato + ", arbitro=" + arbitro
+				+ ", campoGara=" + campoGara + "]";
 	}
 }

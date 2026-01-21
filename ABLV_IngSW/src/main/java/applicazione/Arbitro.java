@@ -5,7 +5,7 @@ package applicazione;
  */
 public class Arbitro {
 
-    public String cfArbitro;
+    private String cfArbitro;
     private String nome;
     private String cognome;
     private String sezione;
@@ -24,7 +24,39 @@ public class Arbitro {
         this.sezione = sezione;
     }
 
-    /**
+    public String getCfArbitro() {
+		return cfArbitro;
+	}
+
+	public void setCfArbitro(String cfArbitro) {
+		this.cfArbitro = cfArbitro;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+
+	public String getSezione() {
+		return sezione;
+	}
+
+	public void setSezione(String sezione) {
+		this.sezione = sezione;
+	}
+
+	/**
      * Avvia formalmente una gara.
      * @param codice identificativo della gara
      */
@@ -90,5 +122,10 @@ public class Arbitro {
      * @param numTurno  numero del turno
      */
     public void salvaPunti(String idSettore, int numTurno) {
+    }
+    
+    @Override
+    public String toString() {
+        return this.cognome + " " + this.nome + " (" + this.cfArbitro + ")";
     }
 }
