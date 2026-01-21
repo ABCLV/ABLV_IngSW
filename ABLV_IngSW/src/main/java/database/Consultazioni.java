@@ -110,7 +110,7 @@ public abstract class Consultazioni {
 
 	            g.setTipoGara(TipologiaGara.INDIVIDUALE);
 
-	            g.setCriterioPunti(r.get(GARA.CRITERIOPUNTI));
+	            g.setCriterioPunti(CriterioPunti.valueOf(r.get(GARA.CRITERIOPUNTI)));
 	            
 	            
 	            

@@ -8,13 +8,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
 
 import applicazione.Concorrente;
-import applicazione.Società;
+import applicazione.Gara;
+import applicazione.Societa;
 import database.Consultazioni;
 
 public class RicercaGareConcorrente {
@@ -50,21 +52,20 @@ public class RicercaGareConcorrente {
 
 	/* --- tabella gare --- */
 	@FXML
-	private TableView<GaraRow> gareTable;
+	private TableView<Gara> gareTable;
 	@FXML
-	private TableColumn<GaraRow, String> colCodice;
+	private TableColumn<Gara, String> colCodice;
 	@FXML
-	private TableColumn<GaraRow, String> colData;
+	private TableColumn<Gara, String> colData;
 	@FXML
-	private TableColumn<GaraRow, String> colTecnica;
+	private TableColumn<Gara, String> colTecnica;
 	@FXML
-	private TableColumn<GaraRow, String> colCampo;
+	private TableColumn<Gara, String> colCampo;
 
-	private final ObservableList<GaraRow> gareObs = FXCollections.observableArrayList();
+	private final ObservableList<Gara> gareObs = FXCollections.observableArrayList();
 
 	@FXML
 	private void initialize() {
-		
 
 		/* --- carica dati personali --- */
 		try {
@@ -78,22 +79,24 @@ public class RicercaGareConcorrente {
 
 			/* --- dati società --- */
 			var soc = Consultazioni.getSocieta(selezionato.getSocieta());
-			lblSocNome.setText("Nome: " + soc.nome());
-			lblSocIndirizzo.setText("Indirizzo: " + soc.indirizzo());
-			lblSocCitta.setText("Città: " + soc.citta());
-			lblSocCap.setText("CAP: " + soc.cap());
-			lblSocEmail.setText("Email: " + soc.email());
+			lblSocNome.setText("Nome: " + soc.getNome());
+			lblSocIndirizzo.setText("Indirizzo: " + soc.getIndirizzo());
+			lblSocCitta.setText("Città: " + soc.getCitta());
+			lblSocCap.setText("CAP: " + soc.getCap());
+			lblSocEmail.setText("Email: " + soc.getEmail());
 
 			/* --- elenco gare --- */
-			List<GaraRow> gare = Consultazioni.getGareConcorrente(selezionato.cf);
+			List<Gara> gare = Consultazioni.getGareConcorrente(selezionato.cf);
 			System.out.println(gare.toString());
 			gareObs.setAll(gare);
 			gareTable.setItems(gareObs);
 
-			colCodice.setCellValueFactory(d -> d.getValue().codiceProperty());
-			colData.setCellValueFactory(d -> d.getValue().dataProperty());
-			colTecnica.setCellValueFactory(d -> d.getValue().tecnicaProperty());
-			colCampo.setCellValueFactory(d -> d.getValue().campoProperty());
+			colCodice.setCellValueFactory(new PropertyValueFactory<>("codice"));
+			colData.setCellValueFactory(new PropertyValueFactory<>("data"));
+			colTecnica.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
+					cellData.getValue().getTecnica().toString()));
+			colCampo.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
+					cellData.getValue().getCampoGara().getIdCampoGara()));
 
 		} catch (Exception e) {
 			e.printStackTrace();

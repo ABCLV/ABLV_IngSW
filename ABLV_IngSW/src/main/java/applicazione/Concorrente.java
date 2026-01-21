@@ -42,17 +42,11 @@ public class Concorrente {
 		this.cf = cf;
 	}
 
-	public String getCognome() {
-		return cognome;
-	}
-
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
 
-	public String getNome() {
-		return nome;
-	}
+
 
 	public void setNome(String nome) {
 		this.nome = nome;
@@ -66,9 +60,7 @@ public class Concorrente {
 		this.email = email;
 	}
 
-	public LocalDate getNascita() {
-		return nascita;
-	}
+	
 
 	public void setNascita(LocalDate nascita) {
 		this.nascita = nascita;
@@ -135,9 +127,7 @@ public class Concorrente {
 		return false;
 	}
 
-	public String getCf() {
-		return cf;
-	}
+	
 
 	public String getNome() {
 		return nome;
@@ -147,9 +137,7 @@ public class Concorrente {
 		return cognome;
 	}
 
-	public String getEmail() {
-		return email;
-	}
+
 
 	public LocalDate getNascita() {
 		return nascita;

@@ -61,7 +61,7 @@ public class RicercaGareController {
         );
         // Criterio punti
         puntiCol.setCellValueFactory(c -> 
-            new SimpleStringProperty(c.getValue().getCriterioPunti())
+            new SimpleStringProperty(c.getValue().getCriterioPunti() != null ? c.getValue().getCriterioPunti().toString() : "")
         );
 
         // Carica dati dal DB
