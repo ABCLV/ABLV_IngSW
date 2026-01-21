@@ -1,6 +1,10 @@
 package applicazione;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
+
+import database.Consultazioni;
 
 /**
  * Rappresenta un concorrente alle gare di pesca.

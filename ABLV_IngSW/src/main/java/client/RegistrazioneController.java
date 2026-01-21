@@ -1,6 +1,5 @@
 package client;
 
-import database.Consultazioni;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +9,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
+import applicazione.RegistrazioneService;
 
 public class RegistrazioneController {
 
@@ -78,19 +79,19 @@ public class RegistrazioneController {
 
 		try {
 			if ("Arbitro".equals(tipo)) {
-				if (Consultazioni.esisteArbitro(v[0])) {
+				if (RegistrazioneService.esisteArbitro(v[0])) {
 					errLabel.setText("Arbitro con questo CF già presente.");
 					errLabel.setVisible(true);
 					return;
 				}
-				Consultazioni.registraArbitro(v[0], v[1], v[2], v[3], v[4]);
+				RegistrazioneService.registraArbitro(v[0], v[1], v[2], v[3], v[4]);
 			} else if ("Società".equals(tipo)) {
-				if (Consultazioni.esisteSocieta(v[0])) {
+				if (RegistrazioneService.esisteSocieta(v[0])) {
 					errLabel.setText("Società con questo nome già presente.");
 					errLabel.setVisible(true);
 					return;
 				}
-				Consultazioni.registraSocieta(v[0], v[1], v[2], v[3], v[4], v[5]);
+				RegistrazioneService.registraSocieta(v[0], v[1], v[2], v[3], v[4], v[5]);
 			}
 			errLabel.setTextFill(javafx.scene.paint.Color.GREEN);
 			errLabel.setText("Registrazione avvenuta!");

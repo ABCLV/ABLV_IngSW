@@ -1,6 +1,8 @@
 package applicazione;
 
+import java.sql.SQLException;
 import database.Consultazioni;
+import java.util.List;
 
 /**
  * Rappresenta una società di pesca partecipante alle gare.
@@ -76,6 +78,30 @@ public class Societa implements PropositoreIF {
      */
     public void modificaProfilo() {
     }
+    
+    public List<Concorrente> getConcorrenti(){
+    	List<Concorrente> ret;
+    	try {
+        	ret = Consultazioni.getConcorrentiPerSocieta(this.nome);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		ret = null;
+    	}
+    	
+    	return ret;
+    }
+    
+    public List<Gara> getGareProposte(){
+    	List<Gara> ret;
+    	try {
+    		ret = Consultazioni.getGareProposteDaSocieta(this.nome);
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    		ret = null;
+    	}
+    	
+    	return ret;
+    }
 
     /**
      * Propone una nuova gara all’amministratore.
@@ -150,5 +176,12 @@ public class Societa implements PropositoreIF {
 
 	public String getIdentificatore() {
 		return this.getNome();
+	}
+	public static Societa fromUsername(String nome) throws SQLException {
+	    return Consultazioni.getSocieta(nome);
+	}
+
+	public List<Concorrente> getConcorrentiIscritti() throws SQLException {
+	    return Consultazioni.getConcorrentiPerSocieta(this.nome);
 	}
 }
