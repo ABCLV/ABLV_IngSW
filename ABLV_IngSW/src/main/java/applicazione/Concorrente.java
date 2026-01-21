@@ -1,6 +1,10 @@
 package applicazione;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
+
+import database.Consultazioni;
 
 /**
  * Rappresenta un concorrente alle gare di pesca.
@@ -12,7 +16,8 @@ public class Concorrente {
     private String nome;
     private String email;
     private LocalDate  nascita;
-
+    private String societa;
+    
     /**
      * Costruttore completo.
      * @param cf       codice fiscale del concorrente
@@ -20,69 +25,151 @@ public class Concorrente {
      * @param nome     nome del concorrente
      * @param nascita  data di nascita del concorrente
      */
-    public Concorrente(String cf, String cognome, String nome, String email, LocalDate nascita) {
+    public Concorrente(String cf, String cognome, String nome, String email, LocalDate nascita, String nomeSocieta) {
         this.cf = cf;
         this.cognome = cognome;
         this.nome = nome;
         this.email = email;
         this.nascita = nascita;
+        this.societa = nomeSocieta;
     }
 
-    @Override
+    public String getCf() {
+		return cf;
+	}
+
+	public void setCf(String cf) {
+		this.cf = cf;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public LocalDate getNascita() {
+		return nascita;
+	}
+
+	public void setNascita(LocalDate nascita) {
+		this.nascita = nascita;
+	}
+
+	@Override
 	public String toString() {
 		return "Concorrente [cf=" + cf + ", cognome=" + cognome + ", nome=" + nome + ", email=" + email + ", nascita="
 				+ nascita + "]";
 	}
 
 	/**
-     * Iscrive il concorrente a una gara.
-     * @param codice codice identificativo della gara
-     * @return true se l'iscrizione è andata a buon fine, false altrimenti
-     */
-    public boolean iscriviGara(String codice) {
-        return false;
-    }
+	 * Iscrive il concorrente a una gara.
+	 * 
+	 * @param codice codice identificativo della gara
+	 * @return true se l'iscrizione è andata a buon fine, false altrimenti
+	 */
+	public boolean iscriviGara(String codice) {
+		return false;
+	}
 
-    /**
-     * Annulla l'iscrizione del concorrente a una gara.
-     * @param codice codice identificativo della gara
-     * @return true se l'annullamento è andato a buon fine, false altrimenti
-     */
-    public boolean annullaIscrizione(String codice) {
-        return false;
-    }
+	/**
+	 * Annulla l'iscrizione del concorrente a una gara.
+	 * 
+	 * @param codice codice identificativo della gara
+	 * @return true se l'annullamento è andato a buon fine, false altrimenti
+	 */
+	public boolean annullaIscrizione(String codice) {
+		return false;
+	}
 
-    /**
-     * Visualizza il profilo del concorrente.
-     */
-    public void visualizzaProfilo() {
-    }
+	/**
+	 * Visualizza il profilo del concorrente.
+	 */
+	public void visualizzaProfilo() {
+	}
 
-    /**
-     * Mostra la carriera del concorrente.
-     */
-    public void carriera() {
-    }
+	/**
+	 * Mostra la carriera del concorrente.
+	 */
+	public void carriera() {
+	}
 
-    /**
-     * Permette la modifica del profilo del concorrente.
-     */
-    public void modificaProfilo() {
-    }
+	/**
+	 * Permette la modifica del profilo del concorrente.
+	 */
+	public void modificaProfilo() {
+	}
 
-    /**
-     * Mostra le iscrizioni attive del concorrente.
-     */
-    public void iscrizioni() {
-    }
+	/**
+	 * Mostra le iscrizioni attive del concorrente.
+	 */
+	public void iscrizioni() {
+	}
 
-    /**
-     * Aggiunge una recensione per una gara a cui ha partecipato.
-     * @param codice codice identificativo della gara
-     * @param rec    oggetto recensione da associare
-     * @return true se l'inserimento è andato a buon fine, false altrimenti
-     */
-    public boolean aggiungiRecensione(String codice, Recensione rec) {
-        return false;
-    }
+	/**
+	 * Aggiunge una recensione per una gara a cui ha partecipato.
+	 * 
+	 * @param codice codice identificativo della gara
+	 * @param rec    oggetto recensione da associare
+	 * @return true se l'inserimento è andato a buon fine, false altrimenti
+	 */
+	public boolean aggiungiRecensione(String codice, Recensione rec) {
+		return false;
+	}
+
+	public String getCf() {
+		return cf;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public LocalDate getNascita() {
+		return nascita;
+	}
+	
+	
+	public String getSocieta() {
+	    return this.societa; // campo già presente o da aggiungere
+	}
+
+	public List<Gara> getGareIscritte() throws SQLException {
+	    return Consultazioni.getGareConcorrente(this.cf);
+	}
+
+	public Societa getDettagliSocieta() throws SQLException {
+	    return Consultazioni.getSocieta(this.societa);
+	}
+	
+	public static Concorrente fromUsername(String cf) throws SQLException {
+	    return Consultazioni.getConcorrente(cf);
+	}
+	
 }

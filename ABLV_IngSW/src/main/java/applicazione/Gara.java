@@ -1,31 +1,38 @@
 package applicazione;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Rappresenta una gara di pesca.
  */
 public class Gara {
 
-	
-
-
 	private String codice;
     private int numProva;
     private Tecnica tecnica;
-    private String criterioPunti;
+    private CriterioPunti criterioPunti;
     private LocalDate data;
     private int maxPersone;
     private int minPersone;
     private StatoGara statoGara;
     private StatoConferma statoConferma;
     private TipologiaGara tipoGara;
+    /*
+     * In posizione:
+     *  - 0, abbiamo il propositore
+     *  - 1, abbiamo l'accettatore
+     */
+    private PropositoreIF[] autori = new PropositoreIF[2]; 
+    private Campionato campionato;
+    private Arbitro arbitro;
+    private CampoGara campoGara;
 
     /**
      * Costruttore completo.
      * @param codiceGara      codice identificativo della gara
      * @param nProva          numero della prova (per campionati)
-     * @param organizzatore   società organizzatrice
      * @param tipoTecnica     tecnica di pesca ammessa
      * @param criterioPunti   criterio di assegnazione punti
      * @param dataSvolgimento data in cui si svolge la gara
@@ -35,24 +42,34 @@ public class Gara {
      * @param tipoGara        tipologia (singola, campionato, ecc.)
      * @param annoGara        anno di edizione
      */
-    public Gara(String codiceGara, int nProva, String organizzatore, Tecnica tipoTecnica,
-                String criterioPunti, LocalDate dataSvolgimento, int maxPersone, int minPersone,
-                StatoConferma statoConferma, StatoGara statoGara, TipologiaGara tipoGara, LocalDate annoGara) {
-        this.codice = codiceGara;
-        this.numProva = nProva;
-        this.tecnica = tipoTecnica;
-        this.criterioPunti = criterioPunti;
-        this.minPersone = minPersone;
-        this.maxPersone = maxPersone;
-        this.statoGara = statoGara;
-        this.statoConferma = statoConferma;
-        this.tipoGara = tipoGara;
-        this.data = dataSvolgimento;
+    public Gara(String codiceGara, int nProva, Tecnica tipoTecnica,
+                CriterioPunti criterioPunti, LocalDate dataSvolgimento, int maxPersone, int minPersone,
+                StatoConferma statoConferma, StatoGara statoGara, TipologiaGara tipoGara, LocalDate annoGara,
+                PropositoreIF propositore, PropositoreIF accettatore, Campionato campionato, Arbitro arbitro,
+                CampoGara campoGara) {
+    	try {
+    		this.setCodice(codiceGara);
+            this.setNumProva(nProva);
+            this.setTecnica(tipoTecnica);
+            this.setCriterioPunti(criterioPunti);
+            this.setMinPersone(minPersone);
+            this.setMaxPersone(maxPersone);
+            this.setStatoGara(statoGara);
+            this.setStatoConferma(statoConferma);
+            this.setTipoGara(tipoGara);
+            this.setData(annoGara);
+            this.setPropositore(propositore);
+            this.setAccettatore((Amministratore) accettatore);
+            this.setCampionato(campionato);
+            this.setArbitro(arbitro);
+            this.setCampoGara(campoGara);
+    	} catch(Exception e) {
+    		System.out.println("Errore: " + e.getMessage());
+    	}
+        
     }
     
-    public Gara() {
-    	
-    }
+    public Gara() {}
 
     /**
      * Cambia lo stato organizzativo della gara.
@@ -155,32 +172,173 @@ public class Gara {
     public Punteggio[] getClassifica() {
         return null;
     }
+     /*
+      * Ritorna true se "o" NON è null.
+      * Sennò lancia un eccezione e viene catturata nel costruttore della classe.
+      */
+    private boolean checkNull(Object o, String msg) {
+    	if(o == null) {
+    		throw new IllegalArgumentException(msg);
+    	}
+    	//Ci arriva solo se "o" NON è null.
+    	return true;
+    }
     
-    public void setCodice(String setCodice) { this.codice = setCodice;}
-    public void setNumProva(int numProva) { this.numProva = numProva; }
-    public void setTecnica(Tecnica tecnica) { this.tecnica = tecnica; }
-    public void setCriterioPunti(String criterioPunti) { this.criterioPunti = criterioPunti; }
-    public void setData(LocalDate data) { this.data = data; }
-    public void setMaxPersone(int maxPersone) { this.maxPersone = maxPersone; }
-    public void setMinPersone(int minPersone) { this.minPersone = minPersone; }
-    public void setStatoGara(StatoGara statoGara) { this.statoGara = statoGara; }
-    public void setStatoConferma(StatoConferma statoConferma) { this.statoConferma = statoConferma; }
-    public void setTipoGara(TipologiaGara tipoGara) { this.tipoGara = tipoGara; }
+    /*
+     * Logica simile a checkNull().
+     */
+    private boolean checkNum(int num, String msg) {
+    	if(num < 0) {
+    		throw new IllegalArgumentException(msg);
+    	}
+    	
+    	return true;
+    }
+    
+    public void setCodice(String codice) throws IllegalArgumentException{
+		this.checkNull(codice, "Codice Gara non valido!");
+		this.codice = codice;
+    }
+    
+    public void setNumProva(int numProva) throws IllegalArgumentException {
+    	this.checkNum(numProva, "Numero di prove non valido! Deve essere positivo...");
+    	this.numProva = numProva;
+    }
+    public void setTecnica(Tecnica tecnica) {
+    	this.checkNull(tecnica, "Tipo di tecnica non valido!");
+    	this.tecnica = tecnica;
+    }
+    public void setCriterioPunti(CriterioPunti criterioPunti) {
+    	this.checkNull(criterioPunti, "Criterio punti non valido!");
+    	this.criterioPunti = criterioPunti;
+    }
+    public void setData(LocalDate data) {
+    	LocalDate current = LocalDate.now();
+    	if(current.isAfter(data)) {
+    		throw new IllegalArgumentException("Data della gara non valida! (E' antecedente ad oggi...)");
+    	} else {
+    		this.data = data;
+    	}
+    }
+    
+    public void setMinPersone(int minPersone) {
+    	this.checkNum(minPersone, "Numero di persone minime della gara non valido! Deve essere positivo...");
+    	this.minPersone = minPersone;
+    }
+    
+    public void setMaxPersone(int maxPersone) {
+    	this.checkNum(maxPersone, "Numero di persone massime della gara non valido! Deve essere positivo...");
+    	if(this.minPersone > maxPersone) {
+    		throw new IllegalArgumentException("Numero di persone massime della gara "
+    				+ "non valido! Deve essere strettamente maggiore del numero minimo di persone...");
+    	}
+    	this.maxPersone = maxPersone;
+    }
+    public void setStatoGara(StatoGara statoGara) {
+    	this.checkNull(statoGara, "Stato gara non valido!");
+    	this.statoGara = statoGara;    	
+    }
+    public void setStatoConferma(StatoConferma statoConferma) {
+    	this.checkNull(statoConferma, "Stato conferma della gara non valido!");
+    	this.statoConferma = statoConferma; 
+    }
+    public void setTipoGara(TipologiaGara tipoGara) {
+    	this.checkNull(tipoGara, "Tipologia di gara non valida!");
+    	this.tipoGara = tipoGara; 
+    }
+    
+    public void setPropositore(PropositoreIF p) {
+    	this.checkNull(p, "Propositore non valido!");
+    	this.autori[0] = p;
+    }
+    
+    public void setAccettatore(Amministratore a) {
+    	this.autori[1] = a;
+    }
+    
+    public void setCampionato(Campionato campionato) {
+		this.campionato = campionato;
+	}
 
+    public void setArbitro(Arbitro arbitro) {
+		this.arbitro = arbitro;
+	}
     
-    @Override
+    public void setCampoGara(CampoGara campoGara) {
+    	this.checkNull(campoGara, "Campo gara non valido!");
+		this.campoGara = campoGara;
+	}
+
+	public String getCodice() {
+		return this.codice;
+	}
+
+	public int getNumProva() {
+		return this.numProva;
+	}
+
+	public Tecnica getTecnica() {
+		return this.tecnica;
+	}
+
+	public CriterioPunti getCriterioPunti() {
+		return this.criterioPunti;
+	}
+
+	public LocalDate getData() {
+		return this.data;
+	}
+
+	public int getMaxPersone() {
+		return this.maxPersone;
+	}
+
+	public int getMinPersone() {
+		return this.minPersone;
+	}
+
+	public StatoGara getStatoGara() {
+		return this.statoGara;
+	}
+
+	public StatoConferma getStatoConferma() {
+		return this.statoConferma;
+	}
+
+	public TipologiaGara getTipoGara() {
+		return this.tipoGara;
+	}
+
+	public PropositoreIF[] getAutori() {
+		return this.autori;
+	}
+	
+	public PropositoreIF getPropositore() {
+		return this.autori[0];
+	}
+
+	public Amministratore getAccettatore() {
+		return (Amministratore) this.autori[1];
+	}
+	
+	public Campionato getCampionato() {
+		return campionato;
+	}
+	
+	public Arbitro getArbitro() {
+		return arbitro;
+	}
+
+	public CampoGara getCampoGara() {
+		return campoGara;
+	}
+
+	@Override
 	public String toString() {
-	    return "Gara {\n" +
-	           "  codiceGara      = " + codice + ",\n" +
-	           "  nProva          = " + numProva + ",\n" +
-	           "  tipoTecnica     = " + tecnica + ",\n" +
-	           "  criterioPunti   = " + criterioPunti + ",\n" +
-	           "  dataSvolgimento = " + data + ",\n" +
-	           "  maxPersone      = " + maxPersone + ",\n" +
-	           "  minPersone      = " + minPersone + ",\n" +
-	           "  statoGara       = " + statoGara + ",\n" +
-	           "  statoConferma   = " + statoConferma + ",\n" +
-	           "  tipoGara        = " + tipoGara + "\n" +
-	           "}";
+		return "Gara [codice=" + codice + ", numProva=" + numProva + ", tecnica=" + tecnica + ", criterioPunti="
+				+ criterioPunti + ", data=" + data + ", maxPersone=" + maxPersone + ", minPersone=" + minPersone
+				+ ", statoGara=" + statoGara + ", statoConferma=" + statoConferma + ", tipoGara=" + tipoGara
+				+ ", autori=" + Arrays.toString(autori) + ", campionato=" + campionato + ", arbitro=" + arbitro
+				+ ", campoGara=" + campoGara + "]";
 	}
 }

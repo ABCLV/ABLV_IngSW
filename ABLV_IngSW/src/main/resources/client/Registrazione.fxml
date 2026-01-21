@@ -22,6 +22,10 @@
     <!-- Contenitore dinamico: qui vengono aggiunti i campi -->
     <GridPane fx:id="campiGrid" alignment="CENTER" hgap="10" vgap="10" maxWidth="350"/>
 
+    <!-- Label errore / successo -->
+    <Label fx:id="errLabel" text="" textFill="RED" visible="false" wrapText="true" maxWidth="300"
+           style="-fx-font-weight: bold; -fx-padding: 5;"/>
+
     <!-- Pulsanti -->
     <HBox spacing="10" alignment="CENTER">
         <Button text="Registrati" fx:id="regBtn" onAction="#handleRegistra"/>

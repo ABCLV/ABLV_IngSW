@@ -45,6 +45,7 @@
 			<artifactId>sqlite-jdbc</artifactId>
 			<version>3.50.3.0</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-controls</artifactId>
@@ -65,8 +66,13 @@
 			<artifactId>jooq</artifactId>
 			<version>3.18.7</version>
 		</dependency>
-		<!-- These may not be required, unless you use the GenerationTool
-manually for code generation -->
+		
+		<dependency>
+   		 <groupId>commons-codec</groupId>
+  		  <artifactId>commons-codec</artifactId>
+   		 <version>1.16.1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.jooq</groupId>
 			<artifactId>jooq-meta</artifactId>

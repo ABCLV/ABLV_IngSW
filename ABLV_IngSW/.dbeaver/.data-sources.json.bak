@@ -1,23 +1,17 @@
 {
 	"folders": {},
 	"connections": {
-		"postgres-jdbc-19b4be06dc4-5d1ef63522447444": {
-			"provider": "postgresql",
-			"driver": "postgres-jdbc",
-			"name": "postgres",
+		"sqlite_jdbc-19b4bea292d-1871cc47ca9fe2a8": {
+			"provider": "sqlite",
+			"driver": "sqlite_jdbc",
+			"name": "gare.db",
 			"save-password": true,
 			"configuration": {
-				"host": "localhost",
-				"port": "5432",
-				"database": "postgres",
-				"url": "jdbc:postgresql://localhost:5432/postgres",
+				"database": "C:\\Users\\Mikyv\\Desktop\\ABLV_IngSW\\ABLV_IngSW\\database\\gare.db",
+				"url": "jdbc:sqlite:C:\\Users\\Mikyv\\Desktop\\ABLV_IngSW\\ABLV_IngSW\\database\\gare.db",
 				"configurationType": "MANUAL",
 				"type": "dev",
-				"closeIdleConnection": true,
-				"provider-properties": {
-					"@dbeaver-show-non-default-db@": "false"
-				},
-				"auth-model": "native"
+				"closeIdleConnection": true
 			}
 		}
 	},
