@@ -11,13 +11,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 
-import org.jooq.Record4;
-
-import applicazione.Gara;
-import applicazione.Tecnica;
 import database.Consultazioni;
 
 public class ConcorrenteHomeController {
@@ -53,23 +48,23 @@ public class ConcorrenteHomeController {
 
 	/* --- tabella gare --- */
 	@FXML
-	private TableView<GaraFxWrapper> gareTable;
+	private TableView<GaraRow> gareTable;
 	@FXML
-	private TableColumn<GaraFxWrapper, String> colCodice;
+	private TableColumn<GaraRow, String> colCodice;
 	@FXML
-	private TableColumn<GaraFxWrapper, String> colData;
+	private TableColumn<GaraRow, String> colData;
 	@FXML
-	private TableColumn<GaraFxWrapper, String> colTecnica;
+	private TableColumn<GaraRow, String> colTecnica;
 	@FXML
-	private TableColumn<GaraFxWrapper, String> colCampo;
+	private TableColumn<GaraRow, String> colCampo;
 
-	private final ObservableList<GaraFxWrapper> gareObs = FXCollections.observableArrayList();
+	private final ObservableList<GaraRow> gareObs = FXCollections.observableArrayList();
 
 	@FXML
 	private void initialize() {
 		welcomeLabel.setText("Benvenuto Concorrente " + Session.userName);
 
-		/* --- dati personali --- */
+		/* --- carica dati personali --- */
 		try {
 			var me = Consultazioni.getConcorrente(Session.userName);
 			lblCF.setText("CF: " + me.cf());
@@ -87,19 +82,9 @@ public class ConcorrenteHomeController {
 			lblSocCap.setText("CAP: " + soc.getCitta());
 			lblSocEmail.setText("Email: " + soc.getEmail());
 
-			/* --- elenco gare: stessa query di prima, ma wrappiamo il risultato --- */
-			List<Record4<String, LocalDate, String, String>> rows = Consultazioni.getGareConcorrenteRecord(me.cf()); // metodo
-																														// nuovo
-																														// (vedi
-																														// sotto)
-
-			ObservableList<GaraFxWrapper> gareObs = FXCollections.observableArrayList();
-			for (var r : rows) {
-				Gara g = new Gara(r.value1()); // codice
-				g.setData(r.value2()); // LocalDate
-				g.setTecnica(Tecnica.valueOf(r.value3())); // tecnica
-				gareObs.add(new GaraFxWrapper(g, r.value4())); // campo descrizione
-			}
+			/* --- elenco gare --- */
+			List<GaraRow> gare = Consultazioni.getGareConcorrente(me.cf());
+			gareObs.setAll(gare);
 			gareTable.setItems(gareObs);
 
 			colCodice.setCellValueFactory(d -> d.getValue().codiceProperty());

@@ -12,9 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
-import applicazione.Concorrente;
 import database.Consultazioni;
 
 public class SocietaHomeController {
@@ -24,17 +22,17 @@ public class SocietaHomeController {
 
 	/* --- tabella pescatori --- */
 	@FXML
-	private TableView<ConcorrenteFxWrapper> pescatoriTable;
+	private TableView<ConcorrenteRow> pescatoriTable;
 	@FXML
-	private TableColumn<ConcorrenteFxWrapper, String> colCF;
+	private TableColumn<ConcorrenteRow, String> colCF;
 	@FXML
-	private TableColumn<ConcorrenteFxWrapper, String> colNome;
+	private TableColumn<ConcorrenteRow, String> colNome;
 	@FXML
-	private TableColumn<ConcorrenteFxWrapper, String> colCognome;
+	private TableColumn<ConcorrenteRow, String> colCognome;
 	@FXML
-	private TableColumn<ConcorrenteFxWrapper, String> colEmail;
+	private TableColumn<ConcorrenteRow, String> colEmail;
 	@FXML
-	private TableColumn<ConcorrenteFxWrapper, String> colNascita;
+	private TableColumn<ConcorrenteRow, String> colNascita;
 
 	/* --- dati società --- */
 	@FXML
@@ -48,7 +46,7 @@ public class SocietaHomeController {
 	@FXML
 	private Label lblSocEmail;
 
-	private final ObservableList<ConcorrenteFxWrapper> pescatoriObs = FXCollections.observableArrayList();
+	private final ObservableList<ConcorrenteRow> pescatoriObs = FXCollections.observableArrayList();
 
 	@FXML
 	private void initialize() {
@@ -64,8 +62,7 @@ public class SocietaHomeController {
 			lblSocEmail.setText("Email: " + soc.getEmail());
 
 			/* --- carica pescatori iscritti alla società --- */
-			List<Concorrente> lista = Consultazioni.getConcorrentiPerSocieta(Session.userName);
-			pescatoriObs.setAll(lista.stream().map(ConcorrenteFxWrapper::new).toList());
+			pescatoriObs.setAll(Consultazioni.getConcorrentiPerSocieta(Session.userName));
 			pescatoriTable.setItems(pescatoriObs);
 
 			colCF.setCellValueFactory(d -> d.getValue().cfProperty());
@@ -93,12 +90,7 @@ public class SocietaHomeController {
 
 	private void ricaricaTabella() {
 		try {
-			pescatoriObs.setAll(
-				Consultazioni.getConcorrentiPerSocieta(Session.userName)
-				             .stream()
-				             .map(ConcorrenteFxWrapper::new)
-				             .toList()
-			);
+			pescatoriObs.setAll(Consultazioni.getConcorrentiPerSocieta(Session.userName));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
