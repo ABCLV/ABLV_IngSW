@@ -1,6 +1,7 @@
 package client;
 
-
+import database.Consultazioni;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import javafx.util.converter.IntegerStringConverter;
 import applicazione.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ProponiGaraController {
 
@@ -116,15 +118,15 @@ public class ProponiGaraController {
 
     private void caricaDatiDatabase() {
         // Carica i campionati dal database
-        campionatiList = FXCollections.observableArrayList(ProponiGaraService.caricaCampionati());
+        campionatiList = FXCollections.observableArrayList(Consultazioni.getCampionati());
         campionatoBox.setItems(campionatiList);
         
         // Carica gli arbitri dal database
-        arbitriList = FXCollections.observableArrayList(ProponiGaraService.caricaArbitri());
+        arbitriList = FXCollections.observableArrayList(Consultazioni.getArbitri());
         arbitroBox.setItems(arbitriList);
         
         // Carica i campi gara dal database
-        campiGaraList = FXCollections.observableArrayList(ProponiGaraService.caricaCampiGara());
+        campiGaraList = FXCollections.observableArrayList(Consultazioni.getCampiGara());
         campoGaraBox.setItems(campiGaraList);
     }
     
@@ -269,7 +271,7 @@ public class ProponiGaraController {
         // Controllo: se è stato selezionato un campionato, verificare che non esista già 
         // una gara con lo stesso numero di prova in quel campionato
         if (campionato != null) {
-            if (ProponiGaraService.esisteGaraInCampionato(campionato, numProva)) {
+            if (Consultazioni.esisteGaraInCampionato(campionato, numProva)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, 
                     "Esiste già una gara con il numero di prova " + numProva + 
                     " nel campionato " + campionato + "!");
@@ -284,17 +286,17 @@ public class ProponiGaraController {
 
         try {
             // Autori:
-            // [0] propositore = società/amministratore corrente
+            // [0] propositore = società corrente
             // [1] accettatore = null
             PropositoreIF[] autori = new PropositoreIF[2];
             if(Session.userType.equals("Societa")) {
-                autori[0] = ProponiGaraService.caricaPropositore("Societa", Session.userName);
+                autori[0] = Consultazioni.getSocieta(Session.userName);
             } else if(Session.userType.equals("Amministratore")) {
-                autori[0] = ProponiGaraService.caricaPropositore("Amministratore", Session.userName);
+            	autori[0] = Consultazioni.getAmministratore(Session.userName);
             }
             autori[1] = null;
             
-            String ultimoCodice = ProponiGaraService.getUltimoCodiceGara();
+            String ultimoCodice = Consultazioni.getUltimoCodiceGara();
             int numero = Integer.parseInt(ultimoCodice.substring(1));
             numero++;
             String nuovoCodice = String.format("G%03d", numero);
@@ -315,7 +317,7 @@ public class ProponiGaraController {
             g.setArbitro(arbitro);
             g.setCampoGara(campoGara);
             
-            ProponiGaraService.insertGara(g);
+            Consultazioni.insertGara(g);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Gara proposta con successo!");
             alert.showAndWait();

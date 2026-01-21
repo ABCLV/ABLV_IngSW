@@ -1,9 +1,6 @@
 package client;
 
-import applicazione.Amministratore;
-import applicazione.Autenticazione;
-import applicazione.Concorrente;
-import applicazione.Societa;
+import database.Consultazioni;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +28,7 @@ public class LoginController {
 	/* ---------- inizializza ---------- */
 	@FXML
 	private void initialize() {
-		tipoCombo.getItems().addAll("Concorrente", "Societa", "Amministratore", "Arbitro");
+		tipoCombo.getItems().addAll("Concorrente", "Società", "Amministratore", "Arbitro");
 		tipoCombo.getSelectionModel().selectFirst();
 		mostraCampi();
 	}
@@ -47,7 +44,7 @@ public class LoginController {
 		idLabel.setVisible(true);
 		switch (tipo) {
 		case "Concorrente" -> idLabel.setText("Codice Fiscale:");
-		case "Societa" -> idLabel.setText("Nome:");
+		case "Società" -> idLabel.setText("Nome:");
 		case "Amministratore" -> idLabel.setText("Codice Fiscale:");
 		case "Arbitro" -> idLabel.setText("Codice Fiscale:");
 		}
@@ -70,7 +67,7 @@ public class LoginController {
 
 		boolean ok = false;
 		try {
-			ok = Autenticazione.verifica(tipo, id, pwd);
+			ok = Consultazioni.checkPassword(tipo, id, pwd);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,28 +80,11 @@ public class LoginController {
 		/* --- salva sessione --- */
 		Session.userName = id;
 		Session.userType = tipo;
-		
-		
-		
 
 		/* --- carica pagina dedicata --- */
-		String fxml = "/client/" + tipo + "Home.fxml";
+		String fxml = "/client/" + tipo.replace("à", "a") + "Home.fxml";
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
 		Scene scene = new Scene(loader.load());
-		if (tipo.equals("Amministratore")) {
-		    AmministratoreHomeController ctrl = loader.getController();
-		    ctrl.setAmministratore(Amministratore.fromUsername(id));
-		}
-		else if (tipo.equals("Concorrente")) {
-		    ConcorrenteHomeController ctrl = loader.getController();
-		    Concorrente c = Concorrente.fromUsername(id);
-		    ctrl.setConcorrente(c);
-		}
-		else if (tipo.equals("Societa")) {
-			SocietaHomeController ctrl = loader.getController();
-			ctrl.setSocieta(Societa.fromUsername(Session.userName));
-				}
-		
 		Stage stage = (Stage) tipoCombo.getScene().getWindow();
 		stage.setScene(scene);
 		stage.setTitle(tipo + " Home");

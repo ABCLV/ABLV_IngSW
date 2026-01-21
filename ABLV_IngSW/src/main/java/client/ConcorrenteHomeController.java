@@ -8,19 +8,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
-import applicazione.Concorrente;
+import org.jooq.Record4;
+
 import applicazione.Gara;
-import applicazione.Societa;
+import applicazione.Tecnica;
+import database.Consultazioni;
+
 public class ConcorrenteHomeController {
 
-	private Concorrente concorrenteCorrente;
 	@FXML
 	private Label welcomeLabel;
 
@@ -52,60 +53,63 @@ public class ConcorrenteHomeController {
 
 	/* --- tabella gare --- */
 	@FXML
-	private TableView<Gara> gareTable;
+	private TableView<GaraFxWrapper> gareTable;
 	@FXML
-	private TableColumn<Gara, String> colCodice;
+	private TableColumn<GaraFxWrapper, String> colCodice;
 	@FXML
-	private TableColumn<Gara, String> colData;
+	private TableColumn<GaraFxWrapper, String> colData;
 	@FXML
-	private TableColumn<Gara, String> colTecnica;
+	private TableColumn<GaraFxWrapper, String> colTecnica;
 	@FXML
-	private TableColumn<Gara, String> colCampo;
+	private TableColumn<GaraFxWrapper, String> colCampo;
 
-	private final ObservableList<Gara> gareObs = FXCollections.observableArrayList();
+	private final ObservableList<GaraFxWrapper> gareObs = FXCollections.observableArrayList();
 
-	public void setConcorrente(Concorrente c) {
-	    this.concorrenteCorrente = c;
-	    try {
-			caricaDati();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	private void caricaDati() throws SQLException {
-	    welcomeLabel.setText("Benvenuto Concorrente " + concorrenteCorrente.getNome());
-
-	    lblCF.setText("CF: " + concorrenteCorrente.getCf());
-	    lblNome.setText("Nome: " + concorrenteCorrente.getNome());
-	    lblCognome.setText("Cognome: " + concorrenteCorrente.getCognome());
-	    lblEmail.setText("Email: " + concorrenteCorrente.getEmail());
-	    lblNascita.setText("Nascita: " + concorrenteCorrente.getNascita());
-	    lblSocieta.setText("Società: " + concorrenteCorrente.getSocieta());
-
-	    Societa s = concorrenteCorrente.getDettagliSocieta();
-	    lblSocNome.setText("Nome: " + s.getNome());
-	    lblSocIndirizzo.setText("Indirizzo: " + s.getIndirizzo());
-	    lblSocCitta.setText("Città: " + s.getCitta());
-	    lblSocCap.setText("CAP: " + s.getCap());
-	    lblSocEmail.setText("Email: " + s.getEmail());
-
-	    List<Gara> gare = concorrenteCorrente.getGareIscritte();
-	    gareObs.setAll(gare);
-	    gareTable.setItems(gareObs);
-	}
-	
 	@FXML
 	private void initialize() {
-	
+		welcomeLabel.setText("Benvenuto Concorrente " + Session.userName);
 
-			colCodice.setCellValueFactory(new PropertyValueFactory<>("codice"));
-			colData.setCellValueFactory(new PropertyValueFactory<>("data"));
-			colTecnica.setCellValueFactory(
-			    cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTecnica().name()));
-			colCampo.setCellValueFactory(
-			    cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getCampoGara().getIdCampoGara()));
+		/* --- dati personali --- */
+		try {
+			var me = Consultazioni.getConcorrente(Session.userName);
+			lblCF.setText("CF: " + me.cf());
+			lblNome.setText("Nome: " + me.nome());
+			lblCognome.setText("Cognome: " + me.cognome());
+			lblEmail.setText("Email: " + me.email());
+			lblNascita.setText("Nascita: " + me.nascita());
+			lblSocieta.setText("Società: " + me.societa());
 
+			/* --- dati società --- */
+			var soc = Consultazioni.getSocieta(me.societa());
+			lblSocNome.setText("Nome: " + soc.getNome());
+			lblSocIndirizzo.setText("Indirizzo: " + soc.getIndirizzo());
+			lblSocCitta.setText("Città: " + soc.getCitta());
+			lblSocCap.setText("CAP: " + soc.getCitta());
+			lblSocEmail.setText("Email: " + soc.getEmail());
+
+			/* --- elenco gare: stessa query di prima, ma wrappiamo il risultato --- */
+			List<Record4<String, LocalDate, String, String>> rows = Consultazioni.getGareConcorrenteRecord(me.cf()); // metodo
+																														// nuovo
+																														// (vedi
+																														// sotto)
+
+			ObservableList<GaraFxWrapper> gareObs = FXCollections.observableArrayList();
+			for (var r : rows) {
+				Gara g = new Gara(r.value1()); // codice
+				g.setData(r.value2()); // LocalDate
+				g.setTecnica(Tecnica.valueOf(r.value3())); // tecnica
+				gareObs.add(new GaraFxWrapper(g, r.value4())); // campo descrizione
+			}
+			gareTable.setItems(gareObs);
+
+			colCodice.setCellValueFactory(d -> d.getValue().codiceProperty());
+			colData.setCellValueFactory(d -> d.getValue().dataProperty());
+			colTecnica.setCellValueFactory(d -> d.getValue().tecnicaProperty());
+			colCampo.setCellValueFactory(d -> d.getValue().campoProperty());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
