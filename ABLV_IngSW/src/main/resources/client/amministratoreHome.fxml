@@ -1,23 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="client.AmministratoreHomeController"
-      alignment="CENTER"
-      spacing="20"
-      prefWidth="400"
-      prefHeight="250"
+      spacing="15"
+      prefWidth="900"
+      prefHeight="700"
       style="-fx-background-color: #e6f7ff;">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
 
     <!-- Label di benvenuto dinamico -->
     <Label fx:id="welcomeLabel"
            style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #005f5f;"/>
 
-    <!-- Pulsante nuova funzionalità -->
-    <Button text="Registra Nuovo Amministratore" onAction="#apriRegistraAmministratore"/>
+    <!-- Pulsanti azioni -->
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Registra Nuovo Amministratore" onAction="#apriRegistraAmministratore" prefWidth="200"/>
+        <Button text="Proponi Gara" onAction="#apriProponiGara" prefWidth="150"/>
+        <Button text="Torna alla Home" onAction="#handleBack" prefWidth="150"/>
+    </HBox>
 
-    <Button text="Torna alla Home" onAction="#handleBack"/>
+    <!-- Separatore -->
+    <Separator/>
+
+    <!-- Tabella: Gare proposte da me -->
+    <VBox spacing="10" VBox.vgrow="ALWAYS">
+        <Label text="Le mie proposte di gara" 
+               style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #005f5f;"/>
+        
+        <TableView fx:id="gareProposteTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colCodiceProposte" text="Codice" prefWidth="80"/>
+                <TableColumn fx:id="colNumProvaProposte" text="N. Prova" prefWidth="80"/>
+                <TableColumn fx:id="colTecnicaProposte" text="Tecnica" prefWidth="100"/>
+                <TableColumn fx:id="colDataProposte" text="Data" prefWidth="100"/>
+                <TableColumn fx:id="colCampionatoProposte" text="Campionato" prefWidth="150"/>
+                <TableColumn fx:id="colStatoGaraProposte" text="Stato Gara" prefWidth="120"/>
+                <TableColumn fx:id="colStatoConfermaProposte" text="Stato Conferma" prefWidth="120"/>
+                <TableColumn fx:id="colCampoGaraProposte" text="Campo Gara" prefWidth="150"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <!-- Separatore -->
+    <Separator/>
+
+    <!-- Tabella: Gare da accettare/rifiutare -->
+    <VBox spacing="10" VBox.vgrow="ALWAYS">
+        <Label text="Gare in attesa di conferma" 
+               style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #005f5f;"/>
+        
+        <TableView fx:id="gareDaConfermare" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colCodiceConferma" text="Codice" prefWidth="80"/>
+                <TableColumn fx:id="colNumProvaConferma" text="N. Prova" prefWidth="80"/>
+                <TableColumn fx:id="colTecnicaConferma" text="Tecnica" prefWidth="100"/>
+                <TableColumn fx:id="colDataConferma" text="Data" prefWidth="100"/>
+                <TableColumn fx:id="colCampionatoConferma" text="Campionato" prefWidth="150"/>
+                <TableColumn fx:id="colPropositoreConferma" text="Proposto da" prefWidth="150"/>
+                <TableColumn fx:id="colCampoGaraConferma" text="Campo Gara" prefWidth="150"/>
+            </columns>
+        </TableView>
+        
+        <!-- Pulsanti azioni per gare da confermare -->
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Accetta Gara" onAction="#accettaGara" prefWidth="120" 
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+            <Button text="Rifiuta Gara" onAction="#rifiutaGara" prefWidth="120"
+                    style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
+        </HBox>
+    </VBox>
+
 </VBox>

@@ -23,7 +23,7 @@
 ## SOCIETÀ
 - **iscrizioneGaraGruppi(concorrenti: List<Concorrente>, codiceGara: String): boolean**
 - **iscrizioneGaraSingolo(concorrente: Concorrente, codiceGara: String): boolean**
-- **getProfilo(): void**
+- **getProfilo(): String**
 - **aggiungiSocio(concorrente: Concorrente): void**
 - **abbandonoSocio(concorrente: Concorrente): void**
 - **modificaProfilo(): void**

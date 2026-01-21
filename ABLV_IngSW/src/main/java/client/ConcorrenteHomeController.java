@@ -81,11 +81,11 @@ public class ConcorrenteHomeController {
 
 			/* --- dati società --- */
 			var soc = Consultazioni.getSocieta(me.societa());
-			lblSocNome.setText("Nome: " + soc.nome());
-			lblSocIndirizzo.setText("Indirizzo: " + soc.indirizzo());
-			lblSocCitta.setText("Città: " + soc.citta());
-			lblSocCap.setText("CAP: " + soc.cap());
-			lblSocEmail.setText("Email: " + soc.email());
+			lblSocNome.setText("Nome: " + soc.getNome());
+			lblSocIndirizzo.setText("Indirizzo: " + soc.getIndirizzo());
+			lblSocCitta.setText("Città: " + soc.getCitta());
+			lblSocCap.setText("CAP: " + soc.getCitta());
+			lblSocEmail.setText("Email: " + soc.getEmail());
 
 			/* --- elenco gare: stessa query di prima, ma wrappiamo il risultato --- */
 			List<Record4<String, LocalDate, String, String>> rows = Consultazioni.getGareConcorrenteRecord(me.cf()); // metodo
