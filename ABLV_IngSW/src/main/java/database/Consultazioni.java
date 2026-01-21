@@ -48,97 +48,14 @@ public abstract class Consultazioni {
 
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-			return ctx.select(
-			        CONCORRENTE.CF,
-			        CONCORRENTE.NOME,
-			        CONCORRENTE.COGNOME,
-			        CONCORRENTE.EMAIL,
-			        CONCORRENTE.NASCITA,
-			        SOCIETA.NOME.as("societa")   
-			    )
-			    .from(CONCORRENTE)
-			    .join(SOCIETA)
-			        .on(CONCORRENTE.SOCIETA.eq(SOCIETA.NOME))
-			    .fetchInto(Concorrente.class);
-
+			return ctx.select(CONCORRENTE.CF, CONCORRENTE.NOME, CONCORRENTE.COGNOME, CONCORRENTE.EMAIL,
+					CONCORRENTE.NASCITA).from(CONCORRENTE).fetchInto(Concorrente.class);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return List.of();
 		}
 	}
-	
-	
-	public static List<Gara> getGare() {
-	    List<Gara> gare = new ArrayList<>();
-	    
-	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
-	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-
-	        var result = ctx.select(
-	                GARA.CODICE,
-	                GARA.NUMPROVA,
-	                GARA.DATA,
-	                GARA.TIPOGARA,
-	                GARA.TECNICA,
-	                GARA.CRITERIOPUNTI,
-	                GARA.MAXPERSONE,
-	                GARA.MINPERSONE,
-	                GARA.STATOGARA,
-	                GARA.STATOCONFERMA
-	            )
-	            .from(GARA)
-	            .fetch();
-
-	        for (var r : result) {
-	            Gara g = new Gara();
-
-	            g.setCodice(r.get(GARA.CODICE));
-	            g.setNumProva(r.get(GARA.NUMPROVA));
-
-	            // Converte la data da java.sql.Date a LocalDate
-	            LocalDate sqlDate = r.get(GARA.DATA);
-	            g.setData(sqlDate);
-	            
-
-	            // Converte stringhe in enum (se Tecnica, TipologiaGara, StatoGara, StatoConferma sono enum)
-	            String tecnicaStr = r.get(GARA.TECNICA);
-	            if (tecnicaStr != null) {
-	                g.setTecnica(Tecnica.fromString(tecnicaStr));
-	            }
-
-
-	            g.setTipoGara(TipologiaGara.INDIVIDUALE);
-
-	            g.setCriterioPunti(r.get(GARA.CRITERIOPUNTI));
-	            
-	            
-	            
-	            g.setMaxPersone(r.get(GARA.MAXPERSONE));
-	            g.setMinPersone(r.get(GARA.MINPERSONE));
-
-	            String statoGaraStr = r.get(GARA.STATOGARA);
-	            if (statoGaraStr != null) {
-	                g.setStatoGara(StatoGara.valueOf(statoGaraStr));
-	            }
-
-	            String statoConfStr = r.get(GARA.STATOCONFERMA);
-	            if (statoConfStr != null) {
-	                g.setStatoConferma(StatoConferma.valueOf(statoConfStr));
-	            }
-
-	            // Autori non popolati, se vuoi puoi aggiungere logica per propositore e accettatore
-
-	            gare.add(g);
-	        }
-
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-
-	    return gare;
-	}
-
 
 	public static List<CampoGara> getCampoGara() {
 
