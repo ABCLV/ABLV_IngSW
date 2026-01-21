@@ -11,28 +11,67 @@ import database.Consultazioni;
  */
 public class Concorrente {
 
-	public String cf;
-	private String cognome;
-	private String nome;
-	private String email;
-	private String societa;
-	private LocalDate nascita;
+    public String cf;
+    private String cognome;
+    private String nome;
+    private String email;
+    private LocalDate  nascita;
+    private String societa;
+    
+    /**
+     * Costruttore completo.
+     * @param cf       codice fiscale del concorrente
+     * @param cognome  cognome del concorrente
+     * @param nome     nome del concorrente
+     * @param nascita  data di nascita del concorrente
+     */
+    public Concorrente(String cf, String cognome, String nome, String email, LocalDate nascita, String nomeSocieta) {
+        this.cf = cf;
+        this.cognome = cognome;
+        this.nome = nome;
+        this.email = email;
+        this.nascita = nascita;
+        this.societa = nomeSocieta;
+    }
 
-	/**
-	 * Costruttore completo.
-	 * 
-	 * @param cf      codice fiscale del concorrente
-	 * @param cognome cognome del concorrente
-	 * @param nome    nome del concorrente
-	 * @param nascita data di nascita del concorrente
-	 */
-	public Concorrente(String cf, String cognome, String nome, String email, LocalDate nascita, String societa) {
+    public String getCf() {
+		return cf;
+	}
+
+	public void setCf(String cf) {
 		this.cf = cf;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public void setCognome(String cognome) {
 		this.cognome = cognome;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public LocalDate getNascita() {
+		return nascita;
+	}
+
+	public void setNascita(LocalDate nascita) {
 		this.nascita = nascita;
-		this.societa = societa;
 	}
 
 	@Override

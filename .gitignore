@@ -26,3 +26,4 @@ Thumbs.db
 # Files temporanei
 *.tmp
 *.swp
+/.metadata/
