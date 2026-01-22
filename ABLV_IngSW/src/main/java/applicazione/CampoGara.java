@@ -5,7 +5,7 @@ package applicazione;
  */
 public class CampoGara {
 
-    public String idCampoGara;
+	private String idCampoGara;
     private String corpoIdrico;
     private String paese;
     private int lunghezza;

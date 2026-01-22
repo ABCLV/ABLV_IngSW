@@ -10,7 +10,7 @@
       alignment="CENTER"
       spacing="10"
       prefWidth="350"
-      prefHeight="320"
+      prefHeight="370"
       style="-fx-background-color: #e6f7ff;">
 
     <Label text="Registra Concorrente" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #005f5f;"/>
@@ -27,8 +27,8 @@
     <Label text="Email:"/>
     <TextField fx:id="emailField" maxWidth="250"/>
 
-    <Label text="Data di Nascita (YYYY-MM-DD):"/>
-    <TextField fx:id="nascitaField" maxWidth="250"/>
+    <Label text="Data di Nascita:"/>
+    <DatePicker fx:id="nascitaPicker" maxWidth="250"/>
 
     <Label text="Password:"/>
     <PasswordField fx:id="pwdField" maxWidth="250"/>

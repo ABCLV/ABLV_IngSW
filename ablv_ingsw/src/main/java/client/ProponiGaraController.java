@@ -261,10 +261,12 @@ public class ProponiGaraController {
         if (tecnica == null || criterio == null || data == null ||
                 tipo == null || campoGara == null) {
 
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Compilare tutti i campi obbligatori!");
+            Alert alert = new Alert(Alert.AlertType.WARNING,
+                    "Compilare tutti i campi obbligatori!");
             alert.showAndWait();
             return;
         }
+
         
         // Controllo: se è stato selezionato un campionato, verificare che non esista già 
         // una gara con lo stesso numero di prova in quel campionato
