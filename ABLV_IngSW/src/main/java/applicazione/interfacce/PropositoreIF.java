@@ -1,6 +1,6 @@
 package applicazione.interfacce;
 
-import applicazione.Gara;
+import applicazione.entita.Gara;
 
 public interface PropositoreIF {
 

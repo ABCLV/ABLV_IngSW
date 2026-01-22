@@ -7,10 +7,10 @@ import javafx.collections.ObservableList;
 import java.sql.SQLException;
 import java.util.List;
 
-import applicazione.Arbitro;
-import applicazione.Campionato;
-import applicazione.CampoGara;
-import applicazione.Gara;
+import applicazione.entita.Arbitro;
+import applicazione.entita.Campionato;
+import applicazione.entita.CampoGara;
+import applicazione.entita.Gara;
 import applicazione.interfacce.PropositoreIF;
 
 public final class ProponiGaraService {

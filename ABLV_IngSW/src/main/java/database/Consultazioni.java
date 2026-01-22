@@ -30,6 +30,14 @@ import dbconSQLJOOQ.generated.tables.records.AmministratoreRecord;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import applicazione.*;
+import applicazione.entita.Amministratore;
+import applicazione.entita.Arbitro;
+import applicazione.entita.Campionato;
+import applicazione.entita.CampoGara;
+import applicazione.entita.Concorrente;
+import applicazione.entita.Gara;
+import applicazione.entita.Settore;
+import applicazione.entita.Societa;
 import applicazione.enumerazioni.CriterioPunti;
 import applicazione.enumerazioni.StatoConferma;
 import applicazione.enumerazioni.StatoGara;

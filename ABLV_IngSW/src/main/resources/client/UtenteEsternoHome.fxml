@@ -4,7 +4,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="client.UtenteEsternoHomeController"
+      fx:controller="client.home.UtenteEsternoHomeController"
       alignment="CENTER"
       spacing="15"
       prefWidth="400"

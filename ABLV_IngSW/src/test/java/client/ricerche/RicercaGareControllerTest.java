@@ -1,0 +1,12 @@
+﻿package client.ricerche;
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class RicercaGareControllerTest {
+
+    @Test
+    public void contextLoads() {
+        // TODO auto-generated test stub
+    }
+}
