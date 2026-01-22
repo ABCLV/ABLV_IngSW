@@ -1,34 +1,37 @@
 package applicazione;
 
 /**
- * Rappresenta un campo gara (tratto di fiume/torrente) dove si svolgono le competizioni.
+ * Rappresenta un campo gara (tratto di fiume/torrente) dove si svolgono le
+ * competizioni.
  */
 public class CampoGara {
 
 	private String idCampoGara;
-    private String corpoIdrico;
-    private String paese;
-    private int lunghezza;
-    private String descrizione;
+	private String corpoIdrico;
+	private String paese;
+	private int lunghezza;
+	private String descrizione;
 
-    /**
-     * Costruttore completo.
-     * @param idCampoGara  identificativo del campo gara
-     * @param corpoIdrico nome del fiume/torrente
-     * @param paese       comune o località
-     * @param lunghezza   lunghezza in metri
-     */
-    public CampoGara(String idCampoGara, String paese, String corpoIdrico,  int lunghezza, String descrizione) {
-        this.idCampoGara = idCampoGara;
-        this.corpoIdrico = corpoIdrico;
-        this.paese = paese;
-        this.lunghezza = lunghezza;
-        this.descrizione = descrizione;
-    }
-    
-    public CampoGara() {}
+	/**
+	 * Costruttore completo.
+	 * 
+	 * @param idCampoGara identificativo del campo gara
+	 * @param corpoIdrico nome del fiume/torrente
+	 * @param paese       comune o località
+	 * @param lunghezza   lunghezza in metri
+	 */
+	public CampoGara(String idCampoGara, String paese, String corpoIdrico, int lunghezza, String descrizione) {
+		this.idCampoGara = idCampoGara;
+		this.corpoIdrico = corpoIdrico;
+		this.paese = paese;
+		this.lunghezza = lunghezza;
+		this.descrizione = descrizione;
+	}
 
-    public String getIdCampoGara() {
+	public CampoGara() {
+	}
+
+	public String getIdCampoGara() {
 		return idCampoGara;
 	}
 
@@ -68,9 +71,9 @@ public class CampoGara {
 		this.descrizione = descrizione;
 	}
 
-    @Override
-    public String toString() {
-        return this.idCampoGara + ", " + this.corpoIdrico +", " + this.paese + ", " + this.descrizione;
-    }
-	
+	@Override
+	public String toString() {
+		return this.idCampoGara + ", " + this.corpoIdrico + ", " + this.paese + ", " + this.descrizione;
+	}
+
 }

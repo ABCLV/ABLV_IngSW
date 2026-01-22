@@ -13,10 +13,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
-
 import applicazione.Concorrente;
 import applicazione.Gara;
-import applicazione.Societa;
 import database.Consultazioni;
 
 public class RicercaGareConcorrente {

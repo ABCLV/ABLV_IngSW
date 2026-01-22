@@ -17,44 +17,41 @@ public class Settore {
 		return descrizione;
 	}
 
-
 	private String idSettore;
-    private int lunghezza;
-    private String descrizione;
+	private int lunghezza;
+	private String descrizione;
 
-    /**
-     * Costruttore completo.
-     * @param idSettore   identificativo del settore
-     * @param descrizione descrizione del settore
-     */
-    public Settore(String idSettore, int lunghezza, String descrizione) {
-        this.idSettore = idSettore;
-        this.lunghezza = lunghezza;
-        this.descrizione = descrizione;
-    }
+	/**
+	 * Costruttore completo.
+	 * 
+	 * @param idSettore   identificativo del settore
+	 * @param descrizione descrizione del settore
+	 */
+	public Settore(String idSettore, int lunghezza, String descrizione) {
+		this.idSettore = idSettore;
+		this.lunghezza = lunghezza;
+		this.descrizione = descrizione;
+	}
 
-    /**
-     * Restituisce le caratteristiche del settore.
-     * @return caratteristiche testuali del settore
-     */
-    public String getCaratteristiche() {
-        return null;
-    }
+	/**
+	 * Restituisce le caratteristiche del settore.
+	 * 
+	 * @return caratteristiche testuali del settore
+	 */
+	public String getCaratteristiche() {
+		return null;
+	}
 
-    /**
-     * Imposta le caratteristiche del settore.
-     */
-    public void setCaratteristiche() {
-    }
-    
-    
-    @Override
-    public String toString() {
-        return "Settore {\n" +
-               "  idSettore   = " + idSettore + ",\n" +
-               "  lunghezza   = " + lunghezza + ",\n" +
-               "  descrizione = " + descrizione + "\n" +
-               "}";
-    }
+	/**
+	 * Imposta le caratteristiche del settore.
+	 */
+	public void setCaratteristiche() {
+	}
+
+	@Override
+	public String toString() {
+		return "Settore {\n" + "  idSettore   = " + idSettore + ",\n" + "  lunghezza   = " + lunghezza + ",\n"
+				+ "  descrizione = " + descrizione + "\n" + "}";
+	}
 
 }

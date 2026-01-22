@@ -8,6 +8,13 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import applicazione.*;
+import applicazione.enumerazioni.CriterioPunti;
+import applicazione.enumerazioni.StatoConferma;
+import applicazione.enumerazioni.StatoGara;
+import applicazione.enumerazioni.Tecnica;
+import applicazione.enumerazioni.TipologiaGara;
+import applicazione.interfacce.PropositoreIF;
+import applicazione.service.ProponiGaraService;
 
 import java.time.LocalDate;
 

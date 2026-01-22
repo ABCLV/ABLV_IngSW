@@ -1,11 +1,12 @@
 package client;
 
-import applicazione.RegistrazioneService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
+
+import applicazione.service.RegistrazioneService;
 
 public class RegistraConcorrenteController {
 

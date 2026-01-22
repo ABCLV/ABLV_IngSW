@@ -1,9 +1,9 @@
 package client;
 
 import applicazione.Amministratore;
-import applicazione.Autenticazione;
 import applicazione.Concorrente;
 import applicazione.Societa;
+import applicazione.service.Autenticazione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import database.Consultazioni;
 import java.util.List;
 
+import applicazione.interfacce.PropositoreIF;
+
 /**
  * Rappresenta una società di pesca partecipante alle gare.
  */
@@ -15,129 +17,137 @@ public class Societa implements PropositoreIF {
 	private String citta;
 	private String indirizzo;
 
-    /**
-     * Costruttore completo.
-     * @param nome nome della società
-     */
-    public Societa(String nome, String email, String cap, String citta, String indirizzo) {
-        try {
-        	this.setNome(nome);
-        	this.setEmail(email);
-        	this.setCap(cap);
-        	this.setCitta(citta);
-        	this.setIndirizzo(indirizzo);
-        } catch(Exception e) {
-        	System.out.println("Errore: " + e.getMessage());
-        }
-    }
-    
-    public Societa() {}
+	/**
+	 * Costruttore completo.
+	 * 
+	 * @param nome nome della società
+	 */
+	public Societa(String nome, String email, String cap, String citta, String indirizzo) {
+		try {
+			this.setNome(nome);
+			this.setEmail(email);
+			this.setCap(cap);
+			this.setCitta(citta);
+			this.setIndirizzo(indirizzo);
+		} catch (Exception e) {
+			System.out.println("Errore: " + e.getMessage());
+		}
+	}
 
-    /**
-     * Iscrive un gruppo di concorrenti a una gara.
-     * @param concorrenti array dei concorrenti da iscrivere
-     * @param codiceGara  codice identificativo della gara
-     * @return true se l'iscrizione è andata a buon fine, false altrimenti
-     */
-    public boolean iscrizioneGaraGruppi(Concorrente[] concorrenti, String codiceGara) {
-        return false;
-    }
+	public Societa() {
+	}
 
-    /**
-     * Iscrive un singolo concorrente a una gara.
-     * @param concorrente concorrente da iscrivere
-     * @param codiceGara  codice identificativo della gara
-     * @return true se l'iscrizione è andata a buon fine, false altrimenti
-     */
-    public boolean iscrizioneGaraSingolo(Concorrente concorrente, String codiceGara) {
-        return false;
-    }
+	/**
+	 * Iscrive un gruppo di concorrenti a una gara.
+	 * 
+	 * @param concorrenti array dei concorrenti da iscrivere
+	 * @param codiceGara  codice identificativo della gara
+	 * @return true se l'iscrizione è andata a buon fine, false altrimenti
+	 */
+	public boolean iscrizioneGaraGruppi(Concorrente[] concorrenti, String codiceGara) {
+		return false;
+	}
 
-    /**
-     * Mostra il profilo della società.
-     */
-    public void getProfilo() {
-    }
+	/**
+	 * Iscrive un singolo concorrente a una gara.
+	 * 
+	 * @param concorrente concorrente da iscrivere
+	 * @param codiceGara  codice identificativo della gara
+	 * @return true se l'iscrizione è andata a buon fine, false altrimenti
+	 */
+	public boolean iscrizioneGaraSingolo(Concorrente concorrente, String codiceGara) {
+		return false;
+	}
 
-    /**
-     * Aggiunge un nuovo socio alla società.
-     * @param concorrente concorrente da aggiungere
-     */
-    public void aggiungiSocio(Concorrente concorrente) {
-    }
+	/**
+	 * Mostra il profilo della società.
+	 */
+	public void getProfilo() {
+	}
 
-    /**
-     * Rimuove un socio dalla società.
-     * @param concorrente concorrente da rimuovere
-     */
-    public void abbandonoSocio(Concorrente concorrente) {
-    }
+	/**
+	 * Aggiunge un nuovo socio alla società.
+	 * 
+	 * @param concorrente concorrente da aggiungere
+	 */
+	public void aggiungiSocio(Concorrente concorrente) {
+	}
 
-    /**
-     * Permette la modifica del profilo della società.
-     */
-    public void modificaProfilo() {
-    }
-    
-    public List<Concorrente> getConcorrenti(){
-    	List<Concorrente> ret;
-    	try {
-        	ret = Consultazioni.getConcorrentiPerSocieta(this.nome);
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    		ret = null;
-    	}
-    	
-    	return ret;
-    }
-    
-    public List<Gara> getGareProposte(){
-    	List<Gara> ret;
-    	try {
-    		ret = Consultazioni.getGareProposteDaSocieta(this.nome);
-    	} catch(Exception e) {
-    		e.printStackTrace();
-    		ret = null;
-    	}
-    	
-    	return ret;
-    }
+	/**
+	 * Rimuove un socio dalla società.
+	 * 
+	 * @param concorrente concorrente da rimuovere
+	 */
+	public void abbandonoSocio(Concorrente concorrente) {
+	}
 
-    /**
-     * Propone una nuova gara all’amministratore.
-     * @param gara oggetto gara da proporre
-     */
-    public void proponiGara(Gara gara) {
-    	if(gara.getPropositore().getNome().isEmpty()) {
-    		gara.setPropositore(this);
-    	}
-    	Consultazioni.insertGara(gara);
-    }
+	/**
+	 * Permette la modifica del profilo della società.
+	 */
+	public void modificaProfilo() {
+	}
 
-    /**
-     * Restituisce il regolamento interno della società.
-     * @return testo del regolamento
-     */
-    public String regolamento() {
-        return null;
-    }
-    
-    public String getNome() {
+	public List<Concorrente> getConcorrenti() {
+		List<Concorrente> ret;
+		try {
+			ret = Consultazioni.getConcorrentiPerSocieta(this.nome);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ret = null;
+		}
+
+		return ret;
+	}
+
+	public List<Gara> getGareProposte() {
+		List<Gara> ret;
+		try {
+			ret = Consultazioni.getGareProposteDaSocieta(this.nome);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ret = null;
+		}
+
+		return ret;
+	}
+
+	/**
+	 * Propone una nuova gara all’amministratore.
+	 * 
+	 * @param gara oggetto gara da proporre
+	 */
+	public void proponiGara(Gara gara) {
+		if (gara.getPropositore().getNome().isEmpty()) {
+			gara.setPropositore(this);
+		}
+		Consultazioni.insertGara(gara);
+	}
+
+	/**
+	 * Restituisce il regolamento interno della società.
+	 * 
+	 * @return testo del regolamento
+	 */
+	public String regolamento() {
+		return null;
+	}
+
+	public String getNome() {
 		return nome;
 	}
-    
-    private boolean checkString(String s) {
-    	if(s.isEmpty() || s.isBlank()) {
+
+	private boolean checkString(String s) {
+		if (s.isEmpty() || s.isBlank()) {
 			throw new IllegalArgumentException("Nome della società non valido!");
 		}
-    	return true;
-    }
+		return true;
+	}
 
 	public void setNome(String nome) {
 		this.checkString(nome);
 		this.nome = nome;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -177,11 +187,12 @@ public class Societa implements PropositoreIF {
 	public String getIdentificatore() {
 		return this.getNome();
 	}
+
 	public static Societa fromUsername(String nome) throws SQLException {
-	    return Consultazioni.getSocieta(nome);
+		return Consultazioni.getSocieta(nome);
 	}
 
 	public List<Concorrente> getConcorrentiIscritti() throws SQLException {
-	    return Consultazioni.getConcorrentiPerSocieta(this.nome);
+		return Consultazioni.getConcorrentiPerSocieta(this.nome);
 	}
 }

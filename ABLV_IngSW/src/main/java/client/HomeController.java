@@ -2,7 +2,7 @@ package client;
 
 import java.io.IOException;
 
-import applicazione.Statistiche;
+import applicazione.service.Statistiche;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

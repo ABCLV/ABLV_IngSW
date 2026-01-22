@@ -3,7 +3,7 @@ package applicazione;
 import java.sql.SQLException;
 import java.util.List;
 
-import client.Session;
+import applicazione.interfacce.PropositoreIF;
 import database.Consultazioni;
 
 /**
@@ -42,8 +42,6 @@ public class Amministratore implements PropositoreIF {
 		}
 		Consultazioni.insertGara(gara);
 	}
-	
-	
 
 	/**
 	 * Approva una proposta di gara.
@@ -126,8 +124,8 @@ public class Amministratore implements PropositoreIF {
 	public String toString() {
 		return this.cfAmministratore + ":" + "\n - " + this.cognome + "\n - " + this.nome;
 	}
-	
+
 	public static Amministratore fromUsername(String cf) {
-	    return Consultazioni.getAmministratoreByCF(cf);
+		return Consultazioni.getAmministratoreByCF(cf);
 	}
 }

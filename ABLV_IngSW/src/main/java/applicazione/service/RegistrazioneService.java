@@ -1,4 +1,4 @@
-package applicazione;
+package applicazione.service;
 
 import java.sql.SQLException;
 import java.time.LocalDate;

@@ -11,30 +11,31 @@ import database.Consultazioni;
  */
 public class Concorrente {
 
-    public String cf;
-    private String cognome;
-    private String nome;
-    private String email;
-    private LocalDate  nascita;
-    private String societa;
-    
-    /**
-     * Costruttore completo.
-     * @param cf       codice fiscale del concorrente
-     * @param cognome  cognome del concorrente
-     * @param nome     nome del concorrente
-     * @param nascita  data di nascita del concorrente
-     */
-    public Concorrente(String cf, String cognome, String nome, String email, LocalDate nascita, String nomeSocieta) {
-        this.cf = cf;
-        this.cognome = cognome;
-        this.nome = nome;
-        this.email = email;
-        this.nascita = nascita;
-        this.societa = nomeSocieta;
-    }
+	public String cf;
+	private String cognome;
+	private String nome;
+	private String email;
+	private LocalDate nascita;
+	private String societa;
 
-    public String getCf() {
+	/**
+	 * Costruttore completo.
+	 * 
+	 * @param cf      codice fiscale del concorrente
+	 * @param cognome cognome del concorrente
+	 * @param nome    nome del concorrente
+	 * @param nascita data di nascita del concorrente
+	 */
+	public Concorrente(String cf, String cognome, String nome, String email, LocalDate nascita, String nomeSocieta) {
+		this.cf = cf;
+		this.cognome = cognome;
+		this.nome = nome;
+		this.email = email;
+		this.nascita = nascita;
+		this.societa = nomeSocieta;
+	}
+
+	public String getCf() {
 		return cf;
 	}
 
@@ -45,8 +46,6 @@ public class Concorrente {
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
-
-
 
 	public void setNome(String nome) {
 		this.nome = nome;
@@ -59,8 +58,6 @@ public class Concorrente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	
 
 	public void setNascita(LocalDate nascita) {
 		this.nascita = nascita;
@@ -127,8 +124,6 @@ public class Concorrente {
 		return false;
 	}
 
-	
-
 	public String getNome() {
 		return nome;
 	}
@@ -137,27 +132,24 @@ public class Concorrente {
 		return cognome;
 	}
 
-
-
 	public LocalDate getNascita() {
 		return nascita;
 	}
-	
-	
+
 	public String getSocieta() {
-	    return this.societa; // campo già presente o da aggiungere
+		return this.societa; // campo già presente o da aggiungere
 	}
 
 	public List<Gara> getGareIscritte() throws SQLException {
-	    return Consultazioni.getGareConcorrente(this.cf);
+		return Consultazioni.getGareConcorrente(this.cf);
 	}
 
 	public Societa getDettagliSocieta() throws SQLException {
-	    return Consultazioni.getSocieta(this.societa);
+		return Consultazioni.getSocieta(this.societa);
 	}
-	
+
 	public static Concorrente fromUsername(String cf) throws SQLException {
-	    return Consultazioni.getConcorrente(cf);
+		return Consultazioni.getConcorrente(cf);
 	}
-	
+
 }
