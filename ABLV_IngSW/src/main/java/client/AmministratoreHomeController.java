@@ -45,6 +45,8 @@ public class AmministratoreHomeController {
 
 	@FXML
 	public void initialize() {
+		
+		
 		// Imposta il messaggio di benvenuto
 		welcomeLabel.setText("Benvenuto, " + Session.userName + "!");
 

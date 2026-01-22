@@ -70,7 +70,7 @@ public class CampoGara {
 
     @Override
     public String toString() {
-        return this.idCampoGara + "; " + this.corpoIdrico +"; " + this.paese + "; " + this.descrizione;
+        return this.idCampoGara + ", " + this.corpoIdrico +", " + this.paese + ", " + this.descrizione;
     }
 	
 }
