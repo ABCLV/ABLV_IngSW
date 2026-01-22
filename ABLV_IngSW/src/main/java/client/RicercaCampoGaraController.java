@@ -46,52 +46,54 @@ public class RicercaCampoGaraController {
 
     @FXML
     private void initialize() {
-        // Carica campi gara nel ComboBox
-        ObservableList<CampoGara> campi = FXCollections.observableArrayList(Consultazioni.getCampoGara());
+
+        ObservableList<CampoGara> campi =
+                FXCollections.observableArrayList(Consultazioni.getCampoGara());
         campoCombo.setItems(campi);
 
         // --- Colonne Settori ---
-        // idSettoreCol -> idSettore
-        idSettoreCol.setCellValueFactory(cellData -> 
-            new SimpleStringProperty(cellData.getValue().getIdSettore())
+        idSettoreCol.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getIdSettore())
         );
-        // nomeSettoreCol -> descrizione
-        nomeSettoreCol.setCellValueFactory(cellData -> 
-            new SimpleStringProperty(cellData.getValue().getDescrizione())
+
+        nomeSettoreCol.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getDescrizione())
         );
 
         // --- Colonne Gare ---
-        // idGaraCol -> codice gara
-        idGaraCol.setCellValueFactory(cellData -> 
-            new SimpleStringProperty(cellData.getValue().getCodice())
+        idGaraCol.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getCodice())
         );
-        // nomeGaraCol -> tipo di gara (puoi cambiare con un altro campo a piacere)
-        nomeGaraCol.setCellValueFactory(cellData -> 
-            new SimpleStringProperty(cellData.getValue().getTipoGara() != null 
-                ? cellData.getValue().getTipoGara().toString() 
-                : "")
+
+        nomeGaraCol.setCellValueFactory(cellData ->
+                new SimpleStringProperty(
+                        cellData.getValue().getTipoGara() != null
+                                ? cellData.getValue().getTipoGara().toString()
+                                : ""
+                )
         );
+
+        campoCombo.valueProperty().addListener((obs, oldValue, newValue) -> {
+            if (newValue != null) {
+                caricaSettori(newValue);
+                caricaGare(newValue);
+            }
+        });
+    }
+
+    private void caricaSettori(CampoGara c) {
+        ObservableList<Settore> settori =
+                FXCollections.observableArrayList(Consultazioni.esploraSettori(c));
+        settoriTable.setItems(settori);
+    }
+
+    private void caricaGare(CampoGara c) {
+        ObservableList<Gara> gare =
+                FXCollections.observableArrayList(Consultazioni.esploraGare(c));
+        gareTable.setItems(gare);
     }
 
 
-
-    @FXML
-    private void esploraSettori() {
-        CampoGara c = campoCombo.getValue();
-        if (c != null) {
-            ObservableList<Settore> settori = FXCollections.observableArrayList(Consultazioni.esploraSettori(c));
-            settoriTable.setItems(settori);
-        }
-    }
-
-    @FXML
-    private void vediGare() {
-        CampoGara c = campoCombo.getValue();
-        if (c != null) {
-            ObservableList<Gara> gare = FXCollections.observableArrayList(Consultazioni.esploraGare(c));
-            gareTable.setItems(gare);
-        }
-    }
 
     @FXML
     private void handleBack(ActionEvent event) throws Exception {

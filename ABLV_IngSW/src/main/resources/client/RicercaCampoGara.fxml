@@ -17,12 +17,6 @@
     <!-- Selezione campo gara -->
     <ComboBox fx:id="campoCombo" promptText="Seleziona Campo Gara" prefWidth="300"/>
 
-    <!-- Pulsanti -->
-    <HBox spacing="10">
-        <Button text="Esplora Settori" onAction="#esploraSettori"/>
-        <Button text="Vedi Gare" onAction="#vediGare"/>
-    </HBox>
-
     <!-- Tabella Settori -->
     <Label text="Settori:" style="-fx-font-weight: bold;"/>
     <TableView fx:id="settoriTable" prefWidth="650" prefHeight="150">
