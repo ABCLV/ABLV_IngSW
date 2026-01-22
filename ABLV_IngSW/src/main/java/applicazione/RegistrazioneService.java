@@ -22,7 +22,7 @@ public final class RegistrazioneService {
 	}
 
 	/* ---------- Concorrente ---------- */
-	public static void registraConcorrente(String cf, String nome, String cognome, String email, String nascita,
+	public static void registraConcorrente(String cf, String nome, String cognome, String email, LocalDate nascita,
 			String societa, String pwd) {
 		try {
 			Consultazioni.registraConcorrente(cf, nome, cognome, email, nascita, societa, pwd);

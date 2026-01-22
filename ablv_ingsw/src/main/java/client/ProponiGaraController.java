@@ -230,7 +230,6 @@ public class ProponiGaraController {
         Object selected = campoGaraBox.getValue();
         
         if(selected != null) {
-        	System.out.println("sono dentro");
         	String text = selected.toString();
             String id = text.split(",")[0].trim();
             
@@ -258,7 +257,6 @@ public class ProponiGaraController {
         Campionato campionato = getSelectedCampionato();
         Arbitro arbitro = getSelectedArbitro();
         CampoGara campoGara = getSelectedCampoGara();
-        System.out.println(campoGara);
 
         if (tecnica == null || criterio == null || data == null ||
                 tipo == null || campoGara == null) {

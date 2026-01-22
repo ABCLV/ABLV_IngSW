@@ -286,17 +286,36 @@ public abstract class Consultazioni {
 		}
 	}
 
-	public static void registraConcorrente(String cf, String nome, String cognome, String email, String nascita,
-			String societaNome, String pwdChiara) throws SQLException {
-		String hash = DigestUtils.sha256Hex(pwdChiara);
-		LocalDate dataNascita = LocalDate.parse(nascita); // yyyy-MM-dd
-		try (Connection conn = SQLiteConnectionManager.getConnection()) {
-			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-			ctx.insertInto(CONCORRENTE, CONCORRENTE.CF, CONCORRENTE.NOME, CONCORRENTE.COGNOME, CONCORRENTE.EMAIL,
-					CONCORRENTE.NASCITA, CONCORRENTE.SOCIETA, CONCORRENTE.PASSWORD_HASH)
-					.values(cf, nome, cognome, email, dataNascita, societaNome, hash).execute();
-		}
+	public static void registraConcorrente(String cf, String nome, String cognome, String email, LocalDate nascita,
+	        String societaNome, String pwdChiara) throws SQLException {
+
+	    String hash = DigestUtils.sha256Hex(pwdChiara);
+
+	    
+
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+	        ctx.insertInto(CONCORRENTE,
+	                CONCORRENTE.CF,
+	                CONCORRENTE.NOME,
+	                CONCORRENTE.COGNOME,
+	                CONCORRENTE.EMAIL,
+	                CONCORRENTE.NASCITA,
+	                CONCORRENTE.SOCIETA,
+	                CONCORRENTE.PASSWORD_HASH)
+	           .values(
+	                cf,
+	                nome,
+	                cognome,
+	                email,
+	                nascita, 
+	                societaNome,
+	                hash)
+	           .execute();
+	    }
 	}
+
 
 	public static void registraAmministratore(String cf, String nome, String cognome, String email, String pwdChiara)
 			throws SQLException {
