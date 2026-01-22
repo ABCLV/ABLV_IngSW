@@ -16,7 +16,7 @@ import java.util.List;
 
 import applicazione.entita.Concorrente;
 import applicazione.entita.Gara;
-import database.Consultazioni;
+import database.dao.*;
 
 public class RicercaGareConcorrente {
 
@@ -77,7 +77,7 @@ public class RicercaGareConcorrente {
 			lblSocieta.setText("Società: " + selezionato.getSocieta());
 
 			/* --- dati società --- */
-			var soc = Consultazioni.getSocieta(selezionato.getSocieta());
+			var soc = SocietaDAO.getSocieta(selezionato.getSocieta());
 			lblSocNome.setText("Nome: " + soc.getNome());
 			lblSocIndirizzo.setText("Indirizzo: " + soc.getIndirizzo());
 			lblSocCitta.setText("Città: " + soc.getCitta());
@@ -85,7 +85,7 @@ public class RicercaGareConcorrente {
 			lblSocEmail.setText("Email: " + soc.getEmail());
 
 			/* --- elenco gare --- */
-			List<Gara> gare = Consultazioni.getGareConcorrente(selezionato.cf);
+			List<Gara> gare = ConcorrenteDAO.getGareConcorrente(selezionato.cf);
 			System.out.println(gare.toString());
 			gareObs.setAll(gare);
 			gareTable.setItems(gareObs);

@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
-import database.Consultazioni;
+import database.dao.*;
 
 /**
  * Rappresenta un concorrente alle gare di pesca.
@@ -141,15 +141,15 @@ public class Concorrente {
 	}
 
 	public List<Gara> getGareIscritte() throws SQLException {
-		return Consultazioni.getGareConcorrente(this.cf);
+		return ConcorrenteDAO.getGareConcorrente(this.cf);
 	}
 
 	public Societa getDettagliSocieta() throws SQLException {
-		return Consultazioni.getSocieta(this.societa);
+		return SocietaDAO.getSocieta(this.societa);
 	}
 
 	public static Concorrente fromUsername(String cf) throws SQLException {
-		return Consultazioni.getConcorrente(cf);
+		return ConcorrenteDAO.getConcorrente(cf);
 	}
 
 }

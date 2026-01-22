@@ -1,4 +1,4 @@
-﻿package applicazione.mainGrafica;
+package applicazione.mainGrafica;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 public class MainAppTest {
 
     @Test
-    public void contextLoads() {
+    public void nomeTest() {
         // TODO auto-generated test stub
     }
 }

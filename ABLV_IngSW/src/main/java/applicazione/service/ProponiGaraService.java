@@ -1,6 +1,6 @@
 package applicazione.service;
 
-import database.Consultazioni;
+import database.dao.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -17,20 +17,20 @@ public final class ProponiGaraService {
 
 	/* ---------- carica liste da DB ---------- */
 	public static ObservableList<Campionato> caricaCampionati() {
-		return FXCollections.observableArrayList(Consultazioni.getCampionati());
+		return FXCollections.observableArrayList(CampionatoDAO.getCampionati());
 	}
 
 	public static ObservableList<Arbitro> caricaArbitri() {
-		return FXCollections.observableArrayList(Consultazioni.getArbitri());
+		return FXCollections.observableArrayList(ArbitroDAO.getArbitri());
 	}
 
 	public static ObservableList<CampoGara> caricaCampiGara() {
-		return FXCollections.observableArrayList(Consultazioni.getCampiGara());
+		return FXCollections.observableArrayList(CampoGaraDAO.getCampiGara());
 	}
 
 	/* ---------- verifica business ---------- */
 	public static boolean esisteGaraInCampionato(Campionato c, int numProva) {
-		return Consultazioni.esisteGaraInCampionato(c, numProva);
+		return CampionatoDAO.esisteGaraInCampionato(c, numProva);
 	}
 
 	/* ---------- ricerche per chiave ---------- */
@@ -54,21 +54,21 @@ public final class ProponiGaraService {
 
 	/* ---------- genera codice ---------- */
 	public static String getUltimoCodiceGara() {
-		return Consultazioni.getUltimoCodiceGara();
+		return GaraDAO.getUltimoCodiceGara();
 	}
 
 	/* ---------- carica propositore ---------- */
 	public static PropositoreIF caricaPropositore(String tipo, String nome) throws SQLException {
 		return switch (tipo) {
-		case "Societa" -> Consultazioni.getSocieta(nome);
-		case "Amministratore" -> Consultazioni.getAmministratore(nome);
+		case "Societa" -> SocietaDAO.getSocieta(nome);
+		case "Amministratore" -> AmministratoreDAO.getAmministratore(nome);
 		default -> throw new IllegalArgumentException("Tipo propositore non valido: " + tipo);
 		};
 	}
 
 	/* ---------- salva gara ---------- */
 	public static void insertGara(Gara g) {
-		Consultazioni.insertGara(g);
+		GaraDAO.insertGara(g);
 	}
 
 	private ProponiGaraService() {

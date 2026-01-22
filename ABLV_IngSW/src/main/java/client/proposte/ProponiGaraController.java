@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
-import applicazione.*;
+
 import applicazione.entita.Arbitro;
 import applicazione.entita.Campionato;
 import applicazione.entita.CampoGara;

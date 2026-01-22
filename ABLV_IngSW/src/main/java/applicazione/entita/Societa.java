@@ -1,7 +1,7 @@
 package applicazione.entita;
 
 import java.sql.SQLException;
-import database.Consultazioni;
+import database.dao.*;
 import java.util.List;
 
 import applicazione.interfacce.PropositoreIF;
@@ -90,7 +90,7 @@ public class Societa implements PropositoreIF {
 	public List<Concorrente> getConcorrenti() {
 		List<Concorrente> ret;
 		try {
-			ret = Consultazioni.getConcorrentiPerSocieta(this.nome);
+			ret = SocietaDAO.getConcorrentiPerSocieta(this.nome);
 		} catch (Exception e) {
 			e.printStackTrace();
 			ret = null;
@@ -102,7 +102,7 @@ public class Societa implements PropositoreIF {
 	public List<Gara> getGareProposte() {
 		List<Gara> ret;
 		try {
-			ret = Consultazioni.getGareProposteDaSocieta(this.nome);
+			ret = SocietaDAO.getGareProposteDaSocieta(this.nome);
 		} catch (Exception e) {
 			e.printStackTrace();
 			ret = null;
@@ -120,7 +120,7 @@ public class Societa implements PropositoreIF {
 		if (gara.getPropositore().getNome().isEmpty()) {
 			gara.setPropositore(this);
 		}
-		Consultazioni.insertGara(gara);
+		GaraDAO.insertGara(gara);
 	}
 
 	/**
@@ -189,10 +189,10 @@ public class Societa implements PropositoreIF {
 	}
 
 	public static Societa fromUsername(String nome) throws SQLException {
-		return Consultazioni.getSocieta(nome);
+		return SocietaDAO.getSocieta(nome);
 	}
 
 	public List<Concorrente> getConcorrentiIscritti() throws SQLException {
-		return Consultazioni.getConcorrentiPerSocieta(this.nome);
+		return SocietaDAO.getConcorrentiPerSocieta(this.nome);
 	}
 }

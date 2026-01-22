@@ -3,7 +3,7 @@ package applicazione.service;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-import database.Consultazioni;
+import database.dao.*;
 
 /**
  * Service MVC: incapsula tutte le operazioni di registrazione. Il controller
@@ -14,7 +14,7 @@ public final class RegistrazioneService {
 	/* ---------- Amministratore ---------- */
 	public static void registraAmministratore(String cf, String nome, String cognome, String email, String pwd) {
 		try {
-			Consultazioni.registraAmministratore(cf, nome, cognome, email, pwd);
+			AmministratoreDAO.registraAmministratore(cf, nome, cognome, email, pwd);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -25,7 +25,7 @@ public final class RegistrazioneService {
 	public static void registraConcorrente(String cf, String nome, String cognome, String email, LocalDate nascita,
 			String societa, String pwd) {
 		try {
-			Consultazioni.registraConcorrente(cf, nome, cognome, email, nascita, societa, pwd);
+			ConcorrenteDAO.registraConcorrente(cf, nome, cognome, email, nascita, societa, pwd);
 		} catch (Exception e) {
 			throw new RuntimeException("Registrazione concorrente fallita", e);
 		}
@@ -35,7 +35,7 @@ public final class RegistrazioneService {
 	public static void registraSocieta(String nome, String indirizzo, String citta, String cap, String email,
 			String pwd) {
 		try {
-			Consultazioni.registraSocieta(nome, indirizzo, citta, cap, email, pwd);
+			SocietaDAO.registraSocieta(nome, indirizzo, citta, cap, email, pwd);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,7 +45,7 @@ public final class RegistrazioneService {
 	/* ---------- Arbitro ---------- */
 	public static void registraArbitro(String cf, String nome, String cognome, String email, String pwd) {
 		try {
-			Consultazioni.registraArbitro(cf, nome, cognome, email, pwd);
+			ArbitroDAO.registraArbitro(cf, nome, cognome, email, pwd);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,11 +54,11 @@ public final class RegistrazioneService {
 
 	/* ---------- esistenza ---------- */
 	public static boolean esisteArbitro(String cf) throws SQLException {
-		return Consultazioni.esisteArbitro(cf);
+		return ArbitroDAO.esisteArbitro(cf);
 	}
 
 	public static boolean esisteSocieta(String nome) throws SQLException {
-		return Consultazioni.esisteSocieta(nome);
+		return SocietaDAO.esisteSocieta(nome);
 	}
 
 	private RegistrazioneService() {

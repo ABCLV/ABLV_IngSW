@@ -1,6 +1,5 @@
 package client.home;
 
-import applicazione.*;
 import applicazione.entita.Amministratore;
 import applicazione.entita.Gara;
 import client.sessione.Session;

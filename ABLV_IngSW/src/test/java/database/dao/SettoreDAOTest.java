@@ -1,12 +1,12 @@
-﻿package database;
+package database.dao;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class ConsultazioniTest {
+public class SettoreDAOTest {
 
     @Test
-    public void contextLoads() {
+    public void nomeTest() {
         // TODO auto-generated test stub
     }
 }

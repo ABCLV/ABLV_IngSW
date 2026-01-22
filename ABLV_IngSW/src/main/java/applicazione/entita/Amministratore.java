@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import applicazione.interfacce.PropositoreIF;
-import database.Consultazioni;
+import database.dao.*;
 
 /**
  * Classe che rappresenta l'amministratore del sistema.
@@ -40,7 +40,7 @@ public class Amministratore implements PropositoreIF {
 		if (gara.getPropositore().getNome().isEmpty()) {
 			gara.setPropositore(this);
 		}
-		Consultazioni.insertGara(gara);
+		GaraDAO.insertGara(gara);
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class Amministratore implements PropositoreIF {
 	 * @throws SQLException
 	 */
 	public boolean confermaProposta(String numGara) throws SQLException {
-		return Consultazioni.accettaGara(numGara, this.cfAmministratore);
+		return GaraDAO.accettaGara(numGara, this.cfAmministratore);
 	}
 
 	/**
@@ -60,15 +60,15 @@ public class Amministratore implements PropositoreIF {
 	 * @param motivo  motivazione del rifiuto
 	 */
 	public boolean negaProposta(String codiceGara) throws SQLException {
-		return Consultazioni.rifiutaGara(codiceGara, this.cfAmministratore);
+		return GaraDAO.rifiutaGara(codiceGara, this.cfAmministratore);
 	}
 
 	public List<Gara> mieProposte() throws SQLException {
-		return Consultazioni.getGareProposteDaAmministratore(this.cfAmministratore);
+		return AmministratoreDAO.getGareProposteDaAmministratore(this.cfAmministratore);
 	}
 
 	public List<Gara> gareDaConfermare() throws SQLException {
-		return Consultazioni.getGareDaConfermare(this.cfAmministratore);
+		return GaraDAO.getGareDaConfermare(this.cfAmministratore);
 	}
 
 	/**
@@ -126,6 +126,6 @@ public class Amministratore implements PropositoreIF {
 	}
 
 	public static Amministratore fromUsername(String cf) {
-		return Consultazioni.getAmministratoreByCF(cf);
+		return AmministratoreDAO.getAmministratoreByCF(cf);
 	}
 }

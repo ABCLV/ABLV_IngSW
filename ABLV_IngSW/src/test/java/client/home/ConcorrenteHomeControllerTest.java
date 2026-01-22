@@ -1,4 +1,4 @@
-﻿package client.home;
+package client.home;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 public class ConcorrenteHomeControllerTest {
 
     @Test
-    public void contextLoads() {
+    public void nomeTest() {
         // TODO auto-generated test stub
     }
 }

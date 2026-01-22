@@ -3,7 +3,9 @@ package client.ricerche;
 import applicazione.entita.CampoGara;
 import applicazione.entita.Gara;
 import applicazione.entita.Settore;
-import database.Consultazioni;
+import database.dao.*;
+import database.dao.CampoGaraDAO;
+import database.dao.SettoreDAO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -47,7 +49,7 @@ public class RicercaCampoGaraController {
     private void initialize() {
 
         ObservableList<CampoGara> campi =
-                FXCollections.observableArrayList(Consultazioni.getCampoGara());
+                FXCollections.observableArrayList(CampoGaraDAO.getCampoGara());
         campoCombo.setItems(campi);
 
         // --- Colonne Settori ---
@@ -82,13 +84,13 @@ public class RicercaCampoGaraController {
 
     private void caricaSettori(CampoGara c) {
         ObservableList<Settore> settori =
-                FXCollections.observableArrayList(Consultazioni.esploraSettori(c));
+                FXCollections.observableArrayList(SettoreDAO.esploraSettori(c));
         settoriTable.setItems(settori);
     }
 
     private void caricaGare(CampoGara c) {
         ObservableList<Gara> gare =
-                FXCollections.observableArrayList(Consultazioni.esploraGare(c));
+                FXCollections.observableArrayList(GaraDAO.esploraGare(c));
         gareTable.setItems(gare);
     }
 

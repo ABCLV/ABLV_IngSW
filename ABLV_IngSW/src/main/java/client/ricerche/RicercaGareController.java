@@ -1,7 +1,7 @@
 package client.ricerche;
 
 import applicazione.entita.Gara;
-import database.Consultazioni;
+import database.dao.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -64,7 +64,7 @@ public class RicercaGareController {
         );
 
         // Carica dati dal DB
-        ObservableList<Gara> dati = FXCollections.observableArrayList(Consultazioni.getGare());
+        ObservableList<Gara> dati = FXCollections.observableArrayList(GaraDAO.getGare());
         table.setItems(dati);
     }
 

@@ -1,7 +1,7 @@
 package client.ricerche;
 
 import applicazione.entita.Concorrente;
-import database.Consultazioni;
+import database.dao.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -59,7 +59,7 @@ public class RicercaConcorrentiController {
         societa.setCellValueFactory(new PropertyValueFactory<>("societa"));
 
         // Carica dati dal DB
-        ObservableList<Concorrente> dati = FXCollections.observableArrayList(Consultazioni.getConcorrenti());
+        ObservableList<Concorrente> dati = FXCollections.observableArrayList(ConcorrenteDAO.getConcorrenti());
         table.setItems(dati);
         
         
