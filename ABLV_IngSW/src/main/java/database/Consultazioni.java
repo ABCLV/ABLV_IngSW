@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.jooq.DSLContext;
 import org.jooq.Record4;
@@ -184,23 +185,36 @@ public abstract class Consultazioni {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
 			// mappaggio manuale
-			return ctx
-					.select(GARA.CODICE, GARA.NUMPROVA, GARA.TECNICA, GARA.CRITERIOPUNTI, GARA.DATA, GARA.MAXPERSONE,
-							GARA.MINPERSONE, GARA.STATOGARA, GARA.STATOCONFERMA, GARA.TIPOGARA)
-					.from(GARA).where(GARA.CAMPOGARA.eq(c.getIdCampoGara())).fetch(record -> {
-						Gara g = new Gara();
-						g.setCodice(record.get(GARA.CODICE));
-						g.setNumProva(record.get(GARA.NUMPROVA));
-						g.setTecnica(Tecnica.valueOf(record.get(GARA.TECNICA).toUpperCase())); // enum
-						g.setCriterioPunti(CriterioPunti.valueOf(record.get(GARA.CRITERIOPUNTI)));
-						g.setData(record.get(GARA.DATA));
-						g.setMaxPersone(record.get(GARA.MAXPERSONE));
-						g.setMinPersone(record.get(GARA.MINPERSONE));
-						g.setStatoGara(StatoGara.valueOf(record.get(GARA.STATOGARA).toUpperCase()));
-						g.setStatoConferma(StatoConferma.valueOf(record.get(GARA.STATOCONFERMA).toUpperCase()));
-						g.setTipoGara(TipologiaGara.valueOf(record.get(GARA.TIPOGARA).toUpperCase()));
-						return g;
-					});
+			return ctx.select(GARA.CODICE, GARA.NUMPROVA, GARA.TECNICA, GARA.CRITERIOPUNTI, GARA.DATA, GARA.MAXPERSONE, GARA.MINPERSONE, GARA.STATOGARA, GARA.STATOCONFERMA, GARA.TIPOGARA)
+					.from(GARA)
+					.where(GARA.CAMPOGARA.eq(c.getIdCampoGara()))
+					.fetch(record -> {
+					    try {
+					        Gara g = new Gara();
+
+					        g.setCodice(record.get(GARA.CODICE));
+					        g.setNumProva(record.get(GARA.NUMPROVA));
+
+					        g.setTecnica(Tecnica.valueOf(record.get(GARA.TECNICA).trim().toUpperCase()));
+					        g.setCriterioPunti(CriterioPunti.valueOf(record.get(GARA.CRITERIOPUNTI).trim().toUpperCase()));
+
+					        g.setMinPersone(record.get(GARA.MINPERSONE));
+					        g.setMaxPersone(record.get(GARA.MAXPERSONE));
+
+					        g.setStatoGara(StatoGara.valueOf(record.get(GARA.STATOGARA).trim().toUpperCase()));
+					        g.setStatoConferma(StatoConferma.valueOf(record.get(GARA.STATOCONFERMA).trim().toUpperCase()));
+					        g.setTipoGara(TipologiaGara.valueOf(record.get(GARA.TIPOGARA).trim().toUpperCase()));
+
+					        // NO validazione business nel DAO
+					        g.setData(record.get(GARA.DATA));
+
+					        return g;
+					    } catch (Exception e) {
+					        e.printStackTrace();
+					        return null;
+					    }
+					}).stream().filter(Objects::nonNull).toList();
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();

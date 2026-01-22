@@ -1,7 +1,7 @@
 package applicazione;
 
 public enum CriterioPunti {
-	QUANTITA,
+	NUM_CATTURE,
 	PESO,
 	BIG_ONE;
 	
