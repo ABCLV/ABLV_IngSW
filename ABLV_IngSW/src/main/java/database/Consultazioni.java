@@ -145,8 +145,18 @@ public abstract class Consultazioni {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+			System.out.println(ctx.selectFrom(CAMPOGARA).fetchInto(CampoGara.class));
+			
+			return ctx.select(
+				    CAMPOGARA.ID.as("idCampoGara"),
+				    CAMPOGARA.PAESE,
+				    CAMPOGARA.CORPOIDRICO,
+				    CAMPOGARA.LUNGHEZZA,
+				    CAMPOGARA.DESCRIZIONE
+				)
+				.from(CAMPOGARA)
+				.fetchInto(CampoGara.class);
 
-			return ctx.selectFrom(CAMPOGARA).fetchInto(CampoGara.class);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -177,12 +187,12 @@ public abstract class Consultazioni {
 			return ctx
 					.select(GARA.CODICE, GARA.NUMPROVA, GARA.TECNICA, GARA.CRITERIOPUNTI, GARA.DATA, GARA.MAXPERSONE,
 							GARA.MINPERSONE, GARA.STATOGARA, GARA.STATOCONFERMA, GARA.TIPOGARA)
-					.from(GARA).where(GARA.CAMPOGARA.eq(c.idCampoGara)).fetch(record -> {
+					.from(GARA).where(GARA.CAMPOGARA.eq(c.getIdCampoGara())).fetch(record -> {
 						Gara g = new Gara();
 						g.setCodice(record.get(GARA.CODICE));
 						g.setNumProva(record.get(GARA.NUMPROVA));
-						g.setTecnica(Tecnica.valueOf(record.get(GARA.TECNICA).toUpperCase()));
-						g.setCriterioPunti(CriterioPunti.valueOf(record.get(GARA.CRITERIOPUNTI).toUpperCase()));
+						g.setTecnica(Tecnica.valueOf(record.get(GARA.TECNICA).toUpperCase())); // enum
+						g.setCriterioPunti(CriterioPunti.valueOf(record.get(GARA.CRITERIOPUNTI)));
 						g.setData(record.get(GARA.DATA));
 						g.setMaxPersone(record.get(GARA.MAXPERSONE));
 						g.setMinPersone(record.get(GARA.MINPERSONE));
@@ -197,6 +207,7 @@ public abstract class Consultazioni {
 			return List.of();
 		}
 	}
+
 
 	public static CampoGara trovaCampoGara(String codice) {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {

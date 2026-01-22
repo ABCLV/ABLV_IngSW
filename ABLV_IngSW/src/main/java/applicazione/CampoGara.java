@@ -5,7 +5,7 @@ package applicazione;
  */
 public class CampoGara {
 
-    public String idCampoGara;
+	private String idCampoGara;
     private String corpoIdrico;
     private String paese;
     private int lunghezza;
@@ -70,7 +70,7 @@ public class CampoGara {
 
     @Override
     public String toString() {
-        return this.idCampoGara + ", " + this.corpoIdrico +", " + this.paese + ", " + this.descrizione;
+        return this.idCampoGara + "; " + this.corpoIdrico +"; " + this.paese + "; " + this.descrizione;
     }
 	
 }
