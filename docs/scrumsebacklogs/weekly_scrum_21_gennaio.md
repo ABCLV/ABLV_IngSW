@@ -1,5 +1,5 @@
-Weekly SCRUM #5 (22/01) o  
-Sprint backlog (dal 2101 al 28/01) 
+Weekly SCRUM #5 (21/01) o  
+Sprint backlog (dal 21/01 al 28/01) 
 ===== 
 Note:  
 Dato che è stato deciso di eseguire degli weekly scrum invece che daily scrum (a causa di impegni/non presenza di tutti sempre) e la lunghezza degli sprint di 1 settimana (così da non farne troppo pochi e rischiare di non finire il progetto), i documenti di sprint backlog e weekly scrum coincidono in quanto già di natura molto simili.
