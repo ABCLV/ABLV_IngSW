@@ -67,11 +67,13 @@ public class RicercaConcorrentiController {
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.setTitle("Profilo concorrente");
+                stage.show();
         	} else {
         		throw new IOException("Errore nel recuperare il concorrente selezionato!");
         	}
         } catch (IOException e) {
             Alerter.showError(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -80,7 +82,7 @@ public class RicercaConcorrentiController {
     @FXML
     private void handleBack(ActionEvent event) {
     	try {
-    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/UtenteEsternoHome.fxml"));
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/UtenteEsternoHome.fxml"));
             Scene scene = new Scene(loader.load());
             Stage stage = (Stage) backBtn.getScene().getWindow();
             stage.setScene(scene);
