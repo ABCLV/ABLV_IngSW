@@ -166,6 +166,8 @@ public class AmministratoreHomeController {
 			return;
 		}
 
+		
+		
 		try {
 			amministratoreService.negaProposta(garaSelezionata.getCodice(), Session.getUserName());
 			caricaDati();
