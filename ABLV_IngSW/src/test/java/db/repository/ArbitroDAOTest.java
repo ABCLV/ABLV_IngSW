@@ -20,6 +20,7 @@ class ArbitroDAOTest {
         dao = new ArbitroDAO();
     }
 
+    //DEBITO TECNICO qui si insersce l'arbtiro per vedere se va la insert, ma poi non lo si elimina
     @Test
     @DisplayName("Registrazione arbitro con CF univoco")
     void testRegistraArbitroOK() {
@@ -85,9 +86,24 @@ class ArbitroDAOTest {
     }
 
     @Test
-    @DisplayName("Get lista arbitri: restituisce lista non null")
+    @DisplayName("Get lista arbitri: lista coerente dopo inserimento")
     void testGetArbitri() {
+        String cf = "TESTCF_LIST_" + System.nanoTime();
+
+        dao.registraArbitro(
+            cf,
+            "Nome",
+            "Cognome",
+            "Sezione",
+            "password"
+        );
+
         List<Arbitro> arbitri = dao.getArbitri();
+
         assertNotNull(arbitri);
+        assertTrue(
+            arbitri.stream().anyMatch(a -> cf.equals(a.getCfArbitro())),
+            "L'arbitro inserito deve essere presente nella lista"
+        );
     }
 }

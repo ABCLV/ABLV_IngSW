@@ -17,12 +17,12 @@ public class AuthDAO {
 
 	public AuthDAO() {
 	}
-
+	//!!DEBITO TECNICO sostituire le stringhe con le enum!!
 	public boolean checkPassword(String tipo, String id, String pwdChiara) throws AuthEccezione {
 		String hash = DigestUtils.sha256Hex(pwdChiara);
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-
+			
 			int cnt = 0;
 			switch (tipo) {
 			case "Concorrente" -> cnt = ctx.fetchCount(

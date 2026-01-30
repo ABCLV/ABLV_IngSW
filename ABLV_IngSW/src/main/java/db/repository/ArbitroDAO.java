@@ -28,12 +28,14 @@ public class ArbitroDAO {
 			ctx.insertInto(ARBITRO, ARBITRO.CF, ARBITRO.NOME, ARBITRO.COGNOME, ARBITRO.SEZIONE, ARBITRO.PASSWORD_HASH)
 					.values(cf, nome, cognome, sezione, hash).execute();
 		} catch (IntegrityConstraintViolationException e) {
-			throw new ArbitroEccezione("Errore nel registrare il nuovo arbitro!", e);
-		} catch (DataAccessException e) {
-			throw new ArbitroEccezione("Errore nel registrare il nuovo arbitro!", e);
-		} catch (SQLException e) {
-			throw new ArbitroEccezione("Errore nel registrare il nuovo arbitro!", e);
-		}
+	        throw new ArbitroEccezione(
+	            "Arbitro già esistente con CF = " + cf, e
+	        );
+	    } catch (DataAccessException | SQLException e) {
+	        throw new ArbitroEccezione(
+	            "Errore di accesso al database durante la registrazione dell'arbitro", e
+	        );
+	    }
 	}
 
 	public boolean esisteArbitro(String cf) throws ArbitroEccezione {

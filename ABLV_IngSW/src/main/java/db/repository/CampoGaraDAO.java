@@ -55,20 +55,6 @@ public class CampoGaraDAO {
 		}
 	}
 
-	public List<CampoGara> getCampiGara() throws CampoGaraEccezione {
-		try (Connection conn = SQLiteConnectionManager.getConnection()) {
-
-			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-
-			return ctx.select(CAMPOGARA.ID.as("idCampoGara"), CAMPOGARA.PAESE, CAMPOGARA.CORPOIDRICO,
-					CAMPOGARA.LUNGHEZZA, CAMPOGARA.DESCRIZIONE).from(CAMPOGARA).orderBy(CAMPOGARA.ID)
-					.fetchInto(CampoGara.class);
-
-		} catch (DataAccessException e) {
-			throw new CampoGaraEccezione("Errore nel recuperare la lista dei campi gara!", e);
-		} catch (SQLException e) {
-			throw new CampoGaraEccezione("Errore nel recuperare la lista dei campi gara!", e);
-		}
-	}
+	
 
 }
