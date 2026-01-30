@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import service.SalvataggioTurniService;
 import state.Session;
 
@@ -63,8 +64,8 @@ public class DefinizioneTurni {
         settTurni = new SalvataggioTurniService();
        
         settTurni.insertTurni(durateTurni, Session.getCodiceGara());
-
         
+        chiudi();
     }
 
     private void aggiornaLabelTurno() {
@@ -78,6 +79,12 @@ public class DefinizioneTurni {
 
     public List<Integer> getDurateTurni() {
         return durateTurni;
+    }
+    
+    @FXML
+    private void chiudi() {
+        Stage stage = (Stage) durataSpinner.getScene().getWindow();
+        stage.close();
     }
 }
 
