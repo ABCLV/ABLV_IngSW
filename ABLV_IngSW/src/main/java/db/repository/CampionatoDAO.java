@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 
 import db.SQLiteConnectionManager;
@@ -17,8 +18,6 @@ import db.exception.*;
 
 public class CampionatoDAO {
 
-	public CampionatoDAO() {}
-
 	public List<Campionato> getCampionati() throws CampionatoEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
@@ -26,8 +25,9 @@ public class CampionatoDAO {
 
 			return ctx.select(CAMPIONATO.TITOLO, CAMPIONATO.CATEGORIA).from(CAMPIONATO).fetchInto(Campionato.class);
 
+		} catch (DataAccessException e) {
+			throw new CampionatoEccezione("Errore nel recuperare la lista di campionati!", e);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new CampionatoEccezione("Errore nel recuperare la lista di campionati!", e);
 		}
 	}
@@ -43,11 +43,12 @@ public class CampionatoDAO {
 
 			ret = count != null && count > 0;
 
+		} catch (DataAccessException e) {
+			throw new CampionatoEccezione("Errore nel controllare l'esistenza della gara nel campionato!", e);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new CampionatoEccezione("Errore nel controllare l'esistenza della gara nel campionato!", e);
 		}
-		
+
 		return ret;
 	}
 

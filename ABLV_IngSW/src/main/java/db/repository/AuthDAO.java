@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataAccessException;
+import org.jooq.exception.IntegrityConstraintViolationException;
 import org.jooq.impl.DSL;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -13,7 +15,8 @@ import db.exception.AuthEccezione;
 
 public class AuthDAO {
 
-	public AuthDAO() {}
+	public AuthDAO() {
+	}
 
 	public boolean checkPassword(String tipo, String id, String pwdChiara) throws AuthEccezione {
 		String hash = DigestUtils.sha256Hex(pwdChiara);
@@ -32,8 +35,9 @@ public class AuthDAO {
 					.fetchCount(ctx.selectFrom(ARBITRO).where(ARBITRO.CF.eq(id)).and(ARBITRO.PASSWORD_HASH.eq(hash)));
 			}
 			return cnt > 0;
-		} catch(SQLException e) {
-			e.printStackTrace();
+		} catch (DataAccessException e) {
+			throw new AuthEccezione("Errore nell'autenticazione!", e);
+		} catch (SQLException e) {
 			throw new AuthEccezione("Errore nell'autenticazione!", e);
 		}
 	}
