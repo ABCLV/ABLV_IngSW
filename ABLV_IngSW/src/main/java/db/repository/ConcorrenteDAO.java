@@ -17,6 +17,8 @@ import org.jooq.DSLContext;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataAccessException;
+import org.jooq.exception.IntegrityConstraintViolationException;
 import org.jooq.impl.DSL;
 
 import model.CampoGara;
@@ -43,8 +45,9 @@ public class ConcorrenteDAO {
 					.from(CONCORRENTE).join(SOCIETA).on(CONCORRENTE.SOCIETA.eq(SOCIETA.NOME))
 					.fetchInto(Concorrente.class);
 
+		}  catch (DataAccessException e) {
+			throw new ConcorrenteEccezione("Errore nel recuperare i concorrente!", e);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new ConcorrenteEccezione("Errore nel recuperare i concorrente!", e);
 		}
 	}
@@ -53,8 +56,9 @@ public class ConcorrenteDAO {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 			return ctx.fetchCount(ctx.selectFrom(CONCORRENTE));
+		}  catch (DataAccessException e) {
+			throw new ConcorrenteEccezione("Errore nel recuperare il numero di pescatori!", e);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new ConcorrenteEccezione("Errore nel recuperare il numero di pescatori!", e);
 		}
 	}
@@ -70,8 +74,11 @@ public class ConcorrenteDAO {
 			ctx.insertInto(CONCORRENTE, CONCORRENTE.CF, CONCORRENTE.NOME, CONCORRENTE.COGNOME, CONCORRENTE.EMAIL,
 					CONCORRENTE.NASCITA, CONCORRENTE.SOCIETA, CONCORRENTE.PASSWORD_HASH)
 					.values(cf, nome, cognome, email, nascita, societaNome, hash).execute();
-		} catch(SQLException e) {
-			e.printStackTrace();
+		} catch (IntegrityConstraintViolationException e) {
+			throw new ConcorrenteEccezione("Errore nel registrare il concorrente!", e);
+		} catch (DataAccessException e) {
+			throw new ConcorrenteEccezione("Errore nel registrare il concorrente!", e);
+		} catch (SQLException e) {
 			throw new ConcorrenteEccezione("Errore nel registrare il concorrente!", e);
 		}
 	}
@@ -90,8 +97,9 @@ public class ConcorrenteDAO {
 
 			return new Concorrente(r.get(CONCORRENTE.CF), r.get(CONCORRENTE.COGNOME), r.get(CONCORRENTE.NOME),
 					r.get(CONCORRENTE.EMAIL), r.get(CONCORRENTE.NASCITA), r.get(CONCORRENTE.SOCIETA));
-		} catch(SQLException e) {
-			e.printStackTrace();
+		} catch (DataAccessException e) {
+			throw new ConcorrenteEccezione("Errore nel recuperare il concorrente!", e);
+		} catch (SQLException e) {
 			throw new ConcorrenteEccezione("Errore nel recuperare il concorrente!", e);
 		}
 	}
@@ -121,8 +129,9 @@ public class ConcorrenteDAO {
 				out.add(g);
 			}
 			return out;
-		} catch(SQLException e) {
-			e.printStackTrace();
+		} catch (DataAccessException e) {
+			throw new ConcorrenteEccezione("Errore nel recuperare le gare a cui il concorrente è iscritto!", e);
+		} catch (SQLException e) {
 			throw new ConcorrenteEccezione("Errore nel recuperare le gare a cui il concorrente è iscritto!", e);
 		}
 	}

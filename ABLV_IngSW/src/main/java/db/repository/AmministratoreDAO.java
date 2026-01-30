@@ -15,6 +15,8 @@ import org.jooq.DSLContext;
 import org.jooq.Record8;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataAccessException;
+import org.jooq.exception.IntegrityConstraintViolationException;
 import org.jooq.impl.DSL;
 
 import dbconSQLJOOQ.generated.tables.records.AmministratoreRecord;
@@ -30,7 +32,8 @@ import db.exception.AmministratoreEccezione;
 
 public class AmministratoreDAO {
 
-	public AmministratoreDAO() {}
+	public AmministratoreDAO() {
+	}
 
 	public Amministratore getAmministratoreByCF(String cf) throws AmministratoreEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
@@ -45,11 +48,12 @@ public class AmministratoreDAO {
 			if (record != null) {
 				return new Amministratore(record.getCf(), record.getNome(), record.getCognome());
 			} else {
-				return null;
+				throw new AmministratoreEccezione("Amministratore con CF=" + cf + " non trovato");
 			}
 
+		} catch (DataAccessException e) {
+			throw new AmministratoreEccezione("Errore nel recuperare l'amministratore!", e);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new AmministratoreEccezione("Errore nel recuperare l'amministratore!", e);
 		}
 	}
@@ -62,24 +66,36 @@ public class AmministratoreDAO {
 			ctx.insertInto(AMMINISTRATORE, AMMINISTRATORE.CF, AMMINISTRATORE.NOME, AMMINISTRATORE.COGNOME,
 					AMMINISTRATORE.EMAIL, AMMINISTRATORE.PASSWORD_HASH).values(cf, nome, cognome, email, hash)
 					.execute();
-		} catch(SQLException e) {
-			e.printStackTrace();
-			throw new AmministratoreEccezione("Errore nel registrare il nuovo amministratore!", e);
+		} catch (IntegrityConstraintViolationException e) {
+			// vincolo di unicità violato
+			throw new AmministratoreEccezione("Amministratore già esistente con CF = " + cf, e);
+
+		} catch (DataAccessException e) {
+			// altri errori jOOQ
+			throw new AmministratoreEccezione("Errore di accesso al database", e);
+
+		} catch (SQLException e) {
+			// problemi di connessione
+			throw new AmministratoreEccezione("Errore di connessione al database", e);
 		}
 	}
 
 	public Amministratore getAmministratore(String cf) throws AmministratoreEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
 			Amministratore amm = ctx
 					.select(AMMINISTRATORE.CF.as("cfAmministratore"), AMMINISTRATORE.NOME, AMMINISTRATORE.COGNOME)
 					.from(AMMINISTRATORE).where(AMMINISTRATORE.CF.eq(cf)).fetchOneInto(Amministratore.class);
-			if (amm == null)
-				throw new SQLException();
+
+			if (amm == null) {
+				throw new AmministratoreEccezione("Amministratore con CF=" + cf + " non trovato");
+			}
+
 			return amm;
-		} catch(SQLException e) {
-			e.printStackTrace();
-			throw new AmministratoreEccezione("Errore nel recuperare l'amministratore!", e);
+
+		} catch (DataAccessException | SQLException e) {
+			throw new AmministratoreEccezione("Errore nel recuperare l'amministratore", e);
 		}
 	}
 
@@ -123,9 +139,12 @@ public class AmministratoreDAO {
 			}
 
 			return out;
-		} catch(SQLException e) {
-			e.printStackTrace();
-			throw new AmministratoreEccezione("Errore nel recuperare la liste delle gare proposte dall'amministratore!", e);
+		} catch (DataAccessException e) {
+			throw new AmministratoreEccezione("Errore nel recuperare la liste delle gare proposte dall'amministratore!",
+					e);
+		} catch (SQLException e) {
+			throw new AmministratoreEccezione("Errore nel recuperare la liste delle gare proposte dall'amministratore!",
+					e);
 		}
 	}
 

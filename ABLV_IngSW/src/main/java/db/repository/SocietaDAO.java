@@ -17,6 +17,8 @@ import org.jooq.Record5;
 import org.jooq.Record8;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataAccessException;
+import org.jooq.exception.IntegrityConstraintViolationException;
 import org.jooq.impl.DSL;
 
 import model.Campionato;
@@ -41,8 +43,11 @@ public class SocietaDAO {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 			ctx.insertInto(SOCIETA, SOCIETA.NOME, SOCIETA.INDIRIZZO, SOCIETA.CITTA, SOCIETA.CAP, SOCIETA.EMAIL,
 					SOCIETA.PASSWORD_HASH).values(nome, indirizzo, citta, cap, email, hash).execute();
-		} catch(SQLException e) {
-			e.printStackTrace();
+		} catch (IntegrityConstraintViolationException e) {
+			throw new SocietaEccezione("Errore nel registrare la società!", e);
+		} catch (DataAccessException e) {
+			throw new SocietaEccezione("Errore nel registrare la società!", e);
+		} catch (SQLException e) {
 			throw new SocietaEccezione("Errore nel registrare la società!", e);
 		}
 	}
@@ -56,8 +61,9 @@ public class SocietaDAO {
 			if (r == null)
 				throw new IllegalArgumentException("Società non trovata");
 			return new Societa(r.value1(), r.value2(), r.value3(), r.value4(), r.value5());
-		} catch(Exception e) {
-			e.printStackTrace();
+		}  catch (DataAccessException e) {
+			throw new SocietaEccezione("Errore nel recuperare la società!", e);
+		} catch (SQLException e) {
 			throw new SocietaEccezione("Errore nel recuperare la società!", e);
 		}
 	}
@@ -66,8 +72,9 @@ public class SocietaDAO {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 			return ctx.fetchExists(ctx.selectFrom(SOCIETA).where(SOCIETA.NOME.eq(nome)));
-		} catch(SQLException e) {
-			e.printStackTrace();
+		} catch (DataAccessException e) {
+			throw new SocietaEccezione("Errore nel cercare la società!", e);
+		} catch (SQLException e) {
 			throw new SocietaEccezione("Errore nel cercare la società!", e);
 		}
 	}
@@ -112,8 +119,9 @@ public class SocietaDAO {
 			}
 
 			return out;
-		} catch(SQLException e) {
-			e.printStackTrace();
+		}catch (DataAccessException e) {
+			throw new SocietaEccezione("Errore nel recuperare le gare proposte dalla società!", e);
+		} catch (SQLException e) {
 			throw new SocietaEccezione("Errore nel recuperare le gare proposte dalla società!", e);
 		}
 	}
@@ -133,8 +141,9 @@ public class SocietaDAO {
 						r.get(CONCORRENTE.EMAIL), r.get(CONCORRENTE.NASCITA), r.get(CONCORRENTE.SOCIETA)));
 			}
 			return out;
-		} catch(SQLException e) {
-			e.printStackTrace();
+		} catch (DataAccessException e) {
+			throw new SocietaEccezione("Errore nel recuperare i concorrenti iscritti alla società!", e);
+		} catch (SQLException e) {
 			throw new SocietaEccezione("Errore nel recuperare i concorrenti iscritti alla società!", e);
 		}
 	}

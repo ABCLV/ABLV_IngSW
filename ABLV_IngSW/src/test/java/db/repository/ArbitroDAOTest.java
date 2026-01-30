@@ -1,12 +1,109 @@
 package db.repository;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class ArbitroDAOTest {
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import db.exception.ArbitroEccezione;
+import model.Arbitro;
+
+class ArbitroDAOTest {
+
+    private ArbitroDAO dao;
+
+    @BeforeEach
+    void setUp() {
+        dao = new ArbitroDAO();
+    }
+
+    //DEBITO TECNICO qui si insersce l'arbtiro per vedere se va la insert, ma poi non lo si elimina
+    @Test
+    @DisplayName("Registrazione arbitro con CF univoco")
+    void testRegistraArbitroOK() {
+        String cf = "TESTCF_" + System.nanoTime();
+
+        assertDoesNotThrow(() ->
+            dao.registraArbitro(
+                cf,
+                "NomeArbitro",
+                "CognomeArbitro",
+                "SezioneTest",
+                "password123"
+            )
+        );
+    }
 
     @Test
-    public void contextLoads() {
-        // TODO auto-generated test stub
+    @DisplayName("Registrazione arbitro duplicato fallisce")
+    void testRegistraArbitroDuplicato() {
+        String cf = "TESTCF_" + System.nanoTime();
+
+        dao.registraArbitro(
+            cf,
+            "NomeArbitro",
+            "CognomeArbitro",
+            "SezioneTest",
+            "password123"
+        );
+
+        assertThrows(ArbitroEccezione.class, () ->
+            dao.registraArbitro(
+                cf,
+                "AltroNome",
+                "AltroCognome",
+                "AltraSezione",
+                "pwd"
+            )
+        );
+    }
+
+    @Test
+    @DisplayName("Esiste arbitro: restituisce false se non esiste")
+    void testEsisteArbitroNotFound() {
+        boolean esiste = dao.esisteArbitro("CF_INESISTENTE");
+        assertFalse(esiste);
+    }
+
+    @Test
+    @DisplayName("Esiste arbitro: restituisce true se esiste")
+    void testEsisteArbitroExists() {
+        String cf = "TESTCF_EXIST_" + System.nanoTime();
+
+        dao.registraArbitro(
+            cf,
+            "NomeArbitro",
+            "CognomeArbitro",
+            "SezioneTest",
+            "password"
+        );
+
+        boolean esiste = dao.esisteArbitro(cf);
+        assertTrue(esiste);
+    }
+
+    @Test
+    @DisplayName("Get lista arbitri: lista coerente dopo inserimento")
+    void testGetArbitri() {
+        String cf = "TESTCF_LIST_" + System.nanoTime();
+
+        dao.registraArbitro(
+            cf,
+            "Nome",
+            "Cognome",
+            "Sezione",
+            "password"
+        );
+
+        List<Arbitro> arbitri = dao.getArbitri();
+
+        assertNotNull(arbitri);
+        assertTrue(
+            arbitri.stream().anyMatch(a -> cf.equals(a.getCfArbitro())),
+            "L'arbitro inserito deve essere presente nella lista"
+        );
     }
 }

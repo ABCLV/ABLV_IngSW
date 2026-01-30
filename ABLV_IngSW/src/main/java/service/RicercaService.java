@@ -33,7 +33,7 @@ public class RicercaService {
 	public List<CampoGara> getCampiGara() throws RicercaEccezione {
 		List<CampoGara> ret = null;
 		try {
-			ret =  this.campoGaraDAO.getCampiGara();
+			ret =  this.campoGaraDAO.getCampoGara();
 		} catch(CampoGaraEccezione e) {
 			throw new RicercaEccezione(e.getMessage(), e);
 		}

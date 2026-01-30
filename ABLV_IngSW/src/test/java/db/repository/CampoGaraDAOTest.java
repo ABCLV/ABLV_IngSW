@@ -1,12 +1,35 @@
 package db.repository;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class CampoGaraDAOTest {
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import model.CampoGara;
+
+class CampoGaraDAOTest {
+
+    private CampoGaraDAO dao;
+
+    @BeforeEach
+    void setUp() {
+        dao = new CampoGaraDAO();
+    }
 
     @Test
-    public void contextLoads() {
-        // TODO auto-generated test stub
+    @DisplayName("Get campi gara")
+    void testGetCampiGara() {
+        List<CampoGara> campi = dao.getCampoGara();
+        assertNotNull(campi);
+    }
+
+    @Test
+    @DisplayName("Campo gara inesistente → null")
+    void testTrovaCampoGaraNotFound() {
+        CampoGara campo = dao.trovaCampoGara("ID_INESISTENTE");
+        assertNull(campo);
     }
 }
