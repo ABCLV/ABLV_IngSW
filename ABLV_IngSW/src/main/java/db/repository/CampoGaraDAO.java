@@ -39,13 +39,25 @@ public class CampoGaraDAO {
 
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-			return ctx.selectFrom(CAMPOGARA).where(CAMPOGARA.ID.eq(codice)).fetchOneInto(CampoGara.class);
+			return ctx
+				    .select(
+				            CAMPOGARA.ID.as("idCampoGara"),
+				            CAMPOGARA.PAESE,
+				            CAMPOGARA.CORPOIDRICO,
+				            CAMPOGARA.LUNGHEZZA,
+				            CAMPOGARA.DESCRIZIONE
+				        )
+				        .from(CAMPOGARA)
+				        .where(CAMPOGARA.ID.eq(codice))
+				        .fetchOneInto(CampoGara.class);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new CampoGaraEccezione("Errore nel cercare il campo gara!", e);
 		}
 	}
+	
+	
 
 	public List<CampoGara> getCampiGara() throws CampoGaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {

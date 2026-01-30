@@ -92,6 +92,37 @@ public class GaraDAO {
 
 		return gare;
 	}
+	
+	
+	
+	
+	
+	
+	
+	public String trovaCodiceCampoGara(String codiceGara) throws GaraEccezione {
+		try (Connection conn = SQLiteConnectionManager.getConnection()) {
+
+			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+			return ctx
+					.select(GARA.CAMPOGARA)
+					.from(GARA)
+					.where(GARA.CODICE.eq(codiceGara))
+					.fetchOne(GARA.CAMPOGARA);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new GaraEccezione("Errore nel recupero del campo gara!", e);
+		}
+	}
+
+
+	
+	
+	
+	
+	
+	
 
 	public List<Gara> esploraGare(CampoGara c) throws GaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
@@ -176,6 +207,8 @@ public class GaraDAO {
 			throw new GaraEccezione("Errore nel recuperare l'ultimo codice gara!", e);
 		}
 	}
+	
+	
 
 	public List<Gara> getGareDaConfermare(String amm) throws GaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {

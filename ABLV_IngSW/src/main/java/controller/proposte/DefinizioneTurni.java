@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.VBox;
+import service.SalvataggioTurniService;
+import state.Session;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,7 @@ public class DefinizioneTurni {
 
     private int numeroTurno = 1;
     private final List<Integer> durateTurni = new ArrayList<>();
+    private SalvataggioTurniService settTurni;
 
     @FXML
     public void initialize() {
@@ -56,11 +59,12 @@ public class DefinizioneTurni {
         for (int i = 0; i < durateTurni.size(); i++) {
             System.out.println("Turno " + (i + 1) + ": " + durateTurni.get(i) + " min");
         }
+        
+        settTurni = new SalvataggioTurniService();
+       
+        settTurni.insertTurni(durateTurni, Session.getCodiceGara());
 
-        // qui puoi:
-        // - chiudere finestra
-        // - passare dati ad altro controller
-        // - salvare su DB
+        
     }
 
     private void aggiornaLabelTurno() {

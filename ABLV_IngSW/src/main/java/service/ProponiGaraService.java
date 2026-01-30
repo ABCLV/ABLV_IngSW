@@ -147,7 +147,7 @@ public class ProponiGaraService {
 	}
 
 	/* ---------- salva gara ---------- */
-	public String insertGara(Tecnica tecnica,  CriterioPunti criterio, LocalDate data, int minPersone,
+	public void insertGara(Tecnica tecnica,  CriterioPunti criterio, LocalDate data, int minPersone,
 			int maxPersone, TipologiaGara tipo, Campionato campionato, int numProva, 
 			Arbitro arbitro, CampoGara campoGara, String userType, String userName) throws PropostaEccezione {
 		try {
@@ -186,7 +186,7 @@ public class ProponiGaraService {
             
 			this.garaDAO.insertGara(g);
 			
-			return nuovoCodice;
+			Session.setCodiceGara(nuovoCodice);
 		} catch(Exception e) {
 			throw new PropostaEccezione(e.getMessage(), e);
 		}

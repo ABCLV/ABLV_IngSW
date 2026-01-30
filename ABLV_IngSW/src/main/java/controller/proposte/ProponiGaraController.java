@@ -45,7 +45,7 @@ public class ProponiGaraController {
     private ObservableList<Campionato> campionatiList;
     private ObservableList<Arbitro> arbitriList;
     private ObservableList<CampoGara> campiGaraList;
-    private String codiceGara;
+    private static String codiceGara;
     
     @FXML
     public void initialize() {
@@ -272,7 +272,7 @@ public class ProponiGaraController {
         }
 
         try {
-        	codiceGara = proponiService.insertGara(tecnica, criterio, data, minPersone, maxPersone, tipo, campionato,
+        	proponiService.insertGara(tecnica, criterio, data, minPersone, maxPersone, tipo, campionato,
         			numProva, arbitro, campoGara, Session.getUserType(), Session.getUserName());
         	definizioneTurni();
             chiudi();
@@ -290,8 +290,8 @@ public class ProponiGaraController {
         stage.close();
     }
     
-    public String getCodiceGara() {
-    	return this.codiceGara;
+    public static String getCodiceGara() {
+    	return codiceGara;
     }
     
     
