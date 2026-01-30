@@ -4,6 +4,8 @@ package controller.proposte;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
@@ -18,6 +20,7 @@ import service.exception.PropostaEccezione;
 import state.Session;
 import utils.Alerter;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class ProponiGaraController {
@@ -42,6 +45,7 @@ public class ProponiGaraController {
     private ObservableList<Campionato> campionatiList;
     private ObservableList<Arbitro> arbitriList;
     private ObservableList<CampoGara> campiGaraList;
+    private static String codiceGara;
     
     @FXML
     public void initialize() {
@@ -270,6 +274,7 @@ public class ProponiGaraController {
         try {
         	proponiService.insertGara(tecnica, criterio, data, minPersone, maxPersone, tipo, campionato,
         			numProva, arbitro, campoGara, Session.getUserType(), Session.getUserName());
+        	definizioneTurni();
             chiudi();
 
         } catch (Exception e) {
@@ -284,4 +289,25 @@ public class ProponiGaraController {
         Stage stage = (Stage) numProvaSpinner.getScene().getWindow();
         stage.close();
     }
+    
+    public static String getCodiceGara() {
+    	return codiceGara;
+    }
+    
+    
+    private void definizioneTurni() {
+    	try {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/CreazioneTurni.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Definizione turni");
+            stage.setScene(scene);
+            stage.showAndWait();
+            
+    	} catch(IOException e) {
+    		Alerter.showError(e.getMessage());
+    	}
+    }
+    
+    
 }

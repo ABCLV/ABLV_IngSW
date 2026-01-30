@@ -185,6 +185,8 @@ public class ProponiGaraService {
             g.setCampoGara(campoGara);
             
 			this.garaDAO.insertGara(g);
+			
+			Session.setCodiceGara(nuovoCodice);
 		} catch(Exception e) {
 			throw new PropostaEccezione(e.getMessage(), e);
 		}
