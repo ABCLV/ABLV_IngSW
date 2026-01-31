@@ -359,10 +359,7 @@ public class Gara {
 
 	@Override
 	public String toString() {
-		return "Gara [codice=" + codice + ", numProva=" + numProva + ", tecnica=" + tecnica + ", criterioPunti="
-				+ criterioPunti + ", data=" + data + ", maxPersone=" + maxPersone + ", minPersone=" + minPersone
-				+ ", statoGara=" + statoGara + ", statoConferma=" + statoConferma + ", tipoGara=" + tipoGara
-				+ ", autori=" + Arrays.toString(autori) + ", campionato=" + campionato + ", arbitro=" + arbitro
-				+ ", campoGara=" + campoGara + "]";
+		return this.getCodice() + ", " + this.getCampoGara().getIdCampoGara() + ", " + this.getNumProva() + ", " + this.getCriterioPunti() +
+				", " + this.getStatoGara() + ", " + this.getData() + ", " + this.getTecnica() + ", " + this.getTipoGara();
 	}
 }

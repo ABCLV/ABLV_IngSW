@@ -15,5 +15,7 @@
     <Label text="Arbitro benvenuto"
            style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #005f5f;"/>
 
+    <Button text="Aggiorna stato gara" onAction="#aggiornaStatoGara"/>
+
     <Button text="Torna alla Home" onAction="#handleBack"/>
 </VBox>
