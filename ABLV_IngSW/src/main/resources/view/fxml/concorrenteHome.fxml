@@ -43,6 +43,8 @@
             <Label fx:id="lblEmail"/>
             <Label fx:id="lblNascita"/>
             <Label fx:id="lblSocieta"/>
+            <Separator/>
+            <Button text="Iscriviti ad una gara" onAction="#apriIscrizioneGara" maxWidth="Infinity"/>
         </VBox>
     </left>
 
