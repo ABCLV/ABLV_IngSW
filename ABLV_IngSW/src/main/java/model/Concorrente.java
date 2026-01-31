@@ -59,12 +59,6 @@ public class Concorrente {
 		this.nascita = nascita;
 	}
 
-	@Override
-	public String toString() {
-		return "Concorrente [cf=" + cf + ", cognome=" + cognome + ", nome=" + nome + ", email=" + email + ", nascita="
-				+ nascita + "]";
-	}
-
 	/**
 	 * Iscrive il concorrente a una gara.
 	 * 
@@ -134,6 +128,11 @@ public class Concorrente {
 
 	public String getSocieta() {
 		return this.societa;
+	}
+	
+	@Override
+	public String toString() {
+		return this.getCognome() + ", " + this.getNome() + " (" + this.getCf() + ")"; 
 	}
 
 }
