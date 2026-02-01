@@ -4,6 +4,7 @@ import javafx.util.StringConverter;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -89,34 +90,43 @@ public class IscrizioneGareArbitroController {
 
     /* ---------- AUTOCOMPLETE ---------- */
     private void setupAutoCompleteGara() {
+
+        // Lista filtrabile basata su TUTTE le gare
+        FilteredList<Gara> filteredList =
+                new FilteredList<>(gareDisponibili, g -> true);
+
+        garaComboBox.setItems(filteredList);
+
         StringConverter<Gara> converter = garaComboBox.getConverter();
 
-        garaComboBox.getEditor().textProperty().addListener((obs, oldV, newV) -> {
-            Gara selectedGara = garaComboBox.getValue();
+        garaComboBox.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
 
-            // Evita filtraggio se l'utente non ha cambiato la selezione
-            if (selectedGara != null && newV.equals(converter.toString(selectedGara))) return;
+            // Se l'utente ha appena selezionato un elemento, non rifiltrare
+            Gara selected = garaComboBox.getValue();
+            if (selected != null && newValue.equals(converter.toString(selected))) {
+                return;
+            }
 
-            if (newV == null || newV.isEmpty()) {
-                garaComboBox.setItems(gareDisponibili);
+            if (newValue == null || newValue.isBlank()) {
+                filteredList.setPredicate(g -> true);
                 garaComboBox.hide();
+                return;
+            }
+
+            String filter = newValue.toLowerCase();
+
+            filteredList.setPredicate(g ->
+                converter.toString(g).toLowerCase().contains(filter)
+            );
+
+            if (!filteredList.isEmpty()) {
+                garaComboBox.show();
             } else {
-                ObservableList<Gara> filtrate = FXCollections.observableArrayList();
-                String filter = newV.toLowerCase();
-
-                for (Gara g : gareDisponibili) {
-                    String display = converter.toString(g).toLowerCase();
-                    if (display.contains(filter)) {
-                        filtrate.add(g);
-                    }
-                }
-
-                garaComboBox.setItems(filtrate);
-                if (!filtrate.isEmpty()) garaComboBox.show();
-                else garaComboBox.hide();
+                garaComboBox.hide();
             }
         });
     }
+
 
     /* ---------- SELEZIONE GARA ---------- */
     @FXML

@@ -134,8 +134,7 @@ public class ArbitroDAO {
 	                        GARA.DATA, GARA.TECNICA, GARA.TIPOGARA, CAMPIONATO.TITOLO, CAMPIONATO.CATEGORIA,
 	                        GARA.STATOCONFERMA)
 	                .from(GARA).leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
-	                .where(GARA.ARBITRO.isNull()
-	                        .and(GARA.STATOCONFERMA.eq(StatoConferma.CONFERMATA.name())))
+	                .where(GARA.ARBITRO.isNull())
 	                .fetch();
 
 	        List<Gara> out = new ArrayList<>();
