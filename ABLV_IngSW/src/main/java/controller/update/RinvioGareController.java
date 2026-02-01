@@ -1,4 +1,4 @@
-package controller.iscrizione;
+package controller.update;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,22 +20,23 @@ import state.Session;
 import utils.Alerter;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import db.exception.GaraEccezione;
 
-public class AnnullaIscrizioneArbitroController {
+public class RinvioGareController {
 
     @FXML private ListView<Gara> listaGare;
     @FXML private VBox dettagliGaraSection;
-    @FXML private Button btnDisiscrivi;
+    @FXML private DatePicker datePickerNuovaData;
+    @FXML private Button btnPosticipa;
 
     @FXML private Label lblCodiceGara;
-    @FXML private Label lblData;
+    @FXML private Label lblDataAttuale;
     @FXML private Label lblTecnica;
     @FXML private Label lblTipoGara;
     @FXML private Label lblCampoGara;
-    @FXML private Label lblStatoGara;
 
     private final ArbitroService arbitroService = new ArbitroService();
     private ObservableList<Gara> gareArbitro;
@@ -47,7 +48,7 @@ public class AnnullaIscrizioneArbitroController {
         nascondiDettagli();
     }
 
-    /* ---------- CARICAMENTO GARE ---------- */
+    /* ---------- CARICA GARE ARBITRO ---------- */
     private void caricaGareArbitro() {
         try {
             String cfArbitro = Session.getUserName();
@@ -68,8 +69,10 @@ public class AnnullaIscrizioneArbitroController {
                 if (empty || gara == null) {
                     setText(null);
                 } else {
-                    setText(gara.getCodice() + " - " +
-                            (gara.getData() != null ? gara.getData() : "N/A"));
+                    setText(
+                        gara.getCodice() + " - " +
+                        (gara.getData() != null ? gara.getData() : "N/A")
+                    );
                 }
             }
         });
@@ -85,56 +88,63 @@ public class AnnullaIscrizioneArbitroController {
     /* ---------- DETTAGLI ---------- */
     private void mostraDettagliGara(Gara g) {
         lblCodiceGara.setText(g.getCodice());
-        lblData.setText(g.getData() != null ? g.getData().toString() : "N/A");
-        lblTecnica.setText(g.getTecnica() != null ? g.getTecnica().toString() : "N/A");
-        lblTipoGara.setText(g.getTipoGara() != null ? g.getTipoGara().toString() : "N/A");
+        lblDataAttuale.setText(
+                g.getData() != null ? g.getData().toString() : "N/A");
+        lblTecnica.setText(
+                g.getTecnica() != null ? g.getTecnica().toString() : "N/A");
+        lblTipoGara.setText(
+                g.getTipoGara() != null ? g.getTipoGara().toString() : "N/A");
         lblCampoGara.setText(
                 g.getCampoGara() != null ? g.getCampoGara().getIdCampoGara() : "N/A");
-        lblStatoGara.setText(
-                g.getStatoGara() != null ? g.getStatoGara().toString() : "N/A");
 
+        datePickerNuovaData.setValue(g.getData());
         dettagliGaraSection.setVisible(true);
         dettagliGaraSection.setManaged(true);
-        btnDisiscrivi.setDisable(false);
+        btnPosticipa.setDisable(false);
     }
 
     private void nascondiDettagli() {
         dettagliGaraSection.setVisible(false);
         dettagliGaraSection.setManaged(false);
-        btnDisiscrivi.setDisable(true);
+        btnPosticipa.setDisable(true);
+        datePickerNuovaData.setValue(null);
     }
 
+    /* ---------- POSTICIPO ---------- */
     @FXML
-    private void handleDisiscrivi(ActionEvent event) {
+    private void handlePosticipa(ActionEvent event) {
 
         Gara gara = listaGare.getSelectionModel().getSelectedItem();
+        LocalDate nuovaData = datePickerNuovaData.getValue();
+
         if (gara == null) {
             Alerter.showError("Seleziona una gara.");
             return;
         }
 
+        if (nuovaData == null) {
+            Alerter.showError("Seleziona una nuova data.");
+            return;
+        }
+
+        if (!nuovaData.isAfter(gara.getData())) {
+            Alerter.showError("La nuova data deve essere successiva a quella attuale.");
+            return;
+        }
+
         try {
-            String cfArbitro = Session.getUserName();
-            arbitroService.rimuoviArbitroDaGara(gara.getCodice(), cfArbitro);
+            arbitroService.rinvioGaraArbitro(gara.getCodice(), nuovaData);
 
-            Alerter.showSuccess("Disiscrizione completata!");
+            gara.setData(nuovaData);
+            listaGare.refresh();
 
-            int index = listaGare.getSelectionModel().getSelectedIndex();
-            gareArbitro.remove(gara);
-
-            if (!gareArbitro.isEmpty()) {
-                // Seleziona la gara successiva (o la precedente se era l’ultima)
-                int newIndex = Math.min(index, gareArbitro.size() - 1);
-                listaGare.getSelectionModel().select(newIndex);
-            } else {
-                nascondiDettagli();
-            }
+            Alerter.showSuccess("Data della gara aggiornata con successo!");
 
         } catch (GaraEccezione e) {
-            Alerter.showError("Errore durante la disiscrizione: " + e.getMessage());
+            Alerter.showError(
+                "Errore durante il posticipo della gara: " + e.getMessage());
         }
     }
-
 
     /* ---------- BACK ---------- */
     @FXML

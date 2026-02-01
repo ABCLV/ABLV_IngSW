@@ -287,5 +287,21 @@ public class ArbitroDAO {
 		}
 		
 	}
+	
+	
+	public void aggiornaDataGara(String codice, LocalDate data) throws ArbitroEccezione {
+		
+		try (Connection conn = SQLiteConnectionManager.getConnection()) {
+			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+			ctx.update(GARA)
+				.set(GARA.DATA, data)
+				.where(GARA.CODICE.eq(codice))
+				.execute();
+		} catch(SQLException e) {
+			e.printStackTrace();
+			throw new ArbitroEccezione("Errore nell'aggiornare la data della gara!", e);
+		}
+		
+	}
 
 }

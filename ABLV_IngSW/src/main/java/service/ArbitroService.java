@@ -1,5 +1,6 @@
 package service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import db.exception.ArbitroEccezione;
@@ -63,6 +64,10 @@ public class ArbitroService {
 	
 	public int assegnaArbitroAGara(String codiceGara, String arb) {
 		return this.arbitroDAO.assegnaArbitroAGara(codiceGara, arb);
+	}
+	
+	public void rinvioGaraArbitro(String codiceGara, LocalDate data) {
+		this.arbitroDAO.aggiornaDataGara(codiceGara, data);
 	}
 	
 	public int rimuoviArbitroDaGara(String codiceGara, String arb) {

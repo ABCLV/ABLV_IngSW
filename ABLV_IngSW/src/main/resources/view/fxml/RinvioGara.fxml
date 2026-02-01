@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.update.RinvioGareController"
+            style="-fx-background-color: #eef6ff;"
+            prefWidth="900"
+            prefHeight="650">
+
+    <!-- TOP -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 15;">
+            <Label text="Posticipa Gara"
+                   style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #003366;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Indietro" onAction="#handleBack"/>
+        </HBox>
+    </top>
+
+    <!-- CENTER -->
+    <center>
+        <HBox spacing="20" style="-fx-padding: 20;">
+
+            <!-- Lista gare -->
+            <VBox spacing="10" prefWidth="300">
+                <Label text="Le tue gare"
+                       style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                <ListView fx:id="listaGare"/>
+            </VBox>
+
+            <!-- Dettagli -->
+            <VBox fx:id="dettagliGaraSection"
+                  spacing="12"
+                  visible="false"
+                  managed="false"
+                  style="-fx-background-color: white;
+                         -fx-padding: 15;
+                         -fx-border-color: #003366;
+                         -fx-border-width: 2;
+                         -fx-border-radius: 5;"
+                  HBox.hgrow="ALWAYS">
+
+                <Label text="Dettagli Gara"
+                       style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+                <GridPane hgap="20" vgap="8">
+                    <Label text="Codice:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblCodiceGara" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Data attuale:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblDataAttuale" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Tecnica:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblTecnica" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Tipo Gara:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblTipoGara" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Label text="Campo:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblCampoGara" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                </GridPane>
+
+                <Separator/>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Nuova data:"/>
+                    <DatePicker fx:id="datePickerNuovaData"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </center>
+
+    <!-- BOTTOM -->
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 20;">
+            <Button fx:id="btnPosticipa"
+                    text="Conferma posticipo"
+                    disable="true"
+                    onAction="#handlePosticipa"
+                    prefWidth="200"
+                    style="-fx-background-color: #003366;
+                           -fx-text-fill: white;
+                           -fx-font-weight: bold;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
