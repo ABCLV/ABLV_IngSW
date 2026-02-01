@@ -1,0 +1,104 @@
+//Il package app contiene esclusivamente il punto di avvio dell’applicazione 
+//e non rappresenta un modulo funzionale, 
+//per questo non sono state mostrate dipendenze.
+
+@startuml
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package app {
+  class MainApp
+}
+
+package controller.home {
+  class HomeController
+  class AmministratoreHomeController
+}
+
+package controller.proposte {
+  class ProponiGaraController
+  class DefinizioneTurni
+}
+
+package controller.reglog {
+  class LoginController
+  class RegistrazioneController
+}
+
+package controller.ricerche {
+  class RicercaGaraController
+  class RicercaCampoGaraController
+}
+
+package service {
+  class HomeService
+  class LoginService
+  class RegistrazioneService
+  class RicercaService
+}
+
+package service.exception {
+  class HomeEccezione
+  class LoginEccezione
+}
+
+package model {
+  class Campionato
+  class Gara
+  class Utente
+}
+
+package model.enums {
+  class StatoGara
+  class TipologiaGara
+}
+
+package model.interfaces {
+  interface ProponenteIF
+  interface SoggettoIF
+}
+
+package db.repository {
+  class CampionatoDAO
+  class GaraDAO
+  class UtenteDAO
+}
+
+package db {
+  class SQLiteConnectionManager
+  class GenerateTooqCode
+}
+
+package db.exception {
+  class DBException
+  class CampionatoEccezione
+}
+
+package utils {
+  class Alerter
+}
+
+controller.home ..> service
+controller.proposte ..> service
+controller.reglog ..> service
+controller.ricerche ..> service
+
+controller.home ..> utils
+controller.ricerche ..> utils
+
+service ..> model
+service ..> model.enums
+service ..> model.interfaces
+service ..> db.repository
+service ..> service.exception
+
+db.repository ..> db
+db.repository ..> db.exception
+
+@enduml
+
+
+
+
+
+
