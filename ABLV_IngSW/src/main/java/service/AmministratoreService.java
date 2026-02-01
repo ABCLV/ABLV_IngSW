@@ -5,6 +5,7 @@ import java.util.List;
 
 import db.repository.AmministratoreDAO;
 import db.repository.GaraDAO;
+import db.repository.TurnoDAO;
 import model.Gara;
 import service.exception.PropostaEccezione;
 import db.exception.*;
@@ -14,10 +15,12 @@ public class AmministratoreService /*implements PropositoreIF*/ {
 	
 	private final GaraDAO garaDAO;
 	private final AmministratoreDAO amministratoreDAO;
+	private final TurnoDAO turnoDAO;
 	
 	public AmministratoreService() {
 		this.garaDAO = new GaraDAO();
 		this.amministratoreDAO = new AmministratoreDAO();
+		this.turnoDAO = new TurnoDAO();
 	};
 	
 	/*
@@ -62,6 +65,7 @@ public class AmministratoreService /*implements PropositoreIF*/ {
 	 */
 	public void negaProposta(String codiceGara, String ammId) throws PropostaEccezione {
 		try {
+			this.turnoDAO.eliminaTurniPerGara(codiceGara);
 			this.garaDAO.rifiutaGara(codiceGara, ammId);
 		} catch(GaraEccezione e) {
 			e.printStackTrace();

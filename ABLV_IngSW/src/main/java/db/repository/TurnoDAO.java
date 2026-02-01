@@ -72,6 +72,23 @@ public class TurnoDAO {
 	        throw new GaraEccezione("Errore nella creazione dei turni!", e);
 	    }
 	}
+	
+	public boolean eliminaTurniPerGara(String codiceGara) throws GaraEccezione {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+	        ctx.deleteFrom(TURNO)
+	           .where(TURNO.GARA.eq(codiceGara))
+	           .execute();
+
+	        return true;
+
+	    } catch (SQLException e) {
+	        throw new GaraEccezione("Errore nell'eliminazione dei turni!", e);
+	    }
+	}
+
 
 	
 	
