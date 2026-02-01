@@ -5,17 +5,38 @@
 
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controller.home.ArbitroHomeController"
+      fx:controller="controller.home.ArbitroHomeController2"
       alignment="CENTER"
-      spacing="20"
-      prefWidth="400"
-      prefHeight="200"
-      style="-fx-background-color: #e6f7ff;">
+      spacing="15"
+      prefWidth="500"
+      prefHeight="350"
+      style="-fx-background-color: #e6f7ff; -fx-padding: 20;">
 
-    <Label text="Arbitro benvenuto"
-           style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #005f5f;"/>
+    <Label text="Area Arbitro"
+           style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #004d4d;" />
 
-    <Button text="Aggiorna stato gara" onAction="#aggiornaStatoGara"/>
+    <Separator />
 
-    <Button text="Torna alla Home" onAction="#handleBack"/>
+    <Button text="▶ Inizio gara"
+            prefWidth="260"
+            onAction="#handleInizioGara"/>
+
+    <Button text="📝 Iscriviti a nuove gare"
+            prefWidth="260"
+            onAction="#handleIscrizioneGare"/>
+
+    <Button text="📋 Gare a cui sei iscritto"
+            prefWidth="260"
+            onAction="#handleVisualizzaGare"/>
+
+    <Button text="⏸ Rinvio gara"
+            prefWidth="260"
+            onAction="#handleRinvioGara"/>
+
+    <Separator />
+
+    <Button text="🔙 Torna alla Home"
+            prefWidth="260"
+            onAction="#handleBack"/>
+
 </VBox>

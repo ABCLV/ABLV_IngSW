@@ -29,12 +29,28 @@ public class ArbitroService {
 		
 	}
 	
+	public List<Gara> getGarePerArbitro() throws RicercaEccezione {
+		List<Gara> ret = null;
+		try {
+			ret = this.arbitroDAO.getGarePerArbitro();
+		} catch(ArbitroEccezione e) {
+			throw new RicercaEccezione(e.getMessage(), e);
+		}
+		
+		return ret;
+		
+	}
+	
 	public void aggiornaStatoGara(String codice, StatoGara stato) {
 		try {
 			this.arbitroDAO.aggiornaStatoGara(codice, stato);
 		} catch(ArbitroEccezione e) {
 			throw new AggiornaEccezione(e.getMessage(), e);
 		}
+	}
+	
+	public void assegnaArbitroAGara(String codiceGara, String arb) {
+		
 	}
 	
 }
