@@ -29,6 +29,18 @@ public class ArbitroService {
 		
 	}
 	
+	public List<Gara> getGareDiArbitro(String arb) throws RicercaEccezione {
+		List<Gara> ret = null;
+		try {
+			ret = this.arbitroDAO.getGareDiArbitro(arb);
+		} catch(ArbitroEccezione e) {
+			throw new RicercaEccezione(e.getMessage(), e);
+		}
+		
+		return ret;
+		
+	}
+	
 	public List<Gara> getGarePerArbitro() throws RicercaEccezione {
 		List<Gara> ret = null;
 		try {
@@ -51,6 +63,10 @@ public class ArbitroService {
 	
 	public int assegnaArbitroAGara(String codiceGara, String arb) {
 		return this.arbitroDAO.assegnaArbitroAGara(codiceGara, arb);
+	}
+	
+	public int rimuoviArbitroDaGara(String codiceGara, String arb) {
+		return this.arbitroDAO.disiscriviArbitro(codiceGara, arb);
 	}
 	
 }

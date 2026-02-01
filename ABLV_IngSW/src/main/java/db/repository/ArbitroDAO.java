@@ -174,6 +174,56 @@ public class ArbitroDAO {
 	    }
 	}
 	
+	public List<Gara> getGareDiArbitro(String arb) throws ArbitroEccezione {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+	        Result<Record11<String, String, Integer, String, String, LocalDate, String, String, String, String, String>> rs = ctx
+	                .select(GARA.CODICE, GARA.CAMPOGARA, GARA.NUMPROVA, GARA.CRITERIOPUNTI, GARA.STATOGARA,
+	                        GARA.DATA, GARA.TECNICA, GARA.TIPOGARA, CAMPIONATO.TITOLO, CAMPIONATO.CATEGORIA,
+	                        GARA.STATOCONFERMA)
+	                .from(GARA).leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
+	                .where(GARA.ARBITRO.eq(arb))
+	                .fetch();
+
+	        List<Gara> out = new ArrayList<>();
+
+	        for (Record11<String, String, Integer, String, String, LocalDate, String, String, String, String, String> r : rs) {
+
+	            Gara g = new Gara();
+	            
+	            g.setCodice(r.value1());                    // GARA.CODICE
+	            g.setNumProva(r.value3());                  // GARA.NUMPROVA
+	            g.setCriterioPunti(CriterioPunti.valueOf(r.value4().toUpperCase()));  // GARA.CRITERIOPUNTI
+	            g.setStatoGara(StatoGara.valueOf(r.value5().toUpperCase()));          // GARA.STATOGARA
+	            g.setData(r.value6());                      // GARA.DATA
+	            g.setTecnica(Tecnica.valueOf(r.value7().toUpperCase()));              // GARA.TECNICA
+	            g.setTipoGara(TipologiaGara.valueOf(r.value8().toUpperCase()));       // GARA.TIPOGARA
+	            g.setStatoConferma(StatoConferma.valueOf(r.value11().toUpperCase())); // GARA.STATOCONFERMA
+
+	            // CampoGara
+	            CampoGara campo = new CampoGara();
+	            campo.setIdCampoGara(r.value2());           // GARA.CAMPOGARA
+	            g.setCampoGara(campo);
+
+	            // Campionato (se non è null)
+	            if (r.value9() != null) {
+	                Campionato campionato = new Campionato();
+	                campionato.setTitolo(r.value9());       // CAMPIONATO.TITOLO
+	                campionato.setCategoria(r.value10());   // CAMPIONATO.CATEGORIA
+	                g.setCampionato(campionato);
+	            }
+
+	            out.add(g);
+	        }
+	        return out;
+	    } catch(SQLException e) {
+	        e.printStackTrace();
+	        throw new ArbitroEccezione("Errore nel recuperare la liste delle gare assegnate all'arbitro!", e);
+	    }
+	}
+	
 	
 	public int assegnaArbitroAGara(String codiceGara, String cfArbitro)
 	        throws ArbitroEccezione {
@@ -197,6 +247,30 @@ public class ArbitroDAO {
 	        );
 	    }
 	}
+	
+	public int disiscriviArbitro(String codiceGara, String cfArbitro)
+	        throws ArbitroEccezione {
+
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+	        return ctx.update(GARA)
+	                .set(GARA.ARBITRO, (String) null)
+	                .where(
+	                    GARA.CODICE.eq(codiceGara)
+	                    .and(GARA.ARBITRO.eq(cfArbitro))
+	                )
+	                .execute();
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw new ArbitroEccezione(
+	            "Errore durante la disiscrizione dell'arbitro dalla gara.", e
+	        );
+	    }
+	}
+
 
 	
 	public void aggiornaStatoGara(String codice, StatoGara stato) throws ArbitroEccezione {
