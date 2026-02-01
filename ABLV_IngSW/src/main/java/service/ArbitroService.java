@@ -49,8 +49,8 @@ public class ArbitroService {
 		}
 	}
 	
-	public void assegnaArbitroAGara(String codiceGara, String arb) {
-		
+	public int assegnaArbitroAGara(String codiceGara, String arb) {
+		return this.arbitroDAO.assegnaArbitroAGara(codiceGara, arb);
 	}
 	
 }

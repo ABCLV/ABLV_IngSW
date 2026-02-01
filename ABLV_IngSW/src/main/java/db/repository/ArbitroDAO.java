@@ -175,6 +175,31 @@ public class ArbitroDAO {
 	    }
 	}
 	
+	
+	public int assegnaArbitroAGara(String codiceGara, String cfArbitro)
+	        throws ArbitroEccezione {
+
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+	        int rows = ctx.update(GARA)
+	                .set(GARA.ARBITRO, cfArbitro)
+	                .where(GARA.CODICE.eq(codiceGara)
+	                        .and(GARA.ARBITRO.isNull()))
+	                .execute();
+	        return rows;
+	        
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw new ArbitroEccezione(
+	            "Errore durante l'assegnazione dell'arbitro alla gara.", e
+	        );
+	    }
+	}
+
+	
 	public void aggiornaStatoGara(String codice, StatoGara stato) throws ArbitroEccezione {
 		
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {

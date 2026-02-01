@@ -1,5 +1,7 @@
 package controller.iscrizione;
 
+import javafx.util.StringConverter;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -44,27 +46,56 @@ public class IscrizioneGareArbitroController {
     @FXML
     public void initialize() {
         caricaGareDisponibili();
+        setupGaraConverter();
         setupAutoCompleteGara();
         btnConferma.setDisable(false);
+        nascondiDettagli(); // Inizialmente nascondi dettagli
+    }
+
+    /* ---------- CONVERTER ---------- */
+    private void setupGaraConverter() {
+        garaComboBox.setConverter(new StringConverter<>() {
+
+            @Override
+            public String toString(Gara gara) {
+                if (gara == null) return "";
+                return gara.getCodice() + " - " + (gara.getData() != null ? gara.getData() : "N/A");
+            }
+
+            @Override
+            public Gara fromString(String string) {
+                if (string == null || string.isBlank()) return null;
+
+                for (Gara g : gareDisponibili) {
+                    if (string.startsWith(g.getCodice())) {
+                        return g;
+                    }
+                }
+                return null;
+            }
+        });
     }
 
     /* ---------- CARICA GARE SENZA ARBITRO ---------- */
     private void caricaGareDisponibili() {
         try {
-        	
             List<Gara> gare = arbitroService.getGarePerArbitro();
             gareDisponibili = FXCollections.observableArrayList(gare);
             garaComboBox.setItems(gareDisponibili);
         } catch (RicercaEccezione e) {
-            Alerter.showError(e.getMessage());
+            Alerter.showError("Errore nel recupero delle gare: " + e.getMessage());
         }
     }
 
     /* ---------- AUTOCOMPLETE ---------- */
     private void setupAutoCompleteGara() {
+        StringConverter<Gara> converter = garaComboBox.getConverter();
+
         garaComboBox.getEditor().textProperty().addListener((obs, oldV, newV) -> {
-            if (garaComboBox.getValue() != null &&
-                newV.equals(garaComboBox.getValue().toString())) return;
+            Gara selectedGara = garaComboBox.getValue();
+
+            // Evita filtraggio se l'utente non ha cambiato la selezione
+            if (selectedGara != null && newV.equals(converter.toString(selectedGara))) return;
 
             if (newV == null || newV.isEmpty()) {
                 garaComboBox.setItems(gareDisponibili);
@@ -74,7 +105,8 @@ public class IscrizioneGareArbitroController {
                 String filter = newV.toLowerCase();
 
                 for (Gara g : gareDisponibili) {
-                    if (g.toString().toLowerCase().contains(filter)) {
+                    String display = converter.toString(g).toLowerCase();
+                    if (display.contains(filter)) {
                         filtrate.add(g);
                     }
                 }
@@ -122,13 +154,17 @@ public class IscrizioneGareArbitroController {
 
         try {
             String cfArbitro = Session.getUserName();
-            arbitroService.assegnaArbitroAGara(gara.getCodice(), cfArbitro);
+            int rows = arbitroService.assegnaArbitroAGara(gara.getCodice(), cfArbitro);
 
-            Alerter.showSuccess("Iscrizione come arbitro completata!");
-            handleBack(event);
+            if (rows == 0) {
+                Alerter.showError("Questa gara ha già un arbitro assegnato.");
+            } else {
+                Alerter.showSuccess("Iscrizione come arbitro completata!");
+                handleBack(event);
+            }
 
         } catch (GaraEccezione e) {
-            Alerter.showError(e.getMessage());
+            Alerter.showError("Errore durante l'iscrizione: " + e.getMessage());
         }
     }
 
@@ -146,6 +182,7 @@ public class IscrizioneGareArbitroController {
             stage.show();
 
         } catch (IOException e) {
+            e.printStackTrace(); // Log per debug
             Alerter.showError("Errore nel ritorno alla home arbitro");
         }
     }
