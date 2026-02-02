@@ -13,11 +13,14 @@ public class LoginService {
 	}
 	
 	public void login(String tipo, String id, String pwd) throws LoginEccezione {
-		try {
-			this.authDAO.checkPassword(tipo, id, pwd);
-		} catch(AuthEccezione e) {
-			throw new LoginEccezione(e.getMessage(), e);
-		}
+	    try {
+	        boolean valido = this.authDAO.checkPassword(tipo, id, pwd);
+	        if (!valido) {
+	            throw new LoginEccezione("Credenziali non valide");
+	        }
+	    } catch(AuthEccezione e) {
+	        throw new LoginEccezione(e.getMessage(), e);
+	    }
 	}
 	
 }
