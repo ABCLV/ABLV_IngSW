@@ -29,6 +29,7 @@ import org.jooq.impl.DSL;
 import model.Amministratore;
 import model.Campionato;
 import model.CampoGara;
+import model.Concorrente;
 import model.Gara;
 import model.Societa;
 import model.enums.CriterioPunti;
@@ -389,5 +390,9 @@ public class GaraDAO {
 	        throw new GaraEccezione("Errore nel recuperare le gare disponibili per l'iscrizione!", e);
 	    }
 	}
+	
+	
+	
+	
 
 }

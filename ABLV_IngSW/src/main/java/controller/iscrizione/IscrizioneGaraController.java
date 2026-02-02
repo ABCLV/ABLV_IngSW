@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Concorrente;
 import model.Gara;
-import service.GaraService;
+import service.IscrizioneDAO;
 import service.IscrizioneService;
 import service.SocietaService;
 import service.exception.IscrizioneEccezione;
@@ -47,7 +47,7 @@ public class IscrizioneGaraController {
     @FXML private Label lblCampionato;
     @FXML private Label lblNumProva;
 
-    private GaraService garaService = new GaraService();
+    private IscrizioneDAO garaService = new IscrizioneDAO();
     private IscrizioneService iscrizioneService = new IscrizioneService();
     private SocietaService societaService = new SocietaService();
     

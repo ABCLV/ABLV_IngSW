@@ -3,8 +3,11 @@ package service;
 import java.time.LocalDate;
 import java.util.List;
 
+import db.exception.ConcorrenteEccezione;
 import db.exception.IscrizioneEccezioneDB;
 import db.repository.IscrizioneDAO;
+import model.Concorrente;
+import service.exception.ConcorrenteHomeEccezione;
 import service.exception.IscrizioneEccezione;
 import service.exception.PropostaEccezione;
 
@@ -62,6 +65,14 @@ public class IscrizioneService {
 			return this.iscrizioneDAO.getCodiciGareIscrittoPerConcorrente(cf);
 		} catch(IscrizioneEccezioneDB e) {
 			throw new IscrizioneEccezione(e.getMessage(), e);
+		}
+	}
+	
+	public List<Concorrente> getIscrizioniGara(String codice) throws  IscrizioneEccezioneDB{
+		try {
+			return this.iscrizioneDAO.getConcorrenti(codice);
+		} catch(ConcorrenteEccezione e) {
+			throw new ConcorrenteHomeEccezione(e.getMessage(), e);
 		}
 	}
 

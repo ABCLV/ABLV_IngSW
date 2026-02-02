@@ -2,16 +2,19 @@ package service;
 
 import java.util.List;
 
+import db.exception.ConcorrenteEccezione;
 import db.exception.GaraEccezione;
 import db.repository.GaraDAO;
+import model.Concorrente;
 import model.Gara;
+import service.exception.ConcorrenteHomeEccezione;
 import service.exception.RicercaEccezione;
 
-public class GaraService {
+public class IscrizioneDAO {
 
 	private final GaraDAO garaDAO;
 	
-	public GaraService() {
+	public IscrizioneDAO() {
 		this.garaDAO = new GaraDAO();
 	}
 	
@@ -25,5 +28,8 @@ public class GaraService {
 		
 		return ret;
 	}
+	
+	
+	
 
 }
