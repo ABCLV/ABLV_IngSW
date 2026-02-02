@@ -3,9 +3,11 @@ package db.repository;
 import static dbconSQLJOOQ.generated.Tables.CAMPIONATO;
 
 import db.SQLiteConnectionManager;
+import db.exception.AmministratoreEccezione;
 import db.exception.GaraEccezione;
 
 import static dbconSQLJOOQ.generated.Tables.GARA;
+import static dbconSQLJOOQ.generated.Tables.ISCRIVE;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,7 +17,9 @@ import java.util.List;
 import java.util.Objects;
 
 import org.jooq.DSLContext;
+import org.jooq.Record11;
 import org.jooq.Record8;
+import org.jooq.Record18;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
@@ -32,6 +36,7 @@ import model.enums.StatoConferma;
 import model.enums.StatoGara;
 import model.enums.Tecnica;
 import model.enums.TipologiaGara;
+import service.exception.RicercaEccezione;
 
 public class GaraDAO {
 
@@ -186,17 +191,30 @@ public class GaraDAO {
 	}
 
 	public String getUltimoCodiceGara() throws GaraEccezione {
-		try (Connection conn = SQLiteConnectionManager.getConnection()) {
-			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
-			return ctx.select(GARA.CODICE).from(GARA).orderBy(GARA.CODICE.desc()).limit(1).fetchOneInto(String.class);
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-		}  catch (DataAccessException e) {
-			throw new GaraEccezione("Errore nel recuperare l'ultimo codice gara!", e);
-		} catch (SQLException e) {
-			throw new GaraEccezione("Errore nel recuperare l'ultimo codice gara!", e);
-		}
+	        return ctx
+	            .select(
+	                DSL.coalesce(
+	                    DSL.max(GARA.CODICE),
+	                    "G000"
+	                )
+	            )
+	            .from(GARA)
+	            .fetchOneInto(String.class);
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw new GaraEccezione(
+	            "Errore nel recuperare l'ultimo codice gara!", e
+	        );
+	    }
 	}
+
+	
+	
 
 	public List<Gara> getGareDaConfermare(String amm) throws GaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
@@ -308,6 +326,68 @@ public class GaraDAO {
 		} catch (SQLException e) {
 			throw new GaraEccezione("Errore nel rifiutare la gara!", e);
 		}
+	}
+	
+	public List<Gara> getGareDisponibiliPerIscrizione() throws RicercaEccezione {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+	        Result<Record11<String, Integer, String, String, Integer, Integer, String, LocalDate, String, String, String>> rs = ctx
+	        	.select(GARA.CODICE, GARA.NUMPROVA, GARA.TECNICA, GARA.CRITERIOPUNTI, GARA.MINPERSONE, 
+	        			GARA.MAXPERSONE, GARA.TIPOGARA, GARA.DATA, GARA.CAMPOGARA, CAMPIONATO.TITOLO, 
+	        			CAMPIONATO.CATEGORIA)
+	            .from(GARA)
+	            .leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
+	            .where(GARA.MAXPERSONE.gt(
+	                DSL.coalesce(
+	                    DSL.select(DSL.count())
+	                        .from(ISCRIVE)
+	                        .where(ISCRIVE.CODICEGARA.eq(GARA.CODICE))
+	                        .asField(),
+	                    0
+	                )
+	            ))
+	            .and(GARA.STATOGARA.eq(StatoGara.NON_INIZIATA.name()))
+	            .and(GARA.STATOCONFERMA.eq(StatoConferma.CONFERMATA.name()))
+	            .fetch();
+
+	        List<Gara> out = new ArrayList<>();
+
+	        for (Record11<String, Integer, String, String, Integer, Integer, String, LocalDate, String, String, String>
+	        	r : rs) {
+	        	
+	            Gara g = new Gara();
+
+	            g.setCodice(r.get(GARA.CODICE));
+	            g.setData(r.get(GARA.DATA));
+	            g.setNumProva(r.get(GARA.NUMPROVA));
+	            g.setCriterioPunti(CriterioPunti.valueOf(r.get(GARA.CRITERIOPUNTI).toUpperCase()));
+	            g.setMinPersone(r.get(GARA.MINPERSONE));
+	            g.setMaxPersone(r.get(GARA.MAXPERSONE));
+	            g.setTecnica(Tecnica.valueOf(r.get(GARA.TECNICA).toUpperCase()));
+	            g.setTipoGara(TipologiaGara.valueOf(r.get(GARA.TIPOGARA).toUpperCase()));
+
+	            // CampoGara
+	            CampoGara campo = new CampoGara();
+	            campo.setIdCampoGara(r.get(GARA.CAMPOGARA));
+	            g.setCampoGara(campo);
+
+	            // Campionato (se presente)
+	            if (r.get(CAMPIONATO.TITOLO) != null) {
+	                Campionato campionato = new Campionato();
+	                campionato.setTitolo(r.get(CAMPIONATO.TITOLO));
+	                campionato.setCategoria(r.get(CAMPIONATO.CATEGORIA));
+	                g.setCampionato(campionato);
+	            }
+
+	            out.add(g);
+	        }
+
+	        return out;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw new GaraEccezione("Errore nel recuperare le gare disponibili per l'iscrizione!", e);
+	    }
 	}
 
 }
