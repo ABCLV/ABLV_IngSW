@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Concorrente;
 import model.Gara;
-import service.IscrizioneDAO;
+import db.repository.IscrizioneDAO;
 import service.IscrizioneService;
 import service.SocietaService;
 import service.exception.IscrizioneEccezione;
@@ -99,7 +99,7 @@ public class IscrizioneGaraController {
     private void caricaGare() {
         try {
             // Carica TUTTE le gare disponibili
-            List<Gara> tutteLeGare = garaService.getGareDisponibiliPerIscrizione();
+            List<Gara> tutteLeGare = this.iscrizioneService.getGareDisponibiliPerIscrizione();
             gareTotali = FXCollections.observableArrayList(tutteLeGare);
             
             // Se è un concorrente, filtra subito

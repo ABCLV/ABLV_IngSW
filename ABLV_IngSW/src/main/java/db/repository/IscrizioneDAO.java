@@ -60,6 +60,8 @@ public class IscrizioneDAO {
 	        );
 	    }
 	}
+	
+	
 
 
 	public void inserisciIscrizione(Integer codiceIscrizione,String cf, String codiceGara, LocalDate dataIscrizione, Integer numIscrizione) throws IscrizioneEccezioneDB {

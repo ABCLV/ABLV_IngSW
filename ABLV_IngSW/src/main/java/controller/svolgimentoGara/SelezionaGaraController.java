@@ -9,6 +9,7 @@ import model.Gara;
 import model.Concorrente;
 import service.ArbitroService;
 import service.IscrizioneService;
+import service.PunteggioService;
 import state.Session;
 import utils.Alerter;
 
@@ -26,6 +27,7 @@ public class SelezionaGaraController {
 
     private final ArbitroService arbitroService = new ArbitroService();
     private final IscrizioneService iscrizioniService = new IscrizioneService();
+    private final PunteggioService punteggioService = new PunteggioService();
 
     private ObservableList<Gara> gareOggi;
     private ObservableList<Concorrente> concorrentiIscritti;
@@ -120,7 +122,7 @@ public class SelezionaGaraController {
 
         try {
         	System.out.println("ciao");
-            //arbitroService.registraAssenti(gara.getCodice(), assenti);
+            punteggioService.registraAssenti(gara.getCodice(), assenti);
         } catch (Exception e) {
             Alerter.showError("Errore durante l'appello");
             return;
