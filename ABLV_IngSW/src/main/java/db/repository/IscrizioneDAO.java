@@ -82,18 +82,22 @@ public class IscrizioneDAO {
 	}
 	
 	public int getUltimoCodiceIscrizione() throws IscrizioneEccezioneDB {
-		try (Connection conn = SQLiteConnectionManager.getConnection()) {
-			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-			int num =  ctx.select(ISCRIVE.IDISCRIZIONE).from(ISCRIVE)
-					.orderBy(ISCRIVE.IDISCRIZIONE.desc())
-					.limit(1).fetchOneInto(Integer.class);
-			
-			return num;
+	        Integer result = ctx.select(ISCRIVE.IDISCRIZIONE)
+	                .from(ISCRIVE)
+	                .orderBy(ISCRIVE.IDISCRIZIONE.desc())
+	                .limit(1)
+	                .fetchOneInto(Integer.class);
+	        
+	        System.out.println(result);
 
-		} catch (SQLException e) {
-			throw new IscrizioneEccezioneDB("Errore nel recuperare l'ultimo codice iscrizione!", e);
-		}
+	        return result != null ? result : 0;
+
+	    } catch (SQLException e) {
+	        throw new IscrizioneEccezioneDB("Errore nel recuperare l'ultimo codice iscrizione!", e);
+	    }
 	}
 	
 	public boolean esisteIscrizione(String cf, String codiceGara) throws IscrizioneEccezioneDB {

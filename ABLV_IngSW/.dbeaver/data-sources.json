@@ -1,0 +1,34 @@
+{
+	"folders": {},
+	"connections": {
+		"sqlite_jdbc-19c1fd84984-3f9fa51698038d05": {
+			"provider": "sqlite",
+			"driver": "sqlite_jdbc",
+			"name": "gare.db",
+			"save-password": true,
+			"configuration": {
+				"database": "C:\\Users\\Mikyv\\Desktop\\Universita\\Ingegneria del Software\\Progetto\\ABLV_IngSW\\database\\gare.db",
+				"url": "jdbc:sqlite:C:\\Users\\Mikyv\\Desktop\\Universita\\Ingegneria del Software\\Progetto\\ABLV_IngSW\\database\\gare.db",
+				"configurationType": "MANUAL",
+				"type": "dev",
+				"closeIdleConnection": true
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"smart-commit": false,
+			"smart-commit-recover": true,
+			"auto-close-transactions": true,
+			"close-transactions-period": 1800,
+			"auto-close-connections": true,
+			"close-connections-period": 14400
+		}
+	}
+}

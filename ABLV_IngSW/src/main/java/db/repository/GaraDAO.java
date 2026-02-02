@@ -295,9 +295,9 @@ public class GaraDAO {
 					.set(GARA.AMMINISTRATOREACCETTAZIONE, amm)
 					.where(GARA.CODICE.eq(codice).and(GARA.STATOCONFERMA.eq(StatoConferma.IN_ATTESA.name()))
 							.and(GARA.AMMINISTRATOREACCETTAZIONE.isNull()) // Solo se non è già stata accettata
-							.and(GARA.AMMINISTRATOREPROPOSTA.notEqual(amm))) // Non può accettare se stesso
+							.and(GARA.AMMINISTRATOREPROPOSTA.notEqual(amm).or(GARA.AMMINISTRATOREPROPOSTA.isNull()))) // Non può accettare se stesso
 					.execute();
-
+			
 			return rowsAffected > 0;
 		} catch (IntegrityConstraintViolationException e) {
 			throw new GaraEccezione("Errore nell'accettare la gara!", e);
