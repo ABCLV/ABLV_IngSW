@@ -3,14 +3,22 @@ package service;
 import java.time.LocalDate;
 import java.util.List;
 
+import db.exception.ConcorrenteEccezione;
+import db.exception.GaraEccezione;
 import db.exception.IscrizioneEccezioneDB;
+import db.repository.GaraDAO;
 import db.repository.IscrizioneDAO;
+import model.Concorrente;
+import model.Gara;
+import service.exception.ConcorrenteHomeEccezione;
 import service.exception.IscrizioneEccezione;
 import service.exception.PropostaEccezione;
+import service.exception.RicercaEccezione;
 
 public class IscrizioneService {
 
 	private final IscrizioneDAO iscrizioneDAO;
+	private final GaraDAO garaDAO = new GaraDAO();
 	
 	public IscrizioneService() {
 		this.iscrizioneDAO = new IscrizioneDAO();
@@ -62,6 +70,26 @@ public class IscrizioneService {
 			return this.iscrizioneDAO.getCodiciGareIscrittoPerConcorrente(cf);
 		} catch(IscrizioneEccezioneDB e) {
 			throw new IscrizioneEccezione(e.getMessage(), e);
+		}
+	}
+	
+	public List<Gara> getGareDisponibiliPerIscrizione(){
+		List<Gara> ret = null;
+		try {
+			ret = this.garaDAO.getGareDisponibiliPerIscrizione();
+		} catch(GaraEccezione e) {
+			throw new RicercaEccezione(e.getMessage(), e);
+		}
+		
+		return ret;
+	}
+	
+	
+	public List<Concorrente> getIscrizioniGara(String codice) throws  IscrizioneEccezioneDB{
+		try {
+			return this.iscrizioneDAO.getConcorrenti(codice);
+		} catch(ConcorrenteEccezione e) {
+			throw new ConcorrenteHomeEccezione(e.getMessage(), e);
 		}
 	}
 

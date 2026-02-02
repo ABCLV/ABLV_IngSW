@@ -1,7 +1,7 @@
 package db.repository;
 
 import static dbconSQLJOOQ.generated.Tables.ISCRIVE;
-
+import static dbconSQLJOOQ.generated.Tables.CONCORRENTE;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -12,8 +12,9 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 import db.SQLiteConnectionManager;
+import db.exception.ConcorrenteEccezione;
 import db.exception.IscrizioneEccezioneDB;
-import model.Gara;
+import model.Concorrente;
 
 public class IscrizioneDAO {
 
@@ -32,6 +33,36 @@ public class IscrizioneDAO {
 	        throw new IscrizioneEccezioneDB("Errore nel recuperare l'ultimo numero iscrizione!", e);
 	    }
 	}
+	
+	public List<Concorrente> getConcorrenti(String codiceGara) {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+	        return ctx.select(
+	                    CONCORRENTE.CF,
+	                    CONCORRENTE.NOME,
+	                    CONCORRENTE.COGNOME,
+	                    CONCORRENTE.EMAIL,
+	                    CONCORRENTE.NASCITA,
+	                    CONCORRENTE.SOCIETA
+	                )
+	                .from(CONCORRENTE)
+	                .join(ISCRIVE)
+	                    .on(CONCORRENTE.CF.eq(ISCRIVE.CONCORRENTE))
+	                .where(ISCRIVE.CODICEGARA.eq(codiceGara))
+	                .fetchInto(Concorrente.class);
+
+	    } catch (SQLException e) {
+	        throw new ConcorrenteEccezione(
+	                "Errore nel recupero dei concorrenti iscritti alla gara",
+	                e
+	        );
+	    }
+	}
+	
+	
+
 
 	public void inserisciIscrizione(Integer codiceIscrizione,String cf, String codiceGara, LocalDate dataIscrizione, Integer numIscrizione) throws IscrizioneEccezioneDB {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
