@@ -24,7 +24,7 @@ public class RegistrazioneController {
 
 	/* ---------- elenco campi per ogni tipo ---------- */
 	private final String[][] dati = { { "Arbitro", "CF", "Nome", "Cognome", "Sezione", "Password" },
-			{ "Società", "Nome", "Indirizzo", "Città", "CAP", "Email", "Password" } };
+			{ "Societa", "Nome", "Indirizzo", "Città", "CAP", "Email", "Password" } };
 	
 	private final RegistrazioneService registrazioneService = new RegistrazioneService();
 
