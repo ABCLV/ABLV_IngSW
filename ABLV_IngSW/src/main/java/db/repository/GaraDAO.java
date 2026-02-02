@@ -197,16 +197,28 @@ public class GaraDAO {
 	}
 
 	public String getUltimoCodiceGara() throws GaraEccezione {
-		try (Connection conn = SQLiteConnectionManager.getConnection()) {
-			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
-			return ctx.select(GARA.CODICE).from(GARA).orderBy(GARA.CODICE.desc()).limit(1).fetchOneInto(String.class);
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new GaraEccezione("Errore nel recuperare l'ultimo codice gara!", e);
-		}
+	        return ctx
+	            .select(
+	                DSL.coalesce(
+	                    DSL.max(GARA.CODICE),
+	                    "G000"
+	                )
+	            )
+	            .from(GARA)
+	            .fetchOneInto(String.class);
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw new GaraEccezione(
+	            "Errore nel recuperare l'ultimo codice gara!", e
+	        );
+	    }
 	}
+
 	
 	
 
