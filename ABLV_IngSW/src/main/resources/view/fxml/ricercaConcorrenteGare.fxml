@@ -6,7 +6,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.ricerche.RicercaGareConcorrente"
+            fx:controller="controller.ricerche.RicercaGareConcorrenteController"
             style="-fx-background-color: #e6f7ff;">
 
     <!-- TOP -->
