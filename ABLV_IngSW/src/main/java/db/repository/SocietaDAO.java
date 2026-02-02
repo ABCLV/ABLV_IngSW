@@ -60,7 +60,12 @@ public class SocietaDAO {
 					.where(SOCIETA.NOME.eq(nome)).fetchOne();
 			if (r == null)
 				throw new IllegalArgumentException("Società non trovata");
-			return new Societa(r.value1(), r.value2(), r.value3(), r.value4(), r.value5());
+			return new Societa(
+					r.get(SOCIETA.NOME),
+					r.get(SOCIETA.EMAIL),
+					r.get(SOCIETA.CAP),
+					r.get(SOCIETA.CITTA),
+					r.get(SOCIETA.INDIRIZZO));
 		}  catch (DataAccessException e) {
 			throw new SocietaEccezione("Errore nel recuperare la società!", e);
 		} catch (SQLException e) {

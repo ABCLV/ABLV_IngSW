@@ -25,6 +25,7 @@
             <Button text="Registra Concorrente" onAction="#apriRegistraConcorrente" maxWidth="Infinity"/>
             <Button text="Proponi Gara" onAction="#apriProponiGara" maxWidth="Infinity"/>
             <Button text="Iscriviti ad una gara" onAction="#apriIscrizioneGara" maxWidth="Infinity"/>
+			<Button text="Modifica dati personali" onAction="#apriModificaDati" maxWidth="Infinity"/>
         </VBox>
     </left>
 
