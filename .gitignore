@@ -33,6 +33,6 @@ Thumbs.db
 
 
 #dbeaver
-/.dbeaver
-/.mvn
-/.settings
+/.dbeaver/
+/.mvn/
+/.settings/
