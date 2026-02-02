@@ -22,6 +22,8 @@ import org.jooq.Record8;
 import org.jooq.Record18;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataAccessException;
+import org.jooq.exception.IntegrityConstraintViolationException;
 import org.jooq.impl.DSL;
 
 import model.Amministratore;
@@ -38,7 +40,6 @@ import service.exception.RicercaEccezione;
 
 public class GaraDAO {
 
-	public GaraDAO() {}
 
 	public List<Gara> getGare() throws GaraEccezione {
 		List<Gara> gare = new ArrayList<>();
@@ -90,44 +91,28 @@ public class GaraDAO {
 				gare.add(g);
 			}
 
+		}  catch (DataAccessException e) {
+			throw new GaraEccezione("Errore nel recuperare la lista di gare!", e);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new GaraEccezione("Errore nel recuperare la lista di gare!", e);
 		}
 
 		return gare;
 	}
-	
-	
-	
-	
-	
-	
-	
+
 	public String trovaCodiceCampoGara(String codiceGara) throws GaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-			return ctx
-					.select(GARA.CAMPOGARA)
-					.from(GARA)
-					.where(GARA.CODICE.eq(codiceGara))
-					.fetchOne(GARA.CAMPOGARA);
+			return ctx.select(GARA.CAMPOGARA).from(GARA).where(GARA.CODICE.eq(codiceGara)).fetchOne(GARA.CAMPOGARA);
 
+		}  catch (DataAccessException e) {
+			throw new GaraEccezione("Errore nel recupero del campo gara!", e);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new GaraEccezione("Errore nel recupero del campo gara!", e);
 		}
 	}
-
-
-	
-	
-	
-	
-	
-	
 
 	public List<Gara> esploraGare(CampoGara c) throws GaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
@@ -167,8 +152,9 @@ public class GaraDAO {
 						}
 					}).stream().filter(Objects::nonNull).toList();
 
+		}  catch (DataAccessException e) {
+			throw new GaraEccezione("Errore nell'esplorare le gare!", e);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new GaraEccezione("Errore nell'esplorare le gare!", e);
 		}
 	}
@@ -195,8 +181,11 @@ public class GaraDAO {
 
 			return true;
 
+		} catch (IntegrityConstraintViolationException e) {
+			throw new GaraEccezione("Errore nell'inserire la nuova gara!", e);
+		} catch (DataAccessException e) {
+			throw new GaraEccezione("Errore nell'inserire la nuova gara!", e);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new GaraEccezione("Errore nell'inserire la nuova gara!", e);
 		}
 	}
@@ -290,8 +279,9 @@ public class GaraDAO {
 			}
 
 			return out;
-		} catch(SQLException e) {
-			e.printStackTrace();
+		} catch (DataAccessException e) {
+			throw new GaraEccezione("Errore nel recuperare la lista delle gare da confermare!", e);
+		} catch (SQLException e) {
 			throw new GaraEccezione("Errore nel recuperare la lista delle gare da confermare!", e);
 		}
 	}
@@ -308,8 +298,11 @@ public class GaraDAO {
 					.execute();
 
 			return rowsAffected > 0;
-		} catch(SQLException e) {
-			e.printStackTrace();
+		} catch (IntegrityConstraintViolationException e) {
+			throw new GaraEccezione("Errore nell'accettare la gara!", e);
+		} catch (DataAccessException e) {
+			throw new GaraEccezione("Errore nell'accettare la gara!", e);
+		} catch (SQLException e) {
 			throw new GaraEccezione("Errore nell'accettare la gara!", e);
 		}
 	}
@@ -326,8 +319,11 @@ public class GaraDAO {
 					.execute();
 
 			return rowsAffected > 0;
-		} catch(SQLException e) {
-			e.printStackTrace();
+		} catch (IntegrityConstraintViolationException e) {
+			throw new GaraEccezione("Errore nel rifiutare la gara!", e);
+		} catch (DataAccessException e) {
+			throw new GaraEccezione("Errore nel rifiutare la gara!", e);
+		} catch (SQLException e) {
 			throw new GaraEccezione("Errore nel rifiutare la gara!", e);
 		}
 	}

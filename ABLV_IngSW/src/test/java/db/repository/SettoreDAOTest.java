@@ -1,12 +1,32 @@
 package db.repository;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class SettoreDAOTest {
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import model.CampoGara;
+import model.Settore;
+
+class SettoreDAOTest {
+
+    private SettoreDAO dao;
+
+    @BeforeEach
+    void setUp() {
+        dao = new SettoreDAO();
+    }
 
     @Test
-    public void contextLoads() {
-        // TODO auto-generated test stub
+    @DisplayName("Esplora settori: ritorna lista (anche vuota)")
+    void testEsploraSettori() {
+        CampoGara campo = new CampoGara();
+        campo.setIdCampoGara("ID_INESISTENTE");
+
+        List<Settore> settori = dao.esploraSettori(campo);
+        assertNotNull(settori);
     }
 }
