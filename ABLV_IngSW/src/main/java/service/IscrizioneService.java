@@ -33,14 +33,23 @@ public class IscrizioneService {
 	        LocalDate dataIscrizione = LocalDate.now();
 	        int nuovoNumIscrizione = this.calcolaNumeroIscrizione(codiceGara);
 	        
-	        int nuovoIdIscrizione = this.getUltimoCodiceIscrizione() + 1;
+	        int nuovoIdIscrizione = this.getUltimoCodiceIscrizione();
+	        if(nuovoIdIscrizione < 0) {
+	        	throw new Exception();
+	        }
+	        nuovoIdIscrizione++;
+	        
+	        System.out.println("Id iscrizione: " + nuovoIdIscrizione);
+	        System.out.println("CF: " + cf);
+	        System.out.println("Gara: " + codiceGara);
+	        System.out.println("Data: " + dataIscrizione);
+	        System.out.println("Numero iscrizione a gara: " + nuovoNumIscrizione);
 	        
 	        this.iscrizioneDAO.inserisciIscrizione(nuovoIdIscrizione, cf, codiceGara,
 	        		dataIscrizione, nuovoNumIscrizione);
 	    } catch (IscrizioneEccezioneDB e) {
 	        throw new IscrizioneEccezione("Errore durante l'iscrizione del concorrente alla gara", e);
 	    } catch(Exception e) {
-	    	e.printStackTrace();
 	    	throw new IscrizioneEccezione("Errore durante l'iscrizione del concorrente alla gara", e);
 	    }
 	}
@@ -54,8 +63,8 @@ public class IscrizioneService {
 	    }
 	}
 	
-	public Integer getUltimoCodiceIscrizione() throws PropostaEccezione {
-		Integer ret = null;
+	public int getUltimoCodiceIscrizione() throws PropostaEccezione {
+		int ret = -1;
 		try {
 			ret = this.iscrizioneDAO.getUltimoCodiceIscrizione();
 		} catch(Exception e) {

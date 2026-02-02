@@ -52,7 +52,6 @@ public class AmministratoreService /*implements PropositoreIF*/ {
 		try {
 			this.garaDAO.accettaGara(codiceGara, ammId);
 		} catch(GaraEccezione e) {
-			e.printStackTrace();
 			throw new PropostaEccezione(e.getMessage(), e);
 		}
 	}

@@ -143,7 +143,7 @@ public class AmministratoreHomeController {
 	@FXML
 	private void accettaGara() {
 		Gara garaSelezionata = gareDaConfermare.getSelectionModel().getSelectedItem();
-
+		
 		if (garaSelezionata == null) {
 			Alerter.showError("Seleziona una gara da accettare!");
 			return;
