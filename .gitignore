@@ -29,7 +29,7 @@ Thumbs.db
 /.metadata/
 
 #db
-/database/gare.db
+#/database/gare.db
 
 
 #dbeaver
