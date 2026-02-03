@@ -1,5 +1,14 @@
 package controller.svolgimentoGara;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -104,6 +113,26 @@ public class SelezionaGaraController {
             Alerter.showError("Errore nel caricamento concorrenti");
         }
     }
+    
+    @FXML
+    private void handleBack(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/view/fxml/arbitroHome.fxml")
+            );
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alerter.showError("Errore nel ritorno al menu arbitro");
+        }
+    }
+
 
     /* ---------- AVVIO GARA ---------- */
     @FXML
@@ -122,11 +151,13 @@ public class SelezionaGaraController {
 
         try {
         	System.out.println("ciao");
-            punteggioService.registraAssenti(gara.getCodice(), assenti);
+            punteggioService.assegnazioneGruppi(gara.getCodice(), assenti);
         } catch (Exception e) {
             Alerter.showError("Errore durante l'appello");
             return;
         }
+        
+        
 
         // 👉 CAMBIO SCHERMATA
         // definizione gruppi + gara
