@@ -51,6 +51,19 @@ public class SocietaDAO {
 			throw new SocietaEccezione("Errore nel registrare la società!", e);
 		}
 	}
+	
+	public void eliminaSocieta(String nome) throws SocietaEccezione {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	        ctx.deleteFrom(SOCIETA)
+	           .where(SOCIETA.NOME.eq(nome))
+	           .execute();
+	    } catch (DataAccessException e) {
+	        throw new SocietaEccezione("Errore nell'eliminare la società", e);
+	    } catch (SQLException e) {
+	        throw new SocietaEccezione("Errore di connessione", e);
+	    }
+	}
 
 	public Societa getSocieta(String nome) throws SocietaEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
@@ -59,7 +72,7 @@ public class SocietaDAO {
 					.select(SOCIETA.NOME, SOCIETA.INDIRIZZO, SOCIETA.CITTA, SOCIETA.CAP, SOCIETA.EMAIL).from(SOCIETA)
 					.where(SOCIETA.NOME.eq(nome)).fetchOne();
 			if (r == null)
-				throw new IllegalArgumentException("Società non trovata");
+				return null;
 			return new Societa(
 					r.get(SOCIETA.NOME),
 					r.get(SOCIETA.EMAIL),

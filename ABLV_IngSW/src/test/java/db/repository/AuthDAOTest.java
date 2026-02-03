@@ -35,6 +35,9 @@ class AuthDAOTest {
             boolean valido = authDao.checkPassword("Amministratore", cf, pwd);
             assertTrue(valido);
         });
+        
+        // Pulizia
+        assertDoesNotThrow(() -> adminDao.eliminaAmministratore(cf));
     }
 
     @Test
@@ -53,13 +56,16 @@ class AuthDAOTest {
             boolean valido = authDao.checkPassword("Amministratore", cf, "passwordSbagliata");
             assertFalse(valido);
         });
+        
+        // Pulizia
+        assertDoesNotThrow(() -> adminDao.eliminaAmministratore(cf));
     }
 
     @Test
     @DisplayName("Check password per utente inesistente restituisce false")
     void testCheckPasswordUtenteInesistente() {
         assertDoesNotThrow(() -> {
-            boolean valido = authDao.checkPassword("Amministratore", "CF_INESISTENTE", "qualunque");
+            boolean valido = authDao.checkPassword("Amministratore", "CF_INESISTENTE_" + System.nanoTime(), "qualunque");
             assertFalse(valido);
         });
     }

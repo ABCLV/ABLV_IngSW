@@ -8,7 +8,7 @@ import db.exception.GaraEccezione;
 
 import static dbconSQLJOOQ.generated.Tables.GARA;
 import static dbconSQLJOOQ.generated.Tables.ISCRIVE;
-
+import static dbconSQLJOOQ.generated.Tables.TURNO;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -115,6 +115,32 @@ public class GaraDAO {
 		}
 	}
 
+	public void eliminaGara(String codice) throws GaraEccezione {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	        ctx.deleteFrom(GARA)
+	           .where(GARA.CODICE.eq(codice))
+	           .execute();
+	    } catch (DataAccessException e) {
+	        throw new GaraEccezione("Errore nell'eliminare la gara", e);
+	    } catch (SQLException e) {
+	        throw new GaraEccezione("Errore di connessione", e);
+	    }
+	}
+
+	public void eliminaTurniGara(String codiceGara) throws GaraEccezione {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	        ctx.deleteFrom(TURNO)
+	           .where(TURNO.GARA.eq(codiceGara))
+	           .execute();
+	    } catch (DataAccessException e) {
+	        throw new GaraEccezione("Errore nell'eliminare i turni della gara", e);
+	    } catch (SQLException e) {
+	        throw new GaraEccezione("Errore di connessione", e);
+	    }
+	}
+	
 	public List<Gara> esploraGare(CampoGara c) throws GaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 

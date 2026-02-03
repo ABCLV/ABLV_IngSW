@@ -1,0 +1,1 @@
+select * from ARBITRO a2 

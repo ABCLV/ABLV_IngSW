@@ -48,11 +48,9 @@ public class AmministratoreDAO {
 			if (record != null) {
 				return new Amministratore(record.getCf(), record.getNome(), record.getCognome());
 			} else {
-				throw new AmministratoreEccezione("Amministratore con CF=" + cf + " non trovato");
+				return null;
 			}
 
-		} catch (DataAccessException e) {
-			throw new AmministratoreEccezione("Errore nel recuperare l'amministratore!", e);
 		} catch (SQLException e) {
 			throw new AmministratoreEccezione("Errore nel recuperare l'amministratore!", e);
 		}
@@ -77,6 +75,18 @@ public class AmministratoreDAO {
 		} catch (SQLException e) {
 			// problemi di connessione
 			throw new AmministratoreEccezione("Errore di connessione al database", e);
+		}
+	}
+
+	// Metodo helper per eliminare amministratore usando jOOQ
+	public void eliminaAmministratore(String cf) throws AmministratoreEccezione {
+		try (Connection conn = SQLiteConnectionManager.getConnection()) {
+			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+			ctx.deleteFrom(AMMINISTRATORE).where(AMMINISTRATORE.CF.eq(cf)).execute();
+		} catch (DataAccessException e) {
+			throw new AmministratoreEccezione("Errore nell'eliminare l'amministratore", e);
+		} catch (SQLException e) {
+			throw new AmministratoreEccezione("Errore di connessione", e);
 		}
 	}
 

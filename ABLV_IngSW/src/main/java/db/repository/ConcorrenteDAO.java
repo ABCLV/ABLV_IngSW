@@ -103,6 +103,18 @@ public class ConcorrenteDAO {
 			throw new ConcorrenteEccezione("Errore nel recuperare il concorrente!", e);
 		}
 	}
+	public void eliminaConcorrente(String cf) throws ConcorrenteEccezione {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	        ctx.deleteFrom(CONCORRENTE)
+	           .where(CONCORRENTE.CF.eq(cf))
+	           .execute();
+	    } catch (DataAccessException e) {
+	        throw new ConcorrenteEccezione("Errore nell'eliminare il concorrente", e);
+	    } catch (SQLException e) {
+	        throw new ConcorrenteEccezione("Errore di connessione", e);
+	    }
+	}
 
 	public List<Gara> getGareConcorrente(String cf) throws ConcorrenteEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
