@@ -18,7 +18,17 @@
                           -fx-font-weight: bold;
                           -fx-text-fill: #005f5f;"/>
         </HBox>
+<HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 15;">
+        <Label text="Appello Gara"
+               style="-fx-font-size: 22;
+                      -fx-font-weight: bold;
+                      -fx-text-fill: #005f5f;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Indietro"
+                onAction="#handleBack"/>
+    </HBox>
     </top>
+
 
     <!-- CENTER -->
     <center>
