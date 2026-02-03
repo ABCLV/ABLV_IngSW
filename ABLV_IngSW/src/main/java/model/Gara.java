@@ -234,12 +234,7 @@ public class Gara {
 	}
 
 	public void setData(LocalDate data) {
-		LocalDate current = LocalDate.now();
-		if (current.isAfter(data)) {
-			throw new IllegalArgumentException("Data della gara non valida! (E' antecedente ad oggi...)");
-		} else {
-			this.data = data;
-		}
+		this.data = data;
 	}
 
 	public void setMinPersone(int minPersone) {
