@@ -20,7 +20,6 @@ class ArbitroDAOTest {
         dao = new ArbitroDAO();
     }
 
-    //DEBITO TECNICO qui si insersce l'arbtiro per vedere se va la insert, ma poi non lo si elimina
     @Test
     @DisplayName("Registrazione arbitro con CF univoco")
     void testRegistraArbitroOK() {
@@ -35,6 +34,13 @@ class ArbitroDAOTest {
                 "password123"
             )
         );
+        
+        // Pulizia
+        assertDoesNotThrow(() -> dao.eliminaArbitro(cf));
+        
+        // Verifica che sia stato eliminato
+        boolean esiste = dao.esisteArbitro(cf);
+        assertFalse(esiste);
     }
 
     @Test
@@ -42,12 +48,14 @@ class ArbitroDAOTest {
     void testRegistraArbitroDuplicato() {
         String cf = "TESTCF_" + System.nanoTime();
 
-        dao.registraArbitro(
-            cf,
-            "NomeArbitro",
-            "CognomeArbitro",
-            "SezioneTest",
-            "password123"
+        assertDoesNotThrow(() ->
+            dao.registraArbitro(
+                cf,
+                "NomeArbitro",
+                "CognomeArbitro",
+                "SezioneTest",
+                "password123"
+            )
         );
 
         assertThrows(ArbitroEccezione.class, () ->
@@ -59,12 +67,15 @@ class ArbitroDAOTest {
                 "pwd"
             )
         );
+        
+        // Pulizia
+        assertDoesNotThrow(() -> dao.eliminaArbitro(cf));
     }
 
     @Test
     @DisplayName("Esiste arbitro: restituisce false se non esiste")
     void testEsisteArbitroNotFound() {
-        boolean esiste = dao.esisteArbitro("CF_INESISTENTE");
+        boolean esiste = dao.esisteArbitro("CF_INESISTENTE_" + System.nanoTime());
         assertFalse(esiste);
     }
 
@@ -73,16 +84,25 @@ class ArbitroDAOTest {
     void testEsisteArbitroExists() {
         String cf = "TESTCF_EXIST_" + System.nanoTime();
 
-        dao.registraArbitro(
-            cf,
-            "NomeArbitro",
-            "CognomeArbitro",
-            "SezioneTest",
-            "password"
+        assertDoesNotThrow(() ->
+            dao.registraArbitro(
+                cf,
+                "NomeArbitro",
+                "CognomeArbitro",
+                "SezioneTest",
+                "password"
+            )
         );
 
         boolean esiste = dao.esisteArbitro(cf);
         assertTrue(esiste);
+        
+        // Pulizia
+        assertDoesNotThrow(() -> dao.eliminaArbitro(cf));
+        
+        // Verifica che sia stato eliminato
+        boolean esisteDopoEliminazione = dao.esisteArbitro(cf);
+        assertFalse(esisteDopoEliminazione);
     }
 
     @Test
@@ -90,12 +110,14 @@ class ArbitroDAOTest {
     void testGetArbitri() {
         String cf = "TESTCF_LIST_" + System.nanoTime();
 
-        dao.registraArbitro(
-            cf,
-            "Nome",
-            "Cognome",
-            "Sezione",
-            "password"
+        assertDoesNotThrow(() ->
+            dao.registraArbitro(
+                cf,
+                "Nome",
+                "Cognome",
+                "Sezione",
+                "password"
+            )
         );
 
         List<Arbitro> arbitri = dao.getArbitri();
@@ -105,5 +127,8 @@ class ArbitroDAOTest {
             arbitri.stream().anyMatch(a -> cf.equals(a.getCfArbitro())),
             "L'arbitro inserito deve essere presente nella lista"
         );
+        
+        // Pulizia
+        assertDoesNotThrow(() -> dao.eliminaArbitro(cf));
     }
 }

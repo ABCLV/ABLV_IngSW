@@ -18,8 +18,7 @@ import db.SQLiteConnectionManager;
 
 public class CampoGaraDAO {
 
-	public CampoGaraDAO() {
-	}
+	
 
 	public List<CampoGara> getCampoGara() throws CampoGaraEccezione {
 
