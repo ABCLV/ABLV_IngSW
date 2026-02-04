@@ -25,8 +25,32 @@ public class RegistraAmministratoreController {
 		String email = emailField.getText().trim();
 		String pwd = pwdField.getText();
 
+		// Controllo campi vuoti
 		if (cf.isEmpty() || nome.isEmpty() || cognome.isEmpty() || email.isEmpty() || pwd.isEmpty()) {
 			Alerter.showError("Devi compilare tutti i campi obbligatori!");
+			return;
+		}
+
+		// Regex CF italiano: 6 lettere, 2 numeri, 1 lettera, 2 numeri, 1 lettera, 3 numeri, 1 lettera
+		if (!cf.matches("^[A-Za-z]{6}[0-9]{2}[A-Za-z][0-9]{2}[A-Za-z][0-9]{3}[A-Za-z]$")) {
+			Alerter.showError("Codice Fiscale non valido! Deve essere 6 lettere, 2 numeri, 1 lettera, 2 numeri, 1 lettera, 3 numeri, 1 lettera");
+			return;
+		}
+
+		// Nome e Cognome: solo lettere e spazi (no numeri)
+		if (!nome.matches("^[A-Za-z\\s]+$")) {
+			Alerter.showError("Il Nome può contenere solo lettere!");
+			return;
+		}
+		if (!cognome.matches("^[A-Za-z\\s]+$")) {
+			Alerter.showError("Il Cognome può contenere solo lettere!");
+			return;
+		}
+
+		// Regex Email: formato standard
+		if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+			Alerter.showError("Formato email non valido!");
+			return;
 		}
 
 		try {

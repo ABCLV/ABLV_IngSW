@@ -231,6 +231,18 @@ public class ArbitroDAO {
 	    }
 	}
 	
+	public void eliminaArbitro(String cf) throws ArbitroEccezione {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	        ctx.deleteFrom(ARBITRO)
+	           .where(ARBITRO.CF.eq(cf))
+	           .execute();
+	    }  catch (DataAccessException e) {
+	        throw new ArbitroEccezione("Errore nell'eliminare l'arbitro", e);
+	    } catch (SQLException e) {
+	        throw new ArbitroEccezione("Errore di connessione", e);
+	    }
+	}
 	
 	public int assegnaArbitroAGara(String codiceGara, String cfArbitro)
 	        throws ArbitroEccezione {

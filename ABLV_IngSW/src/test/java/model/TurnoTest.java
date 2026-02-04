@@ -8,12 +8,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class TurnoTest {
     
     private Turno turno;
+    private Settore settoreTest;
     private static final String CODICE_TEST = "T01";
     private static final String DURATA_TEST = "09:00-13:00";
 
     @BeforeEach
     void setUp() {
-        turno = new Turno(CODICE_TEST, DURATA_TEST);
+    	settoreTest = new Settore("S01", 100, "Settore di test");
+    	turno = new Turno(CODICE_TEST, DURATA_TEST, settoreTest);
     }
     
     @Test
@@ -21,6 +23,7 @@ class TurnoTest {
     void testCostruttore() {
         assertNotNull(turno);
         assertEquals(CODICE_TEST, turno.codiceTurno);
+        assertEquals(settoreTest, turno.getSett());
     }
     
     @Test
@@ -28,5 +31,13 @@ class TurnoTest {
     void testCodiceTurnoPublic() {
         turno.codiceTurno = "T02";
         assertEquals("T02", turno.codiceTurno);
+    }
+    
+    @Test
+    @DisplayName("Setter e getter per settore funzionano correttamente")
+    void testSettoreGetterSetter() {
+        Settore nuovoSettore = new Settore("S01", 100, "Settore di test");
+        turno.setSett(nuovoSettore);
+        assertEquals(nuovoSettore, turno.getSett());
     }
 }
