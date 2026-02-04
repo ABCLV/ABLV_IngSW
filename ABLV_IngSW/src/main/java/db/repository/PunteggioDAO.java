@@ -125,8 +125,8 @@ public class PunteggioDAO {
 	           =============================== */
 	        int lastId = getUltimoIdPunteggio(ctx);
 	        
-	        System.out.println("ultimo id "+lastId);
-	        /*
+	        System.out.println("mappa settori: "+ settorePerConcorrente);
+	        
 	        for (Concorrente c : presenti) {
 
 	            String settore = settorePerConcorrente.get(c.getCf());
@@ -138,14 +138,14 @@ public class PunteggioDAO {
 	                lastId = nextIdPunteggio(lastId);
 
 	                ctx.insertInto(PARTECIPA)
-	                        .set(PARTECIPA.IDPUNTEGGIO, ""+lastId)
-	                        .set(PARTECIPA.IDTURNO, t.getCodiceTurno())
-	                        .set(PARTECIPA.CONCORRENTE, c.getCf())
-	                        .set(PARTECIPA.NUMPUNTI, 0)
-	                        .set(PARTECIPA.SQUALIFICA, (Boolean) null)
-	                        .execute();
+	                .set(PARTECIPA.IDPUNTEGGIO, String.valueOf(lastId))
+	                .set(PARTECIPA.IDTURNO, t.getCodiceTurno())
+	                .set(PARTECIPA.CONCORRENTE, c.getCf())
+	                .set(PARTECIPA.NUMPUNTI, 0)
+	                .execute();
+
 	            }
-	        }*/
+	        }
 		
 	    } catch (SQLException e) {
 	        throw new GaraEccezione(
