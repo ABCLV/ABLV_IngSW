@@ -3,7 +3,6 @@ package db.repository;
 import static dbconSQLJOOQ.generated.Tables.CAMPIONATO;
 
 import db.SQLiteConnectionManager;
-import db.exception.AmministratoreEccezione;
 import db.exception.GaraEccezione;
 
 import static dbconSQLJOOQ.generated.Tables.GARA;
@@ -189,6 +188,8 @@ public class GaraDAO {
 	public boolean insertGara(Gara gara) throws GaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+			
+			this.controllaDataGara(gara.getData(), gara.getCampoGara().getIdCampoGara());
 
 			ctx.insertInto(GARA, GARA.CODICE, GARA.NUMPROVA, GARA.TECNICA, GARA.CRITERIOPUNTI, GARA.MINPERSONE,
 					GARA.MAXPERSONE, GARA.STATOGARA, GARA.STATOCONFERMA, GARA.TIPOGARA, GARA.DATA, GARA.CAMPIONATO,
@@ -214,6 +215,8 @@ public class GaraDAO {
 			throw new GaraEccezione("Errore nell'inserire la nuova gara!", e);
 		} catch (SQLException e) {
 			throw new GaraEccezione("Errore nell'inserire la nuova gara!", e);
+		} catch(GaraEccezione e) {
+			throw new GaraEccezione(e.getMessage(), e);
 		}
 	}
 
@@ -315,13 +318,16 @@ public class GaraDAO {
 
 	public boolean accettaGara(String codice, String amm) throws GaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
+			
+			LocalDate oggi = LocalDate.now();
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
 			int rowsAffected = ctx.update(GARA).set(GARA.STATOCONFERMA, StatoConferma.CONFERMATA.name())
 					.set(GARA.AMMINISTRATOREACCETTAZIONE, amm)
 					.where(GARA.CODICE.eq(codice).and(GARA.STATOCONFERMA.eq(StatoConferma.IN_ATTESA.name()))
 							.and(GARA.AMMINISTRATOREACCETTAZIONE.isNull()) // Solo se non è già stata accettata
-							.and(GARA.AMMINISTRATOREPROPOSTA.notEqual(amm).or(GARA.AMMINISTRATOREPROPOSTA.isNull()))) // Non può accettare se stesso
+							.and(GARA.AMMINISTRATOREPROPOSTA.notEqual(amm).or(GARA.AMMINISTRATOREPROPOSTA.isNull())) // Non può accettare se stesso
+							.and(GARA.DATA.gt(oggi.plusDays(3))))
 					.execute();
 			
 			return rowsAffected > 0;
@@ -357,6 +363,9 @@ public class GaraDAO {
 	
 	public List<Gara> getGareDisponibiliPerIscrizione() throws RicercaEccezione {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	    	
+	    	LocalDate oggi = LocalDate.now();
+	    	
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
 	        Result<Record11<String, Integer, String, String, Integer, Integer, String, LocalDate, String, String, String>> rs = ctx
@@ -375,7 +384,8 @@ public class GaraDAO {
 	                )
 	            ))
 	            .and(GARA.STATOGARA.eq(StatoGara.NON_INIZIATA.name()))
-	            .and(GARA.STATOCONFERMA.eq(StatoConferma.CONFERMATA.name()))
+	            .and(GARA.STATOCONFERMA.eq(StatoConferma.CONFERMATA.name())
+	            .and(GARA.DATA.gt(oggi.plusDays(3))))
 	            .fetch();
 
 	        List<Gara> out = new ArrayList<>();
@@ -417,7 +427,30 @@ public class GaraDAO {
 	    }
 	}
 	
-	
+	public void controllaDataGara(LocalDate data, String campo) throws GaraEccezione {
+		
+		try (Connection conn = SQLiteConnectionManager.getConnection()) {
+			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+			
+			boolean esisteGia = ctx.selectCount()
+									.from(GARA)
+									.where(GARA.DATA.eq(data)
+											.and(GARA.CAMPOGARA.eq(campo)))
+									.fetchOneInto(Integer.class) > 0;
+									
+			if(esisteGia) {
+				throw new GaraEccezione("Esiste già una gara che si svolge in quel campo in quel giorno!", new RuntimeException());
+			}
+
+		} catch (IntegrityConstraintViolationException e) {
+			throw new GaraEccezione("Errore nel controllare la concomitanza nelle gare!", e);
+		} catch (DataAccessException e) {
+			throw new GaraEccezione("Errore nel controllare la concomitanza nelle gare!", e);
+		} catch (SQLException e) {
+			throw new GaraEccezione("Errore nel controllare la concomitanza nelle gare!", e);
+		}
+		
+	}
 	
 	
 

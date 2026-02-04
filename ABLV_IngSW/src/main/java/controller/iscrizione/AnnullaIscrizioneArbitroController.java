@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import model.Gara;
 import service.ArbitroService;
+import service.exception.AggiornaEccezione;
 import service.exception.RicercaEccezione;
 
 import state.Session;
@@ -130,7 +131,7 @@ public class AnnullaIscrizioneArbitroController {
                 nascondiDettagli();
             }
 
-        } catch (GaraEccezione e) {
+        } catch (AggiornaEccezione e) {
             Alerter.showError("Errore durante la disiscrizione: " + e.getMessage());
         }
     }

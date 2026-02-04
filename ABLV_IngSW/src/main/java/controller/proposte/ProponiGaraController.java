@@ -281,12 +281,12 @@ public class ProponiGaraController {
         			numProva, arbitro, campoGara, Session.getUserType(), Session.getUserName());
         	definizioneTurni();
             chiudi();
-
+            Alerter.showSuccess("Gara proposta con successo!");
         } catch (Exception e) {
         	Alerter.showError(e.getMessage());
         }
         
-        Alerter.showSuccess("Gara proposta con successo!");
+        
     }
 
     @FXML
