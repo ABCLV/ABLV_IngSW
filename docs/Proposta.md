@@ -44,9 +44,9 @@ Ci possono essere più squadre iscritte della stessa società, in questo caso pr
 l’arbitro può compilare i punteggi in 2 modalità: nelle gare senza rilascio vengono conteggiate alla fine per ogni partecipante. Nelle gare con rilascio il sistema deve permettere di segnalare catture in tempo live.
 
 
-![Testo alternativo](esempio1.PNG)
-![Testo alternativo](esempio2.PNG)
-![Testo alternativo](esempio3.PNG)
+![Testo alternativo](Classifica_esempio1.PNG)
+![Testo alternativo](Classifica_esempio2.PNG)
+![Testo alternativo](Classifica_esempio3.PNG)
 
 
 
