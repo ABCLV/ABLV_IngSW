@@ -44,7 +44,7 @@ public class SocietaDAO {
 			ctx.insertInto(SOCIETA, SOCIETA.NOME, SOCIETA.INDIRIZZO, SOCIETA.CITTA, SOCIETA.CAP, SOCIETA.EMAIL,
 					SOCIETA.PASSWORD_HASH).values(nome, indirizzo, citta, cap, email, hash).execute();
 		} catch (IntegrityConstraintViolationException e) {
-			throw new SocietaEccezione("Errore nel registrare la società!", e);
+			throw new SocietaEccezione("Società già esistente con nome = " + nome, e);
 		} catch (DataAccessException e) {
 			throw new SocietaEccezione("Errore nel registrare la società!", e);
 		} catch (SQLException e) {
