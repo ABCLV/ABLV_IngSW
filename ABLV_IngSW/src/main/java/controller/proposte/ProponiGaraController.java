@@ -266,6 +266,11 @@ public class ProponiGaraController {
             Alerter.showError("Devi compilare tutti i campi obbligatori!");
             return;
         }
+        
+        if(data.isBefore(LocalDate.now())) {
+        	Alerter.showError("La data di svolgimento della gara deve essere almeno domani!");
+        	return;
+        }
 
         if (!checkMinMax()) {
             return;
