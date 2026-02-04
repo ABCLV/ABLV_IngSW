@@ -1,9 +1,11 @@
 package db.repository;
 
 import static dbconSQLJOOQ.generated.Tables.PARTECIPA;
+import static dbconSQLJOOQ.generated.Tables.SOCIETA;
 import static dbconSQLJOOQ.generated.Tables.TURNO;
 import static dbconSQLJOOQ.generated.Tables.CONCORRENTE;
 import static dbconSQLJOOQ.generated.Tables.ISCRIVE;
+import static dbconSQLJOOQ.generated.Tables.SETTORE;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -27,20 +29,20 @@ import model.Turno;
 public class PunteggioDAO {
 	public PunteggioDAO() {}
 	
-	private String nextIdPunteggio(String last) {
-	    int num = Integer.parseInt(last.substring(1));
-	    return String.format("P%04d", num + 1);
+	private int nextIdPunteggio(int last) {
+	    return last + 1;
 	}
 
-	private String getUltimoIdPunteggio(DSLContext ctx) {
-	    String last = ctx.select(PARTECIPA.IDPUNTEGGIO)
+	private int getUltimoIdPunteggio(DSLContext ctx) {
+	    Integer last = ctx.select(PARTECIPA.IDPUNTEGGIO)
 	            .from(PARTECIPA)
 	            .orderBy(PARTECIPA.IDPUNTEGGIO.desc())
 	            .limit(1)
-	            .fetchOneInto(String.class);
+	            .fetchOneInto(Integer.class);
 
-	    return last != null ? last : "P0000";
+	    return last != null ? last : 0;
 	}
+
 	
 	public void definizioneGruppi(String codiceGara, List<Concorrente> assenti) {
 
@@ -51,7 +53,6 @@ public class PunteggioDAO {
 	        Set<String> cfAssenti = assenti.stream()
 	                .map(Concorrente::getCf)
 	                .collect(Collectors.toSet());
-
 	        Condition cond = ISCRIVE.CODICEGARA.eq(codiceGara);
 
 	        if (!cfAssenti.isEmpty()) {
@@ -59,23 +60,41 @@ public class PunteggioDAO {
 	        }
 
 	        List<Concorrente> presenti =
-	            ctx.select(CONCORRENTE.fields())
+	            ctx.select(CONCORRENTE.CF, CONCORRENTE.NOME, CONCORRENTE.COGNOME, CONCORRENTE.EMAIL,
+						CONCORRENTE.NASCITA, CONCORRENTE.SOCIETA)
 	               .from(CONCORRENTE)
 	               .join(ISCRIVE)
 	                   .on(CONCORRENTE.CF.eq(ISCRIVE.CONCORRENTE))
 	               .where(cond)
 	               .fetchInto(Concorrente.class);
 
-	        if (presenti.isEmpty()) {
-	            throw new GaraEccezione("Nessun concorrente presente alla gara " + codiceGara, null);
-	        }
-
+	        
+	       
+	        
 	        /* ===============================
 	           3️⃣ Turni della gara
 	           =============================== */
-	        List<Turno> turni = ctx.selectFrom(TURNO)
-	                .where(TURNO.GARA.eq(codiceGara))
-	                .fetchInto(Turno.class);
+	        List<Turno> turni =
+	        	    ctx.select(TURNO.CODICE, TURNO.DURATA, TURNO.SETTORE, TURNO.NUMERO)
+	        	       .from(TURNO)
+	        	       .where(TURNO.GARA.eq(codiceGara))
+	        	       .fetch()
+	        	       .map(r -> {
+	        	           Turno t = new Turno();
+	        	           t.setCodiceTurno(r.get(TURNO.CODICE));
+	        	           t.setDurata(r.get(TURNO.DURATA));
+	        	           t.setNumero(r.get(TURNO.NUMERO));
+
+	        	           // carichi il Settore separatamente
+	        	           Settore s = ctx.select(SETTORE.ID, SETTORE.LUNGHEZZA, SETTORE.DESCRIZIONE)
+	        	        		   		.from(SETTORE)
+	        	                        .where(SETTORE.ID.eq(r.get(TURNO.SETTORE)))
+	        	                        .fetchOneInto(Settore.class);
+
+	        	           t.setSett(s);
+	        	           return t;
+	        	       });
+
 
 	        /* ===============================
 	           4️⃣ Settori disponibili
@@ -85,9 +104,7 @@ public class PunteggioDAO {
 	                .distinct()
 	                .toList();
 
-	        if (settori.isEmpty()) {
-	            throw new GaraEccezione("Nessun settore definito per la gara " + codiceGara, null);
-	        }
+	        System.out.println("settori gara:" + settori.toString());
 
 	        /* ===============================
 	           5️⃣ Assegnazione settori (round-robin)
@@ -106,8 +123,10 @@ public class PunteggioDAO {
 	        /* ===============================
 	           6️⃣ Creazione PARTECIPA
 	           =============================== */
-	        String lastId = getUltimoIdPunteggio(ctx);
-
+	        int lastId = getUltimoIdPunteggio(ctx);
+	        
+	        System.out.println("ultimo id "+lastId);
+	        /*
 	        for (Concorrente c : presenti) {
 
 	            String settore = settorePerConcorrente.get(c.getCf());
@@ -119,15 +138,15 @@ public class PunteggioDAO {
 	                lastId = nextIdPunteggio(lastId);
 
 	                ctx.insertInto(PARTECIPA)
-	                        .set(PARTECIPA.IDPUNTEGGIO, lastId)
+	                        .set(PARTECIPA.IDPUNTEGGIO, ""+lastId)
 	                        .set(PARTECIPA.IDTURNO, t.getCodiceTurno())
 	                        .set(PARTECIPA.CONCORRENTE, c.getCf())
 	                        .set(PARTECIPA.NUMPUNTI, 0)
 	                        .set(PARTECIPA.SQUALIFICA, (Boolean) null)
 	                        .execute();
 	            }
-	        }
-
+	        }*/
+		
 	    } catch (SQLException e) {
 	        throw new GaraEccezione(
 	                "Errore nella definizione dei gruppi per la gara " + codiceGara,
