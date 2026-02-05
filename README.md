@@ -34,6 +34,3 @@ Leggi [SECURITY.md](https://github.com/ABCLV/ABLV_IngSW/blob/main/.github/SECURI
 
 ## Licenza
 Leggi [LICENSE](https://github.com/ABCLV/ABLV_IngSW/blob/main/LICENSE).
-
-## Presentazione
-Apri [Presentazione](https://docs.google.com/presentation/d/1NEjBKWEjtvicIzbHiZM7GB1KmApjeg01ftXmkE43h-8/edit?usp=drive_link)
