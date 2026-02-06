@@ -16,6 +16,7 @@ import java.util.function.Function;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function16;
+import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Records;
@@ -53,9 +54,9 @@ public class Gara extends TableImpl<GaraRecord> {
     }
 
     /**
-     * The column <code>GARA.Codice</code>.
+     * The column <code>GARA.ID</code>.
      */
-    public final TableField<GaraRecord, String> CODICE = createField(DSL.name("Codice"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<GaraRecord, Integer> ID = createField(DSL.name("ID"), SQLDataType.INTEGER.identity(true), this, "");
 
     /**
      * The column <code>GARA.NumProva</code>.
@@ -65,12 +66,12 @@ public class Gara extends TableImpl<GaraRecord> {
     /**
      * The column <code>GARA.Tecnica</code>.
      */
-    public final TableField<GaraRecord, String> TECNICA = createField(DSL.name("Tecnica"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<GaraRecord, String> TECNICA = createField(DSL.name("Tecnica"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>GARA.CriterioPunti</code>.
      */
-    public final TableField<GaraRecord, String> CRITERIOPUNTI = createField(DSL.name("CriterioPunti"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<GaraRecord, String> CRITERIOPUNTI = createField(DSL.name("CriterioPunti"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>GARA.MinPersone</code>.
@@ -85,17 +86,17 @@ public class Gara extends TableImpl<GaraRecord> {
     /**
      * The column <code>GARA.StatoGara</code>.
      */
-    public final TableField<GaraRecord, String> STATOGARA = createField(DSL.name("StatoGara"), SQLDataType.VARCHAR(50).nullable(false).defaultValue(DSL.field(DSL.raw("'NON_INIZIATA'"), SQLDataType.VARCHAR)), this, "");
+    public final TableField<GaraRecord, String> STATOGARA = createField(DSL.name("StatoGara"), SQLDataType.CLOB.nullable(false).defaultValue(DSL.field(DSL.raw("'NON_INIZIATA'"), SQLDataType.CLOB)), this, "");
 
     /**
      * The column <code>GARA.StatoConferma</code>.
      */
-    public final TableField<GaraRecord, String> STATOCONFERMA = createField(DSL.name("StatoConferma"), SQLDataType.VARCHAR(50).nullable(false).defaultValue(DSL.field(DSL.raw("'IN_ATTESA'"), SQLDataType.VARCHAR)), this, "");
+    public final TableField<GaraRecord, String> STATOCONFERMA = createField(DSL.name("StatoConferma"), SQLDataType.CLOB.nullable(false).defaultValue(DSL.field(DSL.raw("'IN_ATTESA'"), SQLDataType.CLOB)), this, "");
 
     /**
      * The column <code>GARA.TipoGara</code>.
      */
-    public final TableField<GaraRecord, String> TIPOGARA = createField(DSL.name("TipoGara"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<GaraRecord, String> TIPOGARA = createField(DSL.name("TipoGara"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>GARA.Data</code>.
@@ -105,32 +106,32 @@ public class Gara extends TableImpl<GaraRecord> {
     /**
      * The column <code>GARA.Campionato</code>.
      */
-    public final TableField<GaraRecord, String> CAMPIONATO = createField(DSL.name("Campionato"), SQLDataType.VARCHAR(100), this, "");
+    public final TableField<GaraRecord, String> CAMPIONATO = createField(DSL.name("Campionato"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>GARA.Arbitro</code>.
      */
-    public final TableField<GaraRecord, String> ARBITRO = createField(DSL.name("Arbitro"), SQLDataType.VARCHAR(16), this, "");
+    public final TableField<GaraRecord, String> ARBITRO = createField(DSL.name("Arbitro"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>GARA.AmministratoreProposta</code>.
      */
-    public final TableField<GaraRecord, String> AMMINISTRATOREPROPOSTA = createField(DSL.name("AmministratoreProposta"), SQLDataType.VARCHAR(16), this, "");
+    public final TableField<GaraRecord, String> AMMINISTRATOREPROPOSTA = createField(DSL.name("AmministratoreProposta"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>GARA.AmministratoreAccettazione</code>.
      */
-    public final TableField<GaraRecord, String> AMMINISTRATOREACCETTAZIONE = createField(DSL.name("AmministratoreAccettazione"), SQLDataType.VARCHAR(16), this, "");
+    public final TableField<GaraRecord, String> AMMINISTRATOREACCETTAZIONE = createField(DSL.name("AmministratoreAccettazione"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>GARA.Societa</code>.
      */
-    public final TableField<GaraRecord, String> SOCIETA = createField(DSL.name("Societa"), SQLDataType.VARCHAR(100), this, "");
+    public final TableField<GaraRecord, String> SOCIETA = createField(DSL.name("Societa"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>GARA.CampoGara</code>.
      */
-    public final TableField<GaraRecord, String> CAMPOGARA = createField(DSL.name("CampoGara"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<GaraRecord, Integer> CAMPOGARA = createField(DSL.name("CampoGara"), SQLDataType.INTEGER.nullable(false), this, "");
 
     private Gara(Name alias, Table<GaraRecord> aliased) {
         this(alias, aliased, null);
@@ -171,13 +172,18 @@ public class Gara extends TableImpl<GaraRecord> {
     }
 
     @Override
+    public Identity<GaraRecord, Integer> getIdentity() {
+        return (Identity<GaraRecord, Integer>) super.getIdentity();
+    }
+
+    @Override
     public UniqueKey<GaraRecord> getPrimaryKey() {
         return Keys.GARA__PK_GARA;
     }
 
     @Override
     public List<ForeignKey<GaraRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.GARA__FK_GARA_PK_CAMPIONATO, Keys.GARA__FK_GARA_PK_ARBITRO, Keys.GARA__FK_GARA_PK_AMMINISTRATORE, Keys.GARA__FK_GARA_PK_SOCIETA, Keys.GARA__FK_GARA_PK_CAMPOGARA);
+        return Arrays.asList(Keys.GARA__FK_GARA_PK_CAMPIONATO, Keys.GARA__FK_GARA_PK_ARBITRO, Keys.GARA__FK_GARA_PK_AMMINISTRATORE, Keys.GARA__FK_GARA_SOCIETA_PK, Keys.GARA__FK_GARA_PK_CAMPOGARA);
     }
 
     private transient Campionato _campionato;
@@ -221,7 +227,7 @@ public class Gara extends TableImpl<GaraRecord> {
      */
     public Societa societa() {
         if (_societa == null)
-            _societa = new Societa(this, Keys.GARA__FK_GARA_PK_SOCIETA);
+            _societa = new Societa(this, Keys.GARA__FK_GARA_SOCIETA_PK);
 
         return _societa;
     }
@@ -280,14 +286,14 @@ public class Gara extends TableImpl<GaraRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row16<String, Integer, String, String, Integer, Integer, String, String, String, LocalDate, String, String, String, String, String, String> fieldsRow() {
+    public Row16<Integer, Integer, String, String, Integer, Integer, String, String, String, LocalDate, String, String, String, String, String, Integer> fieldsRow() {
         return (Row16) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function16<? super String, ? super Integer, ? super String, ? super String, ? super Integer, ? super Integer, ? super String, ? super String, ? super String, ? super LocalDate, ? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function16<? super Integer, ? super Integer, ? super String, ? super String, ? super Integer, ? super Integer, ? super String, ? super String, ? super String, ? super LocalDate, ? super String, ? super String, ? super String, ? super String, ? super String, ? super Integer, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -295,7 +301,7 @@ public class Gara extends TableImpl<GaraRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function16<? super String, ? super Integer, ? super String, ? super String, ? super Integer, ? super Integer, ? super String, ? super String, ? super String, ? super LocalDate, ? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function16<? super Integer, ? super Integer, ? super String, ? super String, ? super Integer, ? super Integer, ? super String, ? super String, ? super String, ? super LocalDate, ? super String, ? super String, ? super String, ? super String, ? super String, ? super Integer, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

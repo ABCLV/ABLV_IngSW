@@ -55,22 +55,22 @@ public class Concorrente extends TableImpl<ConcorrenteRecord> {
     /**
      * The column <code>CONCORRENTE.CF</code>.
      */
-    public final TableField<ConcorrenteRecord, String> CF = createField(DSL.name("CF"), SQLDataType.VARCHAR(16).nullable(false), this, "");
+    public final TableField<ConcorrenteRecord, String> CF = createField(DSL.name("CF"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>CONCORRENTE.Nome</code>.
      */
-    public final TableField<ConcorrenteRecord, String> NOME = createField(DSL.name("Nome"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<ConcorrenteRecord, String> NOME = createField(DSL.name("Nome"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>CONCORRENTE.Cognome</code>.
      */
-    public final TableField<ConcorrenteRecord, String> COGNOME = createField(DSL.name("Cognome"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<ConcorrenteRecord, String> COGNOME = createField(DSL.name("Cognome"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>CONCORRENTE.Email</code>.
      */
-    public final TableField<ConcorrenteRecord, String> EMAIL = createField(DSL.name("Email"), SQLDataType.VARCHAR(100).nullable(false), this, "");
+    public final TableField<ConcorrenteRecord, String> EMAIL = createField(DSL.name("Email"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>CONCORRENTE.Nascita</code>.
@@ -80,12 +80,12 @@ public class Concorrente extends TableImpl<ConcorrenteRecord> {
     /**
      * The column <code>CONCORRENTE.Societa</code>.
      */
-    public final TableField<ConcorrenteRecord, String> SOCIETA = createField(DSL.name("Societa"), SQLDataType.VARCHAR(100).nullable(false), this, "");
+    public final TableField<ConcorrenteRecord, String> SOCIETA = createField(DSL.name("Societa"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>CONCORRENTE.password_hash</code>.
+     * The column <code>CONCORRENTE.Password_hash</code>.
      */
-    public final TableField<ConcorrenteRecord, String> PASSWORD_HASH = createField(DSL.name("password_hash"), SQLDataType.CLOB, this, "");
+    public final TableField<ConcorrenteRecord, String> PASSWORD_HASH = createField(DSL.name("Password_hash"), SQLDataType.CLOB.nullable(false), this, "");
 
     private Concorrente(Name alias, Table<ConcorrenteRecord> aliased) {
         this(alias, aliased, null);
@@ -132,7 +132,7 @@ public class Concorrente extends TableImpl<ConcorrenteRecord> {
 
     @Override
     public List<ForeignKey<ConcorrenteRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.CONCORRENTE__FK_CONCORRENTE_PK_SOCIETA);
+        return Arrays.asList(Keys.CONCORRENTE__FK_CONCORRENTE_SOCIETA_PK);
     }
 
     private transient Societa _societa;
@@ -142,7 +142,7 @@ public class Concorrente extends TableImpl<ConcorrenteRecord> {
      */
     public Societa societa() {
         if (_societa == null)
-            _societa = new Societa(this, Keys.CONCORRENTE__FK_CONCORRENTE_PK_SOCIETA);
+            _societa = new Societa(this, Keys.CONCORRENTE__FK_CONCORRENTE_SOCIETA_PK);
 
         return _societa;
     }

@@ -108,14 +108,14 @@ public class ConcorrenteRecord extends UpdatableRecordImpl<ConcorrenteRecord> im
     }
 
     /**
-     * Setter for <code>CONCORRENTE.password_hash</code>.
+     * Setter for <code>CONCORRENTE.Password_hash</code>.
      */
     public void setPasswordHash(String value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>CONCORRENTE.password_hash</code>.
+     * Getter for <code>CONCORRENTE.Password_hash</code>.
      */
     public String getPasswordHash() {
         return (String) get(6);

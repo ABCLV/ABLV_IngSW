@@ -120,13 +120,13 @@ public class ConcorrenteDAO {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-			Result<Record6<String, Integer, String, LocalDate, String, String>> rs = ctx
-					.select(GARA.CODICE, GARA.NUMPROVA, GARA.TECNICA, GARA.DATA, CAMPOGARA.ID, CAMPOGARA.DESCRIZIONE)
-					.from(GARA).join(ISCRIVE).on(GARA.CODICE.eq(ISCRIVE.CODICEGARA)).join(CAMPOGARA)
+			Result<Record6<Integer, Integer, String, LocalDate, Integer, String>> rs = ctx
+					.select(GARA.ID, GARA.NUMPROVA, GARA.TECNICA, GARA.DATA, CAMPOGARA.ID, CAMPOGARA.DESCRIZIONE)
+					.from(GARA).join(ISCRIVE).on(GARA.ID.eq(ISCRIVE.GARA)).join(CAMPOGARA)
 					.on(GARA.CAMPOGARA.eq(CAMPOGARA.ID)).where(ISCRIVE.CONCORRENTE.eq(cf)).fetch();
 
 			List<Gara> out = new ArrayList<>();
-			for (Record6<String, Integer, String, LocalDate, String, String> r : rs) {
+			for (Record6<Integer, Integer, String, LocalDate, Integer, String> r : rs) {
 				CampoGara campo = new CampoGara();
 				campo.setIdCampoGara(r.value5());
 				campo.setDescrizione(r.value6());

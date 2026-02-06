@@ -46,7 +46,7 @@ public class ConcorrenteHomeController {
 	@FXML private TableColumn<Gara, String> colCodice;
 	@FXML private TableColumn<Gara, String> colData;
 	@FXML private TableColumn<Gara, String> colTecnica;
-	@FXML private TableColumn<Gara, String> colCampo;
+	@FXML private TableColumn<Gara, Integer> colCampo;
 	
 	private final ObservableList<Gara> gareObs = FXCollections.observableArrayList();
 	
@@ -87,9 +87,11 @@ public class ConcorrenteHomeController {
 		colData.setCellValueFactory(new PropertyValueFactory<>("data"));
 		colTecnica.setCellValueFactory(
 		    cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTecnica().name()));
-		colCampo.setCellValueFactory(
-		    cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getCampoGara().getIdCampoGara()));
-		
+		colCampo.setCellValueFactory(cellData ->
+	    new javafx.beans.property.SimpleIntegerProperty(
+	            cellData.getValue().getCampoGara().getIdCampoGara()
+	        ).asObject()
+	    );
 		caricaDati();
 	}
 	

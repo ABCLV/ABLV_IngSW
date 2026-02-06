@@ -153,7 +153,7 @@ public class SelezionaGaraController {
         	System.out.println("ciao");
             punteggioService.assegnazioneGruppi(gara.getCodice(), assenti);
         } catch (Exception e) {
-            Alerter.showError("Errore durante l'appello");
+            System.out.println(("Errore durante l'appello " + e.getMessage()));
             return;
         }
         

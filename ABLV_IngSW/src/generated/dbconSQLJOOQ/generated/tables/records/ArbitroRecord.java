@@ -78,14 +78,14 @@ public class ArbitroRecord extends UpdatableRecordImpl<ArbitroRecord> implements
     }
 
     /**
-     * Setter for <code>ARBITRO.password_hash</code>.
+     * Setter for <code>ARBITRO.Password_hash</code>.
      */
     public void setPasswordHash(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>ARBITRO.password_hash</code>.
+     * Getter for <code>ARBITRO.Password_hash</code>.
      */
     public String getPasswordHash() {
         return (String) get(4);

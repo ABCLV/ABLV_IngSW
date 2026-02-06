@@ -103,6 +103,7 @@ public class RegistrazioneController {
 			String nome = v[1];
 			String cognome = v[2];
 			
+			/*
 			// Regex CF italiano: 6 lettere, 2 numeri, 1 lettera, 2 numeri, 1 lettera, 3 numeri, 1 lettera (case insensitive)
 			if (!cf.matches("^[A-Za-z]{6}[0-9]{2}[A-Za-z][0-9]{2}[A-Za-z][0-9]{3}[A-Za-z]$")) {
 				errLabel.setTextFill(Color.RED);
@@ -110,7 +111,7 @@ public class RegistrazioneController {
 				errLabel.setVisible(true);
 				return;
 			}
-			
+			*/
 			// Nome e Cognome: solo lettere e spazi (no numeri)
 			if (!nome.matches("^[A-Za-z\\s]+$") || !cognome.matches("^[A-Za-z\\s]+$")) {
 				errLabel.setTextFill(Color.RED);

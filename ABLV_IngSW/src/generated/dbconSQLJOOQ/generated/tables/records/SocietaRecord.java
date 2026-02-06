@@ -50,58 +50,58 @@ public class SocietaRecord extends UpdatableRecordImpl<SocietaRecord> implements
     }
 
     /**
-     * Setter for <code>SOCIETA.password_hash</code>.
-     */
-    public void setPasswordHash(String value) {
-        set(2, value);
-    }
-
-    /**
-     * Getter for <code>SOCIETA.password_hash</code>.
-     */
-    public String getPasswordHash() {
-        return (String) get(2);
-    }
-
-    /**
-     * Setter for <code>SOCIETA.CAP</code>.
-     */
-    public void setCap(String value) {
-        set(3, value);
-    }
-
-    /**
-     * Getter for <code>SOCIETA.CAP</code>.
-     */
-    public String getCap() {
-        return (String) get(3);
-    }
-
-    /**
-     * Setter for <code>SOCIETA.Citta</code>.
-     */
-    public void setCitta(String value) {
-        set(4, value);
-    }
-
-    /**
-     * Getter for <code>SOCIETA.Citta</code>.
-     */
-    public String getCitta() {
-        return (String) get(4);
-    }
-
-    /**
      * Setter for <code>SOCIETA.Indirizzo</code>.
      */
     public void setIndirizzo(String value) {
-        set(5, value);
+        set(2, value);
     }
 
     /**
      * Getter for <code>SOCIETA.Indirizzo</code>.
      */
     public String getIndirizzo() {
+        return (String) get(2);
+    }
+
+    /**
+     * Setter for <code>SOCIETA.Citta</code>.
+     */
+    public void setCitta(String value) {
+        set(3, value);
+    }
+
+    /**
+     * Getter for <code>SOCIETA.Citta</code>.
+     */
+    public String getCitta() {
+        return (String) get(3);
+    }
+
+    /**
+     * Setter for <code>SOCIETA.Cap</code>.
+     */
+    public void setCap(String value) {
+        set(4, value);
+    }
+
+    /**
+     * Getter for <code>SOCIETA.Cap</code>.
+     */
+    public String getCap() {
+        return (String) get(4);
+    }
+
+    /**
+     * Setter for <code>SOCIETA.Password_hash</code>.
+     */
+    public void setPasswordHash(String value) {
+        set(5, value);
+    }
+
+    /**
+     * Getter for <code>SOCIETA.Password_hash</code>.
+     */
+    public String getPasswordHash() {
         return (String) get(5);
     }
 
@@ -140,22 +140,22 @@ public class SocietaRecord extends UpdatableRecordImpl<SocietaRecord> implements
 
     @Override
     public Field<String> field3() {
-        return Societa.SOCIETA.PASSWORD_HASH;
+        return Societa.SOCIETA.INDIRIZZO;
     }
 
     @Override
     public Field<String> field4() {
-        return Societa.SOCIETA.CAP;
-    }
-
-    @Override
-    public Field<String> field5() {
         return Societa.SOCIETA.CITTA;
     }
 
     @Override
+    public Field<String> field5() {
+        return Societa.SOCIETA.CAP;
+    }
+
+    @Override
     public Field<String> field6() {
-        return Societa.SOCIETA.INDIRIZZO;
+        return Societa.SOCIETA.PASSWORD_HASH;
     }
 
     @Override
@@ -170,22 +170,22 @@ public class SocietaRecord extends UpdatableRecordImpl<SocietaRecord> implements
 
     @Override
     public String component3() {
-        return getPasswordHash();
+        return getIndirizzo();
     }
 
     @Override
     public String component4() {
-        return getCap();
-    }
-
-    @Override
-    public String component5() {
         return getCitta();
     }
 
     @Override
+    public String component5() {
+        return getCap();
+    }
+
+    @Override
     public String component6() {
-        return getIndirizzo();
+        return getPasswordHash();
     }
 
     @Override
@@ -200,22 +200,22 @@ public class SocietaRecord extends UpdatableRecordImpl<SocietaRecord> implements
 
     @Override
     public String value3() {
-        return getPasswordHash();
+        return getIndirizzo();
     }
 
     @Override
     public String value4() {
-        return getCap();
-    }
-
-    @Override
-    public String value5() {
         return getCitta();
     }
 
     @Override
+    public String value5() {
+        return getCap();
+    }
+
+    @Override
     public String value6() {
-        return getIndirizzo();
+        return getPasswordHash();
     }
 
     @Override
@@ -232,25 +232,25 @@ public class SocietaRecord extends UpdatableRecordImpl<SocietaRecord> implements
 
     @Override
     public SocietaRecord value3(String value) {
-        setPasswordHash(value);
+        setIndirizzo(value);
         return this;
     }
 
     @Override
     public SocietaRecord value4(String value) {
-        setCap(value);
-        return this;
-    }
-
-    @Override
-    public SocietaRecord value5(String value) {
         setCitta(value);
         return this;
     }
 
     @Override
+    public SocietaRecord value5(String value) {
+        setCap(value);
+        return this;
+    }
+
+    @Override
     public SocietaRecord value6(String value) {
-        setIndirizzo(value);
+        setPasswordHash(value);
         return this;
     }
 
@@ -279,15 +279,15 @@ public class SocietaRecord extends UpdatableRecordImpl<SocietaRecord> implements
     /**
      * Create a detached, initialised SocietaRecord
      */
-    public SocietaRecord(String nome, String email, String passwordHash, String cap, String citta, String indirizzo) {
+    public SocietaRecord(String nome, String email, String indirizzo, String citta, String cap, String passwordHash) {
         super(Societa.SOCIETA);
 
         setNome(nome);
         setEmail(email);
-        setPasswordHash(passwordHash);
-        setCap(cap);
-        setCitta(citta);
         setIndirizzo(indirizzo);
+        setCitta(citta);
+        setCap(cap);
+        setPasswordHash(passwordHash);
         resetChangedOnNotNull();
     }
 }
