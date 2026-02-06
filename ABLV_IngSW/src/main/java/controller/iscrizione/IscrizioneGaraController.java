@@ -119,7 +119,7 @@ public class IscrizioneGaraController {
     private void filtraGarePerConcorrente(String cf) {
         try {
             // Ottieni le gare a cui è già iscritto
-            List<String> gareIscritte = iscrizioneService.getCodiciGareIscrittoPerConcorrente(cf);
+            List<Integer> gareIscritte = iscrizioneService.getCodiciGareIscrittoPerConcorrente(cf);
             
             // Filtra le gare
             List<Gara> gareFiltrate = gareTotali.stream()

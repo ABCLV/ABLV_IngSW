@@ -5,7 +5,7 @@ package model;
  */
 public class Turno {
 
-	private String codiceTurno;
+	private int codiceTurno;
 	private Integer durata;
 	private Settore sett;
 	private Integer numero;
@@ -26,11 +26,11 @@ public class Turno {
 		this.numero = numero;
 	}
 
-	public String getCodiceTurno() {
+	public int getCodiceTurno() {
 		return codiceTurno;
 	}
 
-	public void setCodiceTurno(String codiceTurno) {
+	public void setCodiceTurno(int codiceTurno) {
 		this.codiceTurno = codiceTurno;
 	}
 
@@ -50,7 +50,7 @@ public class Turno {
 	 * @param codiceTurno identificativo del turno
 	 * @param durata      durata espressa in formato "HH:mm" o testo descrittivo
 	 */
-	public Turno(String codiceTurno, Integer durata, Settore sett, int numero) {
+	public Turno(int codiceTurno, Integer durata, Settore sett, int numero) {
 	    this.codiceTurno = codiceTurno;
 	    this.durata = durata;
 	    this.sett = sett;
