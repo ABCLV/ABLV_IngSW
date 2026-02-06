@@ -255,17 +255,22 @@ public class IscrizioneGaraController {
         
         if(selected != null) {
             String text = selected.toString();
-            int cod = Integer.parseInt(text.split(",")[0].trim());
+            String firstField = text.split(",")[0].trim();
             
-            for (Gara g : gareList) {
-                if (g.getCodice() == cod) {
-                    return g;
+            if (!firstField.isEmpty()) {
+                int cod = Integer.parseInt(firstField);
+                
+                for (Gara g : gareList) {
+                    if (g.getCodice() == cod) {
+                        return g;
+                    }
                 }
             }
         }
         
         return null;
     }
+
     
     private Concorrente getSelectedConcorrente() {
         Object selected = concorrenteComboBox.getValue();

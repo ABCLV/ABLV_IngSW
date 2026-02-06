@@ -52,9 +52,6 @@ public class DefinizioneTurni {
 
     @FXML
     private void terminaInserimento() {
-        // salva ultimo valore se vuoi includerlo automaticamente
-        int durata = durataSpinner.getValue();
-        durateTurni.add(durata);
 
         System.out.println("Durate turni inserite:");
         for (int i = 0; i < durateTurni.size(); i++) {
