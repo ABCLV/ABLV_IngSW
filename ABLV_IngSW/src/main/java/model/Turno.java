@@ -14,6 +14,17 @@ public class Turno {
 		return durata;
 	}
 
+	
+	@Override
+	public String toString() {
+	    return "Turno{" +
+	            "codiceTurno=" + codiceTurno +
+	            ", numero=" + numero +
+	            ", durata=" + durata + " min" +
+	            ", settore=" + (sett != null ? sett.toString() : "null") +
+	            '}';
+	}
+
 	public void setDurata(Integer durata) {
 		this.durata = durata;
 	}

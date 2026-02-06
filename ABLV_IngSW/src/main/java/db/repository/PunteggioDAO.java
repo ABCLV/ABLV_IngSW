@@ -29,12 +29,6 @@ import model.Turno;
 public class PunteggioDAO {
 	public PunteggioDAO() {}
 	
-	private int nextIdPunteggio(int last) {
-	    return last + 1;
-	}
-
-	
-
 	
 	public void definizioneGruppi(int codiceGara, List<Concorrente> assenti) {
 
@@ -61,7 +55,7 @@ public class PunteggioDAO {
 	               .fetchInto(Concorrente.class);
 
 	        
-	       
+	       System.out.println("presenti: " + presenti.toString());
 	        
 	        /* ===============================
 	           3️⃣ Turni della gara
@@ -128,19 +122,21 @@ public class PunteggioDAO {
 
 
 	                ctx.insertInto(PARTECIPA)
-	                .set(PARTECIPA.ID, t.getCodiceTurno())
 	                .set(PARTECIPA.CONCORRENTE, c.getCf())
 	                .set(PARTECIPA.NUMPUNTI, 0)
+	                .set(PARTECIPA.TURNO,t.getCodiceTurno())
+	                .set(PARTECIPA.SQUALIFICA,false)
 	                .execute();
 
 	            }
 	        }
 		
 	    } catch (SQLException e) {
-	        throw new GaraEccezione(
-	                "Errore nella definizione dei gruppi per la gara " + codiceGara,
-	                e
-	        );
+	    	throw new GaraEccezione(
+	    		    "Errore nella definizione dei gruppi per la gara " + codiceGara + ": " + e.getMessage(),
+	    		    e
+	    		);
+
 	    }
 	}
 
