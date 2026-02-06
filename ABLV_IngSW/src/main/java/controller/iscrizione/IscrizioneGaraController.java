@@ -223,11 +223,11 @@ public class IscrizioneGaraController {
     }
 
     private void mostraDettagliGara(Gara gara) {
-        lblCodiceGara.setText(gara.getCodice());
+    	lblCodiceGara.setText(String.valueOf(gara.getCodice()));
         lblData.setText(gara.getData() != null ? gara.getData().toString() : "N/A");
         lblTecnica.setText(gara.getTecnica() != null ? gara.getTecnica().toString() : "N/A");
         lblTipoGara.setText(gara.getTipoGara() != null ? gara.getTipoGara().toString() : "N/A");
-        lblCampoGara.setText(gara.getCampoGara() != null ? gara.getCampoGara().getIdCampoGara() : "N/A");
+        lblCampoGara.setText(String.valueOf(gara.getCampoGara() != null ? gara.getCampoGara().getIdCampoGara() : "N/A"));
         lblCriterioPunti.setText(gara.getCriterioPunti() != null ? gara.getCriterioPunti().toString() : "N/A");
         lblStatoGara.setText(gara.getStatoGara() != null ? gara.getStatoGara().toString() : "N/A");
         
@@ -255,10 +255,10 @@ public class IscrizioneGaraController {
         
         if(selected != null) {
             String text = selected.toString();
-            String cod = text.split(",")[0].trim();
+            int cod = Integer.parseInt(text.split(",")[0].trim());
             
             for (Gara g : gareList) {
-                if (g.getCodice().equals(cod)) {
+                if (g.getCodice() == cod) {
                     return g;
                 }
             }

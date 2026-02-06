@@ -64,7 +64,7 @@ public class TurnoDAO {
 		}
 	}
 	
-	public boolean eliminaTurniPerGara(String codiceGara) throws GaraEccezione {
+	public boolean eliminaTurniPerGara(int codiceGara) throws GaraEccezione {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);

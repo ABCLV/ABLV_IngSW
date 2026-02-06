@@ -60,11 +60,6 @@ public class Societa extends TableImpl<SocietaRecord> {
     public final TableField<SocietaRecord, String> EMAIL = createField(DSL.name("Email"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>SOCIETA.Sede</code>.
-     */
-    public final TableField<SocietaRecord, Integer> SEDE = createField(DSL.name("Sede"), SQLDataType.INTEGER.nullable(false), this, "");
-
-    /**
      * The column <code>SOCIETA.Indirizzo</code>.
      */
     public final TableField<SocietaRecord, String> INDIRIZZO = createField(DSL.name("Indirizzo"), SQLDataType.CLOB.nullable(false), this, "");
@@ -78,6 +73,11 @@ public class Societa extends TableImpl<SocietaRecord> {
      * The column <code>SOCIETA.Cap</code>.
      */
     public final TableField<SocietaRecord, String> CAP = createField(DSL.name("Cap"), SQLDataType.CLOB.nullable(false), this, "");
+
+    /**
+     * The column <code>SOCIETA.Password_hash</code>.
+     */
+    public final TableField<SocietaRecord, String> PASSWORD_HASH = createField(DSL.name("Password_hash"), SQLDataType.CLOB.nullable(false), this, "");
 
     private Societa(Name alias, Table<SocietaRecord> aliased) {
         this(alias, aliased, null);
@@ -119,7 +119,7 @@ public class Societa extends TableImpl<SocietaRecord> {
 
     @Override
     public UniqueKey<SocietaRecord> getPrimaryKey() {
-        return Keys.SOCIETA__PK_SOCIETA;
+        return Keys.SOCIETA__SOCIETA_PK;
     }
 
     @Override
@@ -166,14 +166,14 @@ public class Societa extends TableImpl<SocietaRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row6<String, String, Integer, String, String, String> fieldsRow() {
+    public Row6<String, String, String, String, String, String> fieldsRow() {
         return (Row6) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function6<? super String, ? super String, ? super Integer, ? super String, ? super String, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function6<? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -181,7 +181,7 @@ public class Societa extends TableImpl<SocietaRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function6<? super String, ? super String, ? super Integer, ? super String, ? super String, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function6<? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

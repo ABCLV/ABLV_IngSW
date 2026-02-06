@@ -190,11 +190,11 @@ public class GaraDAO {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-			ctx.insertInto(GARA, GARA.CODICE, GARA.NUMPROVA, GARA.TECNICA, GARA.CRITERIOPUNTI, GARA.MINPERSONE,
+			ctx.insertInto(GARA, GARA.NUMPROVA, GARA.TECNICA, GARA.CRITERIOPUNTI, GARA.MINPERSONE,
 					GARA.MAXPERSONE, GARA.STATOGARA, GARA.STATOCONFERMA, GARA.TIPOGARA, GARA.DATA, GARA.CAMPIONATO,
 					GARA.ARBITRO, GARA.AMMINISTRATOREPROPOSTA, GARA.AMMINISTRATOREACCETTAZIONE, GARA.SOCIETA,
 					GARA.CAMPOGARA)
-					.values(gara.getCodice(), gara.getNumProva(), gara.getTecnica().name(),
+					.values(gara.getNumProva(), gara.getTecnica().name(),
 							gara.getCriterioPunti().name(), gara.getMinPersone(), gara.getMaxPersone(),
 							gara.getStatoGara().name(), gara.getStatoConferma().name(), gara.getTipoGara().name(),
 							gara.getData(), gara.getCampionato() != null ? gara.getCampionato().getTitolo() : null,
@@ -217,7 +217,7 @@ public class GaraDAO {
 		}
 	}
 
-	public String getUltimoCodiceGara() throws GaraEccezione {
+	public int getUltimoCodiceGara() throws GaraEccezione {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
@@ -225,12 +225,12 @@ public class GaraDAO {
 	        return ctx
 	            .select(
 	                DSL.coalesce(
-	                    DSL.max(GARA.CODICE),
-	                    "G000"
+	                    DSL.max(GARA.ID),
+	                    0
 	                )
 	            )
 	            .from(GARA)
-	            .fetchOneInto(String.class);
+	            .fetchOneInto(Integer.class);
 
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -313,13 +313,13 @@ public class GaraDAO {
 		}
 	}
 
-	public boolean accettaGara(String codice, String amm) throws GaraEccezione {
+	public boolean accettaGara(int codice, String amm) throws GaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
 			int rowsAffected = ctx.update(GARA).set(GARA.STATOCONFERMA, StatoConferma.CONFERMATA.name())
 					.set(GARA.AMMINISTRATOREACCETTAZIONE, amm)
-					.where(GARA.CODICE.eq(codice).and(GARA.STATOCONFERMA.eq(StatoConferma.IN_ATTESA.name()))
+					.where(GARA.ID.eq(codice).and(GARA.STATOCONFERMA.eq(StatoConferma.IN_ATTESA.name()))
 							.and(GARA.AMMINISTRATOREACCETTAZIONE.isNull()) // Solo se non è già stata accettata
 							.and(GARA.AMMINISTRATOREPROPOSTA.notEqual(amm).or(GARA.AMMINISTRATOREPROPOSTA.isNull()))) // Non può accettare se stesso
 					.execute();
@@ -334,13 +334,13 @@ public class GaraDAO {
 		}
 	}
 
-	public boolean rifiutaGara(String codice, String amm) throws GaraEccezione {
+	public boolean rifiutaGara(int codice, String amm) throws GaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
 			int rowsAffected = ctx.update(GARA).set(GARA.STATOCONFERMA, StatoConferma.ANNULLATA.name())
 					.set(GARA.AMMINISTRATOREACCETTAZIONE, amm)
-					.where(GARA.CODICE.eq(codice).and(GARA.STATOCONFERMA.eq(StatoConferma.IN_ATTESA.name()))
+					.where(GARA.ID.eq(codice).and(GARA.STATOCONFERMA.eq(StatoConferma.IN_ATTESA.name()))
 							.and(GARA.AMMINISTRATOREACCETTAZIONE.isNull()) // Solo se non è già stata rifiutata
 							.and(GARA.AMMINISTRATOREPROPOSTA.notEqual(amm).or(GARA.AMMINISTRATOREPROPOSTA.isNull())))
 					.execute();

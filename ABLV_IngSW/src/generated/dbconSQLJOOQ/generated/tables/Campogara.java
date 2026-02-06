@@ -12,12 +12,12 @@ import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Function4;
+import org.jooq.Function5;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Records;
-import org.jooq.Row4;
+import org.jooq.Row5;
 import org.jooq.Schema;
 import org.jooq.SelectField;
 import org.jooq.Table;
@@ -69,6 +69,11 @@ public class Campogara extends TableImpl<CampogaraRecord> {
      * The column <code>CAMPOGARA.Lunghezza</code>.
      */
     public final TableField<CampogaraRecord, Integer> LUNGHEZZA = createField(DSL.name("Lunghezza"), SQLDataType.INTEGER, this, "");
+
+    /**
+     * The column <code>CAMPOGARA.Descrizione</code>.
+     */
+    public final TableField<CampogaraRecord, String> DESCRIZIONE = createField(DSL.name("Descrizione"), SQLDataType.CLOB, this, "");
 
     private Campogara(Name alias, Table<CampogaraRecord> aliased) {
         this(alias, aliased, null);
@@ -158,18 +163,18 @@ public class Campogara extends TableImpl<CampogaraRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row4 type methods
+    // Row5 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row4<Integer, String, String, Integer> fieldsRow() {
-        return (Row4) super.fieldsRow();
+    public Row5<Integer, String, String, Integer, String> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function4<? super Integer, ? super String, ? super String, ? super Integer, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function5<? super Integer, ? super String, ? super String, ? super Integer, ? super String, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -177,7 +182,7 @@ public class Campogara extends TableImpl<CampogaraRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function4<? super Integer, ? super String, ? super String, ? super Integer, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function5<? super Integer, ? super String, ? super String, ? super Integer, ? super String, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

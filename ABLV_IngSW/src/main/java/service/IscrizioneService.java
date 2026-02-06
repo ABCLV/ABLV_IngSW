@@ -24,7 +24,7 @@ public class IscrizioneService {
 		this.iscrizioneDAO = new IscrizioneDAO();
 	}
 	
-	public void iscriviConcorrenteAGara(String cf, String codiceGara) throws IscrizioneEccezione {
+	public void iscriviConcorrenteAGara(String cf, int codiceGara) throws IscrizioneEccezione {
 	    try {
 	    	if (this.iscrizioneDAO.esisteIscrizione(cf, codiceGara)) {
 	            throw new Exception("Il concorrente è già iscritto a questa gara!");

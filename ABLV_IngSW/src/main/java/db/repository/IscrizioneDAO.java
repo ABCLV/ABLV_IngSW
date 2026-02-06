@@ -100,14 +100,14 @@ public class IscrizioneDAO {
 	    }
 	}
 	
-	public boolean esisteIscrizione(String cf, String codiceGara) throws IscrizioneEccezioneDB {
+	public boolean esisteIscrizione(String cf, int codiceGara) throws IscrizioneEccezioneDB {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 	        
 	        Integer count = ctx.selectCount()
 	            .from(ISCRIVE)
 	            .where(ISCRIVE.CONCORRENTE.eq(cf)
-	                .and(ISCRIVE.CODICEGARA.eq(codiceGara)))
+	                .and(ISCRIVE.GARA.eq(codiceGara)))
 	            .fetchOne(0, Integer.class);
 	        
 	        return count != null && count > 0;

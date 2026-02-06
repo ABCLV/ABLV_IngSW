@@ -183,7 +183,7 @@ public class Gara extends TableImpl<GaraRecord> {
 
     @Override
     public List<ForeignKey<GaraRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.GARA__FK_GARA_PK_CAMPIONATO, Keys.GARA__FK_GARA_PK_ARBITRO, Keys.GARA__FK_GARA_PK_AMMINISTRATORE, Keys.GARA__FK_GARA_PK_SOCIETA, Keys.GARA__FK_GARA_PK_CAMPOGARA);
+        return Arrays.asList(Keys.GARA__FK_GARA_PK_CAMPIONATO, Keys.GARA__FK_GARA_PK_ARBITRO, Keys.GARA__FK_GARA_PK_AMMINISTRATORE, Keys.GARA__FK_GARA_SOCIETA_PK, Keys.GARA__FK_GARA_PK_CAMPOGARA);
     }
 
     private transient Campionato _campionato;
@@ -227,7 +227,7 @@ public class Gara extends TableImpl<GaraRecord> {
      */
     public Societa societa() {
         if (_societa == null)
-            _societa = new Societa(this, Keys.GARA__FK_GARA_PK_SOCIETA);
+            _societa = new Societa(this, Keys.GARA__FK_GARA_SOCIETA_PK);
 
         return _societa;
     }
