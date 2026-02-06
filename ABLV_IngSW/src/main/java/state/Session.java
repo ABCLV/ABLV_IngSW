@@ -23,13 +23,7 @@ public final class Session {
 		userType = type;
 	}
 
-	public static int getCodiceGara() {
-		return codiceGara;
-	}
-
-	public static void setCodiceGara(int codiceGara) {
-		Session.codiceGara = codiceGara;
-	};
+	
 	
 	
 	

@@ -164,8 +164,7 @@ public class ProponiGaraService {
             }
             
             int ultimoCodice = this.getUltimoCodiceGara();
-            int numero = ultimoCodice++;
-            
+            System.out.println("ultimo codice: " + ultimoCodice);
 
             Gara g = new Gara();
             g.setNumProva(numProva);
@@ -184,7 +183,7 @@ public class ProponiGaraService {
             
 			this.garaDAO.insertGara(g);
 			
-			Session.setCodiceGara(numero);
+			
 		} catch(Exception e) {
 			throw new PropostaEccezione(e.getMessage(), e);
 		}

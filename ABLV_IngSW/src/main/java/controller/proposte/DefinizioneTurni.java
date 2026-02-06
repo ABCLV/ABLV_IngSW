@@ -7,6 +7,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import service.ProponiGaraService;
 import service.SalvataggioTurniService;
 import state.Session;
 
@@ -27,7 +28,8 @@ public class DefinizioneTurni {
     private int numeroTurno = 1;
     private final List<Integer> durateTurni = new ArrayList<>();
     private SalvataggioTurniService settTurni;
-
+    private ProponiGaraService garaproposta;
+    
     @FXML
     public void initialize() {
         durataSpinner.setValueFactory(
@@ -55,12 +57,11 @@ public class DefinizioneTurni {
 
         System.out.println("Durate turni inserite:");
         for (int i = 0; i < durateTurni.size(); i++) {
-            System.out.println("Turno " + (i + 1) + ": " + durateTurni.get(i) + " min");
+            //System.out.println("Turno " + (i + 1) + ": " + durateTurni.get(i) + " min");
         }
-        
+        garaproposta = new ProponiGaraService();
         settTurni = new SalvataggioTurniService();
-       
-        settTurni.insertTurni(durateTurni, Session.getCodiceGara());
+        settTurni.insertTurni(durateTurni, garaproposta.getUltimoCodiceGara());
         
         chiudi();
     }

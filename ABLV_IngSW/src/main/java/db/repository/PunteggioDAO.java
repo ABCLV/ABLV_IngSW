@@ -86,8 +86,8 @@ public class PunteggioDAO {
 	        	           t.setSett(s);
 	        	           return t;
 	        	       });
-
-
+	        System.out.println("codice gara:" + codiceGara);
+	        System.out.println("turni: " + turni.toString());
 	        /* ===============================
 	           4️⃣ Settori disponibili
 	           =============================== */
