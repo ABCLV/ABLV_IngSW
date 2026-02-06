@@ -20,13 +20,13 @@ public class IscrizioneDAO {
 
 	public IscrizioneDAO() {}
 	
-	public Integer getUltimoNumeroIscrizione(String codiceGara) throws IscrizioneEccezioneDB {
+	public Integer getUltimoNumeroIscrizione(int codiceGara) throws IscrizioneEccezioneDB {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
 	        return ctx.select(DSL.max(ISCRIVE.NUMISCRIZIONE))
 	            .from(ISCRIVE)
-	            .where(ISCRIVE.CODICEGARA.eq(codiceGara))
+	            .where(ISCRIVE.GARA.eq(codiceGara))
 	            .fetchOne(0, Integer.class);
 
 	    } catch(SQLException e) {
@@ -64,13 +64,12 @@ public class IscrizioneDAO {
 	
 
 
-	public void inserisciIscrizione(Integer codiceIscrizione,String cf, String codiceGara, LocalDate dataIscrizione, Integer numIscrizione) throws IscrizioneEccezioneDB {
+	public void inserisciIscrizione(String cf, int codiceGara, LocalDate dataIscrizione, Integer numIscrizione) throws IscrizioneEccezioneDB {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
 	        ctx.insertInto(ISCRIVE)
-	        		.set(ISCRIVE.IDISCRIZIONE, codiceIscrizione)
-	                .set(ISCRIVE.CODICEGARA, codiceGara) 
+	                .set(ISCRIVE.GARA, codiceGara) 
 	                .set(ISCRIVE.CONCORRENTE, cf)
 	                .set(ISCRIVE.DATAISCRIZIONE, dataIscrizione)
 	                .set(ISCRIVE.NUMISCRIZIONE, numIscrizione)
