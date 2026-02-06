@@ -22,7 +22,7 @@ public class RicercaGareController {
 
     @FXML private TableView<Gara> table;
     @FXML private TableColumn<Gara, String> dataCol;
-    @FXML private TableColumn<Gara, String> codiceCol;
+    @FXML private TableColumn<Gara, Integer> codiceCol;
     @FXML private TableColumn<Gara, String> numProvaCol;
     @FXML private TableColumn<Gara, String> tipoGaraCol;
     @FXML private TableColumn<Gara, String> tecnicaCol;
@@ -35,9 +35,10 @@ public class RicercaGareController {
     private void initialize() {
     	try {
     		// Codice
-            codiceCol.setCellValueFactory(c -> 
-                new SimpleStringProperty(c.getValue().getCodice())
-            );
+            codiceCol.setCellValueFactory(cellData ->
+            new javafx.beans.property.SimpleIntegerProperty(
+                    cellData.getValue().getCodice()
+                ).asObject());
             // Numero prova
             numProvaCol.setCellValueFactory(c -> 
                 new SimpleStringProperty(String.valueOf(c.getValue().getNumProva()))

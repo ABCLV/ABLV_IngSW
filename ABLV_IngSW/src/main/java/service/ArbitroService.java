@@ -62,7 +62,7 @@ public class ArbitroService {
 		}
 	}
 	
-	public int assegnaArbitroAGara(String codiceGara, String arb) {
+	public int assegnaArbitroAGara(int codiceGara, String arb) {
 		return this.arbitroDAO.assegnaArbitroAGara(codiceGara, arb);
 	}
 	
@@ -70,7 +70,7 @@ public class ArbitroService {
 		this.arbitroDAO.aggiornaDataGara(codiceGara, data);
 	}
 	
-	public int rimuoviArbitroDaGara(String codiceGara, String arb) {
+	public int rimuoviArbitroDaGara(int codiceGara, String arb) {
 		return this.arbitroDAO.disiscriviArbitro(codiceGara, arb);
 	}
 	

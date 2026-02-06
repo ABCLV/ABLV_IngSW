@@ -27,7 +27,7 @@ public class RicercaCampoGaraController {
     @FXML private TableColumn<Settore, String> idSettoreCol;
     @FXML private TableColumn<Settore, String> nomeSettoreCol;
     @FXML private TableView<Gara> gareTable;
-    @FXML private TableColumn<Gara, String> idGaraCol;
+    @FXML private TableColumn<Gara, Integer> idGaraCol;
     @FXML private TableColumn<Gara, String> nomeGaraCol;
     @FXML private Button backBtn;
 
@@ -51,8 +51,9 @@ public class RicercaCampoGaraController {
 
         // --- Colonne Gare ---
         idGaraCol.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getCodice())
-        );
+        new javafx.beans.property.SimpleIntegerProperty(
+                cellData.getValue().getCodice()
+            ).asObject());
 
         nomeGaraCol.setCellValueFactory(cellData ->
                 new SimpleStringProperty(
