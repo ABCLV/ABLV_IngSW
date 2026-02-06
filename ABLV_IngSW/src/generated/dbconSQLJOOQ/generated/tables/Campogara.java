@@ -12,11 +12,12 @@ import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Function5;
+import org.jooq.Function4;
+import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Records;
-import org.jooq.Row5;
+import org.jooq.Row4;
 import org.jooq.Schema;
 import org.jooq.SelectField;
 import org.jooq.Table;
@@ -52,27 +53,22 @@ public class Campogara extends TableImpl<CampogaraRecord> {
     /**
      * The column <code>CAMPOGARA.ID</code>.
      */
-    public final TableField<CampogaraRecord, String> ID = createField(DSL.name("ID"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<CampogaraRecord, Integer> ID = createField(DSL.name("ID"), SQLDataType.INTEGER.identity(true), this, "");
 
     /**
      * The column <code>CAMPOGARA.Paese</code>.
      */
-    public final TableField<CampogaraRecord, String> PAESE = createField(DSL.name("Paese"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<CampogaraRecord, String> PAESE = createField(DSL.name("Paese"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>CAMPOGARA.CorpoIdrico</code>.
      */
-    public final TableField<CampogaraRecord, String> CORPOIDRICO = createField(DSL.name("CorpoIdrico"), SQLDataType.VARCHAR(100).nullable(false), this, "");
+    public final TableField<CampogaraRecord, String> CORPOIDRICO = createField(DSL.name("CorpoIdrico"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>CAMPOGARA.Lunghezza</code>.
      */
     public final TableField<CampogaraRecord, Integer> LUNGHEZZA = createField(DSL.name("Lunghezza"), SQLDataType.INTEGER, this, "");
-
-    /**
-     * The column <code>CAMPOGARA.Descrizione</code>.
-     */
-    public final TableField<CampogaraRecord, String> DESCRIZIONE = createField(DSL.name("Descrizione"), SQLDataType.VARCHAR(1000), this, "");
 
     private Campogara(Name alias, Table<CampogaraRecord> aliased) {
         this(alias, aliased, null);
@@ -110,6 +106,11 @@ public class Campogara extends TableImpl<CampogaraRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
+    }
+
+    @Override
+    public Identity<CampogaraRecord, Integer> getIdentity() {
+        return (Identity<CampogaraRecord, Integer>) super.getIdentity();
     }
 
     @Override
@@ -157,18 +158,18 @@ public class Campogara extends TableImpl<CampogaraRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row5 type methods
+    // Row4 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<String, String, String, Integer, String> fieldsRow() {
-        return (Row5) super.fieldsRow();
+    public Row4<Integer, String, String, Integer> fieldsRow() {
+        return (Row4) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function5<? super String, ? super String, ? super String, ? super Integer, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function4<? super Integer, ? super String, ? super String, ? super Integer, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -176,7 +177,7 @@ public class Campogara extends TableImpl<CampogaraRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function5<? super String, ? super String, ? super String, ? super Integer, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function4<? super Integer, ? super String, ? super String, ? super Integer, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

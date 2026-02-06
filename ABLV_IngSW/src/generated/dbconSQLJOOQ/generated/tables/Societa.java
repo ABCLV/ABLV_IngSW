@@ -57,27 +57,27 @@ public class Societa extends TableImpl<SocietaRecord> {
     /**
      * The column <code>SOCIETA.Email</code>.
      */
-    public final TableField<SocietaRecord, String> EMAIL = createField(DSL.name("Email"), SQLDataType.CLOB, this, "");
+    public final TableField<SocietaRecord, String> EMAIL = createField(DSL.name("Email"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>SOCIETA.password_hash</code>.
+     * The column <code>SOCIETA.Sede</code>.
      */
-    public final TableField<SocietaRecord, String> PASSWORD_HASH = createField(DSL.name("password_hash"), SQLDataType.CLOB, this, "");
-
-    /**
-     * The column <code>SOCIETA.CAP</code>.
-     */
-    public final TableField<SocietaRecord, String> CAP = createField(DSL.name("CAP"), SQLDataType.CLOB, this, "");
-
-    /**
-     * The column <code>SOCIETA.Citta</code>.
-     */
-    public final TableField<SocietaRecord, String> CITTA = createField(DSL.name("Citta"), SQLDataType.CLOB, this, "");
+    public final TableField<SocietaRecord, Integer> SEDE = createField(DSL.name("Sede"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>SOCIETA.Indirizzo</code>.
      */
-    public final TableField<SocietaRecord, String> INDIRIZZO = createField(DSL.name("Indirizzo"), SQLDataType.CLOB, this, "");
+    public final TableField<SocietaRecord, String> INDIRIZZO = createField(DSL.name("Indirizzo"), SQLDataType.CLOB.nullable(false), this, "");
+
+    /**
+     * The column <code>SOCIETA.Citta</code>.
+     */
+    public final TableField<SocietaRecord, String> CITTA = createField(DSL.name("Citta"), SQLDataType.CLOB.nullable(false), this, "");
+
+    /**
+     * The column <code>SOCIETA.Cap</code>.
+     */
+    public final TableField<SocietaRecord, String> CAP = createField(DSL.name("Cap"), SQLDataType.CLOB.nullable(false), this, "");
 
     private Societa(Name alias, Table<SocietaRecord> aliased) {
         this(alias, aliased, null);
@@ -166,14 +166,14 @@ public class Societa extends TableImpl<SocietaRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row6<String, String, String, String, String, String> fieldsRow() {
+    public Row6<String, String, Integer, String, String, String> fieldsRow() {
         return (Row6) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function6<? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function6<? super String, ? super String, ? super Integer, ? super String, ? super String, ? super String, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -181,7 +181,7 @@ public class Societa extends TableImpl<SocietaRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function6<? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function6<? super String, ? super String, ? super Integer, ? super String, ? super String, ? super String, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

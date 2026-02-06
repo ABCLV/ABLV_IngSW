@@ -12,11 +12,11 @@ import java.util.function.Function;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Function5;
+import org.jooq.Function4;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Records;
-import org.jooq.Row5;
+import org.jooq.Row4;
 import org.jooq.Schema;
 import org.jooq.SelectField;
 import org.jooq.Table;
@@ -52,27 +52,22 @@ public class Arbitro extends TableImpl<ArbitroRecord> {
     /**
      * The column <code>ARBITRO.CF</code>.
      */
-    public final TableField<ArbitroRecord, String> CF = createField(DSL.name("CF"), SQLDataType.VARCHAR(16).nullable(false), this, "");
+    public final TableField<ArbitroRecord, String> CF = createField(DSL.name("CF"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>ARBITRO.Nome</code>.
      */
-    public final TableField<ArbitroRecord, String> NOME = createField(DSL.name("Nome"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<ArbitroRecord, String> NOME = createField(DSL.name("Nome"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>ARBITRO.Cognome</code>.
      */
-    public final TableField<ArbitroRecord, String> COGNOME = createField(DSL.name("Cognome"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<ArbitroRecord, String> COGNOME = createField(DSL.name("Cognome"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>ARBITRO.Sezione</code>.
      */
-    public final TableField<ArbitroRecord, String> SEZIONE = createField(DSL.name("Sezione"), SQLDataType.VARCHAR(50), this, "");
-
-    /**
-     * The column <code>ARBITRO.password_hash</code>.
-     */
-    public final TableField<ArbitroRecord, String> PASSWORD_HASH = createField(DSL.name("password_hash"), SQLDataType.VARCHAR(255), this, "");
+    public final TableField<ArbitroRecord, String> SEZIONE = createField(DSL.name("Sezione"), SQLDataType.CLOB, this, "");
 
     private Arbitro(Name alias, Table<ArbitroRecord> aliased) {
         this(alias, aliased, null);
@@ -157,18 +152,18 @@ public class Arbitro extends TableImpl<ArbitroRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row5 type methods
+    // Row4 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<String, String, String, String, String> fieldsRow() {
-        return (Row5) super.fieldsRow();
+    public Row4<String, String, String, String> fieldsRow() {
+        return (Row4) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function5<? super String, ? super String, ? super String, ? super String, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function4<? super String, ? super String, ? super String, ? super String, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -176,7 +171,7 @@ public class Arbitro extends TableImpl<ArbitroRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function5<? super String, ? super String, ? super String, ? super String, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function4<? super String, ? super String, ? super String, ? super String, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

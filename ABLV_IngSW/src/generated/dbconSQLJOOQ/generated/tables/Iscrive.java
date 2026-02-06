@@ -16,6 +16,7 @@ import java.util.function.Function;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function5;
+import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Records;
@@ -53,19 +54,19 @@ public class Iscrive extends TableImpl<IscriveRecord> {
     }
 
     /**
-     * The column <code>ISCRIVE.IdIscrizione</code>.
+     * The column <code>ISCRIVE.ID</code>.
      */
-    public final TableField<IscriveRecord, Integer> IDISCRIZIONE = createField(DSL.name("IdIscrizione"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<IscriveRecord, Integer> ID = createField(DSL.name("ID"), SQLDataType.INTEGER.identity(true), this, "");
 
     /**
-     * The column <code>ISCRIVE.CodiceGara</code>.
+     * The column <code>ISCRIVE.Gara</code>.
      */
-    public final TableField<IscriveRecord, String> CODICEGARA = createField(DSL.name("CodiceGara"), SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<IscriveRecord, Integer> GARA = createField(DSL.name("Gara"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>ISCRIVE.Concorrente</code>.
      */
-    public final TableField<IscriveRecord, String> CONCORRENTE = createField(DSL.name("Concorrente"), SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<IscriveRecord, String> CONCORRENTE = createField(DSL.name("Concorrente"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>ISCRIVE.DataIscrizione</code>.
@@ -116,13 +117,18 @@ public class Iscrive extends TableImpl<IscriveRecord> {
     }
 
     @Override
+    public Identity<IscriveRecord, Integer> getIdentity() {
+        return (Identity<IscriveRecord, Integer>) super.getIdentity();
+    }
+
+    @Override
     public UniqueKey<IscriveRecord> getPrimaryKey() {
-        return Keys.ISCRIVE__ISCRIVE_PK;
+        return Keys.ISCRIVE__PK_ISCRIVE;
     }
 
     @Override
     public List<ForeignKey<IscriveRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.ISCRIVE__FK_ISCRIVE_GARA_2, Keys.ISCRIVE__FK_ISCRIVE_CONCORRENTE);
+        return Arrays.asList(Keys.ISCRIVE__FK_ISCRIVE_PK_GARA, Keys.ISCRIVE__FK_ISCRIVE_PK_CONCORRENTE);
     }
 
     private transient Gara _gara;
@@ -133,7 +139,7 @@ public class Iscrive extends TableImpl<IscriveRecord> {
      */
     public Gara gara() {
         if (_gara == null)
-            _gara = new Gara(this, Keys.ISCRIVE__FK_ISCRIVE_GARA_2);
+            _gara = new Gara(this, Keys.ISCRIVE__FK_ISCRIVE_PK_GARA);
 
         return _gara;
     }
@@ -143,7 +149,7 @@ public class Iscrive extends TableImpl<IscriveRecord> {
      */
     public Concorrente concorrente() {
         if (_concorrente == null)
-            _concorrente = new Concorrente(this, Keys.ISCRIVE__FK_ISCRIVE_CONCORRENTE);
+            _concorrente = new Concorrente(this, Keys.ISCRIVE__FK_ISCRIVE_PK_CONCORRENTE);
 
         return _concorrente;
     }
@@ -192,14 +198,14 @@ public class Iscrive extends TableImpl<IscriveRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<Integer, String, String, LocalDate, Integer> fieldsRow() {
+    public Row5<Integer, Integer, String, LocalDate, Integer> fieldsRow() {
         return (Row5) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function5<? super Integer, ? super String, ? super String, ? super LocalDate, ? super Integer, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function5<? super Integer, ? super Integer, ? super String, ? super LocalDate, ? super Integer, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -207,7 +213,7 @@ public class Iscrive extends TableImpl<IscriveRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function5<? super Integer, ? super String, ? super String, ? super LocalDate, ? super Integer, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function5<? super Integer, ? super Integer, ? super String, ? super LocalDate, ? super Integer, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }
