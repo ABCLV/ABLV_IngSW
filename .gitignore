@@ -28,6 +28,8 @@ Thumbs.db
 *.swp
 /.metadata/
 
+#db
+/database/gare.db
 
 
 #dbeaver

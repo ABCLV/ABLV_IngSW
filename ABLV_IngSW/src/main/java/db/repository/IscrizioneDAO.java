@@ -20,13 +20,13 @@ public class IscrizioneDAO {
 
 	public IscrizioneDAO() {}
 	
-	public Integer getUltimoNumeroIscrizione(int codiceGara) throws IscrizioneEccezioneDB {
+	public Integer getUltimoNumeroIscrizione(String codiceGara) throws IscrizioneEccezioneDB {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
 	        return ctx.select(DSL.max(ISCRIVE.NUMISCRIZIONE))
 	            .from(ISCRIVE)
-	            .where(ISCRIVE.GARA.eq(codiceGara))
+	            .where(ISCRIVE.CODICEGARA.eq(codiceGara))
 	            .fetchOne(0, Integer.class);
 
 	    } catch(SQLException e) {
@@ -34,7 +34,7 @@ public class IscrizioneDAO {
 	    }
 	}
 	
-	public List<Concorrente> getConcorrenti(int codiceGara) {
+	public List<Concorrente> getConcorrenti(String codiceGara) {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
@@ -50,7 +50,7 @@ public class IscrizioneDAO {
 	                .from(CONCORRENTE)
 	                .join(ISCRIVE)
 	                    .on(CONCORRENTE.CF.eq(ISCRIVE.CONCORRENTE))
-	                .where(ISCRIVE.GARA.eq(codiceGara))
+	                .where(ISCRIVE.CODICEGARA.eq(codiceGara))
 	                .fetchInto(Concorrente.class);
 
 	    } catch (SQLException e) {
@@ -64,12 +64,13 @@ public class IscrizioneDAO {
 	
 
 
-	public void inserisciIscrizione(String cf, int codiceGara, LocalDate dataIscrizione, Integer numIscrizione) throws IscrizioneEccezioneDB {
+	public void inserisciIscrizione(Integer codiceIscrizione,String cf, String codiceGara, LocalDate dataIscrizione, Integer numIscrizione) throws IscrizioneEccezioneDB {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
 	        ctx.insertInto(ISCRIVE)
-	                .set(ISCRIVE.GARA, codiceGara) 
+	        		.set(ISCRIVE.IDISCRIZIONE, codiceIscrizione)
+	                .set(ISCRIVE.CODICEGARA, codiceGara) 
 	                .set(ISCRIVE.CONCORRENTE, cf)
 	                .set(ISCRIVE.DATAISCRIZIONE, dataIscrizione)
 	                .set(ISCRIVE.NUMISCRIZIONE, numIscrizione)
@@ -79,7 +80,7 @@ public class IscrizioneDAO {
 	        throw new IscrizioneEccezioneDB("Errore nell'inserire l'iscrizione!", e);
 	    }
 	}
-	/*
+	
 	public int getUltimoCodiceIscrizione() throws IscrizioneEccezioneDB {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
@@ -97,16 +98,16 @@ public class IscrizioneDAO {
 	    } catch (SQLException e) {
 	        throw new IscrizioneEccezioneDB("Errore nel recuperare l'ultimo codice iscrizione!", e);
 	    }
-	}*/
+	}
 	
-	public boolean esisteIscrizione(String cf, int codiceGara) throws IscrizioneEccezioneDB {
+	public boolean esisteIscrizione(String cf, String codiceGara) throws IscrizioneEccezioneDB {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 	        
 	        Integer count = ctx.selectCount()
 	            .from(ISCRIVE)
 	            .where(ISCRIVE.CONCORRENTE.eq(cf)
-	                .and(ISCRIVE.GARA.eq(codiceGara)))
+	                .and(ISCRIVE.CODICEGARA.eq(codiceGara)))
 	            .fetchOne(0, Integer.class);
 	        
 	        return count != null && count > 0;
@@ -116,14 +117,14 @@ public class IscrizioneDAO {
 	    }
 	}
 	
-	public List<Integer> getCodiciGareIscrittoPerConcorrente(String cf) throws IscrizioneEccezioneDB {
+	public List<String> getCodiciGareIscrittoPerConcorrente(String cf) throws IscrizioneEccezioneDB {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 	        
-	        return ctx.select(ISCRIVE.GARA)
+	        return ctx.select(ISCRIVE.CODICEGARA)
 	            .from(ISCRIVE)
 	            .where(ISCRIVE.CONCORRENTE.eq(cf))
-	            .fetch(ISCRIVE.GARA);
+	            .fetch(ISCRIVE.CODICEGARA);
 	            
 	    } catch(SQLException e) {
 	        throw new IscrizioneEccezioneDB("Errore nel recuperare le gare iscritte!", e);

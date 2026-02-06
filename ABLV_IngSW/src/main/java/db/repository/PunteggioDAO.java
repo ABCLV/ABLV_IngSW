@@ -29,8 +29,22 @@ import model.Turno;
 public class PunteggioDAO {
 	public PunteggioDAO() {}
 	
+	private int nextIdPunteggio(int last) {
+	    return last + 1;
+	}
+
+	private int getUltimoIdPunteggio(DSLContext ctx) {
+	    Integer last = ctx.select(PARTECIPA.IDPUNTEGGIO)
+	            .from(PARTECIPA)
+	            .orderBy(PARTECIPA.IDPUNTEGGIO.desc())
+	            .limit(1)
+	            .fetchOneInto(Integer.class);
+
+	    return last != null ? last : 0;
+	}
+
 	
-	public void definizioneGruppi(int codiceGara, List<Concorrente> assenti) {
+	public void definizioneGruppi(String codiceGara, List<Concorrente> assenti) {
 
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
@@ -39,7 +53,7 @@ public class PunteggioDAO {
 	        Set<String> cfAssenti = assenti.stream()
 	                .map(Concorrente::getCf)
 	                .collect(Collectors.toSet());
-	        Condition cond = ISCRIVE.GARA.eq(codiceGara);
+	        Condition cond = ISCRIVE.CODICEGARA.eq(codiceGara);
 
 	        if (!cfAssenti.isEmpty()) {
 	            cond = cond.and(CONCORRENTE.CF.notIn(cfAssenti));
@@ -55,19 +69,19 @@ public class PunteggioDAO {
 	               .fetchInto(Concorrente.class);
 
 	        
-	       System.out.println("presenti: " + presenti.toString());
+	       
 	        
 	        /* ===============================
 	           3️⃣ Turni della gara
 	           =============================== */
 	        List<Turno> turni =
-	        	    ctx.select(TURNO.ID, TURNO.DURATA, TURNO.SETTORE, TURNO.NUMERO)
+	        	    ctx.select(TURNO.CODICE, TURNO.DURATA, TURNO.SETTORE, TURNO.NUMERO)
 	        	       .from(TURNO)
 	        	       .where(TURNO.GARA.eq(codiceGara))
 	        	       .fetch()
 	        	       .map(r -> {
 	        	           Turno t = new Turno();
-	        	           t.setCodiceTurno(r.get(TURNO.ID));
+	        	           t.setCodiceTurno(r.get(TURNO.CODICE));
 	        	           t.setDurata(r.get(TURNO.DURATA));
 	        	           t.setNumero(r.get(TURNO.NUMERO));
 
@@ -80,8 +94,8 @@ public class PunteggioDAO {
 	        	           t.setSett(s);
 	        	           return t;
 	        	       });
-	        System.out.println("codice gara:" + codiceGara);
-	        System.out.println("turni: " + turni.toString());
+
+
 	        /* ===============================
 	           4️⃣ Settori disponibili
 	           =============================== */
@@ -95,7 +109,7 @@ public class PunteggioDAO {
 	        /* ===============================
 	           5️⃣ Assegnazione settori (round-robin)
 	           =============================== */
-	        Map<String, Integer> settorePerConcorrente = new HashMap<>();
+	        Map<String, String> settorePerConcorrente = new HashMap<>();
 	        int i = 0;
 
 	        for (Concorrente c : presenti) {
@@ -109,34 +123,35 @@ public class PunteggioDAO {
 	        /* ===============================
 	           6️⃣ Creazione PARTECIPA
 	           =============================== */
+	        int lastId = getUltimoIdPunteggio(ctx);
 	        
 	        System.out.println("mappa settori: "+ settorePerConcorrente);
 	        
 	        for (Concorrente c : presenti) {
 
-	            int settore = settorePerConcorrente.get(c.getCf());
+	            String settore = settorePerConcorrente.get(c.getCf());
 
 	            for (Turno t : turni) {
 
-	                if (t.getSett().getIdSettore() != settore) continue;
+	                if (!t.getSett().getIdSettore().equals(settore)) continue;
 
+	                lastId = nextIdPunteggio(lastId);
 
 	                ctx.insertInto(PARTECIPA)
+	                .set(PARTECIPA.IDPUNTEGGIO, String.valueOf(lastId))
+	                .set(PARTECIPA.IDTURNO, t.getCodiceTurno())
 	                .set(PARTECIPA.CONCORRENTE, c.getCf())
 	                .set(PARTECIPA.NUMPUNTI, 0)
-	                .set(PARTECIPA.TURNO,t.getCodiceTurno())
-	                .set(PARTECIPA.SQUALIFICA,false)
 	                .execute();
 
 	            }
 	        }
 		
 	    } catch (SQLException e) {
-	    	throw new GaraEccezione(
-	    		    "Errore nella definizione dei gruppi per la gara " + codiceGara + ": " + e.getMessage(),
-	    		    e
-	    		);
-
+	        throw new GaraEccezione(
+	                "Errore nella definizione dei gruppi per la gara " + codiceGara,
+	                e
+	        );
 	    }
 	}
 

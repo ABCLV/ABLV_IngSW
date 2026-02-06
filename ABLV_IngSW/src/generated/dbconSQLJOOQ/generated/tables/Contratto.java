@@ -16,7 +16,6 @@ import java.util.function.Function;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function6;
-import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Records;
@@ -54,19 +53,19 @@ public class Contratto extends TableImpl<ContrattoRecord> {
     }
 
     /**
-     * The column <code>CONTRATTO.ID</code>.
+     * The column <code>CONTRATTO.IdContratto</code>.
      */
-    public final TableField<ContrattoRecord, Integer> ID = createField(DSL.name("ID"), SQLDataType.INTEGER.identity(true), this, "");
+    public final TableField<ContrattoRecord, Integer> IDCONTRATTO = createField(DSL.name("IdContratto"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>CONTRATTO.Sponsor</code>.
      */
-    public final TableField<ContrattoRecord, Integer> SPONSOR = createField(DSL.name("Sponsor"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ContrattoRecord, String> SPONSOR = createField(DSL.name("Sponsor"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>CONTRATTO.Concorrente</code>.
      */
-    public final TableField<ContrattoRecord, String> CONCORRENTE = createField(DSL.name("Concorrente"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<ContrattoRecord, String> CONCORRENTE = createField(DSL.name("Concorrente"), SQLDataType.VARCHAR(16).nullable(false), this, "");
 
     /**
      * The column <code>CONTRATTO.DataFirma</code>.
@@ -81,7 +80,7 @@ public class Contratto extends TableImpl<ContrattoRecord> {
     /**
      * The column <code>CONTRATTO.Premio</code>.
      */
-    public final TableField<ContrattoRecord, String> PREMIO = createField(DSL.name("Premio"), SQLDataType.CLOB, this, "");
+    public final TableField<ContrattoRecord, String> PREMIO = createField(DSL.name("Premio"), SQLDataType.VARCHAR(100), this, "");
 
     private Contratto(Name alias, Table<ContrattoRecord> aliased) {
         this(alias, aliased, null);
@@ -119,11 +118,6 @@ public class Contratto extends TableImpl<ContrattoRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
-    }
-
-    @Override
-    public Identity<ContrattoRecord, Integer> getIdentity() {
-        return (Identity<ContrattoRecord, Integer>) super.getIdentity();
     }
 
     @Override
@@ -203,14 +197,14 @@ public class Contratto extends TableImpl<ContrattoRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row6<Integer, Integer, String, LocalDate, LocalDate, String> fieldsRow() {
+    public Row6<Integer, String, String, LocalDate, LocalDate, String> fieldsRow() {
         return (Row6) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function6<? super Integer, ? super Integer, ? super String, ? super LocalDate, ? super LocalDate, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function6<? super Integer, ? super String, ? super String, ? super LocalDate, ? super LocalDate, ? super String, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -218,7 +212,7 @@ public class Contratto extends TableImpl<ContrattoRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function6<? super Integer, ? super Integer, ? super String, ? super LocalDate, ? super LocalDate, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function6<? super Integer, ? super String, ? super String, ? super LocalDate, ? super LocalDate, ? super String, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

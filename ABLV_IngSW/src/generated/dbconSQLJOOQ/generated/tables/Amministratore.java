@@ -52,27 +52,27 @@ public class Amministratore extends TableImpl<AmministratoreRecord> {
     /**
      * The column <code>AMMINISTRATORE.CF</code>.
      */
-    public final TableField<AmministratoreRecord, String> CF = createField(DSL.name("CF"), SQLDataType.CLOB, this, "");
+    public final TableField<AmministratoreRecord, String> CF = createField(DSL.name("CF"), SQLDataType.VARCHAR(16).nullable(false), this, "");
 
     /**
      * The column <code>AMMINISTRATORE.Nome</code>.
      */
-    public final TableField<AmministratoreRecord, String> NOME = createField(DSL.name("Nome"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<AmministratoreRecord, String> NOME = createField(DSL.name("Nome"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>AMMINISTRATORE.Cognome</code>.
      */
-    public final TableField<AmministratoreRecord, String> COGNOME = createField(DSL.name("Cognome"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<AmministratoreRecord, String> COGNOME = createField(DSL.name("Cognome"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>AMMINISTRATORE.Email</code>.
      */
-    public final TableField<AmministratoreRecord, String> EMAIL = createField(DSL.name("Email"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<AmministratoreRecord, String> EMAIL = createField(DSL.name("Email"), SQLDataType.VARCHAR(100).nullable(false), this, "");
 
     /**
-     * The column <code>AMMINISTRATORE.Password_hash</code>.
+     * The column <code>AMMINISTRATORE.password_hash</code>.
      */
-    public final TableField<AmministratoreRecord, String> PASSWORD_HASH = createField(DSL.name("Password_hash"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<AmministratoreRecord, String> PASSWORD_HASH = createField(DSL.name("password_hash"), SQLDataType.CLOB, this, "");
 
     private Amministratore(Name alias, Table<AmministratoreRecord> aliased) {
         this(alias, aliased, null);

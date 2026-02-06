@@ -15,7 +15,7 @@ import model.interfaces.SoggettoIF;
  */
 public class Gara {
 
-	private int codice;
+	private String codice;
 	private int numProva;
 	private Tecnica tecnica;
 	private CriterioPunti criterioPunti;
@@ -47,7 +47,7 @@ public class Gara {
 	 * @param tipoGara        tipologia (singola, campionato, ecc.)
 	 * @param annoGara        anno di edizione
 	 */
-	public Gara(int codiceGara, int nProva, Tecnica tipoTecnica, CriterioPunti criterioPunti,
+	public Gara(String codiceGara, int nProva, Tecnica tipoTecnica, CriterioPunti criterioPunti,
 			LocalDate dataSvolgimento, int maxPersone, int minPersone, StatoConferma statoConferma, StatoGara statoGara,
 			TipologiaGara tipoGara, LocalDate annoGara, SoggettoIF propositore, SoggettoIF accettatore,
 			Campionato campionato, Arbitro arbitro, CampoGara campoGara) {
@@ -213,7 +213,7 @@ public class Gara {
 		return true;
 	}
 
-	public void setCodice(int codice) throws IllegalArgumentException {
+	public void setCodice(String codice) throws IllegalArgumentException {
 		this.checkNull(codice, "Codice Gara non valido!");
 		this.codice = codice;
 	}
@@ -288,7 +288,7 @@ public class Gara {
 		this.campoGara = campoGara;
 	}
 
-	public int getCodice() {
+	public String getCodice() {
 		return this.codice;
 	}
 

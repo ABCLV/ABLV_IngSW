@@ -7,7 +7,7 @@ import java.util.Objects;
  */
 public class Settore {
 
-	public int getIdSettore() {
+	public String getIdSettore() {
 		return idSettore;
 	}
 
@@ -19,7 +19,7 @@ public class Settore {
 		return descrizione;
 	}
 
-	private int idSettore;
+	private String idSettore;
 	private int lunghezza;
 	private String descrizione;
 
@@ -29,7 +29,7 @@ public class Settore {
 	 * @param idSettore   identificativo del settore
 	 * @param descrizione descrizione del settore
 	 */
-	public Settore(int idSettore, int lunghezza, String descrizione) {
+	public Settore(String idSettore, int lunghezza, String descrizione) {
 		this.idSettore = idSettore;
 		this.lunghezza = lunghezza;
 		this.descrizione = descrizione;

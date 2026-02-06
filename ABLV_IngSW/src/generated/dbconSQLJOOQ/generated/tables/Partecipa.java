@@ -15,7 +15,6 @@ import java.util.function.Function;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function5;
-import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Records;
@@ -53,19 +52,19 @@ public class Partecipa extends TableImpl<PartecipaRecord> {
     }
 
     /**
-     * The column <code>PARTECIPA.ID</code>.
+     * The column <code>PARTECIPA.IdPunteggio</code>.
      */
-    public final TableField<PartecipaRecord, Integer> ID = createField(DSL.name("ID"), SQLDataType.INTEGER.identity(true), this, "");
+    public final TableField<PartecipaRecord, String> IDPUNTEGGIO = createField(DSL.name("IdPunteggio"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
-     * The column <code>PARTECIPA.Turno</code>.
+     * The column <code>PARTECIPA.IdTurno</code>.
      */
-    public final TableField<PartecipaRecord, Integer> TURNO = createField(DSL.name("Turno"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<PartecipaRecord, String> IDTURNO = createField(DSL.name("IdTurno"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>PARTECIPA.Concorrente</code>.
      */
-    public final TableField<PartecipaRecord, String> CONCORRENTE = createField(DSL.name("Concorrente"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<PartecipaRecord, String> CONCORRENTE = createField(DSL.name("Concorrente"), SQLDataType.VARCHAR(16).nullable(false), this, "");
 
     /**
      * The column <code>PARTECIPA.NumPunti</code>.
@@ -113,11 +112,6 @@ public class Partecipa extends TableImpl<PartecipaRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
-    }
-
-    @Override
-    public Identity<PartecipaRecord, Integer> getIdentity() {
-        return (Identity<PartecipaRecord, Integer>) super.getIdentity();
     }
 
     @Override
@@ -197,14 +191,14 @@ public class Partecipa extends TableImpl<PartecipaRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<Integer, Integer, String, Integer, Boolean> fieldsRow() {
+    public Row5<String, String, String, Integer, Boolean> fieldsRow() {
         return (Row5) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function5<? super Integer, ? super Integer, ? super String, ? super Integer, ? super Boolean, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function5<? super String, ? super String, ? super String, ? super Integer, ? super Boolean, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -212,7 +206,7 @@ public class Partecipa extends TableImpl<PartecipaRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function5<? super Integer, ? super Integer, ? super String, ? super Integer, ? super Boolean, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function5<? super String, ? super String, ? super String, ? super Integer, ? super Boolean, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

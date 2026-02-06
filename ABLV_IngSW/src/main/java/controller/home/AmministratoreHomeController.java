@@ -32,7 +32,7 @@ public class AmministratoreHomeController {
 	@FXML private TableColumn<Gara, String> colTecnicaProposte;
 	@FXML private TableColumn<Gara, LocalDate> colDataProposte;
 	@FXML private TableColumn<Gara, String> colCampionatoProposte;
-	@FXML private TableColumn<Gara, Integer> colCampoGaraProposte;
+	@FXML private TableColumn<Gara, String> colCampoGaraProposte;
 	@FXML private TableColumn<Gara, String> colStatoConfermaProposte;
 
 	// Tabella gare da confermare
@@ -43,7 +43,7 @@ public class AmministratoreHomeController {
 	@FXML private TableColumn<Gara, LocalDate> colDataConferma;
 	@FXML private TableColumn<Gara, String> colCampionatoConferma;
 	@FXML private TableColumn<Gara, String> colPropositoreConferma;
-	@FXML private TableColumn<Gara, Integer> colCampoGaraConferma;
+	@FXML private TableColumn<Gara, String> colCampoGaraConferma;
 
 	private final AmministratoreService amministratoreService = new AmministratoreService();
 
@@ -71,10 +71,8 @@ public class AmministratoreHomeController {
 		colDataProposte.setCellValueFactory(new PropertyValueFactory<>("data"));
 		colCampionatoProposte.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
 				cellData.getValue().getCampionato() != null ? cellData.getValue().getCampionato().getTitolo() : "N/A"));
-		colCampoGaraProposte.setCellValueFactory(cellData ->
-	    new javafx.beans.property.SimpleIntegerProperty(
-	        cellData.getValue().getCampoGara().getIdCampoGara()
-	    ).asObject());
+		colCampoGaraProposte.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
+				cellData.getValue().getCampoGara().getIdCampoGara()));
 		colStatoConfermaProposte.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
 				cellData.getValue().getStatoConferma().name()));
 	}
@@ -89,11 +87,8 @@ public class AmministratoreHomeController {
 				cellData.getValue().getCampionato() != null ? cellData.getValue().getCampionato().getTitolo() : "N/A"));
 		colPropositoreConferma.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
 				cellData.getValue().getPropositore().getIdentificatore()));
-		colCampoGaraConferma.setCellValueFactory(cellData ->
-	    new javafx.beans.property.SimpleIntegerProperty(
-	        cellData.getValue().getCampoGara().getIdCampoGara()
-	    ).asObject());
-
+		colCampoGaraConferma.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
+				cellData.getValue().getCampoGara().getIdCampoGara()));
 	}
 
 	private void caricaDati() {

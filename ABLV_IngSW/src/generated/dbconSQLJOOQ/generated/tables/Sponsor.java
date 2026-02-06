@@ -13,7 +13,6 @@ import java.util.function.Function;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function3;
-import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Records;
@@ -53,17 +52,17 @@ public class Sponsor extends TableImpl<SponsorRecord> {
     /**
      * The column <code>SPONSOR.ID</code>.
      */
-    public final TableField<SponsorRecord, Integer> ID = createField(DSL.name("ID"), SQLDataType.INTEGER.identity(true), this, "");
+    public final TableField<SponsorRecord, String> ID = createField(DSL.name("ID"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>SPONSOR.Nome</code>.
      */
-    public final TableField<SponsorRecord, String> NOME = createField(DSL.name("Nome"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<SponsorRecord, String> NOME = createField(DSL.name("Nome"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>SPONSOR.Sito</code>.
      */
-    public final TableField<SponsorRecord, String> SITO = createField(DSL.name("Sito"), SQLDataType.CLOB, this, "");
+    public final TableField<SponsorRecord, String> SITO = createField(DSL.name("Sito"), SQLDataType.VARCHAR(100), this, "");
 
     private Sponsor(Name alias, Table<SponsorRecord> aliased) {
         this(alias, aliased, null);
@@ -101,11 +100,6 @@ public class Sponsor extends TableImpl<SponsorRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
-    }
-
-    @Override
-    public Identity<SponsorRecord, Integer> getIdentity() {
-        return (Identity<SponsorRecord, Integer>) super.getIdentity();
     }
 
     @Override
@@ -157,14 +151,14 @@ public class Sponsor extends TableImpl<SponsorRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row3<Integer, String, String> fieldsRow() {
+    public Row3<String, String, String> fieldsRow() {
         return (Row3) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function3<? super Integer, ? super String, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function3<? super String, ? super String, ? super String, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -172,7 +166,7 @@ public class Sponsor extends TableImpl<SponsorRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function3<? super Integer, ? super String, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function3<? super String, ? super String, ? super String, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

@@ -52,12 +52,12 @@ public class Campionato extends TableImpl<CampionatoRecord> {
     /**
      * The column <code>CAMPIONATO.Titolo</code>.
      */
-    public final TableField<CampionatoRecord, String> TITOLO = createField(DSL.name("Titolo"), SQLDataType.CLOB, this, "");
+    public final TableField<CampionatoRecord, String> TITOLO = createField(DSL.name("Titolo"), SQLDataType.VARCHAR(100).nullable(false), this, "");
 
     /**
      * The column <code>CAMPIONATO.Categoria</code>.
      */
-    public final TableField<CampionatoRecord, String> CATEGORIA = createField(DSL.name("Categoria"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<CampionatoRecord, String> CATEGORIA = createField(DSL.name("Categoria"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     private Campionato(Name alias, Table<CampionatoRecord> aliased) {
         this(alias, aliased, null);

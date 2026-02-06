@@ -84,8 +84,8 @@ public class ArbitroDAO {
 
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-	        Result<Record11<Integer, Integer, Integer, String, String, LocalDate, String, String, String, String, String>> rs = ctx
-	                .select(GARA.ID, GARA.CAMPOGARA, GARA.NUMPROVA, GARA.CRITERIOPUNTI, GARA.STATOGARA,
+	        Result<Record11<String, String, Integer, String, String, LocalDate, String, String, String, String, String>> rs = ctx
+	                .select(GARA.CODICE, GARA.CAMPOGARA, GARA.NUMPROVA, GARA.CRITERIOPUNTI, GARA.STATOGARA,
 	                        GARA.DATA, GARA.TECNICA, GARA.TIPOGARA, CAMPIONATO.TITOLO, CAMPIONATO.CATEGORIA,
 	                        GARA.STATOCONFERMA)
 	                .from(GARA).leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
@@ -95,7 +95,7 @@ public class ArbitroDAO {
 
 	        List<Gara> out = new ArrayList<>();
 
-	        for (Record11<Integer, Integer, Integer, String, String, LocalDate, String, String, String, String, String> r : rs) {
+	        for (Record11<String, String, Integer, String, String, LocalDate, String, String, String, String, String> r : rs) {
 
 	            Gara g = new Gara();
 	            
@@ -136,8 +136,8 @@ public class ArbitroDAO {
 
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-	        Result<Record11<Integer, Integer, Integer, String, String, LocalDate, String, String, String, String, String>> rs = ctx
-	                .select(GARA.ID, GARA.CAMPOGARA, GARA.NUMPROVA, GARA.CRITERIOPUNTI, GARA.STATOGARA,
+	        Result<Record11<String, String, Integer, String, String, LocalDate, String, String, String, String, String>> rs = ctx
+	                .select(GARA.CODICE, GARA.CAMPOGARA, GARA.NUMPROVA, GARA.CRITERIOPUNTI, GARA.STATOGARA,
 	                        GARA.DATA, GARA.TECNICA, GARA.TIPOGARA, CAMPIONATO.TITOLO, CAMPIONATO.CATEGORIA,
 	                        GARA.STATOCONFERMA)
 	                .from(GARA).leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
@@ -146,7 +146,7 @@ public class ArbitroDAO {
 
 	        List<Gara> out = new ArrayList<>();
 
-	        for (Record11<Integer, Integer, Integer, String, String, LocalDate, String, String, String, String, String> r : rs) {
+	        for (Record11<String, String, Integer, String, String, LocalDate, String, String, String, String, String> r : rs) {
 
 	            Gara g = new Gara();
 	            
@@ -186,8 +186,8 @@ public class ArbitroDAO {
 
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-	        Result<Record11<Integer, Integer, Integer, String, String, LocalDate, String, String, String, String, String>> rs = ctx
-	                .select(GARA.ID, GARA.CAMPOGARA, GARA.NUMPROVA, GARA.CRITERIOPUNTI, GARA.STATOGARA,
+	        Result<Record11<String, String, Integer, String, String, LocalDate, String, String, String, String, String>> rs = ctx
+	                .select(GARA.CODICE, GARA.CAMPOGARA, GARA.NUMPROVA, GARA.CRITERIOPUNTI, GARA.STATOGARA,
 	                        GARA.DATA, GARA.TECNICA, GARA.TIPOGARA, CAMPIONATO.TITOLO, CAMPIONATO.CATEGORIA,
 	                        GARA.STATOCONFERMA)
 	                .from(GARA).leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
@@ -196,7 +196,7 @@ public class ArbitroDAO {
 
 	        List<Gara> out = new ArrayList<>();
 
-	        for (Record11<Integer, Integer, Integer, String, String, LocalDate, String, String, String, String, String> r : rs) {
+	        for (Record11<String, String, Integer, String, String, LocalDate, String, String, String, String, String> r : rs) {
 
 	            Gara g = new Gara();
 	            
@@ -244,7 +244,7 @@ public class ArbitroDAO {
 	    }
 	}
 	
-	public int assegnaArbitroAGara(int codiceGara, String cfArbitro)
+	public int assegnaArbitroAGara(String codiceGara, String cfArbitro)
 	        throws ArbitroEccezione {
 
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
@@ -253,7 +253,7 @@ public class ArbitroDAO {
 
 	        int rows = ctx.update(GARA)
 	                .set(GARA.ARBITRO, cfArbitro)
-	                .where(GARA.ID.eq(codiceGara)
+	                .where(GARA.CODICE.eq(codiceGara)
 	                        .and(GARA.ARBITRO.isNull()))
 	                .execute();
 	        return rows;
@@ -267,7 +267,7 @@ public class ArbitroDAO {
 	    }
 	}
 	
-	public int disiscriviArbitro(int codiceGara, String cfArbitro)
+	public int disiscriviArbitro(String codiceGara, String cfArbitro)
 	        throws ArbitroEccezione {
 
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
@@ -277,7 +277,7 @@ public class ArbitroDAO {
 	        return ctx.update(GARA)
 	                .set(GARA.ARBITRO, (String) null)
 	                .where(
-	                    GARA.ID.eq(codiceGara)
+	                    GARA.CODICE.eq(codiceGara)
 	                    .and(GARA.ARBITRO.eq(cfArbitro))
 	                )
 	                .execute();
@@ -292,13 +292,13 @@ public class ArbitroDAO {
 
 
 	
-	public void aggiornaStatoGara(int codice, StatoGara stato) throws ArbitroEccezione {
+	public void aggiornaStatoGara(String codice, StatoGara stato) throws ArbitroEccezione {
 		
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 			ctx.update(GARA)
 				.set(GARA.STATOGARA, stato.name())
-				.where(GARA.ID.eq(codice))
+				.where(GARA.CODICE.eq(codice))
 				.execute();
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -308,13 +308,13 @@ public class ArbitroDAO {
 	}
 	
 	
-	public void aggiornaDataGara(int codice, LocalDate data) throws ArbitroEccezione {
+	public void aggiornaDataGara(String codice, LocalDate data) throws ArbitroEccezione {
 		
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 			ctx.update(GARA)
 				.set(GARA.DATA, data)
-				.where(GARA.ID.eq(codice))
+				.where(GARA.CODICE.eq(codice))
 				.execute();
 		} catch(SQLException e) {
 			e.printStackTrace();

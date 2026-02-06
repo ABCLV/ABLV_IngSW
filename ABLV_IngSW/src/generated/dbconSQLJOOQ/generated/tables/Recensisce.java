@@ -15,7 +15,6 @@ import java.util.function.Function;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function6;
-import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Records;
@@ -53,24 +52,24 @@ public class Recensisce extends TableImpl<RecensisceRecord> {
     }
 
     /**
-     * The column <code>RECENSISCE.ID</code>.
+     * The column <code>RECENSISCE.IdRecensione</code>.
      */
-    public final TableField<RecensisceRecord, Integer> ID = createField(DSL.name("ID"), SQLDataType.INTEGER.identity(true), this, "");
+    public final TableField<RecensisceRecord, String> IDRECENSIONE = createField(DSL.name("IdRecensione"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
-     * The column <code>RECENSISCE.Gara</code>.
+     * The column <code>RECENSISCE.CodiceGara</code>.
      */
-    public final TableField<RecensisceRecord, Integer> GARA = createField(DSL.name("Gara"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RecensisceRecord, String> CODICEGARA = createField(DSL.name("CodiceGara"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>RECENSISCE.Concorrente</code>.
      */
-    public final TableField<RecensisceRecord, String> CONCORRENTE = createField(DSL.name("Concorrente"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<RecensisceRecord, String> CONCORRENTE = createField(DSL.name("Concorrente"), SQLDataType.VARCHAR(16).nullable(false), this, "");
 
     /**
      * The column <code>RECENSISCE.Titolo</code>.
      */
-    public final TableField<RecensisceRecord, String> TITOLO = createField(DSL.name("Titolo"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<RecensisceRecord, String> TITOLO = createField(DSL.name("Titolo"), SQLDataType.VARCHAR(100).nullable(false), this, "");
 
     /**
      * The column <code>RECENSISCE.Voto</code>.
@@ -118,11 +117,6 @@ public class Recensisce extends TableImpl<RecensisceRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
-    }
-
-    @Override
-    public Identity<RecensisceRecord, Integer> getIdentity() {
-        return (Identity<RecensisceRecord, Integer>) super.getIdentity();
     }
 
     @Override
@@ -202,14 +196,14 @@ public class Recensisce extends TableImpl<RecensisceRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row6<Integer, Integer, String, String, Integer, String> fieldsRow() {
+    public Row6<String, String, String, String, Integer, String> fieldsRow() {
         return (Row6) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function6<? super Integer, ? super Integer, ? super String, ? super String, ? super Integer, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function6<? super String, ? super String, ? super String, ? super String, ? super Integer, ? super String, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -217,7 +211,7 @@ public class Recensisce extends TableImpl<RecensisceRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function6<? super Integer, ? super Integer, ? super String, ? super String, ? super Integer, ? super String, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function6<? super String, ? super String, ? super String, ? super String, ? super Integer, ? super String, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

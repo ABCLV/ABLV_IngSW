@@ -15,7 +15,6 @@ import java.util.function.Function;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function5;
-import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Records;
@@ -53,9 +52,9 @@ public class Turno extends TableImpl<TurnoRecord> {
     }
 
     /**
-     * The column <code>TURNO.ID</code>.
+     * The column <code>TURNO.Codice</code>.
      */
-    public final TableField<TurnoRecord, Integer> ID = createField(DSL.name("ID"), SQLDataType.INTEGER.identity(true), this, "");
+    public final TableField<TurnoRecord, String> CODICE = createField(DSL.name("Codice"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>TURNO.Numero</code>.
@@ -70,12 +69,12 @@ public class Turno extends TableImpl<TurnoRecord> {
     /**
      * The column <code>TURNO.Settore</code>.
      */
-    public final TableField<TurnoRecord, Integer> SETTORE = createField(DSL.name("Settore"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<TurnoRecord, String> SETTORE = createField(DSL.name("Settore"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>TURNO.Gara</code>.
      */
-    public final TableField<TurnoRecord, Integer> GARA = createField(DSL.name("Gara"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<TurnoRecord, String> GARA = createField(DSL.name("Gara"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     private Turno(Name alias, Table<TurnoRecord> aliased) {
         this(alias, aliased, null);
@@ -113,11 +112,6 @@ public class Turno extends TableImpl<TurnoRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
-    }
-
-    @Override
-    public Identity<TurnoRecord, Integer> getIdentity() {
-        return (Identity<TurnoRecord, Integer>) super.getIdentity();
     }
 
     @Override
@@ -197,14 +191,14 @@ public class Turno extends TableImpl<TurnoRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<Integer, Integer, Integer, Integer, Integer> fieldsRow() {
+    public Row5<String, Integer, Integer, String, String> fieldsRow() {
         return (Row5) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function5<? super Integer, ? super Integer, ? super Integer, ? super Integer, ? super Integer, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function5<? super String, ? super Integer, ? super Integer, ? super String, ? super String, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -212,7 +206,7 @@ public class Turno extends TableImpl<TurnoRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function5<? super Integer, ? super Integer, ? super Integer, ? super Integer, ? super Integer, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function5<? super String, ? super Integer, ? super Integer, ? super String, ? super String, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

@@ -119,7 +119,7 @@ public class IscrizioneGaraController {
     private void filtraGarePerConcorrente(String cf) {
         try {
             // Ottieni le gare a cui è già iscritto
-            List<Integer> gareIscritte = iscrizioneService.getCodiciGareIscrittoPerConcorrente(cf);
+            List<String> gareIscritte = iscrizioneService.getCodiciGareIscrittoPerConcorrente(cf);
             
             // Filtra le gare
             List<Gara> gareFiltrate = gareTotali.stream()
@@ -223,11 +223,11 @@ public class IscrizioneGaraController {
     }
 
     private void mostraDettagliGara(Gara gara) {
-    	lblCodiceGara.setText(String.valueOf(gara.getCodice()));
+        lblCodiceGara.setText(gara.getCodice());
         lblData.setText(gara.getData() != null ? gara.getData().toString() : "N/A");
         lblTecnica.setText(gara.getTecnica() != null ? gara.getTecnica().toString() : "N/A");
         lblTipoGara.setText(gara.getTipoGara() != null ? gara.getTipoGara().toString() : "N/A");
-        lblCampoGara.setText(String.valueOf(gara.getCampoGara() != null ? gara.getCampoGara().getIdCampoGara() : "N/A"));
+        lblCampoGara.setText(gara.getCampoGara() != null ? gara.getCampoGara().getIdCampoGara() : "N/A");
         lblCriterioPunti.setText(gara.getCriterioPunti() != null ? gara.getCriterioPunti().toString() : "N/A");
         lblStatoGara.setText(gara.getStatoGara() != null ? gara.getStatoGara().toString() : "N/A");
         
@@ -255,22 +255,17 @@ public class IscrizioneGaraController {
         
         if(selected != null) {
             String text = selected.toString();
-            String firstField = text.split(",")[0].trim();
+            String cod = text.split(",")[0].trim();
             
-            if (!firstField.isEmpty()) {
-                int cod = Integer.parseInt(firstField);
-                
-                for (Gara g : gareList) {
-                    if (g.getCodice() == cod) {
-                        return g;
-                    }
+            for (Gara g : gareList) {
+                if (g.getCodice().equals(cod)) {
+                    return g;
                 }
             }
         }
         
         return null;
     }
-
     
     private Concorrente getSelectedConcorrente() {
         Object selected = concorrenteComboBox.getValue();

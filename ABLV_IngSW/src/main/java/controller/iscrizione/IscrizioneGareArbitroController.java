@@ -68,13 +68,12 @@ public class IscrizioneGareArbitroController {
                 if (string == null || string.isBlank()) return null;
 
                 for (Gara g : gareDisponibili) {
-                    if (string.startsWith(String.valueOf(g.getCodice()))) {
+                    if (string.startsWith(g.getCodice())) {
                         return g;
                     }
                 }
                 return null;
             }
-
         });
     }
 
@@ -138,11 +137,11 @@ public class IscrizioneGareArbitroController {
     }
 
     private void mostraDettagliGara(Gara g) {
-        lblCodiceGara.setText(String.valueOf(g.getCodice()));
+        lblCodiceGara.setText(g.getCodice());
         lblData.setText(g.getData() != null ? g.getData().toString() : "N/A");
         lblTecnica.setText(g.getTecnica() != null ? g.getTecnica().toString() : "N/A");
         lblTipoGara.setText(g.getTipoGara() != null ? g.getTipoGara().toString() : "N/A");
-        lblCampoGara.setText(String.valueOf(g.getCampoGara() != null ? g.getCampoGara().getIdCampoGara() : "N/A"));
+        lblCampoGara.setText(g.getCampoGara() != null ? g.getCampoGara().getIdCampoGara() : "N/A");
         lblStatoGara.setText(g.getStatoGara() != null ? g.getStatoGara().toString() : "N/A");
 
         dettagliGaraSection.setVisible(true);

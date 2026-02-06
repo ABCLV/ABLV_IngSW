@@ -6,7 +6,7 @@ package model;
  */
 public class CampoGara {
 
-	private int idCampoGara;
+	private String idCampoGara;
 	private String corpoIdrico;
 	private String paese;
 	private int lunghezza;
@@ -20,7 +20,7 @@ public class CampoGara {
 	 * @param paese       comune o località
 	 * @param lunghezza   lunghezza in metri
 	 */
-	public CampoGara(int idCampoGara, String paese, String corpoIdrico, int lunghezza, String descrizione) {
+	public CampoGara(String idCampoGara, String paese, String corpoIdrico, int lunghezza, String descrizione) {
 		this.idCampoGara = idCampoGara;
 		this.corpoIdrico = corpoIdrico;
 		this.paese = paese;
@@ -31,11 +31,11 @@ public class CampoGara {
 	public CampoGara() {
 	}
 
-	public int getIdCampoGara() {
+	public String getIdCampoGara() {
 		return idCampoGara;
 	}
 
-	public void setIdCampoGara(int idCampoGara) {
+	public void setIdCampoGara(String idCampoGara) {
 		this.idCampoGara = idCampoGara;
 	}
 

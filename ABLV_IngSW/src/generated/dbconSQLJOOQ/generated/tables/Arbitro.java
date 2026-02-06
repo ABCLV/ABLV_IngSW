@@ -52,27 +52,27 @@ public class Arbitro extends TableImpl<ArbitroRecord> {
     /**
      * The column <code>ARBITRO.CF</code>.
      */
-    public final TableField<ArbitroRecord, String> CF = createField(DSL.name("CF"), SQLDataType.CLOB, this, "");
+    public final TableField<ArbitroRecord, String> CF = createField(DSL.name("CF"), SQLDataType.VARCHAR(16).nullable(false), this, "");
 
     /**
      * The column <code>ARBITRO.Nome</code>.
      */
-    public final TableField<ArbitroRecord, String> NOME = createField(DSL.name("Nome"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<ArbitroRecord, String> NOME = createField(DSL.name("Nome"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>ARBITRO.Cognome</code>.
      */
-    public final TableField<ArbitroRecord, String> COGNOME = createField(DSL.name("Cognome"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<ArbitroRecord, String> COGNOME = createField(DSL.name("Cognome"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>ARBITRO.Sezione</code>.
      */
-    public final TableField<ArbitroRecord, String> SEZIONE = createField(DSL.name("Sezione"), SQLDataType.CLOB, this, "");
+    public final TableField<ArbitroRecord, String> SEZIONE = createField(DSL.name("Sezione"), SQLDataType.VARCHAR(50), this, "");
 
     /**
-     * The column <code>ARBITRO.Password_hash</code>.
+     * The column <code>ARBITRO.password_hash</code>.
      */
-    public final TableField<ArbitroRecord, String> PASSWORD_HASH = createField(DSL.name("Password_hash"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<ArbitroRecord, String> PASSWORD_HASH = createField(DSL.name("password_hash"), SQLDataType.VARCHAR(255), this, "");
 
     private Arbitro(Name alias, Table<ArbitroRecord> aliased) {
         this(alias, aliased, null);

@@ -10,7 +10,7 @@ public class PunteggioService {
 	private final PunteggioDAO punteggioDAO = new PunteggioDAO();
 	public PunteggioService() {}
 		
-	public void assegnazioneGruppi(int codiceGara, List<Concorrente> assenti){
+	public void assegnazioneGruppi(String codiceGara, List<Concorrente> assenti){
 		punteggioDAO.definizioneGruppi(codiceGara, assenti);
 	}
 }

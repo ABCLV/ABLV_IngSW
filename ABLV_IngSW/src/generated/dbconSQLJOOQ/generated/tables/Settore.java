@@ -15,7 +15,6 @@ import java.util.function.Function;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function4;
-import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Records;
@@ -55,7 +54,7 @@ public class Settore extends TableImpl<SettoreRecord> {
     /**
      * The column <code>SETTORE.ID</code>.
      */
-    public final TableField<SettoreRecord, Integer> ID = createField(DSL.name("ID"), SQLDataType.INTEGER.identity(true), this, "");
+    public final TableField<SettoreRecord, String> ID = createField(DSL.name("ID"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>SETTORE.Lunghezza</code>.
@@ -65,12 +64,12 @@ public class Settore extends TableImpl<SettoreRecord> {
     /**
      * The column <code>SETTORE.Descrizione</code>.
      */
-    public final TableField<SettoreRecord, String> DESCRIZIONE = createField(DSL.name("Descrizione"), SQLDataType.CLOB, this, "");
+    public final TableField<SettoreRecord, String> DESCRIZIONE = createField(DSL.name("Descrizione"), SQLDataType.VARCHAR(100), this, "");
 
     /**
      * The column <code>SETTORE.CampoGara</code>.
      */
-    public final TableField<SettoreRecord, Integer> CAMPOGARA = createField(DSL.name("CampoGara"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<SettoreRecord, String> CAMPOGARA = createField(DSL.name("CampoGara"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     private Settore(Name alias, Table<SettoreRecord> aliased) {
         this(alias, aliased, null);
@@ -108,11 +107,6 @@ public class Settore extends TableImpl<SettoreRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
-    }
-
-    @Override
-    public Identity<SettoreRecord, Integer> getIdentity() {
-        return (Identity<SettoreRecord, Integer>) super.getIdentity();
     }
 
     @Override
@@ -181,14 +175,14 @@ public class Settore extends TableImpl<SettoreRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row4<Integer, Integer, String, Integer> fieldsRow() {
+    public Row4<String, Integer, String, String> fieldsRow() {
         return (Row4) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function4<? super Integer, ? super Integer, ? super String, ? super Integer, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function4<? super String, ? super Integer, ? super String, ? super String, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -196,7 +190,7 @@ public class Settore extends TableImpl<SettoreRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function4<? super Integer, ? super Integer, ? super String, ? super Integer, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function4<? super String, ? super Integer, ? super String, ? super String, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

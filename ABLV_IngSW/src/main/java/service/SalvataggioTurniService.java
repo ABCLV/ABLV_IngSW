@@ -15,8 +15,8 @@ public class SalvataggioTurniService {
 	private SettoreDAO cercaSettori = new SettoreDAO();
 	private TurnoDAO creaSettori = new TurnoDAO();
 	
-	public void insertTurni(List<Integer> durate, int CodiceGara) {
-		int codiceCampoGara = cercaCodiceCampoGara.trovaCodiceCampoGara(CodiceGara);
+	public void insertTurni(List<Integer> durate, String CodiceGara) {
+		String codiceCampoGara = cercaCodiceCampoGara.trovaCodiceCampoGara(CodiceGara);
 		CampoGara c = cercaCampoGara.trovaCampoGara(codiceCampoGara);
 		
 		List<Settore> sett = cercaSettori.esploraSettori(c);

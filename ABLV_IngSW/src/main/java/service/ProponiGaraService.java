@@ -114,8 +114,8 @@ public class ProponiGaraService {
 	}*/
 
 	/* ---------- genera codice ---------- */
-	public int getUltimoCodiceGara() throws PropostaEccezione {
-		int ret;
+	public String getUltimoCodiceGara() throws PropostaEccezione {
+		String ret = null;
 		try {
 			ret = this.garaDAO.getUltimoCodiceGara();
 		} catch(Exception e) {
@@ -163,10 +163,13 @@ public class ProponiGaraService {
                 propositore = this.caricaPropositore("Amministratore", Session.getUserName());
             }
             
-            int ultimoCodice = this.getUltimoCodiceGara();
-            System.out.println("ultimo codice: " + ultimoCodice);
+            String ultimoCodice = this.getUltimoCodiceGara();
+            int numero = Integer.parseInt(ultimoCodice.substring(1));
+            numero++;
+            String nuovoCodice = String.format("G%03d", numero);
 
             Gara g = new Gara();
+            g.setCodice(nuovoCodice);
             g.setNumProva(numProva);
             g.setTecnica(tecnica);
             g.setCriterioPunti(criterio);
@@ -183,7 +186,7 @@ public class ProponiGaraService {
             
 			this.garaDAO.insertGara(g);
 			
-			
+			Session.setCodiceGara(nuovoCodice);
 		} catch(Exception e) {
 			throw new PropostaEccezione(e.getMessage(), e);
 		}

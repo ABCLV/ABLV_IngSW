@@ -3,7 +3,7 @@ package state;
 public final class Session {
 	private static String userName; // nome della società / CF / ecc.
 	private static String userType; // "Società", "Arbitro", ...
-	private static int codiceGara;
+	private static String codiceGara;
 	
 	private Session() {}
 
@@ -23,7 +23,13 @@ public final class Session {
 		userType = type;
 	}
 
-	
+	public static String getCodiceGara() {
+		return codiceGara;
+	}
+
+	public static void setCodiceGara(String codiceGara) {
+		Session.codiceGara = codiceGara;
+	};
 	
 	
 	
