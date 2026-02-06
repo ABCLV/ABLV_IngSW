@@ -88,7 +88,7 @@ public class LoginController {
 			else if (tipo.equals("Societa")) {
 				SocietaHomeController ctrl = loader.getController();
 			}
-			else if (tipo.equals("Arbtiro")) {
+			else if (tipo.equals("Arbitro")) {
 				ArbitroHomeController ctrl = loader.getController();
 			}
 			
@@ -97,6 +97,7 @@ public class LoginController {
 			stage.setTitle(tipo + " Home");
 		} catch(Exception e) {
 			errLabel.setVisible(true);
+			e.printStackTrace();
 			Alerter.showError(e.getMessage());
 		}
 		

@@ -78,8 +78,7 @@ public class SocietaDAO {
 					r.get(SOCIETA.EMAIL),
 					r.get(SOCIETA.CAP),
 					r.get(SOCIETA.CITTA),
-					r.get(SOCIETA.INDIRIZZO)
-					);
+					r.get(SOCIETA.INDIRIZZO));
 		}  catch (DataAccessException e) {
 			throw new SocietaEccezione("Errore nel recuperare la società!", e);
 		} catch (SQLException e) {

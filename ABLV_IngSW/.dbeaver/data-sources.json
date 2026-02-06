@@ -1,7 +1,7 @@
 {
 	"folders": {},
 	"connections": {
-		"sqlite_jdbc-19c1fd84984-3f9fa51698038d05": {
+		"sqlite_jdbc-19c203e1bc2-35826802cf3e40c4": {
 			"provider": "sqlite",
 			"driver": "sqlite_jdbc",
 			"name": "gare.db",
