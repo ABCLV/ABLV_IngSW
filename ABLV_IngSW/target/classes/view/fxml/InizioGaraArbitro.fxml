@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.svolgimentoGara.SelezionaGaraController"
+            style="-fx-background-color: #e6f7ff;"
+            prefWidth="900"
+            prefHeight="650">
+
+    <!-- TOP -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 15;">
+            <Label text="Appello Gara"
+                   style="-fx-font-size: 22;
+                          -fx-font-weight: bold;
+                          -fx-text-fill: #005f5f;"/>
+        </HBox>
+<HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 15;">
+        <Label text="Appello Gara"
+               style="-fx-font-size: 22;
+                      -fx-font-weight: bold;
+                      -fx-text-fill: #005f5f;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Indietro"
+                onAction="#handleBack"/>
+    </HBox>
+    </top>
+
+
+    <!-- CENTER -->
+    <center>
+        <VBox spacing="20" style="-fx-padding: 30;">
+
+            <!-- DATA -->
+            <HBox spacing="10">
+                <Label text="Data odierna:"
+                       style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                <Label fx:id="lblDataOggi"
+                       style="-fx-font-size: 16;"/>
+            </HBox>
+
+            <Separator/>
+
+            <!-- GARA -->
+            <VBox spacing="10">
+                <Label text="Seleziona gara:"
+                       style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                <ComboBox fx:id="garaComboBox"
+                          prefWidth="400"
+                          onAction="#onGaraSelected"
+                          promptText="Gara di oggi"/>
+            </VBox>
+
+            <Separator/>
+
+            <!-- APPELLO -->
+            <VBox spacing="10">
+                <Label text="Appello concorrenti (seleziona gli ASSENTI):"
+                       style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                <ListView fx:id="listConcorrenti"
+                          prefHeight="250"/>
+            </VBox>
+
+        </VBox>
+    </center>
+
+    <!-- BOTTOM -->
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 20;">
+            <Button fx:id="btnAvviaGara"
+                    text="Avvia Gara"
+                    prefWidth="180"
+                    onAction="#handleAvviaGara"
+                    style="-fx-background-color: #005f5f;
+                           -fx-text-fill: white;
+                           -fx-font-weight: bold;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

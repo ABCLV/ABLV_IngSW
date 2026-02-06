@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.ricerche.RicercaConcorrentiController"
+      alignment="CENTER"
+      spacing="10"
+      prefWidth="700"
+      prefHeight="400"
+      style="-fx-background-color: #e6f7ff;">
+
+    <Label text="Elenco Concorrenti"
+           style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #005f5f;" />
+
+    <TableView fx:id="table" prefWidth="650" prefHeight="300">
+        <columns>
+            <TableColumn fx:id="cfCol" text="Codice Fiscale" prefWidth="120"/>
+            <TableColumn fx:id="nomeCol" text="Nome" prefWidth="120"/>
+            <TableColumn fx:id="cognomeCol" text="Cognome" prefWidth="120"/>
+            <TableColumn fx:id="emailCol" text="Email" prefWidth="150"/>
+            <TableColumn fx:id="nascitaCol" text="Data Nascita" prefWidth="80"/>
+	    <TableColumn fx:id="societa" text="Societa'" prefWidth="100"/>
+        </columns>
+    </TableView>
+
+    <Button text="Indietro" fx:id="backBtn" onAction="#handleBack" maxWidth="150"/>
+</VBox>
