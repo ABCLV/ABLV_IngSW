@@ -20,20 +20,10 @@ public class TurnoDAO {
 	public TurnoDAO() {
 	};
 
-	public boolean creaTurni(List<Settore> sett, List<Integer> durate, String codiceGara) throws GaraEccezione {
+	public boolean creaTurni(List<Settore> sett, List<Integer> durate, int codiceGara) throws GaraEccezione {
 
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-
-			// 🔹 1 — leggo ultimo codice turno
-			String ultimoCodice = ctx.select(TURNO.CODICE).from(TURNO).orderBy(TURNO.CODICE.desc()).limit(1)
-					.fetchOneInto(String.class);
-
-			int progressivo = 0;
-
-			if (ultimoCodice != null) {
-				progressivo = Integer.parseInt(ultimoCodice.substring(1));
-			}
 
 			// 🔹 2 — ciclo settori
 			for (Settore s : sett) {
@@ -43,11 +33,9 @@ public class TurnoDAO {
 				// 🔹 3 — ciclo durate
 				for (Integer durata : durate) {
 
-					progressivo++;
-					String nuovoCodice = String.format("T%03d", progressivo);
 
-					ctx.insertInto(TURNO, TURNO.CODICE, TURNO.NUMERO, TURNO.DURATA, TURNO.SETTORE, TURNO.GARA)
-							.values(nuovoCodice, numeroTurno, durata, s.getIdSettore(), codiceGara).execute();
+					ctx.insertInto(TURNO, TURNO.NUMERO, TURNO.DURATA, TURNO.SETTORE, TURNO.GARA)
+							.values(numeroTurno, durata, s.getIdSettore(), codiceGara).execute();
 
 					numeroTurno++;
 				}

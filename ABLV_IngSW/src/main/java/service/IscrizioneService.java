@@ -53,18 +53,9 @@ public class IscrizioneService {
 	    }
 	}
 	
-	public int getUltimoCodiceIscrizione() throws PropostaEccezione {
-		int ret = -1;
-		try {
-			ret = this.iscrizioneDAO.getUltimoCodiceIscrizione();
-		} catch(Exception e) {
-			throw new PropostaEccezione(e.getMessage(), e);
-		}
-		
-		return ret;
-	}
+	
 
-	public List<String> getCodiciGareIscrittoPerConcorrente(String cf) throws IscrizioneEccezione {
+	public List<Integer> getCodiciGareIscrittoPerConcorrente(String cf) throws IscrizioneEccezione {
 		try {
 			return this.iscrizioneDAO.getCodiciGareIscrittoPerConcorrente(cf);
 		} catch(IscrizioneEccezioneDB e) {
@@ -84,7 +75,7 @@ public class IscrizioneService {
 	}
 	
 	
-	public List<Concorrente> getIscrizioniGara(String codice) throws  IscrizioneEccezioneDB{
+	public List<Concorrente> getIscrizioniGara(int codice) throws  IscrizioneEccezioneDB{
 		try {
 			return this.iscrizioneDAO.getConcorrenti(codice);
 		} catch(ConcorrenteEccezione e) {
