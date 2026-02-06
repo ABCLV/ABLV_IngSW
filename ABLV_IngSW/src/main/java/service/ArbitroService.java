@@ -54,7 +54,7 @@ public class ArbitroService {
 		
 	}
 	
-	public void aggiornaStatoGara(String codice, StatoGara stato) {
+	public void aggiornaStatoGara(int codice, StatoGara stato) {
 		try {
 			this.arbitroDAO.aggiornaStatoGara(codice, stato);
 		} catch(ArbitroEccezione e) {
@@ -66,7 +66,7 @@ public class ArbitroService {
 		return this.arbitroDAO.assegnaArbitroAGara(codiceGara, arb);
 	}
 	
-	public void rinvioGaraArbitro(String codiceGara, LocalDate data) {
+	public void rinvioGaraArbitro(int codiceGara, LocalDate data) {
 		this.arbitroDAO.aggiornaDataGara(codiceGara, data);
 	}
 	

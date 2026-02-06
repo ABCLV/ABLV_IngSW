@@ -115,15 +115,15 @@ public class AmministratoreDAO {
 
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-			Result<Record8<String, Integer, String, LocalDate, String, String, String, String>> rs = ctx
-					.select(GARA.CODICE, GARA.NUMPROVA, GARA.TECNICA, GARA.DATA, GARA.CAMPOGARA, CAMPIONATO.TITOLO,
+			Result<Record8<Integer, Integer, String, LocalDate, Integer, String, String, String>> rs = ctx
+					.select(GARA.ID, GARA.NUMPROVA, GARA.TECNICA, GARA.DATA, GARA.CAMPOGARA, CAMPIONATO.TITOLO,
 							CAMPIONATO.CATEGORIA, GARA.STATOCONFERMA)
 					.from(GARA).leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
 					.where(GARA.AMMINISTRATOREPROPOSTA.eq(amm)).fetch();
 
 			List<Gara> out = new ArrayList<>();
 
-			for (Record8<String, Integer, String, LocalDate, String, String, String, String> r : rs) {
+			for (Record8<Integer, Integer, String, LocalDate, Integer, String, String, String> r : rs) {
 
 				Gara g = new Gara();
 				g.setCodice(r.value1());

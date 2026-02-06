@@ -48,14 +48,14 @@ public class GaraDAO {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-			var result = ctx.select(GARA.CODICE, GARA.NUMPROVA, GARA.DATA, GARA.TIPOGARA, GARA.TECNICA,
+			var result = ctx.select(GARA.ID, GARA.NUMPROVA, GARA.DATA, GARA.TIPOGARA, GARA.TECNICA,
 					GARA.CRITERIOPUNTI, GARA.MAXPERSONE, GARA.MINPERSONE, GARA.STATOGARA, GARA.STATOCONFERMA).from(GARA)
 					.fetch();
 
 			for (var r : result) {
 				Gara g = new Gara();
 
-				g.setCodice(r.get(GARA.CODICE));
+				g.setCodice(r.get(GARA.ID));
 				g.setNumProva(r.get(GARA.NUMPROVA));
 
 				// Converte la data da java.sql.Date a LocalDate
@@ -101,12 +101,12 @@ public class GaraDAO {
 		return gare;
 	}
 
-	public String trovaCodiceCampoGara(String codiceGara) throws GaraEccezione {
+	public int trovaCodiceCampoGara(int codiceGara) throws GaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-			return ctx.select(GARA.CAMPOGARA).from(GARA).where(GARA.CODICE.eq(codiceGara)).fetchOne(GARA.CAMPOGARA);
+			return ctx.select(GARA.CAMPOGARA).from(GARA).where(GARA.ID.eq(codiceGara)).fetchOne(GARA.CAMPOGARA);
 
 		}  catch (DataAccessException e) {
 			throw new GaraEccezione("Errore nel recupero del campo gara!", e);
@@ -115,11 +115,11 @@ public class GaraDAO {
 		}
 	}
 
-	public void eliminaGara(String codice) throws GaraEccezione {
+	public void eliminaGara(int codice) throws GaraEccezione {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 	        ctx.deleteFrom(GARA)
-	           .where(GARA.CODICE.eq(codice))
+	           .where(GARA.ID.eq(codice))
 	           .execute();
 	    } catch (DataAccessException e) {
 	        throw new GaraEccezione("Errore nell'eliminare la gara", e);
@@ -128,7 +128,7 @@ public class GaraDAO {
 	    }
 	}
 
-	public void eliminaTurniGara(String codiceGara) throws GaraEccezione {
+	public void eliminaTurniGara(int codiceGara) throws GaraEccezione {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 	        ctx.deleteFrom(TURNO)
@@ -148,13 +148,13 @@ public class GaraDAO {
 
 			// mappaggio manuale
 			return ctx
-					.select(GARA.CODICE, GARA.NUMPROVA, GARA.TECNICA, GARA.CRITERIOPUNTI, GARA.DATA, GARA.MAXPERSONE,
+					.select(GARA.ID, GARA.NUMPROVA, GARA.TECNICA, GARA.CRITERIOPUNTI, GARA.DATA, GARA.MAXPERSONE,
 							GARA.MINPERSONE, GARA.STATOGARA, GARA.STATOCONFERMA, GARA.TIPOGARA)
 					.from(GARA).where(GARA.CAMPOGARA.eq(c.getIdCampoGara())).fetch(record -> {
 						try {
 							Gara g = new Gara();
 
-							g.setCodice(record.get(GARA.CODICE));
+							g.setCodice(record.get(GARA.ID));
 							g.setNumProva(record.get(GARA.NUMPROVA));
 
 							g.setTecnica(Tecnica.valueOf(record.get(GARA.TECNICA).trim().toUpperCase()));
@@ -246,20 +246,20 @@ public class GaraDAO {
 	public List<Gara> getGareDaConfermare(String amm) throws GaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-			Result<Record8<String, Integer, String, LocalDate, String, String, String, String>> gareAmm = ctx
-					.select(GARA.CODICE, GARA.NUMPROVA, GARA.TECNICA, GARA.DATA, GARA.CAMPOGARA,
+			Result<Record8<Integer, Integer, String, LocalDate, Integer, String, String, String>> gareAmm = ctx
+					.select(GARA.ID, GARA.NUMPROVA, GARA.TECNICA, GARA.DATA, GARA.CAMPOGARA,
 							GARA.AMMINISTRATOREPROPOSTA, CAMPIONATO.TITOLO, CAMPIONATO.CATEGORIA)
 					.from(GARA).leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
 					.where(GARA.AMMINISTRATOREACCETTAZIONE.isNull(), GARA.AMMINISTRATOREPROPOSTA.notEqual(amm)).fetch();
 
-			Result<Record8<String, Integer, String, LocalDate, String, String, String, String>> gareSoc = ctx
-					.select(GARA.CODICE, GARA.NUMPROVA, GARA.TECNICA, GARA.DATA, GARA.CAMPOGARA, GARA.SOCIETA,
+			Result<Record8<Integer, Integer, String, LocalDate, Integer, String, String, String>> gareSoc = ctx
+					.select(GARA.ID, GARA.NUMPROVA, GARA.TECNICA, GARA.DATA, GARA.CAMPOGARA, GARA.SOCIETA,
 							CAMPIONATO.TITOLO, CAMPIONATO.CATEGORIA)
 					.from(GARA).leftJoin(CAMPIONATO).on(CAMPIONATO.TITOLO.eq(GARA.CAMPIONATO))
 					.where(GARA.AMMINISTRATOREACCETTAZIONE.isNull(), GARA.SOCIETA.isNotNull()).fetch();
 
 			List<Gara> out = new ArrayList<>();
-			for (Record8<String, Integer, String, LocalDate, String, String, String, String> r : gareAmm) {
+			for (Record8<Integer, Integer, String, LocalDate, Integer, String, String, String> r : gareAmm) {
 
 				Campionato campionato = null;
 				if (r.value7() != null) {
@@ -282,7 +282,7 @@ public class GaraDAO {
 				out.add(g);
 			}
 
-			for (Record8<String, Integer, String, LocalDate, String, String, String, String> r : gareSoc) {
+			for (Record8<Integer, Integer, String, LocalDate, Integer, String, String, String> r : gareSoc) {
 
 				Campionato campionato = null;
 				if (r.value6() != null) {
@@ -359,8 +359,8 @@ public class GaraDAO {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-	        Result<Record11<String, Integer, String, String, Integer, Integer, String, LocalDate, String, String, String>> rs = ctx
-	        	.select(GARA.CODICE, GARA.NUMPROVA, GARA.TECNICA, GARA.CRITERIOPUNTI, GARA.MINPERSONE, 
+	        Result<Record11<Integer, Integer, String, String, Integer, Integer, String, LocalDate, Integer, String, String>> rs = ctx
+	        	.select(GARA.ID, GARA.NUMPROVA, GARA.TECNICA, GARA.CRITERIOPUNTI, GARA.MINPERSONE, 
 	        			GARA.MAXPERSONE, GARA.TIPOGARA, GARA.DATA, GARA.CAMPOGARA, CAMPIONATO.TITOLO, 
 	        			CAMPIONATO.CATEGORIA)
 	            .from(GARA)
@@ -369,7 +369,7 @@ public class GaraDAO {
 	                DSL.coalesce(
 	                    DSL.select(DSL.count())
 	                        .from(ISCRIVE)
-	                        .where(ISCRIVE.CODICEGARA.eq(GARA.CODICE))
+	                        .where(ISCRIVE.GARA.eq(GARA.ID))
 	                        .asField(),
 	                    0
 	                )
@@ -380,12 +380,12 @@ public class GaraDAO {
 
 	        List<Gara> out = new ArrayList<>();
 
-	        for (Record11<String, Integer, String, String, Integer, Integer, String, LocalDate, String, String, String>
+	        for (Record11<Integer, Integer, String, String, Integer, Integer, String, LocalDate, Integer, String, String>
 	        	r : rs) {
 	        	
 	            Gara g = new Gara();
 
-	            g.setCodice(r.get(GARA.CODICE));
+	            g.setCodice(r.get(GARA.ID));
 	            g.setData(r.get(GARA.DATA));
 	            g.setNumProva(r.get(GARA.NUMPROVA));
 	            g.setCriterioPunti(CriterioPunti.valueOf(r.get(GARA.CRITERIOPUNTI).toUpperCase()));

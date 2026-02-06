@@ -87,15 +87,15 @@ public class RinvioGareController {
 
     /* ---------- DETTAGLI ---------- */
     private void mostraDettagliGara(Gara g) {
-        lblCodiceGara.setText(g.getCodice());
+        lblCodiceGara.setText(String.valueOf(g.getCodice()));
         lblDataAttuale.setText(
                 g.getData() != null ? g.getData().toString() : "N/A");
         lblTecnica.setText(
                 g.getTecnica() != null ? g.getTecnica().toString() : "N/A");
         lblTipoGara.setText(
                 g.getTipoGara() != null ? g.getTipoGara().toString() : "N/A");
-        lblCampoGara.setText(
-                g.getCampoGara() != null ? g.getCampoGara().getIdCampoGara() : "N/A");
+        lblCampoGara.setText(String.valueOf(
+                g.getCampoGara() != null ? g.getCampoGara().getIdCampoGara() : "N/A"));
 
         datePickerNuovaData.setValue(g.getData());
         dettagliGaraSection.setVisible(true);
