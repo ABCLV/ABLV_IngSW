@@ -231,20 +231,21 @@ public class ProponiGaraController {
     
     private CampoGara getSelectedCampoGara() {
         Object selected = campoGaraBox.getValue();
-        
-        if(selected != null) {
-        	String text = selected.toString();
-            String id = text.split(",")[0].trim();
-            
+
+        if (selected != null) {
+            String text = selected.toString();
+            int id = Integer.parseInt(text.split(",")[0].trim());
+
             for (CampoGara cg : campiGaraList) {
-                if (cg.getIdCampoGara().equals(id)) {
+                if (cg.getIdCampoGara() == id) {
                     return cg;
                 }
             }
         }
-        
+
         return null;
     }
+
     
     @FXML
     private void proponiGara() {

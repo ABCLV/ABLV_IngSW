@@ -1,14 +1,14 @@
 {
 	"folders": {},
 	"connections": {
-		"sqlite_jdbc-19c1fd84984-3f9fa51698038d05": {
+		"sqlite_jdbc-19c37e3867d-749e1b385841d5ed": {
 			"provider": "sqlite",
 			"driver": "sqlite_jdbc",
 			"name": "gare.db",
 			"save-password": true,
 			"configuration": {
-				"database": "C:\\Users\\Utente\\Desktop\\Nicola\\UNIBG\\ingegneria del software\\progetto\\ABLV_IngSW\\database\\gare.db",
-				"url": "jdbc:sqlite:C:\\Users\\Utente\\Desktop\\Nicola\\UNIBG\\ingegneria del software\\progetto\\ABLV_IngSW\\database\\gare.db",
+				"database": "C:\\Users\\Mikyv\\Desktop\\Universita\\Ingegneria del Software\\Progetto\\ABLV_IngSW\\database\\gare.db",
+				"url": "jdbc:sqlite:C:\\Users\\Mikyv\\Desktop\\Universita\\Ingegneria del Software\\Progetto\\ABLV_IngSW\\database\\gare.db",
 				"configurationType": "MANUAL",
 				"type": "dev",
 				"closeIdleConnection": true

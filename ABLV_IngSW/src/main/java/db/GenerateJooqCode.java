@@ -7,7 +7,7 @@ public class GenerateJooqCode {
 
     public static void main(String[] args) throws Exception {
 
-        String dbUrl = "jdbc:sqlite:database/gare.db"; // il tuo DB SQLite
+        String dbUrl = "jdbc:sqlite:../database/gare.db"; // il tuo DB SQLite
 
         Configuration configuration = new Configuration()
             .withJdbc(new Jdbc()

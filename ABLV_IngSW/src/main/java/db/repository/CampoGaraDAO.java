@@ -37,7 +37,7 @@ public class CampoGaraDAO {
 		}
 	}
 
-	public CampoGara trovaCampoGara(String codice) throws CampoGaraEccezione {
+	public CampoGara trovaCampoGara(int codice) throws CampoGaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);

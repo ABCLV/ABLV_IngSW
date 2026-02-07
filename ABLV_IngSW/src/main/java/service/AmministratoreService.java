@@ -48,7 +48,7 @@ public class AmministratoreService /*implements PropositoreIF*/ {
 	 * @param numGara numero identificativo della gara
 	 * @throws SQLException
 	 */
-	public void confermaProposta(String codiceGara, String ammId) throws PropostaEccezione {
+	public void confermaProposta(int codiceGara, String ammId) throws PropostaEccezione {
 		try {
 			this.garaDAO.accettaGara(codiceGara, ammId);
 		} catch(GaraEccezione e) {
@@ -62,9 +62,10 @@ public class AmministratoreService /*implements PropositoreIF*/ {
 	 * @param numGara numero identificativo della gara
 	 * @param motivo  motivazione del rifiuto
 	 */
-	public void negaProposta(String codiceGara, String ammId) throws PropostaEccezione {
+	public void negaProposta(int codiceGara, String ammId) throws PropostaEccezione {
 		try {
-			this.turnoDAO.eliminaTurniPerGara(codiceGara);
+			//dovrebbero eliminarsi da soli con cascade
+			//this.turnoDAO.eliminaTurniPerGara(codiceGara);
 			this.garaDAO.rifiutaGara(codiceGara, ammId);
 		} catch(GaraEccezione e) {
 			e.printStackTrace();

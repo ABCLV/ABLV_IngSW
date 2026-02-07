@@ -104,10 +104,10 @@ public class AggiornaStatoGaraController {
         
         if(selected != null) {
         	String text = selected.toString();
-            String cod = text.split(",")[0].trim();
+            int cod = Integer.parseInt(text);
             
             for (Gara g : gareList) {
-                if (g.getCodice().equals(cod)) {
+                if (g.getCodice() == cod) {
                     return g;
                 }
             }
@@ -137,7 +137,7 @@ public class AggiornaStatoGaraController {
         	this.arbitroService.aggiornaStatoGara(garaSelezionata.getCodice(), statoSelezionato);
         	caricaGare();
         	for (Gara g : gareList) {
-                if (g.getCodice().equals(garaSelezionata.getCodice())) {
+                if (g.getCodice() == garaSelezionata.getCodice()) {
                     gareComboBox.setValue(g);
                     break;
                 }

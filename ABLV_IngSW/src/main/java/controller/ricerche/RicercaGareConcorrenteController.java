@@ -44,7 +44,7 @@ public class RicercaGareConcorrenteController {
 	@FXML private TableColumn<Gara, String> colCodice;
 	@FXML private TableColumn<Gara, String> colData;
 	@FXML private TableColumn<Gara, String> colTecnica;
-	@FXML private TableColumn<Gara, String> colCampo;
+	@FXML private TableColumn<Gara, Integer> colCampo;
 
 	private final ObservableList<Gara> gareObs = FXCollections.observableArrayList();
 
@@ -60,7 +60,9 @@ public class RicercaGareConcorrenteController {
 	    colTecnica.setCellValueFactory(cellData ->
 	        new SimpleStringProperty(cellData.getValue().getTecnica().toString()));
 	    colCampo.setCellValueFactory(cellData ->
-	        new SimpleStringProperty(cellData.getValue().getCampoGara().getIdCampoGara()));
+	    new javafx.beans.property.SimpleIntegerProperty(
+	            cellData.getValue().getCampoGara().getIdCampoGara()
+	        ).asObject());
 
 	    gareTable.setItems(gareObs);
 	}
@@ -78,13 +80,13 @@ public class RicercaGareConcorrenteController {
 	        lblCognome.setText("Cognome: " + concorrente.getCognome());
 	        lblEmail.setText("Email: " + concorrente.getEmail());
 	        lblNascita.setText("Nascita: " + concorrente.getNascita());
-	        lblSocieta.setText("Società: " + concorrente.getSocieta());
+	        lblSocieta.setText("Societï¿½: " + concorrente.getSocieta());
 
 	        var soc = societaService.getSocieta(concorrente.getSocieta());
 
 	        lblSocNome.setText("Nome: " + soc.getNome());
 	        lblSocIndirizzo.setText("Indirizzo: " + soc.getIndirizzo());
-	        lblSocCitta.setText("Città: " + soc.getCitta());
+	        lblSocCitta.setText("Cittï¿½: " + soc.getCitta());
 	        lblSocCap.setText("CAP: " + soc.getCap());
 	        lblSocEmail.setText("Email: " + soc.getEmail());
 
