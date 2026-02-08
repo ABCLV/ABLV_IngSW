@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.svolgimentoGara.InizioGaraController"
+            prefWidth="900"
+            prefHeight="650"
+            style="-fx-background-color: #f0faff;">
+
+    <!-- TOP -->
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-padding: 15;">
+            <Label text="Svolgimento Gara"
+                   style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #004d4d;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Turno:" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+            <Label fx:id="lblTurno" style="-fx-font-size: 16;"/>
+        </HBox>
+    </top>
+
+    <!-- CENTER -->
+    <center>
+        <VBox spacing="25" style="-fx-padding: 20;">
+
+            <!-- SETTORE -->
+            <VBox spacing="10">
+                <Label text="Seleziona settore:" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                <ComboBox fx:id="settoreComboBox" prefWidth="300" promptText="Settore"/>
+            </VBox>
+
+            <Separator/>
+
+            <!-- TIPO PUNTEGGIO -->
+            <Label fx:id="lblTipoPunteggio"
+                   text="Inserisci punteggio:"
+                   style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+
+            <!-- CONCORRENTI -->
+            <VBox spacing="15">
+                <Label text="Concorrenti del settore"
+                       style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                <ScrollPane prefHeight="400" prefWidth="850">
+                    <VBox fx:id="concorrentiVBox" spacing="10" style="-fx-padding: 10;"/>
+                </ScrollPane>
+            </VBox>
+
+        </VBox>
+    </center>
+
+    <!-- BOTTOM -->
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 20;">
+            <Button text="Salva Turno"
+                    prefWidth="180"
+                    onAction="#handleSalvaTurno"
+                    style="-fx-background-color: #004d4d; -fx-text-fill: white; -fx-font-weight: bold;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

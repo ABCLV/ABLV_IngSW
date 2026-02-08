@@ -136,33 +136,43 @@ public class SelezionaGaraController {
 
     /* ---------- AVVIO GARA ---------- */
     @FXML
-    private void handleAvviaGara() {
+    private void handleAvviaGara(ActionEvent event) {
         Gara gara = garaComboBox.getValue();
         if (gara == null) {
             Alerter.showError("Seleziona una gara");
             return;
         }
 
-        // concorrenti ASSENTI
         List<Concorrente> assenti = listConcorrenti.getItems().stream()
                 .filter(CheckBox::isSelected)
                 .map(cb -> (Concorrente) cb.getUserData())
                 .collect(Collectors.toList());
 
         try {
-        	System.out.println("ciao");
             punteggioService.assegnazioneGruppi(gara.getCodice(), assenti);
         } catch (Exception e) {
-            System.out.println(("Errore durante l'appello " + e.getMessage()));
+            Alerter.showError("Errore durante l'appello");
             return;
         }
-        
-        
-
-        // 👉 CAMBIO SCHERMATA
-        // definizione gruppi + gara
-        // FXMLLoader verso "avvioGara.fxml"
 
         Alerter.showSuccess("Appello completato. Avvio gara...");
+        Session.setCodiceGara(gara.getCodice());
+
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/view/fxml/InizioGara.fxml")
+            );
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Inizio Gara");
+            stage.show();
+
+        } catch (IOException e) {
+            Alerter.showError("Errore apertura schermata Inizio Gara");
+        }
     }
+
 }

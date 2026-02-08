@@ -185,6 +185,100 @@ public class GaraDAO {
 			throw new GaraEccezione("Errore nell'esplorare le gare!", e);
 		}
 	}
+	
+	
+	public Gara getGaraById(int codiceGara) throws GaraEccezione {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+	        var record = ctx
+	            .select(
+	                GARA.ID,
+	                GARA.NUMPROVA,
+	                GARA.DATA,
+	                GARA.TECNICA,
+	                GARA.CRITERIOPUNTI,
+	                GARA.MINPERSONE,
+	                GARA.MAXPERSONE,
+	                GARA.STATOGARA,
+	                GARA.STATOCONFERMA,
+	                GARA.TIPOGARA,
+	                GARA.CAMPOGARA,
+	                CAMPIONATO.TITOLO,
+	                CAMPIONATO.CATEGORIA
+	            )
+	            .from(GARA)
+	            .leftJoin(CAMPIONATO)
+	                .on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
+	            .where(GARA.ID.eq(codiceGara))
+	            .fetchOne();
+
+	        if (record == null) {
+	            return null; // oppure lancia eccezione custom se preferisci
+	        }
+
+	        Gara g = new Gara();
+
+	        g.setCodice(record.get(GARA.ID));
+	        g.setNumProva(record.get(GARA.NUMPROVA));
+	        g.setData(record.get(GARA.DATA));
+
+	        if (record.get(GARA.TECNICA) != null) {
+	            g.setTecnica(Tecnica.valueOf(
+	                record.get(GARA.TECNICA).trim().toUpperCase()
+	            ));
+	        }
+
+	        if (record.get(GARA.CRITERIOPUNTI) != null) {
+	            g.setCriterioPunti(CriterioPunti.valueOf(
+	                record.get(GARA.CRITERIOPUNTI).trim().toUpperCase()
+	            ));
+	        }
+
+	        g.setMinPersone(record.get(GARA.MINPERSONE));
+	        g.setMaxPersone(record.get(GARA.MAXPERSONE));
+
+	        if (record.get(GARA.STATOGARA) != null) {
+	            g.setStatoGara(StatoGara.valueOf(
+	                record.get(GARA.STATOGARA).trim().toUpperCase()
+	            ));
+	        }
+
+	        if (record.get(GARA.STATOCONFERMA) != null) {
+	            g.setStatoConferma(StatoConferma.valueOf(
+	                record.get(GARA.STATOCONFERMA).trim().toUpperCase()
+	            ));
+	        }
+
+	        if (record.get(GARA.TIPOGARA) != null) {
+	            g.setTipoGara(TipologiaGara.valueOf(
+	                record.get(GARA.TIPOGARA).trim().toUpperCase()
+	            ));
+	        }
+
+	        // Campo gara
+	        CampoGara campo = new CampoGara();
+	        campo.setIdCampoGara(record.get(GARA.CAMPOGARA));
+	        g.setCampoGara(campo);
+
+	        // Campionato (se presente)
+	        if (record.get(CAMPIONATO.TITOLO) != null) {
+	            Campionato campionato = new Campionato();
+	            campionato.setTitolo(record.get(CAMPIONATO.TITOLO));
+	            campionato.setCategoria(record.get(CAMPIONATO.CATEGORIA));
+	            g.setCampionato(campionato);
+	        }
+
+	        return g;
+
+	    } catch (DataAccessException | SQLException e) {
+	        throw new GaraEccezione(
+	            "Errore nel recupero della gara con codice " + codiceGara, e
+	        );
+	    }
+	}
+
 
 	public boolean insertGara(Gara gara) throws GaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
@@ -416,6 +510,10 @@ public class GaraDAO {
 	        throw new GaraEccezione("Errore nel recuperare le gare disponibili per l'iscrizione!", e);
 	    }
 	}
+	
+	
+	
+
 	
 	
 	
