@@ -3,7 +3,7 @@ package controller.reglog;
 import java.io.IOException;
 
 import controller.home.AmministratoreHomeController;
-import controller.home.ArbitroHomeController;
+import controller.home.ArbitroHomeController2;
 import controller.home.ConcorrenteHomeController;
 import controller.home.SocietaHomeController;
 import javafx.event.ActionEvent;
@@ -89,7 +89,7 @@ public class LoginController {
 				SocietaHomeController ctrl = loader.getController();
 			}
 			else if (tipo.equals("Arbtiro")) {
-				ArbitroHomeController ctrl = loader.getController();
+				ArbitroHomeController2 ctrl = loader.getController();
 			}
 			
 			Stage stage = (Stage) tipoCombo.getScene().getWindow();

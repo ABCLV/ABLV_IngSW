@@ -9,6 +9,7 @@ import db.exception.GaraEccezione;
 import static dbconSQLJOOQ.generated.Tables.GARA;
 import static dbconSQLJOOQ.generated.Tables.ISCRIVE;
 import static dbconSQLJOOQ.generated.Tables.TURNO;
+import static dbconSQLJOOQ.generated.Tables.SETTORE;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -25,6 +26,7 @@ import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.IntegrityConstraintViolationException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.Max;
 
 import model.Amministratore;
 import model.Campionato;
@@ -100,6 +102,27 @@ public class GaraDAO {
 
 		return gare;
 	}
+	
+	public int getNumTurni(int codiceGara) {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+	        Integer maxTurno = ctx.select(DSL.max(TURNO.NUMERO))
+                    .from(TURNO)
+                    .where(TURNO.GARA.eq(codiceGara))
+                    .fetchOne(0, Integer.class);
+
+	        return maxTurno != null ? maxTurno : 0;
+
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return 0;
+	    }
+	}
+
+
+
 
 	public int trovaCodiceCampoGara(int codiceGara) throws GaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {

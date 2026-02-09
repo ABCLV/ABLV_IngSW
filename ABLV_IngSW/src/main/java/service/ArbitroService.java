@@ -36,6 +36,12 @@ public class ArbitroService {
 		
 	}
 	
+	
+	public int getNumTurni(int codiceGara) {
+		return this.garaDAO.getNumTurni(codiceGara);
+	}
+	
+	
 	public List<Gara> getGareDiArbitro(String arb) throws RicercaEccezione {
 		List<Gara> ret = null;
 		try {
@@ -91,6 +97,8 @@ public class ArbitroService {
 			throw new AggiornaEccezione("Errore nel salvataggio del turno", e);
 		}
 	}
+	
+	
 
 	
 }

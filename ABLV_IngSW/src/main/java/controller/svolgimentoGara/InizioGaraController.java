@@ -1,12 +1,17 @@
 package controller.svolgimentoGara;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.Concorrente;
 import model.Gara;
@@ -18,6 +23,7 @@ import service.ArbitroService;
 import state.Session;
 import utils.Alerter;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -243,7 +249,7 @@ public class InizioGaraController {
     /* ===================== SALVA TURNO ===================== */
 
     @FXML
-    private void handleSalvaTurno() {
+    private void handleSalvaTurno(ActionEvent event) {
         // salva i risultati del settore visibile
         salvaRisultatiCorrenti();
 
@@ -286,18 +292,49 @@ public class InizioGaraController {
                 return; // l'utente vuole modificare ancora
             }
 
-            // Se l’utente continua, consideriamo i non modificati come squalificati o punteggio 0
+            // ---------- NUOVA LOGICA ----------
+            // Imposta punteggio 0 e squalifica per tutti i non modificati
             for (Map.Entry<Integer, List<RisultatoTurno>> entry : risultatiPerSettore.entrySet()) {
                 int idSettore = entry.getKey();
                 Set<String> modified = modifiedPerSettore.getOrDefault(idSettore, Collections.emptySet());
                 for (RisultatoTurno r : entry.getValue()) {
                     if (!modified.contains(r.getIdConcorrente())) {
-                        r.setSqualificato();
                         r.azzeraPunti();
+                        r.setSqualificato();
+                    }
+                }
+            }
+
+            // Aggiorna subito la UI per mostrare gli azzeramenti
+            for (Node node : concorrentiVBox.getChildren()) {
+                if (!(node instanceof HBox hbox)) continue;
+                Concorrente c = (Concorrente) hbox.getUserData();
+                RisultatoTurno r = risultatiPerSettore.get(settoreCorrente.getIdSettore()).stream()
+                        .filter(rt -> rt.getIdConcorrente().equals(c.getCf()))
+                        .findFirst().orElse(null);
+                if (r == null) continue;
+
+                Node input = hbox.getChildren().get(1);
+                CheckBox chk = (CheckBox) hbox.getChildren().get(3);
+
+                chk.setSelected(r.isSqualificato());
+                if (input instanceof Spinner<?> sp) {
+                    sp.setDisable(r.isSqualificato());
+                    if (!r.isSqualificato()) {
+                        if (sp.getValue() instanceof Integer)
+                            ((Spinner<Integer>) sp).getValueFactory().setValue((int) r.getPunteggio());
+                        else
+                            ((Spinner<Double>) sp).getValueFactory().setValue(r.getPunteggio());
+                    } else {
+                        if (sp.getValue() instanceof Integer)
+                            ((Spinner<Integer>) sp).getValueFactory().setValue(0);
+                        else
+                            ((Spinner<Double>) sp).getValueFactory().setValue(0.0);
                     }
                 }
             }
         }
+
 
         try {
             // invia tutti i risultati al servizio
@@ -312,13 +349,33 @@ public class InizioGaraController {
             modifiedPerSettore.clear();
 
             turnoCorrente++;
+            
+           
+            
             lblTurno.setText(String.valueOf(turnoCorrente));
             Alerter.showSuccess("Turno salvato correttamente");
+            System.out.println("turno corrente: " + turnoCorrente);
+            System.out.println("turni totali: " + this.arbitroService.getNumTurni(garaCorrente.getCodice()));
+            if(turnoCorrente > this.arbitroService.getNumTurni(garaCorrente.getCodice())) {
+            	buttonEsci(event);
+            }
 
         } catch (Exception e) {
             Alerter.showError("Errore nel salvataggio del turno");
             e.printStackTrace();
         }
+    }
+    
+    private void buttonEsci(ActionEvent event) {
+    	try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/arbitroHome.fxml"));
+			Scene homeScene = new Scene(loader.load());
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			stage.setScene(homeScene);
+			stage.setTitle("Orobic Fishing Race");
+		} catch(IOException e) {
+			Alerter.showError(e.getMessage());
+		}
     }
 
 
