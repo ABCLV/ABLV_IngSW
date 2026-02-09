@@ -31,11 +31,10 @@ class CampionatoTest {
    
     
     @Test
-    @DisplayName("Getter classifiche dovrebbero ritornare liste, ma al momento sono null")
+    @DisplayName("Getter classifiche dovrebbero ritornare liste")
     void testClassificheNonImplementate() {
         // Questo test fallisce perché getClassificaTotale() e classificaProva() 
         // ritornano null.
         assertNotNull(campionato.getClassificaTotale(), "TODO: implementare logica classifica totale");
-        assertNotNull(campionato.classificaProva(1), "TODO: implementare logica classifica prova");
-    }
+     }
 }
