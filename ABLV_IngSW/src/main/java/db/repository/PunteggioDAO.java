@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 import org.jooq.Condition;
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
@@ -24,6 +25,11 @@ import db.exception.GaraEccezione;
 import model.Concorrente;
 import model.Settore;
 import model.Turno;
+import service.RisultatoTurno;
+import org.jooq.Query;
+import org.jooq.impl.DSL;
+import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
 
 
 public class PunteggioDAO {
@@ -32,6 +38,48 @@ public class PunteggioDAO {
 	
 	
 	
+	public void salvaTurno(int codiceGara, int numeroTurno, List<RisultatoTurno> risultati) {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	        System.out.println("risultati: "+risultati.toString());
+	        ctx.transaction(configuration -> {
+	            DSLContext tx = DSL.using(configuration);
+
+	            // Definizione della subquery per ottenere l'ID del turno
+	            // (verrà poi usata nel WHERE)
+	            Field<Integer> turnoIdSubquery = DSL
+	                .select(TURNO.ID)
+	                .from(TURNO)
+	                .where(TURNO.NUMERO.eq(numeroTurno))
+	                .and(TURNO.GARA.eq(codiceGara))
+	                .asField();
+
+	            // Creazione delle query per ciascun concorrente
+	            List<Query> queries = risultati.stream()
+	                .map(r -> (Query) tx.update(PARTECIPA)
+	                    .set(PARTECIPA.NUMPUNTI, r.isSqualificato() ? 0 : (int) r.getPunteggio())
+	                    .set(PARTECIPA.SQUALIFICA, r.isSqualificato())
+	                    .where(PARTECIPA.CONCORRENTE.eq(r.getIdConcorrente()))
+	                    .and(PARTECIPA.TURNO.eq(turnoIdSubquery))
+	                )
+	                .collect(Collectors.toList());
+
+	            // Esecuzione in batch per efficienza
+	            tx.batch(queries).execute();
+	        });
+
+	    } catch (Exception e) {
+	        throw new GaraEccezione(
+	            "Errore nel salvataggio del turno " + numeroTurno +
+	            " per la gara " + codiceGara,
+	            e
+	        );
+	    }
+	}
+
+
+
 
 
 

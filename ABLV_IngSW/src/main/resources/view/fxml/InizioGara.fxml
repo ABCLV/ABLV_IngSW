@@ -27,23 +27,28 @@
 
             <!-- SETTORE -->
             <VBox spacing="10">
-                <Label text="Seleziona settore:" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
-                <ComboBox fx:id="settoreComboBox" prefWidth="300" promptText="Settore"/>
+                <Label text="Seleziona settore:"
+                       style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+                <ComboBox fx:id="settoreComboBox"
+                          prefWidth="300"
+                          promptText="Settore"/>
             </VBox>
 
             <Separator/>
 
             <!-- TIPO PUNTEGGIO -->
             <Label fx:id="lblTipoPunteggio"
-                   text="Inserisci punteggio:"
                    style="-fx-font-size: 16; -fx-font-weight: bold;"/>
 
             <!-- CONCORRENTI -->
             <VBox spacing="15">
                 <Label text="Concorrenti del settore"
                        style="-fx-font-size: 16; -fx-font-weight: bold;"/>
-                <ScrollPane prefHeight="400" prefWidth="850">
-                    <VBox fx:id="concorrentiVBox" spacing="10" style="-fx-padding: 10;"/>
+
+                <ScrollPane prefHeight="400" prefWidth="850" fitToWidth="true">
+                    <VBox fx:id="concorrentiVBox"
+                          spacing="10"
+                          style="-fx-padding: 10;"/>
                 </ScrollPane>
             </VBox>
 

@@ -7,22 +7,24 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.StringConverter;
 import model.Concorrente;
 import model.Gara;
 import model.Settore;
 import service.PunteggioService;
 import service.RicercaService;
+import service.RisultatoTurno;
 import service.ArbitroService;
 import state.Session;
 import utils.Alerter;
 
-import java.util.List;
+import java.text.DecimalFormat;
+import java.util.*;
 
 public class InizioGaraController {
 
     @FXML private Label lblTurno;
     @FXML private Label lblTipoPunteggio;
-
     @FXML private ComboBox<Settore> settoreComboBox;
     @FXML private VBox concorrentiVBox;
 
@@ -32,10 +34,18 @@ public class InizioGaraController {
 
     private Gara garaCorrente;
     private int turnoCorrente;
+    private Settore settoreCorrente;
+
+    // idSettore -> risultati inseriti in quel settore
+    private final Map<Integer, List<RisultatoTurno>> risultatiPerSettore = new HashMap<>();
+
+    // idSettore -> set di CF concorrenti che sono stati modificati dall'utente
+    private final Map<Integer, Set<String>> modifiedPerSettore = new HashMap<>();
+
+    /* ===================== INIT ===================== */
 
     @FXML
     public void initialize() {
-        // Recupero gara dalla sessione
         garaCorrente = arbitroService.getGara(Session.getCodiceGara());
         turnoCorrente = 1;
 
@@ -44,105 +54,301 @@ public class InizioGaraController {
         caricaSettori();
     }
 
-    /* ---------- TIPO PUNTEGGIO ---------- */
+    /* ===================== TIPO PUNTEGGIO ===================== */
+
     private void setupTipoPunteggio() {
         switch (garaCorrente.getCriterioPunti()) {
             case NUM_CATTURE -> lblTipoPunteggio.setText("Numero catture:");
-            case PESO -> lblTipoPunteggio.setText("Peso totale (kg):");
-            case BIG_ONE -> lblTipoPunteggio.setText("Peso cattura maggiore (kg):");
+            case PESO -> lblTipoPunteggio.setText("Peso totale:");
+            case BIG_ONE -> lblTipoPunteggio.setText("Peso cattura maggiore:");
         }
     }
 
-    /* ---------- CARICA SETTORI ---------- */
-    private void caricaSettori() {
-        List<Settore> settori = ricercaSettori.esploraSettori(garaCorrente.getCampoGara());
-        settoreComboBox.setItems(FXCollections.observableArrayList(settori));
+    /* ===================== SETTORI ===================== */
 
-        settoreComboBox.setOnAction(e -> caricaConcorrentiSettore(settoreComboBox.getValue()));
+    private void caricaSettori() {
+        List<Settore> settori =
+                ricercaSettori.esploraSettori(garaCorrente.getCampoGara());
+
+        settoreComboBox.setItems(FXCollections.observableArrayList(settori));
+        settoreComboBox.setOnAction(e -> {
+            Settore nuovoSettore = settoreComboBox.getValue();
+            salvaRisultatiCorrenti(); // salva i valori del settore attuale
+            caricaConcorrentiSettore(nuovoSettore);
+        });
     }
 
-    /* ---------- CARICA CONCORRENTI DEL SETTORE ---------- */
+    /* ===================== CONCORRENTI ===================== */
+
     private void caricaConcorrentiSettore(Settore settore) {
         concorrentiVBox.getChildren().clear();
         if (settore == null) return;
 
+        settoreCorrente = settore;
+        int idSettore = settore.getIdSettore();
+
+        // assicurati che esista un set per le modifiche di questo settore
+        modifiedPerSettore.putIfAbsent(idSettore, new HashSet<>());
+
         List<Concorrente> concorrenti =
-                punteggioService.getConcorrentiSettore(garaCorrente.getCodice(), settore.getIdSettore());
+                punteggioService.getConcorrentiSettore(
+                        garaCorrente.getCodice(),
+                        idSettore
+                );
 
         for (Concorrente c : concorrenti) {
             HBox row = new HBox(15);
             row.setAlignment(Pos.CENTER_LEFT);
+            row.setUserData(c);
 
             Label lblNome = new Label(c.getNome());
             lblNome.setPrefWidth(200);
 
-            Spinner<Double> spPunteggio = new Spinner<>(0, 1000, 0, 0.1);
-            spPunteggio.setEditable(true);
-            spPunteggio.setPrefWidth(100);
+            Control inputPunteggio;
+            Label lblUnita = new Label();
+
+            switch (garaCorrente.getCriterioPunti()) {
+                case NUM_CATTURE -> {
+                    Spinner<Integer> sp = new Spinner<>(0, 1000, 0, 1);
+                    sp.setEditable(true);
+                    sp.setPrefWidth(100);
+                    enforcePositiveIntegerSpinner(sp);
+
+                    // listener per marcare la modifica
+                    sp.valueProperty().addListener((obs, oldV, newV) -> markAsModified(idSettore, c.getCf()));
+
+                    inputPunteggio = sp;
+                }
+
+                case PESO, BIG_ONE -> {
+                    Spinner<Double> sp = new Spinner<>(0.0, 1000.0, 0.0, 0.01);
+                    sp.setEditable(true);
+                    sp.setPrefWidth(100);
+                    enforcePositiveDoubleSpinner(sp);
+
+                    DecimalFormat df = new DecimalFormat("#.00");
+                    sp.getValueFactory().setConverter(new StringConverter<>() {
+                        @Override
+                        public String toString(Double value) {
+                            return value == null ? "0.00" : df.format(value);
+                        }
+
+                        @Override
+                        public Double fromString(String s) {
+                            try {
+                                return Double.parseDouble(s.replace(",", "."));
+                            } catch (Exception e) {
+                                return 0.0;
+                            }
+                        }
+                    });
+
+                    // listener per marcare la modifica
+                    sp.valueProperty().addListener((obs, oldV, newV) -> markAsModified(idSettore, c.getCf()));
+
+                    lblUnita.setText("kg");
+                    inputPunteggio = sp;
+                }
+
+                default -> throw new IllegalStateException("Criterio non gestito");
+            }
 
             CheckBox chkSqualifica = new CheckBox("Squalifica");
+            chkSqualifica.selectedProperty().addListener(
+                    (obs, oldV, newV) -> {
+                        inputPunteggio.setDisable(newV);
+                        markAsModified(idSettore, c.getCf()); // checkbox tocca -> mark modified
+                    }
+            );
 
-            row.getChildren().addAll(lblNome, spPunteggio, chkSqualifica);
+            // se si clicca direttamente sull'editor del spinner (testo), anche quello conta come modifica:
+            if (inputPunteggio instanceof Spinner<?> spEditor) {
+                spEditor.getEditor().textProperty().addListener((obs, oldT, newT) -> markAsModified(idSettore, c.getCf()));
+            }
+
+            row.getChildren().addAll(lblNome, inputPunteggio, lblUnita, chkSqualifica);
             concorrentiVBox.getChildren().add(row);
+        }
 
-            // Se vuoi, puoi associare spinner e checkbox all’oggetto concorrente
-            //c.setSpinnerPunteggio(spPunteggio);
-            //c.setCheckBoxSqualifica(chkSqualifica);
+        // Ripristina eventuali risultati già salvati per questo settore e marca come modificati
+        List<RisultatoTurno> salvati = risultatiPerSettore.get(idSettore);
+        if (salvati != null) {
+            for (Node node : concorrentiVBox.getChildren()) {
+                if (!(node instanceof HBox hbox)) continue;
+                Concorrente c = (Concorrente) hbox.getUserData();
+                RisultatoTurno r = salvati.stream()
+                        .filter(rt -> rt.getIdConcorrente().equals(c.getCf()))
+                        .findFirst().orElse(null);
+                if (r == null) continue;
+
+                Node input = hbox.getChildren().get(1);
+                CheckBox chk = (CheckBox) hbox.getChildren().get(3);
+
+                chk.setSelected(r.isSqualificato());
+                if (input instanceof Spinner<?> sp) {
+                    if (!r.isSqualificato()) {
+                        if (sp.getValue() instanceof Integer)
+                            ((Spinner<Integer>) sp).getValueFactory().setValue((int) r.getPunteggio());
+                        else
+                            ((Spinner<Double>) sp).getValueFactory().setValue(r.getPunteggio());
+                    }
+                    sp.setDisable(r.isSqualificato());
+                }
+
+                // Se abbiamo ripristinato un valore, consideriamolo "modificato"
+                markAsModified(idSettore, c.getCf());
+            }
         }
     }
 
-    /* ---------- SALVA PUNTEGGI TURNO ---------- */
+    /* ===================== MARCATURE MODIFICA ===================== */
+
+    private void markAsModified(int idSettore, String cfConcorrente) {
+        if (idSettore <= 0 || cfConcorrente == null) return;
+        modifiedPerSettore.putIfAbsent(idSettore, new HashSet<>());
+        modifiedPerSettore.get(idSettore).add(cfConcorrente);
+    }
+
+    /* ===================== SALVA RISULTATI LOCALI ===================== */
+
+    private void salvaRisultatiCorrenti() {
+        if (settoreCorrente == null) return;
+
+        int idSettore = settoreCorrente.getIdSettore();
+        List<RisultatoTurno> risultati = new ArrayList<>();
+
+        for (Node node : concorrentiVBox.getChildren()) {
+            if (!(node instanceof HBox hbox)) continue;
+
+            Concorrente c = (Concorrente) hbox.getUserData();
+            if (c == null) continue;
+
+            Node input = hbox.getChildren().get(1);
+            CheckBox chk = (CheckBox) hbox.getChildren().get(3);
+
+            boolean squalificato = chk.isSelected();
+            double punteggio = 0.0;
+
+            if (!squalificato && input instanceof Spinner<?> sp && sp.getValue() != null) {
+                Object val = sp.getValue();
+                punteggio = val instanceof Integer i ? i.doubleValue() : (Double) val;
+            }
+
+            risultati.add(new RisultatoTurno(c.getCf(), punteggio, squalificato));
+        }
+
+        risultatiPerSettore.put(idSettore, risultati);
+    }
+
+    /* ===================== SALVA TURNO ===================== */
+
     @FXML
     private void handleSalvaTurno() {
-        boolean tuttiCompilati = true;
+        // salva i risultati del settore visibile
+        salvaRisultatiCorrenti();
 
-        // Controllo che tutti abbiano punteggio o siano squalificati
-        for (Node node : concorrentiVBox.getChildren()) {
-            if (node instanceof HBox hbox) {
-                Spinner<Double> sp = (Spinner<Double>) hbox.getChildren().get(1);
-                CheckBox chk = (CheckBox) hbox.getChildren().get(2);
+        // unisci tutti i risultati di tutti i settori
+        List<RisultatoTurno> tuttiRisultati = new ArrayList<>();
+        risultatiPerSettore.values().forEach(tuttiRisultati::addAll);
 
-                if (!chk.isSelected() && sp.getValue() == null) {
-                    tuttiCompilati = false;
+        // Verifica: esistono concorrenti non "modificati" (cioè non toccati) ?
+        boolean ciSonoNonToccati = false;
+
+        // per ogni settore, controlla i concorrenti che non sono nel modified set
+        for (Map.Entry<Integer, List<RisultatoTurno>> entry : risultatiPerSettore.entrySet()) {
+            int idSett = entry.getKey();
+            Set<String> modified = modifiedPerSettore.getOrDefault(idSett, Collections.emptySet());
+
+            for (RisultatoTurno r : entry.getValue()) {
+                // se NON è stato marcato come modificato -> consideriamo "non toccato"
+                if (!modified.contains(r.getIdConcorrente())) {
+                    ciSonoNonToccati = true;
                     break;
                 }
             }
+            if (ciSonoNonToccati) break;
         }
 
-        if (!tuttiCompilati) {
-            Alerter.showError("Compila tutti i punteggi o marca i concorrenti squalificati.");
-            return;
-        }
-        /*
-        // Salvataggio punteggi
-        for (Node node : concorrentiVBox.getChildren()) {
-            if (node instanceof HBox hbox) {
-                Label lbl = (Label) hbox.getChildren().get(0);
-                Spinner<Double> sp = (Spinner<Double>) hbox.getChildren().get(1);
-                CheckBox chk = (CheckBox) hbox.getChildren().get(2);
+        if (ciSonoNonToccati) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Valori non inseriti");
+            alert.setHeaderText("Alcuni concorrenti non sono stati modificati.");
+            alert.setContentText("Vuoi continuare comunque e considerarli squalificati/valore predefinito?\nScegli 'Annulla' per tornare a modificare.");
+            ButtonType continua = new ButtonType("Continua comunque");
+            ButtonType annulla = new ButtonType("Annulla");
+            alert.getButtonTypes().setAll(continua, annulla);
 
-                Concorrente c = ricercaConcorrenteDaNome(lbl.getText());
-                double punteggio = sp.getValue();
-                boolean squalifica = chk.isSelected();
-
-                try {
-                    punteggioService.salvaPunteggio(
-                            garaCorrente.getCodice(),
-                            turnoCorrente,
-                            c.getIdConcorrente(),
-                            punteggio,
-                            squalifica
-                    );
-                } catch (Exception e) {
-                    Alerter.showError("Errore nel salvataggio del punteggio di " + c.getNome());
-                }
+            Optional<ButtonType> risultato = alert.showAndWait();
+            if (risultato.isEmpty() || risultato.get() == annulla) {
+                return; // l'utente vuole modificare ancora
             }
         }
-	*/
-        turnoCorrente++;
-        lblTurno.setText(String.valueOf(turnoCorrente));
-        Alerter.showSuccess("Turno salvato correttamente");
+
+        try {
+            // invia tutti i risultati
+            arbitroService.salvaTurno(
+                    garaCorrente.getCodice(),
+                    turnoCorrente,
+                    tuttiRisultati
+            );
+
+            // dopo il salvataggio reale, svuota le strutture locali e incrementa turno
+            risultatiPerSettore.clear();
+            modifiedPerSettore.clear();
+
+            turnoCorrente++;
+            lblTurno.setText(String.valueOf(turnoCorrente));
+            Alerter.showSuccess("Turno salvato correttamente");
+
+        } catch (Exception e) {
+            Alerter.showError("Errore nel salvataggio del turno");
+            e.printStackTrace();
+        }
     }
 
-   
+    /* ===================== VALIDAZIONE SPINNER ===================== */
+
+    private void enforcePositiveIntegerSpinner(Spinner<Integer> spinner) {
+        TextFormatter<Integer> formatter = new TextFormatter<>(change -> {
+            String text = change.getControlNewText();
+            if (text.isEmpty()) return change;
+            return text.matches("\\d+") ? change : null;
+        });
+
+        spinner.getEditor().setTextFormatter(formatter);
+
+        spinner.focusedProperty().addListener((obs, oldV, newV) -> {
+            if (!newV) {
+                try {
+                    int value = Integer.parseInt(spinner.getEditor().getText());
+                    spinner.getValueFactory().setValue(Math.max(0, value));
+                } catch (Exception e) {
+                    spinner.getValueFactory().setValue(0);
+                }
+            }
+        });
+    }
+
+    private void enforcePositiveDoubleSpinner(Spinner<Double> spinner) {
+        TextFormatter<Double> formatter = new TextFormatter<>(change -> {
+            String text = change.getControlNewText();
+            if (text.isEmpty()) return change;
+            return text.matches("\\d*(\\.|,)?\\d*") ? change : null;
+        });
+
+        spinner.getEditor().setTextFormatter(formatter);
+
+        spinner.focusedProperty().addListener((obs, oldV, newV) -> {
+            if (!newV) {
+                try {
+                    double value = Double.parseDouble(
+                            spinner.getEditor().getText().replace(",", ".")
+                    );
+                    spinner.getValueFactory().setValue(Math.max(0.0, value));
+                } catch (Exception e) {
+                    spinner.getValueFactory().setValue(0.0);
+                }
+            }
+        });
+    }
 }
