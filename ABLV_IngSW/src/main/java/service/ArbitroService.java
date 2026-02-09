@@ -4,18 +4,23 @@ import java.time.LocalDate;
 import java.util.List;
 
 import db.exception.ArbitroEccezione;
+import db.exception.GaraEccezione;
 import db.repository.ArbitroDAO;
+import db.repository.GaraDAO;
 import model.Gara;
 import model.enums.StatoGara;
 import service.exception.AggiornaEccezione;
+import service.exception.IscrizioneEccezione;
 import service.exception.RicercaEccezione;
 
 public class ArbitroService {
 
 	private final ArbitroDAO arbitroDAO;
+	private final GaraDAO garaDAO;
 	
 	public ArbitroService() {
 		this.arbitroDAO = new ArbitroDAO();
+		this.garaDAO = new GaraDAO();
 	}
 	
 	public List<Gara> getGareAggiornabiliPerArbitro(String arb) throws RicercaEccezione {
@@ -62,16 +67,33 @@ public class ArbitroService {
 		}
 	}
 	
-	public int assegnaArbitroAGara(int codiceGara, String arb) {
-		return this.arbitroDAO.assegnaArbitroAGara(codiceGara, arb);
+	public void assegnaArbitroAGara(int codiceGara, String arb) throws IscrizioneEccezione {
+		try {
+			this.arbitroDAO.assegnaArbitroAGara(codiceGara, arb);
+		} catch(ArbitroEccezione e) {
+			throw new IscrizioneEccezione(e.getMessage(), e);
+		}
 	}
 	
-	public void rinvioGaraArbitro(int codiceGara, LocalDate data) {
-		this.arbitroDAO.aggiornaDataGara(codiceGara, data);
+	public void rinvioGaraArbitro(int codiceGara, LocalDate data, int campo) throws AggiornaEccezione {
+		try {
+			this.garaDAO.controllaDataGara(data, campo);
+			this.arbitroDAO.aggiornaDataGara(codiceGara, data);
+		} catch(GaraEccezione e) {
+			throw new AggiornaEccezione(e.getMessage(), e);
+		} catch(ArbitroEccezione e) {
+			throw new AggiornaEccezione(e.getMessage(), e);
+		}
+		
 	}
 	
-	public int rimuoviArbitroDaGara(int codiceGara, String arb) {
-		return this.arbitroDAO.disiscriviArbitro(codiceGara, arb);
+	public void rimuoviArbitroDaGara(int codiceGara, String arb) throws AggiornaEccezione {
+		try {
+			this.arbitroDAO.disiscriviArbitro(codiceGara, arb);
+		} catch(ArbitroEccezione e) {
+			throw new AggiornaEccezione(e.getMessage(), e);
+		}
+		
 	}
 	
 }

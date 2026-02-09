@@ -261,6 +261,8 @@ public class ProponiGaraController {
         Campionato campionato = getSelectedCampionato();
         Arbitro arbitro = getSelectedArbitro();
         CampoGara campoGara = getSelectedCampoGara();
+        
+        LocalDate oggi = LocalDate.now();
 
         if (tecnica == null || criterio == null || data == null ||
                 tipo == null || campoGara == null) {
@@ -270,6 +272,11 @@ public class ProponiGaraController {
         
         if(data.isBefore(LocalDate.now())) {
         	Alerter.showError("La data di svolgimento della gara deve essere almeno domani!");
+        	return;
+        }
+        
+        if(data.isBefore(oggi.plusDays(3))) {
+        	Alerter.showError("La proposta deve avvenire almeno 3 giorni prima del suo inizio...");
         	return;
         }
 
@@ -282,12 +289,13 @@ public class ProponiGaraController {
         			numProva, arbitro, campoGara, Session.getUserType(), Session.getUserName());
         	definizioneTurni();
             chiudi();
+            
+            Alerter.showSuccess("Gara proposta con successo!");
 
         } catch (Exception e) {
         	Alerter.showError(e.getMessage());
         }
         
-        Alerter.showSuccess("Gara proposta con successo!");
     }
 
     @FXML

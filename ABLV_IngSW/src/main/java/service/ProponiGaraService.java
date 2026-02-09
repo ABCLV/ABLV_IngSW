@@ -85,34 +85,6 @@ public class ProponiGaraService {
 		return ret;
 	}
 
-	/* ---------- ricerche per chiave ---------- 
-	public Campionato getSelectedCampionato(String titolo, List<Campionato> lista) {
-		Campionato ret = null;
-		if (titolo != null) {
-			ret = lista.stream().filter(c -> c.getTitolo().equals(titolo)).findFirst().orElse(null);
-		}
-		
-		return ret;
-	}
-
-	public Arbitro getSelectedArbitro(String cf, List<Arbitro> lista) {
-		Arbitro ret = null;
-		if (cf != null) {
-			ret = lista.stream().filter(a -> a.getCfArbitro().equals(cf)).findFirst().orElse(null);
-		}
-	
-		return ret;
-	}
-
-	public CampoGara getSelectedCampoGara(String id, List<CampoGara> lista) {
-		CampoGara ret = null;
-		if (id != null) {
-			ret = lista.stream().filter(cg -> cg.getIdCampoGara().equals(id)).findFirst().orElse(null);
-		}
-		
-		return ret;
-	}*/
-
 	/* ---------- genera codice ---------- */
 	public int getUltimoCodiceGara() throws PropostaEccezione {
 		int ret;
