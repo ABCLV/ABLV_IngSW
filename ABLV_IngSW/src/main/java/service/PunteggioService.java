@@ -5,12 +5,15 @@ import java.util.List;
 import db.repository.ConcorrenteDAO;
 import db.repository.GaraDAO;
 import db.repository.PunteggioDAO;
+import javafx.collections.ObservableList;
+import model.ClassificaRiga;
 import model.Concorrente;
 
 public class PunteggioService {
 	
 	private final PunteggioDAO punteggioDAO = new PunteggioDAO();
 	private final ConcorrenteDAO concDAO = new ConcorrenteDAO();
+	
 	public PunteggioService() {}
 		
 	public void assegnazioneGruppi(int codiceGara, List<Concorrente> assenti){
@@ -19,5 +22,10 @@ public class PunteggioService {
 	
 	public List<Concorrente> getConcorrentiSettore(int codiceGara, int settore){
 		return concDAO.getConcorrentiPerSettore(codiceGara, settore);
+	}
+	
+	
+	public ObservableList<ClassificaRiga> calcolaClassifica(int codiceGara){
+		return this.punteggioDAO.calcolaClassifica(codiceGara);
 	}
 }

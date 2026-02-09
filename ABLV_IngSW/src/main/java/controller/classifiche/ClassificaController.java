@@ -16,6 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import model.Gara;
+import service.PunteggioService;
 import utils.Alerter;
 import model.ClassificaRiga; // ipotetico DTO per la tabella
 
@@ -42,6 +43,7 @@ public class ClassificaController {
     @FXML private TableColumn<ClassificaRiga, String> turniCol;
 
     private Gara gara;
+    private PunteggioService punteggioService = new PunteggioService();
 
     @FXML
     private void initialize() {
@@ -85,8 +87,9 @@ public class ClassificaController {
 
     private void caricaClassifica() {
         // Qui poi userai il service vero
-        ObservableList<ClassificaRiga> dati =
-                FXCollections.observableArrayList();
+    	
+        ObservableList<ClassificaRiga> dati = punteggioService.calcolaClassifica(this.gara.getCodice());
+                
 
         classificaTable.setItems(dati);
     }

@@ -5,6 +5,7 @@ import static dbconSQLJOOQ.generated.Tables.CAMPIONATO;
 import db.SQLiteConnectionManager;
 import db.exception.AmministratoreEccezione;
 import db.exception.GaraEccezione;
+import javafx.collections.ObservableList;
 
 import static dbconSQLJOOQ.generated.Tables.GARA;
 import static dbconSQLJOOQ.generated.Tables.ISCRIVE;
@@ -31,6 +32,7 @@ import org.jooq.impl.QOM.Max;
 import model.Amministratore;
 import model.Campionato;
 import model.CampoGara;
+import model.ClassificaRiga;
 import model.Concorrente;
 import model.Gara;
 import model.Societa;
@@ -122,7 +124,7 @@ public class GaraDAO {
 	}
 
 
-
+	
 
 	public int trovaCodiceCampoGara(int codiceGara) throws GaraEccezione {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {

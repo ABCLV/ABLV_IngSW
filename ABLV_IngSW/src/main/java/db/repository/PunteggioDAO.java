@@ -22,6 +22,8 @@ import org.jooq.impl.DSL;
 
 import db.SQLiteConnectionManager;
 import db.exception.GaraEccezione;
+import javafx.collections.ObservableList;
+import model.ClassificaRiga;
 import model.Concorrente;
 import model.Settore;
 import model.Turno;
@@ -35,6 +37,149 @@ import org.jooq.SQLDialect;
 public class PunteggioDAO {
 	public PunteggioDAO() {}
 	private Map<String, Integer> settorePerConcorrente;
+	
+	
+	
+	
+	
+	public ObservableList<ClassificaRiga> calcolaClassifica(int codiceGara) {
+
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+	        // --- Strutture di appoggio ---
+	        Map<String, Double> penalitaTotali = new HashMap<>();
+	        Map<String, List<Double>> penalitaPerTurno = new HashMap<>();
+
+	        // --- Recupero turni ---
+	        List<Integer> turni = ctx.select(TURNO.ID)
+	                .from(TURNO)
+	                .where(TURNO.GARA.eq(codiceGara))
+	                .fetchInto(Integer.class);
+
+	        // --- Calcolo classifiche di ogni turno ---
+	        for (Integer idTurno : turni) {
+
+	            var records = ctx.select(
+	                        PARTECIPA.CONCORRENTE,
+	                        PARTECIPA.NUMPUNTI
+	                    )
+	                    .from(PARTECIPA)
+	                    .where(PARTECIPA.TURNO.eq(idTurno))
+	                    .orderBy(PARTECIPA.NUMPUNTI.desc())
+	                    .fetch();
+
+	            int posizione = 1;
+	            int i = 0;
+
+	            while (i < records.size()) {
+
+	                int j = i;
+	                int punti = records.get(i).get(PARTECIPA.NUMPUNTI);
+
+	                // gruppo di pari merito
+	                while (j < records.size()
+	                        && records.get(j).get(PARTECIPA.NUMPUNTI) == punti) {
+	                    j++;
+	                }
+
+	                int count = j - i;
+	                double penalitaMedia =
+	                        (posizione + (posizione + count - 1)) / 2.0;
+
+	                for (int k = i; k < j; k++) {
+	                    String cf = records.get(k).get(PARTECIPA.CONCORRENTE);
+
+	                    penalitaTotali.merge(cf, penalitaMedia, Double::sum);
+
+	                    penalitaPerTurno
+	                            .computeIfAbsent(cf, x -> new java.util.ArrayList<>())
+	                            .add(penalitaMedia);
+	                }
+
+	                posizione += count;
+	                i = j;
+	            }
+	        }
+
+	        // --- Ordinamento per piazzamento ---
+	        List<Map.Entry<String, Double>> ordinati =
+	                penalitaTotali.entrySet().stream()
+	                        .sorted(Map.Entry.comparingByValue())
+	                        .toList();
+
+	        ObservableList<ClassificaRiga> classifica =
+	                javafx.collections.FXCollections.observableArrayList();
+
+	        int posizioneFinale = 1;
+	        int i = 0;
+
+	        while (i < ordinati.size()) {
+
+	            int j = i;
+	            double piazzamento = ordinati.get(i).getValue();
+
+	            while (j < ordinati.size()
+	                    && ordinati.get(j).getValue().equals(piazzamento)) {
+	                j++;
+	            }
+
+	            double penalitaFinale =
+	                    (posizioneFinale + (posizioneFinale + (j - i) - 1)) / 2.0;
+
+	            for (int k = i; k < j; k++) {
+
+	                String cf = ordinati.get(k).getKey();
+
+	                var conc = ctx.select(
+	                                CONCORRENTE.CF,
+	                                CONCORRENTE.SOCIETA,
+	                                CONCORRENTE.SOCIETA
+	                        )
+	                        .from(CONCORRENTE)
+	                        .where(CONCORRENTE.CF.eq(cf))
+	                        .fetchOne();
+
+	                String piazzamentiTurni = penalitaPerTurno.get(cf).stream()
+	                        .map(p -> p % 1 == 0 ? String.valueOf(p.intValue()) : p.toString())
+	                        .collect(Collectors.joining("-"));
+
+	                classifica.add(new ClassificaRiga(
+	                        posizioneFinale,
+	                        cf,
+	                        conc.get(CONCORRENTE.SOCIETA),
+	                        conc.get(CONCORRENTE.SOCIETA),
+	                        penalitaFinale,
+	                        piazzamento,
+	                        piazzamentiTurni
+	                ));
+	            }
+
+	            posizioneFinale += (j - i);
+	            i = j;
+	        }
+
+	        return classifica;
+
+	    } catch (Exception e) {
+	        throw new GaraEccezione(
+	                "Errore nel calcolo della classifica per la gara " + codiceGara,
+	                e
+	        );
+	    }
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
