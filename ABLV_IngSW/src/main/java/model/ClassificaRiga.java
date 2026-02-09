@@ -5,7 +5,7 @@ public class ClassificaRiga {
     private int posizione;
     private String cfConcorrente;
     private String societa;
-    private int sponsor;
+    private String sponsor;
     private Double penalita;
     private Double piazzamento;
     private String piazzamentiTurni;
@@ -13,7 +13,7 @@ public class ClassificaRiga {
     public ClassificaRiga(int posizione,
                           String cfConcorrente,
                           String societa,
-                          int sponsor,
+                          String sponsor,
                           Double penalita,
                           Double piazzamento,
                           String piazzamentiTurni) {
@@ -38,7 +38,7 @@ public class ClassificaRiga {
         return societa;
     }
 
-    public int getSponsor() {
+    public String getSponsor() {
         return sponsor;
     }
 

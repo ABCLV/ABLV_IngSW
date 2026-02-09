@@ -37,7 +37,7 @@ public class ClassificaController {
     @FXML private TableColumn<ClassificaRiga, Integer> posizioneCol;
     @FXML private TableColumn<ClassificaRiga, String> cfCol;
     @FXML private TableColumn<ClassificaRiga, String> societaCol;
-    @FXML private TableColumn<ClassificaRiga, Integer> sponsorCol;
+    @FXML private TableColumn<ClassificaRiga, String> sponsorCol;
     @FXML private TableColumn<ClassificaRiga, Double> penalitaCol;
     @FXML private TableColumn<ClassificaRiga, Double> piazzamentoCol;
     @FXML private TableColumn<ClassificaRiga, String> turniCol;
@@ -57,7 +57,7 @@ public class ClassificaController {
                 new SimpleStringProperty(c.getValue().getSocieta()));
 
         sponsorCol.setCellValueFactory(c ->
-                new SimpleIntegerProperty(c.getValue().getSponsor()).asObject());
+                new SimpleStringProperty(c.getValue().getSponsor()));
 
         penalitaCol.setCellValueFactory(c ->
                 new SimpleDoubleProperty(c.getValue().getPenalita()).asObject());

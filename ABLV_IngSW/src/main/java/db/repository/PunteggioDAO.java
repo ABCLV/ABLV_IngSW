@@ -130,34 +130,39 @@ public class PunteggioDAO {
 	                    (posizioneFinale + (posizioneFinale + (j - i) - 1)) / 2.0;
 
 	            for (int k = i; k < j; k++) {
-
 	                String cf = ordinati.get(k).getKey();
 
 	                var conc = ctx.select(
-                            CONCORRENTE.CF,
-                            CONCORRENTE.SOCIETA,
-                            CONTRATTO.SPONSOR
-                    )
-                    .from(CONCORRENTE)
-                    .join(CONTRATTO)
-                        .on(CONCORRENTE.CF.eq(CONTRATTO.CONCORRENTE))
-                    .where(CONCORRENTE.CF.eq(cf))
-                    .fetchOne();
+	                            CONCORRENTE.CF,
+	                            CONCORRENTE.SOCIETA,
+	                            CONTRATTO.SPONSOR
+	                        )
+	                        .from(CONCORRENTE)
+	                        .leftJoin(CONTRATTO)
+	                            .on(CONCORRENTE.CF.eq(CONTRATTO.CONCORRENTE))
+	                        .where(CONCORRENTE.CF.eq(cf))
+	                        .fetchOne();
 
 	                String piazzamentiTurni = penalitaPerTurno.get(cf).stream()
 	                        .map(p -> p % 1 == 0 ? String.valueOf(p.intValue()) : p.toString())
 	                        .collect(Collectors.joining("-"));
 
+	                String sponsor = conc != null && conc.get(CONTRATTO.SPONSOR) != null
+	                        ? conc.get(CONTRATTO.SPONSOR).toString()
+	                        : null;
+
+
 	                classifica.add(new ClassificaRiga(
 	                        posizioneFinale,
 	                        cf,
-	                        conc.get(CONCORRENTE.SOCIETA),
-	                        conc.get(CONTRATTO.SPONSOR),
+	                        conc != null ? conc.get(CONCORRENTE.SOCIETA) : null,
+	                        sponsor,
 	                        penalitaFinale,
 	                        piazzamento,
 	                        piazzamentiTurni
 	                ));
 	            }
+
 
 	            posizioneFinale += (j - i);
 	            i = j;
