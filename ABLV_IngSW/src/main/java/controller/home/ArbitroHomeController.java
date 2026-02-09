@@ -10,7 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import utils.Alerter;
 
-public class ArbitroHomeController2 {
+public class ArbitroHomeController {
 
     /* ---------- INIZIO GARA ---------- */
     @FXML
