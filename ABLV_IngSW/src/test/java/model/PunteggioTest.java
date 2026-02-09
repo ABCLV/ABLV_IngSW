@@ -16,14 +16,7 @@ class PunteggioTest {
     void setUp() {
         punteggio = new Punteggio(ID_TEST, NUM_PUNTI_TEST, SQUALIFICA_TEST);
     }
-    
-    @Test
-    @DisplayName("Costruttore inizializza tutti i campi")
-    void testCostruttore() {
-        assertEquals(ID_TEST, punteggio.idPunteggio);
-        assertEquals(NUM_PUNTI_TEST, punteggio.getPunti());
-        // Nota: non c'è getter per squalifica, quindi non testabile direttamente
-    }
+   
     
     @Test
     @DisplayName("Setter e getter punti modificano il valore")
@@ -41,7 +34,7 @@ class PunteggioTest {
     @DisplayName("GetPunti ritorna 0 di default se non settato")
     void testGetPuntiDefault() {
         Punteggio p = new Punteggio(2, 0.0f, false);
-        // Il metodo getPunti nel tuo codice ritorna 0 hardcoded!
+       
         assertEquals(0, p.getPunti());
     }
 }

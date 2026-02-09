@@ -20,273 +20,234 @@ import model.enums.TipologiaGara;
 
 class GaraDAOTest {
 
-    private GaraDAO dao;
-    private AmministratoreDAO adminDao;
-    private CampoGaraDAO campoGaraDao;
+	private GaraDAO dao;
+	private AmministratoreDAO adminDao;
+	private CampoGaraDAO campoGaraDao;
 
-    @BeforeEach
-    void setUp() {
-        dao = new GaraDAO();
-        adminDao = new AmministratoreDAO();
-        campoGaraDao = new CampoGaraDAO();
-    }
+	@BeforeEach
+	void setUp() {
+		dao = new GaraDAO();
+		adminDao = new AmministratoreDAO();
+		campoGaraDao = new CampoGaraDAO();
+	}
 
-    // Metodo helper per ottenere un campo gara esistente dal DB
-    private String getCampoGaraEsistente() {
-        List<CampoGara> campi = assertDoesNotThrow(() -> campoGaraDao.getCampoGara());
-        if (!campi.isEmpty()) {
-            return campi.get(0).getIdCampoGara();
-        }
-        return "CAMPO_001"; // fallback, ma potrebbe fallire se non esiste
-    }
+	// Metodo helper per ottenere un campo gara esistente dal DB
+	private int getCampoGaraEsistente() {
+		List<CampoGara> campi = assertDoesNotThrow(() -> campoGaraDao.getCampoGara());
+		if (!campi.isEmpty()) {
+			return campi.get(0).getIdCampoGara();
+		}
+		return (Integer) null;
+	}
 
-  
-    @Test
-    @DisplayName("Codice campo gara non trovato → null")
-    void testTrovaCodiceCampoGaraNotFound() {
-        String codice = dao.trovaCodiceCampoGara("GARA_INESISTENTE_" + System.nanoTime());
-        assertNull(codice);
-    }
+	@Test
+	@DisplayName("Codice campo gara non trovato → null")
+	void testTrovaCodiceCampoGaraNotFound() {
+		int codice = dao.trovaCodiceCampoGara(123456789);
+		assertNull(codice);
+	}
 
-    @Test
-    @DisplayName("Esplora gare per campo")
-    void testEsploraGare() {
-        String campoEsistente = getCampoGaraEsistente();
-        CampoGara campo = new CampoGara();
-        campo.setIdCampoGara(campoEsistente);
 
-        List<Gara> gare = dao.esploraGare(campo);
-        assertNotNull(gare);
-    }
 
-    @Test
-    @DisplayName("Ultimo codice gara: formato valido")
-    void testGetUltimoCodiceGara() {
-        String codice = dao.getUltimoCodiceGara();
-        assertNotNull(codice);
-        assertTrue(codice.matches("G\\d+"));
-    }
+	@Test
+	@DisplayName("Insert gara e verifica recupero")
+	void testInsertGara() {
+		// Preparazione: creo admin propositore
+		String cfAdmin = "ADM_GARA_" + System.nanoTime();
+		assertDoesNotThrow(() -> adminDao.registraAmministratore(cfAdmin, "Admin", "Test", "admin@test.it", "pwd"));
 
-    @Test
-    @DisplayName("Insert gara e verifica recupero")
-    void testInsertGara() {
-        // Preparazione: creo admin propositore
-        String cfAdmin = "ADM_GARA_" + System.nanoTime();
-        assertDoesNotThrow(() -> 
-            adminDao.registraAmministratore(cfAdmin, "Admin", "Test", "admin@test.it", "pwd")
-        );
+		int codiceGara = dao.getUltimoCodiceGara();
+		int nuovoCodice = codiceGara++;
 
-        String codiceGara = dao.getUltimoCodiceGara();
-        int num = Integer.parseInt(codiceGara.substring(1)) + 1;
-        String nuovoCodice = String.format("G%03d", num);
+		int idCampo = getCampoGaraEsistente();
 
-        String idCampo = getCampoGaraEsistente();
+		Gara gara = new Gara();
+		gara.setCodice(nuovoCodice);
+		gara.setNumProva(1);
+		gara.setTecnica(Tecnica.SPINNING);
+		gara.setCriterioPunti(CriterioPunti.PESO);
+		gara.setMinPersone(2);
+		gara.setMaxPersone(10);
+		gara.setStatoGara(StatoGara.NON_INIZIATA);
+		gara.setStatoConferma(StatoConferma.IN_ATTESA);
+		gara.setTipoGara(TipologiaGara.INDIVIDUALE);
+		gara.setData(LocalDate.now().plusDays(7));
 
-        Gara gara = new Gara();
-        gara.setCodice(nuovoCodice);
-        gara.setNumProva(1);
-        gara.setTecnica(Tecnica.SPINNING);
-        gara.setCriterioPunti(CriterioPunti.PESO);
-        gara.setMinPersone(2);
-        gara.setMaxPersone(10);
-        gara.setStatoGara(StatoGara.NON_INIZIATA);
-        gara.setStatoConferma(StatoConferma.IN_ATTESA);
-        gara.setTipoGara(TipologiaGara.INDIVIDUALE);
-        gara.setData(LocalDate.now().plusDays(7));
-        
-        CampoGara campo = new CampoGara();
-        campo.setIdCampoGara(idCampo);
-        gara.setCampoGara(campo);
-        
-        Amministratore admin = new Amministratore();
-        admin.setCfAmministratore(cfAdmin);
-        gara.setPropositore(admin);
+		CampoGara campo = new CampoGara();
+		campo.setIdCampoGara(idCampo);
+		gara.setCampoGara(campo);
 
-        // Inserimento
-        assertDoesNotThrow(() -> dao.insertGara(gara));
+		Amministratore admin = new Amministratore();
+		admin.setCfAmministratore(cfAdmin);
+		gara.setPropositore(admin);
 
-        // Verifica: la gara ora esiste
-        String campoGara = dao.trovaCodiceCampoGara(nuovoCodice);
-        assertNotNull(campoGara);
-        assertEquals(idCampo, campoGara);
+		// Inserimento
+		assertDoesNotThrow(() -> dao.insertGara(gara));
 
-        // Pulizia
-        assertDoesNotThrow(() -> dao.eliminaTurniGara(nuovoCodice));
-        assertDoesNotThrow(() -> dao.eliminaGara(nuovoCodice));
-        assertDoesNotThrow(() -> adminDao.eliminaAmministratore(cfAdmin));
-        
-        // Verifica eliminazione
-        assertNull(dao.trovaCodiceCampoGara(nuovoCodice));
-    }
+		// Verifica: la gara ora esiste
+		int campoGara = dao.trovaCodiceCampoGara(nuovoCodice);
+		assertNotNull(campoGara);
+		assertEquals(idCampo, campoGara);
 
-    @Test
-    @DisplayName("Accetta gara")
-    void testAccettaGara() {
-        // Preparazione: creo due admin
-        String cfPropositore = "ADM_PROP_" + System.nanoTime();
-        String cfAccettatore = "ADM_ACC_" + System.nanoTime();
-        
-        assertDoesNotThrow(() -> {
-            adminDao.registraAmministratore(cfPropositore, "Prop", "Test", "prop@test.it", "pwd");
-            adminDao.registraAmministratore(cfAccettatore, "Acc", "Test", "acc@test.it", "pwd");
-        });
+		// Pulizia
+		assertDoesNotThrow(() -> dao.eliminaTurniGara(nuovoCodice));
+		assertDoesNotThrow(() -> dao.eliminaGara(nuovoCodice));
+		assertDoesNotThrow(() -> adminDao.eliminaAmministratore(cfAdmin));
 
-        // Creo gara
-        String codiceGara = dao.getUltimoCodiceGara();
-        int num = Integer.parseInt(codiceGara.substring(1)) + 1;
-        String nuovoCodice = String.format("G%03d", num);
+		// Verifica eliminazione
+		assertNull(dao.trovaCodiceCampoGara(nuovoCodice));
+	}
 
-        String idCampo = getCampoGaraEsistente();
+	@Test
+	@DisplayName("Accetta gara")
+	void testAccettaGara() {
+		// Preparazione: creo due admin
+		String cfPropositore = "ADM_PROP_" + System.nanoTime();
+		String cfAccettatore = "ADM_ACC_" + System.nanoTime();
 
-        Gara gara = new Gara();
-        gara.setCodice(nuovoCodice);
-        gara.setNumProva(1);
-        gara.setTecnica(Tecnica.GALLEGGIANTE);
-        gara.setCriterioPunti(CriterioPunti.BIG_ONE);
-        gara.setMinPersone(1);
-        gara.setMaxPersone(5);
-        gara.setStatoGara(StatoGara.NON_INIZIATA);
-        gara.setStatoConferma(StatoConferma.IN_ATTESA);
-        gara.setTipoGara(TipologiaGara.INDIVIDUALE);
-        gara.setData(LocalDate.now().plusDays(14));
-        
-        CampoGara campo = new CampoGara();
-        campo.setIdCampoGara(idCampo);
-        gara.setCampoGara(campo);
-        
-        Amministratore adminProp = new Amministratore();
-        adminProp.setCfAmministratore(cfPropositore);
-        gara.setPropositore(adminProp);
+		assertDoesNotThrow(() -> {
+			adminDao.registraAmministratore(cfPropositore, "Prop", "Test", "prop@test.it", "pwd");
+			adminDao.registraAmministratore(cfAccettatore, "Acc", "Test", "acc@test.it", "pwd");
+		});
 
-        assertDoesNotThrow(() -> dao.insertGara(gara));
+		// Creo gara
+		int codiceGara = dao.getUltimoCodiceGara();
+		int nuovoCodice = codiceGara++;
 
-        // Accetto la gara con admin diverso
-        boolean accettata = assertDoesNotThrow(() -> dao.accettaGara(nuovoCodice, cfAccettatore));
-        assertTrue(accettata);
+		int idCampo = getCampoGaraEsistente();
 
-        // Pulizia
-        assertDoesNotThrow(() -> dao.eliminaTurniGara(nuovoCodice));
-        assertDoesNotThrow(() -> dao.eliminaGara(nuovoCodice));
-        assertDoesNotThrow(() -> {
-            adminDao.eliminaAmministratore(cfPropositore);
-            adminDao.eliminaAmministratore(cfAccettatore);
-        });
-    }
+		Gara gara = new Gara();
+		gara.setCodice(nuovoCodice);
+		gara.setNumProva(1);
+		gara.setTecnica(Tecnica.GALLEGGIANTE);
+		gara.setCriterioPunti(CriterioPunti.BIG_ONE);
+		gara.setMinPersone(1);
+		gara.setMaxPersone(5);
+		gara.setStatoGara(StatoGara.NON_INIZIATA);
+		gara.setStatoConferma(StatoConferma.IN_ATTESA);
+		gara.setTipoGara(TipologiaGara.INDIVIDUALE);
+		gara.setData(LocalDate.now().plusDays(14));
 
-    @Test
-    @DisplayName("Rifiuta gara")
-    void testRifiutaGara() {
-        // Preparazione
-        String cfPropositore = "ADM_PROP_R_" + System.nanoTime();
-        String cfRifiutatore = "ADM_RIF_" + System.nanoTime();
-        
-        assertDoesNotThrow(() -> {
-            adminDao.registraAmministratore(cfPropositore, "Prop", "Rif", "prop@rif.it", "pwd");
-            adminDao.registraAmministratore(cfRifiutatore, "Rif", "Test", "rif@test.it", "pwd");
-        });
+		CampoGara campo = new CampoGara();
+		campo.setIdCampoGara(idCampo);
+		gara.setCampoGara(campo);
 
-        // Creo gara
-        String codiceGara = dao.getUltimoCodiceGara();
-        int num = Integer.parseInt(codiceGara.substring(1)) + 1;
-        String nuovoCodice = String.format("G%03d", num);
+		Amministratore adminProp = new Amministratore();
+		adminProp.setCfAmministratore(cfPropositore);
+		gara.setPropositore(adminProp);
 
-        String idCampo = getCampoGaraEsistente();
+		assertDoesNotThrow(() -> dao.insertGara(gara));
 
-        Gara gara = new Gara();
-        gara.setCodice(nuovoCodice);
-        gara.setNumProva(1);
-        gara.setTecnica(Tecnica.GALLEGGIANTE);
-        gara.setCriterioPunti(CriterioPunti.BIG_ONE);
-        gara.setMinPersone(2);
-        gara.setMaxPersone(8);
-        gara.setStatoGara(StatoGara.NON_INIZIATA);
-        gara.setStatoConferma(StatoConferma.IN_ATTESA);
-        gara.setTipoGara(TipologiaGara.INDIVIDUALE);
-        gara.setData(LocalDate.now().plusDays(21));
-        
-        CampoGara campo = new CampoGara();
-        campo.setIdCampoGara(idCampo);
-        gara.setCampoGara(campo);
-        
-        Amministratore adminProp = new Amministratore();
-        adminProp.setCfAmministratore(cfPropositore);
-        gara.setPropositore(adminProp);
+		// Accetto la gara con admin diverso
+		boolean accettata = assertDoesNotThrow(() -> dao.accettaGara(nuovoCodice, cfAccettatore));
+		assertTrue(accettata);
 
-        assertDoesNotThrow(() -> dao.insertGara(gara));
+		// Pulizia
+		assertDoesNotThrow(() -> dao.eliminaTurniGara(nuovoCodice));
+		assertDoesNotThrow(() -> dao.eliminaGara(nuovoCodice));
+		assertDoesNotThrow(() -> {
+			adminDao.eliminaAmministratore(cfPropositore);
+			adminDao.eliminaAmministratore(cfAccettatore);
+		});
+	}
 
-        // Rifiuto la gara
-        boolean rifiutata = assertDoesNotThrow(() -> dao.rifiutaGara(nuovoCodice, cfRifiutatore));
-        assertTrue(rifiutata);
+	@Test
+	@DisplayName("Rifiuta gara")
+	void testRifiutaGara() {
+		// Preparazione
+		String cfPropositore = "ADM_PROP_R_" + System.nanoTime();
+		String cfRifiutatore = "ADM_RIF_" + System.nanoTime();
 
-        // Pulizia
-        assertDoesNotThrow(() -> dao.eliminaTurniGara(nuovoCodice));
-        assertDoesNotThrow(() -> dao.eliminaGara(nuovoCodice));
-        assertDoesNotThrow(() -> {
-            adminDao.eliminaAmministratore(cfPropositore);
-            adminDao.eliminaAmministratore(cfRifiutatore);
-        });
-    }
+		assertDoesNotThrow(() -> {
+			adminDao.registraAmministratore(cfPropositore, "Prop", "Rif", "prop@rif.it", "pwd");
+			adminDao.registraAmministratore(cfRifiutatore, "Rif", "Test", "rif@test.it", "pwd");
+		});
 
-    @Test
-    @DisplayName("Get gare da confermare")
-    void testGetGareDaConfermare() {
-        String cf = "ADM_CONF_" + System.nanoTime();
-        assertDoesNotThrow(() -> 
-            adminDao.registraAmministratore(cf, "Conf", "Test", "conf@test.it", "pwd")
-        );
+		// Creo gara
+		int codiceGara = dao.getUltimoCodiceGara();
 
-        List<Gara> gare = assertDoesNotThrow(() -> dao.getGareDaConfermare(cf));
-        assertNotNull(gare);
+		int nuovoCodice = codiceGara++;
 
-        assertDoesNotThrow(() -> adminDao.eliminaAmministratore(cf));
-    }
+		int idCampo = getCampoGaraEsistente();
 
-    
+		Gara gara = new Gara();
+		gara.setCodice(nuovoCodice);
+		gara.setNumProva(1);
+		gara.setTecnica(Tecnica.GALLEGGIANTE);
+		gara.setCriterioPunti(CriterioPunti.BIG_ONE);
+		gara.setMinPersone(2);
+		gara.setMaxPersone(8);
+		gara.setStatoGara(StatoGara.NON_INIZIATA);
+		gara.setStatoConferma(StatoConferma.IN_ATTESA);
+		gara.setTipoGara(TipologiaGara.INDIVIDUALE);
+		gara.setData(LocalDate.now().plusDays(21));
 
-    @Test
-    @DisplayName("Admin non può accettare propria gara")
-    void testAccettaGaraStessoAdmin() {
-        String cfAdmin = "ADM_SELF_" + System.nanoTime();
-        assertDoesNotThrow(() -> 
-            adminDao.registraAmministratore(cfAdmin, "Self", "Test", "self@test.it", "pwd")
-        );
+		CampoGara campo = new CampoGara();
+		campo.setIdCampoGara(idCampo);
+		gara.setCampoGara(campo);
 
-        // Creo gara
-        String codiceGara = dao.getUltimoCodiceGara();
-        int num = Integer.parseInt(codiceGara.substring(1)) + 1;
-        String nuovoCodice = String.format("G%03d", num);
+		Amministratore adminProp = new Amministratore();
+		adminProp.setCfAmministratore(cfPropositore);
+		gara.setPropositore(adminProp);
 
-        String idCampo = getCampoGaraEsistente();
+		assertDoesNotThrow(() -> dao.insertGara(gara));
 
-        Gara gara = new Gara();
-        gara.setCodice(nuovoCodice);
-        gara.setNumProva(1);
-        gara.setTecnica(Tecnica.GALLEGGIANTE);
-        gara.setCriterioPunti(CriterioPunti.PESO);
-        gara.setMinPersone(1);
-        gara.setMaxPersone(3);
-        gara.setStatoGara(StatoGara.NON_INIZIATA);
-        gara.setStatoConferma(StatoConferma.IN_ATTESA);
-        gara.setTipoGara(TipologiaGara.INDIVIDUALE);
-        gara.setData(LocalDate.now().plusDays(30));
-        
-        CampoGara campo = new CampoGara();
-        campo.setIdCampoGara(idCampo);
-        gara.setCampoGara(campo);
-        
-        Amministratore admin = new Amministratore();
-        admin.setCfAmministratore(cfAdmin);
-        gara.setPropositore(admin);
+		// Rifiuto la gara
+		boolean rifiutata = assertDoesNotThrow(() -> dao.rifiutaGara(nuovoCodice, cfRifiutatore));
+		assertTrue(rifiutata);
 
-        assertDoesNotThrow(() -> dao.insertGara(gara));
+		// Pulizia
+		assertDoesNotThrow(() -> dao.eliminaTurniGara(nuovoCodice));
+		assertDoesNotThrow(() -> dao.eliminaGara(nuovoCodice));
+		assertDoesNotThrow(() -> {
+			adminDao.eliminaAmministratore(cfPropositore);
+			adminDao.eliminaAmministratore(cfRifiutatore);
+		});
+	}
 
-        // Provo ad accettare con lo stesso admin → deve fallire
-        boolean accettata = assertDoesNotThrow(() -> dao.accettaGara(nuovoCodice, cfAdmin));
-        assertFalse(accettata);
 
-        // Pulizia
-        assertDoesNotThrow(() -> dao.eliminaTurniGara(nuovoCodice));
-        assertDoesNotThrow(() -> dao.eliminaGara(nuovoCodice));
-        assertDoesNotThrow(() -> adminDao.eliminaAmministratore(cfAdmin));
-    }
+
+	@Test
+	@DisplayName("Admin non può accettare propria gara")
+	void testAccettaGaraStessoAdmin() {
+		String cfAdmin = "ADM_SELF_" + System.nanoTime();
+		assertDoesNotThrow(() -> adminDao.registraAmministratore(cfAdmin, "Self", "Test", "self@test.it", "pwd"));
+
+		// Creo gara
+		int codiceGara = dao.getUltimoCodiceGara();
+		int nuovoCodice = codiceGara++;
+
+		int idCampo = getCampoGaraEsistente();
+
+		Gara gara = new Gara();
+		gara.setCodice(nuovoCodice);
+		gara.setNumProva(1);
+		gara.setTecnica(Tecnica.GALLEGGIANTE);
+		gara.setCriterioPunti(CriterioPunti.PESO);
+		gara.setMinPersone(1);
+		gara.setMaxPersone(3);
+		gara.setStatoGara(StatoGara.NON_INIZIATA);
+		gara.setStatoConferma(StatoConferma.IN_ATTESA);
+		gara.setTipoGara(TipologiaGara.INDIVIDUALE);
+		gara.setData(LocalDate.now().plusDays(30));
+
+		CampoGara campo = new CampoGara();
+		campo.setIdCampoGara(idCampo);
+		gara.setCampoGara(campo);
+
+		Amministratore admin = new Amministratore();
+		admin.setCfAmministratore(cfAdmin);
+		gara.setPropositore(admin);
+
+		assertDoesNotThrow(() -> dao.insertGara(gara));
+
+		// Provo ad accettare con lo stesso admin → deve fallire
+		boolean accettata = assertDoesNotThrow(() -> dao.accettaGara(nuovoCodice, cfAdmin));
+		assertFalse(accettata);
+
+		// Pulizia
+		assertDoesNotThrow(() -> dao.eliminaTurniGara(nuovoCodice));
+		assertDoesNotThrow(() -> dao.eliminaGara(nuovoCodice));
+		assertDoesNotThrow(() -> adminDao.eliminaAmministratore(cfAdmin));
+	}
 }

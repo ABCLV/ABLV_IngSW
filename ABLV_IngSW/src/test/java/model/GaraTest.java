@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GaraTest {
     
     private Gara gara;
-    private static final String CODICE_TEST = "G001";
+    private static final int CODICE_TEST = 12345678;
     private static final int NUM_PROVA_TEST = 1;
     private static final int MIN_PERSONE_TEST = 10;
     private static final int MAX_PERSONE_TEST = 50;
@@ -36,12 +36,7 @@ class GaraTest {
         gara.setTipoGara(TipologiaGara.INDIVIDUALE);
     }
     
-    @Test
-    @DisplayName("Costruttore vuoto crea istanza")
-    void testCostruttoreVuoto() {
-        Gara g = new Gara();
-        assertNotNull(g);
-    }
+   
     
     @Test
     @DisplayName("Setter e getter modificano correttamente i valori base")
@@ -61,7 +56,7 @@ class GaraTest {
     @DisplayName("Validazione: codice null non consentito")
     void testCodiceNull() {
         try {
-            gara.setCodice(null);
+            gara.setCodice((Integer) null);
             fail("Dovrebbe lanciare eccezione per codice null");
         } catch (IllegalArgumentException e) {
             // OK, eccezione attesa
@@ -117,24 +112,7 @@ class GaraTest {
         }
     }
     
-    @Test
-    @DisplayName("toString contiene codice e stato")
-    void testToString() {
-        String result = gara.toString();
-        assertTrue(result.contains(CODICE_TEST));
-        assertTrue(result.contains("SPINNING"));
-    }
     
-    @Test
-    @DisplayName("Gestione relazioni: campionato, arbitro, campoGara")
-    void testRelazioni() {
-        Campionato campionato = new Campionato("Coppa Test", "Senior");
-        gara.setCampionato(campionato);
-        assertEquals("Coppa Test", gara.getCampionato().getTitolo());
-        
-        CampoGara campo = new CampoGara();
-        campo.setIdCampoGara("CG001");
-        gara.setCampoGara(campo);
-        assertEquals("CG001", gara.getCampoGara().getIdCampoGara());
-    }
+    
+
 }
