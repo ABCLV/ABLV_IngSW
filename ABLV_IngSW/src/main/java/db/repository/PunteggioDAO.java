@@ -42,41 +42,42 @@ public class PunteggioDAO {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-	        System.out.println("risultati: "+risultati.toString());
+	        System.out.println("risultati: " + risultati);
+
 	        ctx.transaction(configuration -> {
 	            DSLContext tx = DSL.using(configuration);
 
-	            // Definizione della subquery per ottenere l'ID del turno
-	            // (verrà poi usata nel WHERE)
-	            Field<Integer> turnoIdSubquery = DSL
-	                .select(TURNO.ID)
-	                .from(TURNO)
-	                .where(TURNO.NUMERO.eq(numeroTurno))
-	                .and(TURNO.GARA.eq(codiceGara))
-	                .asField();
+	            // Recupera gli ID dei turni
+	            List<Integer> turni = ctx.select(TURNO.ID)
+	                    .from(TURNO)
+	                    .where(TURNO.NUMERO.eq(numeroTurno))
+	                    .and(TURNO.GARA.eq(codiceGara))
+	                    .fetchInto(Integer.class);
 
-	            // Creazione delle query per ciascun concorrente
+	            System.out.println("turni recuperati: " + turni);
+
+	            // Aggiorna i risultati dei concorrenti per tutti i turni trovati
 	            List<Query> queries = risultati.stream()
-	                .map(r -> (Query) tx.update(PARTECIPA)
-	                    .set(PARTECIPA.NUMPUNTI, r.isSqualificato() ? 0 : (int) r.getPunteggio())
-	                    .set(PARTECIPA.SQUALIFICA, r.isSqualificato())
-	                    .where(PARTECIPA.CONCORRENTE.eq(r.getIdConcorrente()))
-	                    .and(PARTECIPA.TURNO.eq(turnoIdSubquery))
-	                )
-	                .collect(Collectors.toList());
+	                    .map(r -> (Query) tx.update(PARTECIPA)
+	                            .set(PARTECIPA.NUMPUNTI, r.isSqualificato() ? 0 : (int) r.getPunteggio())
+	                            .set(PARTECIPA.SQUALIFICA, r.isSqualificato())
+	                            .where(PARTECIPA.CONCORRENTE.eq(r.getIdConcorrente()))
+	                            .and(PARTECIPA.TURNO.in(turni)) // <- qui usiamo la lista di ID
+	                    )
+	                    .collect(Collectors.toList());
 
-	            // Esecuzione in batch per efficienza
 	            tx.batch(queries).execute();
 	        });
 
 	    } catch (Exception e) {
 	        throw new GaraEccezione(
-	            "Errore nel salvataggio del turno " + numeroTurno +
-	            " per la gara " + codiceGara,
-	            e
+	                "Errore nel salvataggio del turno " + numeroTurno +
+	                        " per la gara " + codiceGara,
+	                e
 	        );
 	    }
 	}
+
 
 
 
