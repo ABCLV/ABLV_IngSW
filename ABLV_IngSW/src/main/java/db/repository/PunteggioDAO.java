@@ -6,6 +6,7 @@ import static dbconSQLJOOQ.generated.Tables.TURNO;
 import static dbconSQLJOOQ.generated.Tables.CONCORRENTE;
 import static dbconSQLJOOQ.generated.Tables.ISCRIVE;
 import static dbconSQLJOOQ.generated.Tables.SETTORE;
+import static dbconSQLJOOQ.generated.Tables.CONTRATTO;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -133,13 +134,15 @@ public class PunteggioDAO {
 	                String cf = ordinati.get(k).getKey();
 
 	                var conc = ctx.select(
-	                                CONCORRENTE.CF,
-	                                CONCORRENTE.SOCIETA,
-	                                CONCORRENTE.SOCIETA
-	                        )
-	                        .from(CONCORRENTE)
-	                        .where(CONCORRENTE.CF.eq(cf))
-	                        .fetchOne();
+                            CONCORRENTE.CF,
+                            CONCORRENTE.SOCIETA,
+                            CONTRATTO.SPONSOR
+                    )
+                    .from(CONCORRENTE)
+                    .join(CONTRATTO)
+                        .on(CONCORRENTE.CF.eq(CONTRATTO.CONCORRENTE))
+                    .where(CONCORRENTE.CF.eq(cf))
+                    .fetchOne();
 
 	                String piazzamentiTurni = penalitaPerTurno.get(cf).stream()
 	                        .map(p -> p % 1 == 0 ? String.valueOf(p.intValue()) : p.toString())
@@ -149,7 +152,7 @@ public class PunteggioDAO {
 	                        posizioneFinale,
 	                        cf,
 	                        conc.get(CONCORRENTE.SOCIETA),
-	                        conc.get(CONCORRENTE.SOCIETA),
+	                        conc.get(CONTRATTO.SPONSOR),
 	                        penalitaFinale,
 	                        piazzamento,
 	                        piazzamentiTurni
