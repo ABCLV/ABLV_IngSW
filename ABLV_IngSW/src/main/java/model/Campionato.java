@@ -63,7 +63,7 @@ public class Campionato {
 	 * @return lista dei punteggi totali ordinati per posizione
 	 */
 	public ArrayList<Punteggio> getClassificaTotale() {
-		return null;
+		return classificaTotale;
 	}
 
 	/**

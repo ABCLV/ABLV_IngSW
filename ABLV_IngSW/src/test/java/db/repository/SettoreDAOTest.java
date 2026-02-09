@@ -24,7 +24,7 @@ class SettoreDAOTest {
     @DisplayName("Esplora settori: ritorna lista (anche vuota)")
     void testEsploraSettori() {
         CampoGara campo = new CampoGara();
-        campo.setIdCampoGara("ID_INESISTENTE");
+        campo.setIdCampoGara(123456);
 
         List<Settore> settori = dao.esploraSettori(campo);
         assertNotNull(settori);

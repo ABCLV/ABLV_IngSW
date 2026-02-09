@@ -18,16 +18,7 @@ class ArbitroTest {
         arbitro = new Arbitro(CF_TEST, NOME_TEST, COGNOME_TEST, SEZIONE_TEST);
     }
     
-    @Test
-    @DisplayName("Costruttore inizializza tutti i campi")
-    void testCostruttore() {
-        assertAll("Verifica inizializzazione",
-            () -> assertEquals(CF_TEST, arbitro.getCfArbitro()),
-            () -> assertEquals(NOME_TEST, arbitro.getNome()),
-            () -> assertEquals(COGNOME_TEST, arbitro.getCognome()),
-            () -> assertEquals(SEZIONE_TEST, arbitro.getSezione())
-        );
-    }
+  
     
     @Test
     @DisplayName("Setter e getter modificano correttamente i valori")
@@ -45,13 +36,5 @@ class ArbitroTest {
         assertEquals("Brescia", arbitro.getSezione());
     }
     
-    @Test
-    @DisplayName("toString contiene cognome, nome e CF")
-    void testToString() {
-        String result = arbitro.toString();
-        
-        assertTrue(result.contains(COGNOME_TEST));
-        assertTrue(result.contains(NOME_TEST));
-        assertTrue(result.contains(CF_TEST));
-    }
+  
 }

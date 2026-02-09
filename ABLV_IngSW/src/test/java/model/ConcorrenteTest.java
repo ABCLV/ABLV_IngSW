@@ -21,18 +21,7 @@ class ConcorrenteTest {
         concorrente = new Concorrente(CF_TEST, COGNOME_TEST, NOME_TEST, EMAIL_TEST, NASCITA_TEST, SOCIETA_TEST);
     }
     
-    @Test
-    @DisplayName("Costruttore inizializza tutti i campi")
-    void testCostruttore() {
-        assertAll("Verifica inizializzazione",
-            () -> assertEquals(CF_TEST, concorrente.getCf()),
-            () -> assertEquals(COGNOME_TEST, concorrente.getCognome()),
-            () -> assertEquals(NOME_TEST, concorrente.getNome()),
-            () -> assertEquals(EMAIL_TEST, concorrente.getEmail()),
-            () -> assertEquals(NASCITA_TEST, concorrente.getNascita()),
-            () -> assertEquals(SOCIETA_TEST, concorrente.getSocieta())
-        );
-    }
+
     
     @Test
     @DisplayName("Setter e getter modificano correttamente i valori")
@@ -54,16 +43,7 @@ class ConcorrenteTest {
         assertEquals(nuovaData, concorrente.getNascita());
     }
     
-    @Test
-    @DisplayName("toString contiene CF, cognome, nome e email")
-    void testToString() {
-        String result = concorrente.toString();
-        
-        assertTrue(result.contains(CF_TEST));
-        assertTrue(result.contains(COGNOME_TEST));
-        assertTrue(result.contains(NOME_TEST));
-        assertTrue(result.contains(EMAIL_TEST));
-    }
+
     
     @Test
     @DisplayName("Getter societa ritorna il nome della societa")

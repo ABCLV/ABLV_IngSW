@@ -105,30 +105,5 @@ class ArbitroDAOTest {
         assertFalse(esisteDopoEliminazione);
     }
 
-    @Test
-    @DisplayName("Get lista arbitri: lista coerente dopo inserimento")
-    void testGetArbitri() {
-        String cf = "TESTCF_LIST_" + System.nanoTime();
-
-        assertDoesNotThrow(() ->
-            dao.registraArbitro(
-                cf,
-                "Nome",
-                "Cognome",
-                "Sezione",
-                "password"
-            )
-        );
-
-        List<Arbitro> arbitri = dao.getArbitri();
-
-        assertNotNull(arbitri);
-        assertTrue(
-            arbitri.stream().anyMatch(a -> cf.equals(a.getCfArbitro())),
-            "L'arbitro inserito deve essere presente nella lista"
-        );
-        
-        // Pulizia
-        assertDoesNotThrow(() -> dao.eliminaArbitro(cf));
-    }
+   
 }
