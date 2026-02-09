@@ -114,7 +114,7 @@ public class InizioGaraController {
                     sp.setPrefWidth(100);
                     enforcePositiveIntegerSpinner(sp);
 
-                    // listener per marcare la modifica
+                    // listener per marcare la modifica reale
                     sp.valueProperty().addListener((obs, oldV, newV) -> markAsModified(idSettore, c.getCf()));
 
                     inputPunteggio = sp;
@@ -143,7 +143,7 @@ public class InizioGaraController {
                         }
                     });
 
-                    // listener per marcare la modifica
+                    // listener per marcare la modifica reale
                     sp.valueProperty().addListener((obs, oldV, newV) -> markAsModified(idSettore, c.getCf()));
 
                     lblUnita.setText("kg");
@@ -157,11 +157,11 @@ public class InizioGaraController {
             chkSqualifica.selectedProperty().addListener(
                     (obs, oldV, newV) -> {
                         inputPunteggio.setDisable(newV);
-                        markAsModified(idSettore, c.getCf()); // checkbox tocca -> mark modified
+                        markAsModified(idSettore, c.getCf()); // solo modifiche reali
                     }
             );
 
-            // se si clicca direttamente sull'editor del spinner (testo), anche quello conta come modifica:
+            // listener sull'editor del spinner (testo)
             if (inputPunteggio instanceof Spinner<?> spEditor) {
                 spEditor.getEditor().textProperty().addListener((obs, oldT, newT) -> markAsModified(idSettore, c.getCf()));
             }
@@ -170,7 +170,7 @@ public class InizioGaraController {
             concorrentiVBox.getChildren().add(row);
         }
 
-        // Ripristina eventuali risultati già salvati per questo settore e marca come modificati
+        // Ripristina eventuali risultati già salvati per questo settore
         List<RisultatoTurno> salvati = risultatiPerSettore.get(idSettore);
         if (salvati != null) {
             for (Node node : concorrentiVBox.getChildren()) {
@@ -195,11 +195,11 @@ public class InizioGaraController {
                     sp.setDisable(r.isSqualificato());
                 }
 
-                // Se abbiamo ripristinato un valore, consideriamolo "modificato"
-                markAsModified(idSettore, c.getCf());
+                // ❌ NON marcare come modificato qui! Solo i listener faranno la marcatura
             }
         }
     }
+
 
     /* ===================== MARCATURE MODIFICA ===================== */
 
@@ -251,16 +251,15 @@ public class InizioGaraController {
         List<RisultatoTurno> tuttiRisultati = new ArrayList<>();
         risultatiPerSettore.values().forEach(tuttiRisultati::addAll);
 
-        // Verifica: esistono concorrenti non "modificati" (cioè non toccati) ?
+        // controlla se ci sono concorrenti non modificati
         boolean ciSonoNonToccati = false;
 
-        // per ogni settore, controlla i concorrenti che non sono nel modified set
         for (Map.Entry<Integer, List<RisultatoTurno>> entry : risultatiPerSettore.entrySet()) {
-            int idSett = entry.getKey();
-            Set<String> modified = modifiedPerSettore.getOrDefault(idSett, Collections.emptySet());
+            int idSettore = entry.getKey();
+            Set<String> modified = modifiedPerSettore.getOrDefault(idSettore, Collections.emptySet());
 
             for (RisultatoTurno r : entry.getValue()) {
-                // se NON è stato marcato come modificato -> consideriamo "non toccato"
+                // se il CF non è presente nel set "modified", allora è non toccato
                 if (!modified.contains(r.getIdConcorrente())) {
                     ciSonoNonToccati = true;
                     break;
@@ -269,11 +268,15 @@ public class InizioGaraController {
             if (ciSonoNonToccati) break;
         }
 
+        // mostra alert solo se ci sono concorrenti non toccati
         if (ciSonoNonToccati) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Valori non inseriti");
             alert.setHeaderText("Alcuni concorrenti non sono stati modificati.");
-            alert.setContentText("Vuoi continuare comunque e considerarli squalificati/valore predefinito?\nScegli 'Annulla' per tornare a modificare.");
+            alert.setContentText(
+                "Vuoi continuare comunque e considerarli con valore predefinito/squalificati?\n" +
+                "Scegli 'Annulla' per tornare a modificare."
+            );
             ButtonType continua = new ButtonType("Continua comunque");
             ButtonType annulla = new ButtonType("Annulla");
             alert.getButtonTypes().setAll(continua, annulla);
@@ -282,10 +285,22 @@ public class InizioGaraController {
             if (risultato.isEmpty() || risultato.get() == annulla) {
                 return; // l'utente vuole modificare ancora
             }
+
+            // Se l’utente continua, consideriamo i non modificati come squalificati o punteggio 0
+            for (Map.Entry<Integer, List<RisultatoTurno>> entry : risultatiPerSettore.entrySet()) {
+                int idSettore = entry.getKey();
+                Set<String> modified = modifiedPerSettore.getOrDefault(idSettore, Collections.emptySet());
+                for (RisultatoTurno r : entry.getValue()) {
+                    if (!modified.contains(r.getIdConcorrente())) {
+                        r.setSqualificato();
+                        r.azzeraPunti();
+                    }
+                }
+            }
         }
 
         try {
-            // invia tutti i risultati
+            // invia tutti i risultati al servizio
             arbitroService.salvaTurno(
                     garaCorrente.getCodice(),
                     turnoCorrente,
@@ -305,6 +320,7 @@ public class InizioGaraController {
             e.printStackTrace();
         }
     }
+
 
     /* ===================== VALIDAZIONE SPINNER ===================== */
 

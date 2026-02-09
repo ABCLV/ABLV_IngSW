@@ -2,9 +2,9 @@ package service;
 
 public class RisultatoTurno {
 
-    private final String idConcorrente;
-    private final double punteggio;
-    private final boolean squalificato;
+    private String idConcorrente;
+    private double punteggio;
+    private boolean squalificato;
 
     public RisultatoTurno(String idConcorrente, double punteggio, boolean squalificato) {
         this.idConcorrente = idConcorrente;
@@ -22,6 +22,14 @@ public class RisultatoTurno {
 
     public boolean isSqualificato() {
         return squalificato;
+    }
+    
+    public void setSqualificato() {
+    	this.squalificato = true;
+    }
+    
+    public void azzeraPunti() {
+    	this.punteggio = 0.0;
     }
     
     @Override
