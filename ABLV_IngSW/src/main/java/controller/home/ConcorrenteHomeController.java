@@ -110,6 +110,22 @@ public class ConcorrenteHomeController {
 	        Alerter.showError("Errore nel caricamento della pagina di iscrizione");
 	    }
 	}
+	
+	@FXML
+	private void apriModificaDati(ActionEvent event) {
+	    try {
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/ModificaDati.fxml"));
+	        Parent root = loader.load();
+	        
+	        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+	        Scene scene = new Scene(root);
+	        stage.setScene(scene);
+	        stage.show();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        Alerter.showError("Errore nel caricamento della pagina di modifica dei dati");
+	    }
+	}
 
 	@FXML
 	private void handleBack(ActionEvent event) {
