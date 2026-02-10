@@ -24,25 +24,6 @@ public class AmministratoreService /*implements PropositoreIF*/ {
 		this.amministratoreDAO = new AmministratoreDAO();
 		this.turnoDAO = new TurnoDAO();
 	};
-	
-	/*
-	/**
-	 * Crea e proponi una nuova gara.
-	 * 
-	 * @param gara oggetto gara da inserire nel sistema
-	 
-	public boolean proponiGara(Gara gara) {
-		boolean ret = false;
-		try {
-			GaraDAO.insertGara(gara);
-			ret = true;
-		} catch(Exception e) {
-			e.printStackTrace();
-			new Alert(Alert.AlertType.INFORMATION, "Errore nell'inserimento della nuova gara!");
-		}
-		
-		return ret;
-	}*/
 
 	/**
 	 * Approva una proposta di gara.
@@ -74,8 +55,6 @@ public class AmministratoreService /*implements PropositoreIF*/ {
 	 */
 	public void negaProposta(int codiceGara, String ammId) throws PropostaEccezione {
 		try {
-			//dovrebbero eliminarsi da soli con cascade
-			//this.turnoDAO.eliminaTurniPerGara(codiceGara);
 			this.garaDAO.rifiutaGara(codiceGara, ammId);
 		} catch(GaraEccezione e) {
 			e.printStackTrace();

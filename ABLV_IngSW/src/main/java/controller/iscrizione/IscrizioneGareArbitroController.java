@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import model.Gara;
 import service.ArbitroService;
+import service.exception.IscrizioneEccezione;
 import service.exception.RicercaEccezione;
 
 import state.Session;
@@ -165,16 +166,12 @@ public class IscrizioneGareArbitroController {
 
         try {
             String cfArbitro = Session.getUserName();
-            int rows = arbitroService.assegnaArbitroAGara(gara.getCodice(), cfArbitro);
+            arbitroService.assegnaArbitroAGara(gara.getCodice(), cfArbitro);
 
-            if (rows == 0) {
-                Alerter.showError("Questa gara ha già un arbitro assegnato.");
-            } else {
-                Alerter.showSuccess("Iscrizione come arbitro completata!");
-                handleBack(event);
-            }
+            Alerter.showSuccess("Iscrizione come arbitro completata!");
+            handleBack(event);
 
-        } catch (GaraEccezione e) {
+        } catch (IscrizioneEccezione e) {
             Alerter.showError("Errore durante l'iscrizione: " + e.getMessage());
         }
     }

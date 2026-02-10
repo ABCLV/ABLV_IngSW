@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import model.Gara;
 import service.ArbitroService;
+import service.exception.AggiornaEccezione;
 import service.exception.RicercaEccezione;
 
 import state.Session;
@@ -133,16 +134,15 @@ public class RinvioGareController {
         }
 
         try {
-            arbitroService.rinvioGaraArbitro(gara.getCodice(), nuovaData);
+            arbitroService.rinvioGaraArbitro(gara.getCodice(), nuovaData, gara.getCampoGara().getIdCampoGara());
 
             gara.setData(nuovaData);
             listaGare.refresh();
 
             Alerter.showSuccess("Data della gara aggiornata con successo!");
 
-        } catch (GaraEccezione e) {
-            Alerter.showError(
-                "Errore durante il posticipo della gara: " + e.getMessage());
+        } catch (AggiornaEccezione e) {
+            Alerter.showError("Errore durante il posticipo della gara: " + e.getMessage());
         }
     }
 
