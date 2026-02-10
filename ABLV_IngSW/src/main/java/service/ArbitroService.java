@@ -30,17 +30,7 @@ public class ArbitroService {
 		this.punteggioDAO = new PunteggioDAO();
 	}
 	
-	public List<Gara> getGareAggiornabiliPerArbitro(String arb) throws RicercaEccezione {
-		List<Gara> ret = null;
-		try {
-			ret = this.arbitroDAO.getGareAggiornabiliPerArbitro(arb);
-		} catch(ArbitroEccezione e) {
-			throw new RicercaEccezione(e.getMessage(), e);
-		}
-		
-		return ret;
-		
-	}
+	
 	
 	
 	public int getNumTurni(int codiceGara) {

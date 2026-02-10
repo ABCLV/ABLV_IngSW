@@ -57,7 +57,7 @@ public class DefinizioneTurni {
 
         System.out.println("Durate turni inserite:");
         for (int i = 0; i < durateTurni.size(); i++) {
-            //System.out.println("Turno " + (i + 1) + ": " + durateTurni.get(i) + " min");
+            System.out.println("Turno " + (i + 1) + ": " + durateTurni.get(i) + " min");
         }
         garaproposta = new ProponiGaraService();
         settTurni = new SalvataggioTurniService();
