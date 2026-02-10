@@ -27,9 +27,10 @@ import db.exception.GaraEccezione;
 import javafx.collections.ObservableList;
 import model.ClassificaRiga;
 import model.Concorrente;
+import model.RisultatoTurno;
 import model.Settore;
 import model.Turno;
-import service.RisultatoTurno;
+
 import org.jooq.Query;
 import org.jooq.impl.DSL;
 import org.jooq.DSLContext;

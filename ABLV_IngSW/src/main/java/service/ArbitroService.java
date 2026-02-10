@@ -11,6 +11,7 @@ import db.repository.GaraDAO;
 import db.repository.PunteggioDAO;
 import model.Arbitro;
 import model.Gara;
+import model.RisultatoTurno;
 import model.enums.StatoGara;
 import service.exception.AggiornaEccezione;
 import service.exception.ConcorrenteHomeEccezione;
