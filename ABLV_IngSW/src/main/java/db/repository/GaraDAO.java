@@ -41,8 +41,6 @@ import model.enums.StatoConferma;
 import model.enums.StatoGara;
 import model.enums.Tecnica;
 import model.enums.TipologiaGara;
-import service.exception.AggiornaEccezione;
-import service.exception.RicercaEccezione;
 
 public class GaraDAO {
 
@@ -496,7 +494,7 @@ public class GaraDAO {
 		}
 	}
 	
-	public List<Gara> getGareDisponibiliPerIscrizione() throws RicercaEccezione {
+	public List<Gara> getGareDisponibiliPerIscrizione() throws GaraEccezione {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 

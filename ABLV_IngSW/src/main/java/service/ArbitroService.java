@@ -5,6 +5,7 @@ import java.util.List;
 
 import db.exception.ArbitroEccezione;
 import db.exception.ConcorrenteEccezione;
+import db.exception.GaraEccezione;
 import db.repository.ArbitroDAO;
 import db.repository.GaraDAO;
 import db.repository.PunteggioDAO;
@@ -13,6 +14,7 @@ import model.Gara;
 import model.enums.StatoGara;
 import service.exception.AggiornaEccezione;
 import service.exception.ConcorrenteHomeEccezione;
+import service.exception.IscrizioneEccezione;
 import service.exception.RicercaEccezione;
 
 public class ArbitroService {
