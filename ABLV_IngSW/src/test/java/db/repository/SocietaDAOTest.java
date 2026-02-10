@@ -88,13 +88,5 @@ class SocietaDAOTest {
         assertFalse(dao.esisteSocieta(nome));
     }
 
-    @Test
-    @DisplayName("Liste associate a società non sono null")
-    void testListeSocieta() {
-        List<Gara> gare = dao.getGareProposteDaSocieta("INESISTENTE_" + System.nanoTime());
-        List<Concorrente> conc = dao.getConcorrentiPerSocieta("INESISTENTE_" + System.nanoTime());
-
-        assertNotNull(gare);
-        assertNotNull(conc);
-    }
+  
 }

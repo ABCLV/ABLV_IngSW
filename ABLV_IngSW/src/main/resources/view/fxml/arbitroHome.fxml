@@ -32,6 +32,10 @@
     <Button text="⏸ Rinvio gara"
             prefWidth="260"
             onAction="#handleRinvioGara"/>
+            
+	<Button text="Modifica dati"
+			prefWidth="260"
+			onAction="#handleModificaDati"/>
 
     <Separator />
 

@@ -88,7 +88,7 @@ public class LoginController {
 			else if (tipo.equals("Societa")) {
 				SocietaHomeController ctrl = loader.getController();
 			}
-			else if (tipo.equals("Arbtiro")) {
+			else if (tipo.equals("Arbitro")) {
 				ArbitroHomeController ctrl = loader.getController();
 			}
 			
