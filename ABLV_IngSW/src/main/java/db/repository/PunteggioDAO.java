@@ -7,6 +7,7 @@ import static dbconSQLJOOQ.generated.Tables.CONCORRENTE;
 import static dbconSQLJOOQ.generated.Tables.ISCRIVE;
 import static dbconSQLJOOQ.generated.Tables.SETTORE;
 import static dbconSQLJOOQ.generated.Tables.CONTRATTO;
+import static dbconSQLJOOQ.generated.Tables.GARA;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -30,6 +31,7 @@ import model.Concorrente;
 import model.RisultatoTurno;
 import model.Settore;
 import model.Turno;
+import model.enums.StatoConferma;
 
 import org.jooq.Query;
 import org.jooq.impl.DSL;
@@ -169,6 +171,7 @@ public class PunteggioDAO {
 	            posizioneFinale += (j - i);
 	            i = j;
 	        }
+	        
 
 	        return classifica;
 
@@ -181,8 +184,29 @@ public class PunteggioDAO {
 	}
 
 	
-	
-	
+
+	public void terminaGara(int codiceGara) {
+
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+	        ctx.update(GARA)
+	           .set(GARA.STATOCONFERMA, "TERMINATA")
+	           .where(GARA.ID.eq(codiceGara))
+	           .execute();
+
+	        System.out.println("Gara " + codiceGara + " terminata.");
+
+	    } catch (Exception e) {
+	        throw new GaraEccezione(
+	                "Errore nella terminazione della gara " + codiceGara,
+	                e
+	        );
+	    }
+	}
+
+
 	
 
 	public void salvaTurno(int codiceGara, int numeroTurno, List<RisultatoTurno> risultati) {

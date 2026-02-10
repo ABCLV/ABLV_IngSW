@@ -120,6 +120,8 @@ public class ArbitroDAO {
 	                        GARA.STATOCONFERMA)
 	                .from(GARA).leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
 	                .where(GARA.ARBITRO.isNull())
+	                	.and(GARA.STATOCONFERMA.ne(StatoConferma.TERMINATA.name()))
+	                	.and(GARA.STATOCONFERMA.ne(StatoConferma.ANNULLATA.name()))
 	                		//.and(GARA.DATA.gt(oggi.plusDays(3))))
 	                .fetch();
 
@@ -171,6 +173,7 @@ public class ArbitroDAO {
 	                        GARA.STATOCONFERMA)
 	                .from(GARA).leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
 	                .where(GARA.ARBITRO.eq(arb))
+	                .and(GARA.STATOCONFERMA.ne(StatoConferma.TERMINATA.name()))
 	                .fetch();
 
 	        List<Gara> out = new ArrayList<>();
@@ -259,6 +262,7 @@ public class ArbitroDAO {
 	                .where(
 	                    GARA.ID.eq(codiceGara)
 	                    .and(GARA.ARBITRO.eq(cfArbitro))
+	                    .and(GARA.STATOCONFERMA.ne(StatoConferma.ANNULLATA.name()))
 	                    //.and(GARA.DATA.gt(oggi.plusDays(3)))
 	                )
 	                .execute() > 0;

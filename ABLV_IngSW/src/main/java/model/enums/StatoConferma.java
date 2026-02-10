@@ -13,7 +13,11 @@ public enum StatoConferma {
 	 * La gara è in attesa di approvazione.
 	 */
 	IN_ATTESA,
-	
+	/**
+	 * La gara è terminata.
+	 */
+	TERMINATA,
+
 	/**
 	 * La gara è stata annullata.
 	 */
