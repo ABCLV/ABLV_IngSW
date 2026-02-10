@@ -85,16 +85,33 @@ public class ArbitroService {
 		}
 	}
 	
-	public int assegnaArbitroAGara(int codiceGara, String arb) {
-		return this.arbitroDAO.assegnaArbitroAGara(codiceGara, arb);
+	public void assegnaArbitroAGara(int codiceGara, String arb) throws IscrizioneEccezione {
+		try {
+			this.arbitroDAO.assegnaArbitroAGara(codiceGara, arb);
+		} catch(ArbitroEccezione e) {
+			throw new IscrizioneEccezione(e.getMessage(), e);
+		}
 	}
 	
-	public void rinvioGaraArbitro(int codiceGara, LocalDate data) {
-		this.arbitroDAO.aggiornaDataGara(codiceGara, data);
+	public void rinvioGaraArbitro(int codiceGara, LocalDate data, int campo) throws AggiornaEccezione {
+		try {
+			this.garaDAO.controllaDataGara(data, campo);
+			this.arbitroDAO.aggiornaDataGara(codiceGara, data);
+		} catch(GaraEccezione e) {
+			throw new AggiornaEccezione(e.getMessage(), e);
+		} catch(ArbitroEccezione e) {
+			throw new AggiornaEccezione(e.getMessage(), e);
+		}
+		
 	}
 	
-	public int rimuoviArbitroDaGara(int codiceGara, String arb) {
-		return this.arbitroDAO.disiscriviArbitro(codiceGara, arb);
+	public void rimuoviArbitroDaGara(int codiceGara, String arb) throws AggiornaEccezione {
+		try {
+			this.arbitroDAO.disiscriviArbitro(codiceGara, arb);
+		} catch(ArbitroEccezione e) {
+			throw new AggiornaEccezione(e.getMessage(), e);
+		}
+		
 	}
 	
 	public Gara getGara(int codice) {

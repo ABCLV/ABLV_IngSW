@@ -108,6 +108,8 @@ public class ArbitroDAO {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	        
+	        LocalDate oggi = LocalDate.now();
 
 	        Result<Record11<Integer, Integer, Integer, String, String, LocalDate, String, String, String, String, String>> rs = ctx
 	                .select(GARA.ID, GARA.CAMPOGARA, GARA.NUMPROVA, GARA.CRITERIOPUNTI, GARA.STATOGARA,
@@ -115,7 +117,8 @@ public class ArbitroDAO {
 	                        GARA.STATOCONFERMA)
 	                .from(GARA).leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
 	                .where(GARA.ARBITRO.eq(arb)
-	                        .and(GARA.STATOCONFERMA.eq(StatoConferma.CONFERMATA.name())))
+	                		.and(GARA.STATOCONFERMA.eq(StatoConferma.CONFERMATA.name()))
+	                        .and(GARA.DATA.gt(oggi)))
 	                .fetch();
 
 	        List<Gara> out = new ArrayList<>();
@@ -160,13 +163,16 @@ public class ArbitroDAO {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	        
+	        LocalDate oggi = LocalDate.now();
 
 	        Result<Record11<Integer, Integer, Integer, String, String, LocalDate, String, String, String, String, String>> rs = ctx
 	                .select(GARA.ID, GARA.CAMPOGARA, GARA.NUMPROVA, GARA.CRITERIOPUNTI, GARA.STATOGARA,
 	                        GARA.DATA, GARA.TECNICA, GARA.TIPOGARA, CAMPIONATO.TITOLO, CAMPIONATO.CATEGORIA,
 	                        GARA.STATOCONFERMA)
 	                .from(GARA).leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
-	                .where(GARA.ARBITRO.isNull())
+	                .where(GARA.ARBITRO.isNull()
+	                		.and(GARA.DATA.gt(oggi.plusDays(3))))
 	                .fetch();
 
 	        List<Gara> out = new ArrayList<>();
@@ -276,12 +282,11 @@ public class ArbitroDAO {
 
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-	        int rows = ctx.update(GARA)
+	        return ctx.update(GARA)
 	                .set(GARA.ARBITRO, cfArbitro)
 	                .where(GARA.ID.eq(codiceGara)
 	                        .and(GARA.ARBITRO.isNull()))
 	                .execute();
-	        return rows;
 	        
 
 	    } catch (SQLException e) {
@@ -292,26 +297,30 @@ public class ArbitroDAO {
 	    }
 	}
 	
-	public int disiscriviArbitro(int codiceGara, String cfArbitro)
+	public void disiscriviArbitro(int codiceGara, String cfArbitro)
 	        throws ArbitroEccezione {
 
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	        
+	        LocalDate oggi = LocalDate.now();
 
-	        return ctx.update(GARA)
+	        boolean updated = ctx.update(GARA)
 	                .set(GARA.ARBITRO, (String) null)
 	                .where(
 	                    GARA.ID.eq(codiceGara)
 	                    .and(GARA.ARBITRO.eq(cfArbitro))
+	                    .and(GARA.DATA.gt(oggi.plusDays(3)))
 	                )
-	                .execute();
+	                .execute() > 0;
+	                
+            if(!updated) {
+	        	throw new ArbitroEccezione("Errore nel disiscrivere l'arbitro dalla gara!", new RuntimeException());
+	        }
 
 	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        throw new ArbitroEccezione(
-	            "Errore durante la disiscrizione dell'arbitro dalla gara.", e
-	        );
+	        throw new ArbitroEccezione("Errore durante la disiscrizione dell'arbitro dalla gara!", e);
 	    }
 	}
 
@@ -336,13 +345,19 @@ public class ArbitroDAO {
 	public void aggiornaDataGara(int codice, LocalDate data) throws ArbitroEccezione {
 		
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
-			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-			ctx.update(GARA)
-				.set(GARA.DATA, data)
-				.where(GARA.ID.eq(codice))
-				.execute();
+			
+			LocalDate oggi = LocalDate.now();
+			
+			if(data.isAfter(oggi.plusDays(3))) {
+				DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+				ctx.update(GARA)
+					.set(GARA.DATA, data)
+					.where(GARA.ID.eq(codice))
+					.execute();
+			} else {
+				throw new ArbitroEccezione("La nuova data deve essere almeno 3 giorni dopo oggi!", new RuntimeException());
+			}
 		} catch(SQLException e) {
-			e.printStackTrace();
 			throw new ArbitroEccezione("Errore nell'aggiornare la data della gara!", e);
 		}
 		
