@@ -5,6 +5,8 @@ import static dbconSQLJOOQ.generated.Tables.CONCORRENTE;
 import static dbconSQLJOOQ.generated.Tables.GARA;
 import static dbconSQLJOOQ.generated.Tables.ISCRIVE;
 import static dbconSQLJOOQ.generated.Tables.SOCIETA;
+import static dbconSQLJOOQ.generated.Tables.TURNO;
+import static dbconSQLJOOQ.generated.Tables.PARTECIPA;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -28,6 +30,7 @@ import model.enums.Tecnica;
 
 import db.SQLiteConnectionManager;
 import db.exception.ConcorrenteEccezione;
+import db.exception.GaraEccezione;
 
 public class ConcorrenteDAO {
 
@@ -147,5 +150,42 @@ public class ConcorrenteDAO {
 			throw new ConcorrenteEccezione("Errore nel recuperare le gare a cui il concorrente è iscritto!", e);
 		}
 	}
+	
+	
+	public List<Concorrente> getConcorrentiPerSettore(int codiceGara, int codiceSettore)
+	        throws GaraEccezione {
+
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+	        return ctx
+	        	    .selectDistinct(
+	        	        CONCORRENTE.CF,
+	        	        CONCORRENTE.NOME,
+	        	        CONCORRENTE.COGNOME,
+	        	        CONCORRENTE.EMAIL,
+	        	        CONCORRENTE.NASCITA,
+	        	        CONCORRENTE.SOCIETA
+	        	    )
+	        	    .from(CONCORRENTE)
+	        	    .join(PARTECIPA)
+	        	        .on(CONCORRENTE.CF.eq(PARTECIPA.CONCORRENTE))
+	        	    .join(TURNO)
+	        	        .on(PARTECIPA.TURNO.eq(TURNO.ID))
+	        	    .where(TURNO.GARA.eq(codiceGara))
+	        	    .and(TURNO.SETTORE.eq(codiceSettore))
+	        	    .fetchInto(Concorrente.class);
+
+
+	    } catch (DataAccessException | SQLException e) {
+	        throw new GaraEccezione(
+	            "Errore nel recupero dei concorrenti del settore "
+	            + codiceSettore + " per la gara " + codiceGara,
+	            e
+	        );
+	    }
+	}
+
 
 }

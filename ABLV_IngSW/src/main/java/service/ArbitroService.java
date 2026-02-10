@@ -6,6 +6,8 @@ import java.util.List;
 import db.exception.ArbitroEccezione;
 import db.exception.ConcorrenteEccezione;
 import db.repository.ArbitroDAO;
+import db.repository.GaraDAO;
+import db.repository.PunteggioDAO;
 import model.Arbitro;
 import model.Gara;
 import model.enums.StatoGara;
@@ -17,10 +19,12 @@ public class ArbitroService {
 
 	private final ArbitroDAO arbitroDAO;
 	private final GaraDAO garaDAO;
+	private final PunteggioDAO punteggioDAO;
 	
 	public ArbitroService() {
 		this.arbitroDAO = new ArbitroDAO();
 		this.garaDAO = new GaraDAO();
+		this.punteggioDAO = new PunteggioDAO();
 	}
 	
 	public List<Gara> getGareAggiornabiliPerArbitro(String arb) throws RicercaEccezione {
@@ -34,6 +38,12 @@ public class ArbitroService {
 		return ret;
 		
 	}
+	
+	
+	public int getNumTurni(int codiceGara) {
+		return this.garaDAO.getNumTurni(codiceGara);
+	}
+	
 	
 	public Arbitro getArbitro(String arb) throws RicercaEccezione {
 		try {
@@ -103,5 +113,20 @@ public class ArbitroService {
 		}
 		
 	}
+	
+	public Gara getGara(int codice) {
+		return this.garaDAO.getGaraById(codice);
+	}
+	
+	public void salvaTurno(int codiceGara,int turno, List<RisultatoTurno> risultati) {
+		try {
+			punteggioDAO.salvaTurno(codiceGara, turno, risultati);
+		} catch (Exception e) {
+			throw new AggiornaEccezione("Errore nel salvataggio del turno", e);
+		}
+	}
+	
+	
+
 	
 }

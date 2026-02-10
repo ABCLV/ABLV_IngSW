@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.classifiche.ClassificaController"
+      spacing="20"
+      alignment="TOP_CENTER"
+      prefWidth="900"
+      prefHeight="650"
+      style="-fx-background-color: #f4f9ff; -fx-padding: 20;">
+
+    <!-- Titolo -->
+    <Label text="Classifica Gara"
+           style="-fx-font-size: 26; -fx-font-weight: bold; -fx-text-fill: #004d4d;"/>
+
+    <!-- Info Gara -->
+    <GridPane hgap="15" vgap="10"
+              style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: #cccccc;">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="25"/>
+            <ColumnConstraints percentWidth="25"/>
+            <ColumnConstraints percentWidth="25"/>
+            <ColumnConstraints percentWidth="25"/>
+        </columnConstraints>
+
+        <Label text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <Label fx:id="idLbl" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="N. Prova:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+        <Label fx:id="numProvaLbl" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+        <Label text="Tecnica:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <Label fx:id="tecnicaLbl" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Criterio Punti:" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+        <Label fx:id="criterioPuntiLbl" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+        <Label text="Tipo Gara:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <Label fx:id="tipoGaraLbl" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Data:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+        <Label fx:id="dataLbl" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+
+        <Label text="Campo Gara:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <Label fx:id="campoGaraLbl" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <!-- Tabella Classifica -->
+    <TableView fx:id="classificaTable" prefHeight="350" prefWidth="850">
+        <columns>
+            <TableColumn fx:id="posizioneCol" text="Posizione" prefWidth="80"/>
+            <TableColumn fx:id="cfCol" text="CF Concorrente" prefWidth="150"/>
+            <TableColumn fx:id="societaCol" text="Società" prefWidth="150"/>
+            <TableColumn fx:id="sponsorCol" text="Sponsor" prefWidth="120"/>
+            <TableColumn fx:id="penalitaCol" text="Penalità" prefWidth="80"/>
+            <TableColumn fx:id="piazzamentoCol" text="Piazzamento" prefWidth="100"/>
+            <TableColumn fx:id="turniCol" text="Piazzamenti Turni" prefWidth="170"/>
+        </columns>
+    </TableView>
+
+    <!-- Pulsante Indietro -->
+    <HBox alignment="CENTER">
+        <Button fx:id="backBtn"
+                text="Torna indietro"
+                onAction="#handleBack"
+                style="-fx-background-color: #004d4d; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </HBox>
+
+</VBox>

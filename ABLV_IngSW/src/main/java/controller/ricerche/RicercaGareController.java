@@ -2,12 +2,14 @@ package controller.ricerche;
 
 import java.io.IOException;
 
+import controller.classifiche.ClassificaController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -63,11 +65,44 @@ public class RicercaGareController {
             // Carica dati dal DB
             ObservableList<Gara> dati = FXCollections.observableArrayList(this.ricercaService.getGare());
             table.setItems(dati);
+            
+            
+            table.setRowFactory(tv -> {
+                TableRow<Gara> row = new TableRow<>();
+                row.setOnMouseClicked(event -> {
+                    if (event.getClickCount() == 2 && !row.isEmpty()) {
+                        Gara garaSelezionata = row.getItem();
+                        apriClassifica(garaSelezionata);
+                    }
+                });
+                return row;
+            });
     	} catch(RicercaEccezione e) {
     		Alerter.showError(e.getMessage());
     	}
         
     }
+    
+    
+    private void apriClassifica(Gara gara) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/view/fxml/Classifica.fxml")
+            );
+            Scene scene = new Scene(loader.load());
+
+            // Se vuoi passare la gara al controller della classifica
+            ClassificaController controller = loader.getController();
+            controller.setGara(gara);
+
+            Stage stage = (Stage) table.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Classifica");
+        } catch (IOException e) {
+            Alerter.showError(e.getMessage());
+        }
+    }
+
 
 
     @FXML
