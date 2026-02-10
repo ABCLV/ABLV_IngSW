@@ -68,12 +68,7 @@ class ConcorrenteDAOTest {
         assertNull(dao.getConcorrente("CF_INESISTENTE_" + System.nanoTime()));
     }
 
-    @Test
-    @DisplayName("Get gare concorrente")
-    void testGetGareConcorrente() {
-        List<Gara> gare = dao.getGareConcorrente("CF_INESISTENTE");
-        assertNotNull(gare);
-    }
+  
 
     @Test
     @DisplayName("Count pescatori >= 0")

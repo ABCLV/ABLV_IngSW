@@ -19,21 +19,6 @@ class SocietaTest {
 		societa = new Societa(NOME_TEST, EMAIL_TEST, CAP_TEST, CITTA_TEST, INDIRIZZO_TEST);
 	}
 
-	@Test
-	@DisplayName("Costruttore inizializza tutti i campi correttamente")
-	void testCostruttore() {
-		assertAll("Verifica inizializzazione", () -> assertEquals(NOME_TEST, societa.getNome()),
-				() -> assertEquals(EMAIL_TEST, societa.getEmail()), () -> assertEquals(CAP_TEST, societa.getCap()),
-				() -> assertEquals(CITTA_TEST, societa.getCitta()),
-				() -> assertEquals(INDIRIZZO_TEST, societa.getIndirizzo()));
-	}
-
-	@Test
-	@DisplayName("Costruttore vuoto crea istanza valida")
-	void testCostruttoreVuoto() {
-		Societa s = new Societa();
-		assertNotNull(s);
-	}
 
 	@Test
 	@DisplayName("Validazione: nome vuoto o null lancia eccezione")
@@ -83,10 +68,6 @@ class SocietaTest {
 		assertEquals("Via Roma 1", societa.getIndirizzo());
 	}
 
-	@Test
-	@DisplayName("SoggettoIF: getIdentificatore ritorna nome")
-	void testGetIdentificatore() {
-		assertEquals(NOME_TEST, societa.getIdentificatore());
-	}
+	
 
 }

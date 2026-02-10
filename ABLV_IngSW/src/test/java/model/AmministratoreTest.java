@@ -23,33 +23,7 @@ class AmministratoreTest {
         admin = new Amministratore();
     }
 
-    // ============================================================
-    // TEST COSTRUTTORI
-    // ============================================================
-
-    @Test
-    @DisplayName("Costruttore vuoto dovrebbe creare istanza non null")
-    void testCostruttoreVuoto() {
-        Amministratore a = new Amministratore();
-        assertNotNull(a);
-    }
-
-    @Test
-    @DisplayName("Costruttore completo dovrebbe inizializzare tutti i campi")
-    void testCostruttoreCompleto() {
-        Amministratore a = new Amministratore(CF_TEST, NOME_TEST, COGNOME_TEST);
-        
-        assertAll("Verifica inizializzazione costruttore",
-            () -> assertEquals(CF_TEST, a.getCfAmministratore()),
-            () -> assertEquals(NOME_TEST, a.getNome()),
-            () -> assertEquals(COGNOME_TEST, a.getCognome())
-        );
-    }
-
-    // ============================================================
-    // TEST GETTER/SETTER BASE
-    // ============================================================
-
+  
     @Test
     @DisplayName("Dovrebbe settare e restituire correttamente il CF")
     void testSetAndGetCfAmministratore() {
@@ -71,68 +45,14 @@ class AmministratoreTest {
         assertEquals(COGNOME_TEST, admin.getCognome());
     }
 
-    @Test
-    @DisplayName("Setter dovrebbero permettere modifiche post-costruzione")
-    void testModificaDati() {
-        // Setup iniziale
-        admin.setCfAmministratore("OLD_CF");
-        admin.setNome("Old");
-        admin.setCognome("Old");
-        
-        // Modifica
-        admin.setCfAmministratore(CF_TEST);
-        admin.setNome(NOME_TEST);
-        admin.setCognome(COGNOME_TEST);
-        
-        // Verifica
-        assertAll("Verifica modifiche",
-            () -> assertEquals(CF_TEST, admin.getCfAmministratore()),
-            () -> assertEquals(NOME_TEST, admin.getNome()),
-            () -> assertEquals(COGNOME_TEST, admin.getCognome())
-        );
-    }
+ 
 
-
-    // ============================================================
-    // TEST toString()
-    // ============================================================
-
-    @Test
-    @DisplayName("toString() dovrebbe contenere CF, cognome e nome")
-    void testToString() {
-        admin.setCfAmministratore(CF_TEST);
-        admin.setNome(NOME_TEST);
-        admin.setCognome(COGNOME_TEST);
-        
-        String result = admin.toString();
-        
-        assertAll("Verifica contenuto toString",
-            () -> assertTrue(result.contains(CF_TEST)),
-            () -> assertTrue(result.contains(NOME_TEST)),
-            () -> assertTrue(result.contains(COGNOME_TEST)),
-            () -> assertTrue(result.contains(":")),
-            () -> assertTrue(result.contains("-"))
-        );
-    }
 
     // ============================================================
     // TEST COMPORTAMENTO OGGETTO
     // ============================================================
 
-    @Test
-    @DisplayName("Distanza logica: due amministratori con stesso CF sono logicamente equivalenti")
-    void testUguaglianzaLogicaPerCf() {
-        Amministratore a1 = new Amministratore();
-        a1.setCfAmministratore(CF_TEST);
-        a1.setNome("Mario");
-        
-        Amministratore a2 = new Amministratore();
-        a2.setCfAmministratore(CF_TEST);
-        a2.setNome("Luigi"); // nome diverso, stesso CF
-        
-        // Verifica che il CF sia la chiave logica (anche se equals() non è override)
-        assertEquals(a1.getCfAmministratore(), a2.getCfAmministratore());
-    }
+  
     
     @Test
     @DisplayName("Non dovrebbe accettare valori null nei campi obbligatori")

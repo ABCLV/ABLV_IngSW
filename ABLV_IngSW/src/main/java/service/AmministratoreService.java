@@ -6,7 +6,9 @@ import java.util.List;
 import db.repository.AmministratoreDAO;
 import db.repository.GaraDAO;
 import db.repository.TurnoDAO;
+import model.Amministratore;
 import model.Gara;
+import service.exception.AmministratoreHomeEccezione;
 import service.exception.PropostaEccezione;
 import db.exception.*;
 //import model.interfaces.*;
@@ -34,6 +36,14 @@ public class AmministratoreService /*implements PropositoreIF*/ {
 			this.garaDAO.accettaGara(codiceGara, ammId);
 		} catch(GaraEccezione e) {
 			throw new PropostaEccezione(e.getMessage(), e);
+		}
+	}
+	
+	public Amministratore getAmministratore(String cf) {
+		try {
+			return this.amministratoreDAO.getAmministratore(cf);
+		} catch(ConcorrenteEccezione e) {
+			throw new AmministratoreHomeEccezione(e.getMessage(), e);
 		}
 	}
 

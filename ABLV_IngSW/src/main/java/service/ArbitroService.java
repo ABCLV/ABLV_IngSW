@@ -4,13 +4,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 import db.exception.ArbitroEccezione;
-import db.exception.GaraEccezione;
+import db.exception.ConcorrenteEccezione;
 import db.repository.ArbitroDAO;
-import db.repository.GaraDAO;
+import model.Arbitro;
 import model.Gara;
 import model.enums.StatoGara;
 import service.exception.AggiornaEccezione;
-import service.exception.IscrizioneEccezione;
+import service.exception.ConcorrenteHomeEccezione;
 import service.exception.RicercaEccezione;
 
 public class ArbitroService {
@@ -33,6 +33,14 @@ public class ArbitroService {
 		
 		return ret;
 		
+	}
+	
+	public Arbitro getArbitro(String arb) throws RicercaEccezione {
+		try {
+			return this.arbitroDAO.getArbitro(arb);
+		} catch(ArbitroEccezione e) {
+			throw new ConcorrenteHomeEccezione(e.getMessage(), e);
+		}
 	}
 	
 	public List<Gara> getGareDiArbitro(String arb) throws RicercaEccezione {

@@ -213,14 +213,18 @@ public class Gara {
 		return true;
 	}
 
-	public void setCodice(int codice) throws IllegalArgumentException {
-		this.checkNull(codice, "Codice Gara non valido!");
-		this.codice = codice;
+	public void setCodice(Integer codice) {
+	    if (codice == null) {
+	        throw new IllegalArgumentException("Il codice non può essere null");
+	    }
+	    this.codice = codice;
 	}
 
-	public void setNumProva(int numProva) throws IllegalArgumentException {
-		this.checkNum(numProva, "Numero di prove non valido! Deve essere positivo...");
-		this.numProva = numProva;
+	public void setNumProva(int numProva) {
+	    if (numProva <= 0) {
+	        throw new IllegalArgumentException("Il numero prova deve essere positivo");
+	    }
+	    this.numProva = numProva;
 	}
 
 	public void setTecnica(Tecnica tecnica) {
@@ -234,21 +238,36 @@ public class Gara {
 	}
 
 	public void setData(LocalDate data) {
-		this.data = data;
+	    if (data == null) {
+	        throw new IllegalArgumentException("La data non può essere null");
+	    }
+	    if (data.isBefore(LocalDate.now())) {
+	        throw new IllegalArgumentException("La data non può essere nel passato");
+	    }
+	    this.data = data;
 	}
 
 	public void setMinPersone(int minPersone) {
-		this.checkNum(minPersone, "Numero di persone minime della gara non valido! Deve essere positivo...");
-		this.minPersone = minPersone;
+	    if (minPersone <= 0) {
+	        throw new IllegalArgumentException("Il numero minimo di persone deve essere positivo");
+	    }
+	    this.minPersone = minPersone;
 	}
 
 	public void setMaxPersone(int maxPersone) {
-		this.checkNum(maxPersone, "Numero di persone massime della gara non valido! Deve essere positivo...");
-		if (this.minPersone > maxPersone) {
-			throw new IllegalArgumentException("Numero di persone massime della gara "
-					+ "non valido! Deve essere strettamente maggiore del numero minimo di persone...");
-		}
-		this.maxPersone = maxPersone;
+	    if (maxPersone <= 0) {
+	        throw new IllegalArgumentException("Il numero massimo di persone deve essere positivo");
+	    }
+	    if (this.minPersone <= 0) {
+	        throw new IllegalStateException("Imposta prima il numero minimo di persone");
+	    }
+	    if (maxPersone <= this.minPersone) {
+	        throw new IllegalArgumentException(
+	            "Il numero massimo di persone (" + maxPersone + 
+	            ") deve essere strettamente maggiore del minimo (" + this.minPersone + ")"
+	        );
+	    }
+	    this.maxPersone = maxPersone;
 	}
 
 	public void setStatoGara(StatoGara statoGara) {

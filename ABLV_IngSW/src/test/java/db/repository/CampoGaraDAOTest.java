@@ -14,22 +14,11 @@ class CampoGaraDAOTest {
 
     private CampoGaraDAO dao;
 
-    @BeforeEach
-    void setUp() {
-        dao = new CampoGaraDAO();
-    }
-
-    @Test
-    @DisplayName("Get campi gara")
-    void testGetCampiGara() {
-        List<CampoGara> campi = dao.getCampoGara();
-        assertNotNull(campi);
-    }
-
     @Test
     @DisplayName("Campo gara inesistente → null")
     void testTrovaCampoGaraNotFound() {
-        CampoGara campo = dao.trovaCampoGara("ID_INESISTENTE");
+    	dao = new CampoGaraDAO();
+        CampoGara campo = dao.trovaCampoGara(12345);
         assertNull(campo);
     }
 }

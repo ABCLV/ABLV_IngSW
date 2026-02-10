@@ -2,6 +2,7 @@ package db.repository;
 
 import static dbconSQLJOOQ.generated.Tables.ARBITRO;
 import static dbconSQLJOOQ.generated.Tables.CAMPIONATO;
+import static dbconSQLJOOQ.generated.Tables.CONCORRENTE;
 import static dbconSQLJOOQ.generated.Tables.GARA;
 
 import java.sql.Connection;
@@ -14,6 +15,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.jooq.DSLContext;
 import org.jooq.Record8;
 import org.jooq.Record11;
+import org.jooq.Record4;
+import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
@@ -23,6 +26,7 @@ import org.jooq.impl.DSL;
 import model.Arbitro;
 import model.Campionato;
 import model.CampoGara;
+import model.Concorrente;
 import model.Gara;
 import model.enums.CriterioPunti;
 import model.enums.StatoConferma;
@@ -32,8 +36,29 @@ import model.enums.TipologiaGara;
 import db.SQLiteConnectionManager;
 import db.exception.AmministratoreEccezione;
 import db.exception.ArbitroEccezione;
+import db.exception.ConcorrenteEccezione;
 
 public class ArbitroDAO {
+	
+	public Arbitro getArbitro(String cf) throws ArbitroEccezione {
+		try (Connection conn = SQLiteConnectionManager.getConnection()) {
+			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+			Record4<String, String, String, String> r = ctx
+					.select(ARBITRO.CF, ARBITRO.COGNOME, ARBITRO.NOME, ARBITRO.SEZIONE)
+					.from(ARBITRO).where(ARBITRO.CF.eq(cf)).fetchOne();
+
+			if (r == null)
+				return null;
+
+			return new Arbitro(r.get(ARBITRO.CF), r.get(ARBITRO.NOME), r.get(ARBITRO.COGNOME),
+					r.get(ARBITRO.SEZIONE));
+		} catch (DataAccessException e) {
+			throw new ArbitroEccezione("Errore nel recuperare l'arbitro!", e);
+		} catch (SQLException e) {
+			throw new ArbitroEccezione("Errore nel recuperare l'arbitro!", e);
+		}
+	}
 
 	public void registraArbitro(String cf, String nome, String cognome, String sezione, String pwdChiara)
 			throws ArbitroEccezione {
