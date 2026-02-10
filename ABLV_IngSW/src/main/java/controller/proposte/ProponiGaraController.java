@@ -269,7 +269,7 @@ public class ProponiGaraController {
             Alerter.showError("Devi compilare tutti i campi obbligatori!");
             return;
         }
-        
+        /*
         if(data.isBefore(LocalDate.now())) {
         	Alerter.showError("La data di svolgimento della gara deve essere almeno domani!");
         	return;
@@ -278,7 +278,7 @@ public class ProponiGaraController {
         if(data.isBefore(oggi.plusDays(3))) {
         	Alerter.showError("La proposta deve avvenire almeno 3 giorni prima del suo inizio...");
         	return;
-        }
+        }*/
 
         if (!checkMinMax()) {
             return;

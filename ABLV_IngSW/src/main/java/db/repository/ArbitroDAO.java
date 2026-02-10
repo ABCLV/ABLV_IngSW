@@ -171,8 +171,8 @@ public class ArbitroDAO {
 	                        GARA.DATA, GARA.TECNICA, GARA.TIPOGARA, CAMPIONATO.TITOLO, CAMPIONATO.CATEGORIA,
 	                        GARA.STATOCONFERMA)
 	                .from(GARA).leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
-	                .where(GARA.ARBITRO.isNull()
-	                		.and(GARA.DATA.gt(oggi.plusDays(3))))
+	                .where(GARA.ARBITRO.isNull())
+	                		//.and(GARA.DATA.gt(oggi.plusDays(3))))
 	                .fetch();
 
 	        List<Gara> out = new ArrayList<>();
@@ -311,7 +311,7 @@ public class ArbitroDAO {
 	                .where(
 	                    GARA.ID.eq(codiceGara)
 	                    .and(GARA.ARBITRO.eq(cfArbitro))
-	                    .and(GARA.DATA.gt(oggi.plusDays(3)))
+	                    //.and(GARA.DATA.gt(oggi.plusDays(3)))
 	                )
 	                .execute() > 0;
 	                
