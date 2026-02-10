@@ -19,7 +19,6 @@ public class AuthDAO {
 	}
 	//!!DEBITO TECNICO sostituire le stringhe con le enum!!
 	public boolean checkPassword(String tipo, String id, String pwdChiara) throws AuthEccezione {
-		System.out.println("aa: " + DigestUtils.sha256Hex("aa"));
 		String hash = DigestUtils.sha256Hex(pwdChiara);
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);

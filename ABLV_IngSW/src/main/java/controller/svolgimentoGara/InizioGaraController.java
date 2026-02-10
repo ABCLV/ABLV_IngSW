@@ -354,8 +354,6 @@ public class InizioGaraController {
             
             lblTurno.setText(String.valueOf(turnoCorrente));
             Alerter.showSuccess("Turno salvato correttamente");
-            System.out.println("turno corrente: " + turnoCorrente);
-            System.out.println("turni totali: " + this.arbitroService.getNumTurni(garaCorrente.getCodice()));
             if(turnoCorrente > this.arbitroService.getNumTurni(garaCorrente.getCodice())) {
             	this.punteggioService.terminaGara(garaCorrente.getCodice());
             	buttonEsci(event);

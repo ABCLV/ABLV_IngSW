@@ -136,7 +136,6 @@ public class ProponiGaraService {
             }
             
             int ultimoCodice = this.getUltimoCodiceGara();
-            System.out.println("ultimo codice: " + ultimoCodice);
 
             Gara g = new Gara();
             g.setNumProva(numProva);

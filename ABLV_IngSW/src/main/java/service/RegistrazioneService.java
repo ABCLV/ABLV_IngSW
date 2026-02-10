@@ -82,7 +82,6 @@ public class RegistrazioneService {
 	public void esisteSocieta(String nome) throws RegistrazioneEccezione {
 		try {
 			this.societaDAO.esisteSocieta(nome);
-			System.out.println("La societaa' esiste gia'? " + this.societaDAO.esisteSocieta(nome));
 		} catch(SocietaEccezione e) {
 			throw new RegistrazioneEccezione(e.getMessage(), e);
 		}

@@ -25,7 +25,6 @@ public class CampoGaraDAO {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-			System.out.println(ctx.selectFrom(CAMPOGARA).fetchInto(CampoGara.class));
 
 			return ctx.select(CAMPOGARA.ID.as("idCampoGara"), CAMPOGARA.PAESE, CAMPOGARA.CORPOIDRICO,
 					CAMPOGARA.LUNGHEZZA, CAMPOGARA.DESCRIZIONE).from(CAMPOGARA).fetchInto(CampoGara.class);

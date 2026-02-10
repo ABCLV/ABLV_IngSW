@@ -73,7 +73,6 @@ public class RicercaConcorrentiController {
         	}
         } catch (IOException e) {
             Alerter.showError(e.getMessage());
-            System.out.println(e.getMessage());
         }
     }
 

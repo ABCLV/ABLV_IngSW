@@ -196,7 +196,6 @@ public class PunteggioDAO {
 	           .where(GARA.ID.eq(codiceGara))
 	           .execute();
 
-	        System.out.println("Gara " + codiceGara + " terminata.");
 
 	    } catch (Exception e) {
 	        throw new GaraEccezione(
@@ -213,7 +212,6 @@ public class PunteggioDAO {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-	        System.out.println("risultati: " + risultati);
 
 	        ctx.transaction(configuration -> {
 	            DSLContext tx = DSL.using(configuration);
@@ -225,7 +223,6 @@ public class PunteggioDAO {
 	                    .and(TURNO.GARA.eq(codiceGara))
 	                    .fetchInto(Integer.class);
 
-	            System.out.println("turni recuperati: " + turni);
 
 	            // Aggiorna i risultati dei concorrenti per tutti i turni trovati
 	            List<Query> queries = risultati.stream()
@@ -316,7 +313,6 @@ public class PunteggioDAO {
 	        .where(cond)
 	        .fetchInto(Concorrente.class);
 
-	    System.out.println("presenti: " + presenti);
 	    return presenti;
 	}
 
@@ -350,7 +346,6 @@ public class PunteggioDAO {
 	            return t;
 	        });
 
-	    System.out.println("turni: " + turni);
 	    return turni;
 	}
 
@@ -361,7 +356,6 @@ public class PunteggioDAO {
 	            .distinct()
 	            .toList();
 
-	    System.out.println("settori gara: " + settori);
 	    return settori;
 	}
 
@@ -385,7 +379,6 @@ public class PunteggioDAO {
 	        i++;
 	    }
 
-	    System.out.println("mappa settori: " + settorePerConcorrente);
 	}
 
 	
