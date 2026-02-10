@@ -376,8 +376,8 @@ public class GaraDAO {
 							GARA.AMMINISTRATOREPROPOSTA, CAMPIONATO.TITOLO, CAMPIONATO.CATEGORIA)
 					.from(GARA).leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
 					.where(GARA.AMMINISTRATOREACCETTAZIONE.isNull(), 
-							GARA.AMMINISTRATOREPROPOSTA.notEqual(amm),
-							GARA.DATA.gt(oggi.plusDays(3)))
+							GARA.AMMINISTRATOREPROPOSTA.notEqual(amm))
+							//GARA.DATA.gt(oggi.plusDays(3)))
 					.fetch();
 
 			Result<Record8<Integer, Integer, String, LocalDate, Integer, String, String, String>> gareSoc = ctx
@@ -385,8 +385,8 @@ public class GaraDAO {
 							CAMPIONATO.TITOLO, CAMPIONATO.CATEGORIA)
 					.from(GARA).leftJoin(CAMPIONATO).on(CAMPIONATO.TITOLO.eq(GARA.CAMPIONATO))
 					.where(GARA.AMMINISTRATOREACCETTAZIONE.isNull(),
-							GARA.SOCIETA.isNotNull(),
-							GARA.DATA.gt(oggi.plusDays(3)))
+							GARA.SOCIETA.isNotNull())
+							//GARA.DATA.gt(oggi.plusDays(3)))
 					.fetch();
 
 			List<Gara> out = new ArrayList<>();
@@ -454,8 +454,8 @@ public class GaraDAO {
 					.set(GARA.AMMINISTRATOREACCETTAZIONE, amm)
 					.where(GARA.ID.eq(codice).and(GARA.STATOCONFERMA.eq(StatoConferma.IN_ATTESA.name()))
 							.and(GARA.AMMINISTRATOREACCETTAZIONE.isNull()) // Solo se non è già stata accettata
-							.and(GARA.AMMINISTRATOREPROPOSTA.notEqual(amm).or(GARA.AMMINISTRATOREPROPOSTA.isNull())) // Non può accettare se stesso
-							.and(GARA.DATA.gt(oggi.plusDays(3))))
+							.and(GARA.AMMINISTRATOREPROPOSTA.notEqual(amm).or(GARA.AMMINISTRATOREPROPOSTA.isNull()))) // Non può accettare se stesso
+							//.and(GARA.DATA.gt(oggi.plusDays(3))))
 					.execute() > 0;
 					
 			if(!updated) {
@@ -516,8 +516,8 @@ public class GaraDAO {
 	                )
 	            ))
 	            .and(GARA.STATOGARA.eq(StatoGara.NON_INIZIATA.name()))
-	            .and(GARA.STATOCONFERMA.eq(StatoConferma.CONFERMATA.name())
-	    	            .and(GARA.DATA.gt(oggi.plusDays(3))))
+	            .and(GARA.STATOCONFERMA.eq(StatoConferma.CONFERMATA.name()))
+	    	            //.and(GARA.DATA.gt(oggi.plusDays(3))))
 	            .fetch();
 
 	        List<Gara> out = new ArrayList<>();

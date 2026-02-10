@@ -79,25 +79,6 @@ public class IscrizioneDAO {
 	        throw new IscrizioneEccezioneDB("Errore nell'inserire l'iscrizione!", e);
 	    }
 	}
-	/*
-	public int getUltimoCodiceIscrizione() throws IscrizioneEccezioneDB {
-	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
-	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-
-	        Integer result = ctx.select(ISCRIVE.IDISCRIZIONE)
-	                .from(ISCRIVE)
-	                .orderBy(ISCRIVE.IDISCRIZIONE.desc())
-	                .limit(1)
-	                .fetchOneInto(Integer.class);
-	        
-	        System.out.println(result);
-
-	        return result != null ? result : 0;
-
-	    } catch (SQLException e) {
-	        throw new IscrizioneEccezioneDB("Errore nel recuperare l'ultimo codice iscrizione!", e);
-	    }
-	}*/
 	
 	public boolean esisteIscrizione(String cf, int codiceGara) throws IscrizioneEccezioneDB {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {

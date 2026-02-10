@@ -54,11 +54,7 @@ public class DefinizioneTurni {
 
     @FXML
     private void terminaInserimento() {
-
-        System.out.println("Durate turni inserite:");
-        for (int i = 0; i < durateTurni.size(); i++) {
-            //System.out.println("Turno " + (i + 1) + ": " + durateTurni.get(i) + " min");
-        }
+    	
         garaproposta = new ProponiGaraService();
         settTurni = new SalvataggioTurniService();
         settTurni.insertTurni(durateTurni, garaproposta.getUltimoCodiceGara());

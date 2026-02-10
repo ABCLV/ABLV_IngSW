@@ -24,6 +24,10 @@ public class PunteggioService {
 		return concDAO.getConcorrentiPerSettore(codiceGara, settore);
 	}
 	
+	public void terminaGara(int codiceGara) {
+		this.punteggioDAO.terminaGara(codiceGara);
+	}
+	
 	
 	public ObservableList<ClassificaRiga> calcolaClassifica(int codiceGara){
 		return this.punteggioDAO.calcolaClassifica(codiceGara);

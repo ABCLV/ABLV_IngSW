@@ -15,10 +15,10 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.Concorrente;
 import model.Gara;
+import model.RisultatoTurno;
 import model.Settore;
 import service.PunteggioService;
 import service.RicercaService;
-import service.RisultatoTurno;
 import service.ArbitroService;
 import state.Session;
 import utils.Alerter;
@@ -354,9 +354,8 @@ public class InizioGaraController {
             
             lblTurno.setText(String.valueOf(turnoCorrente));
             Alerter.showSuccess("Turno salvato correttamente");
-            System.out.println("turno corrente: " + turnoCorrente);
-            System.out.println("turni totali: " + this.arbitroService.getNumTurni(garaCorrente.getCodice()));
             if(turnoCorrente > this.arbitroService.getNumTurni(garaCorrente.getCodice())) {
+            	this.punteggioService.terminaGara(garaCorrente.getCodice());
             	buttonEsci(event);
             }
 
@@ -368,6 +367,7 @@ public class InizioGaraController {
     
     private void buttonEsci(ActionEvent event) {
     	try {
+    		
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/arbitroHome.fxml"));
 			Scene homeScene = new Scene(loader.load());
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

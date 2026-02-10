@@ -7,8 +7,10 @@ import static dbconSQLJOOQ.generated.Tables.CONCORRENTE;
 import static dbconSQLJOOQ.generated.Tables.ISCRIVE;
 import static dbconSQLJOOQ.generated.Tables.SETTORE;
 import static dbconSQLJOOQ.generated.Tables.CONTRATTO;
+import static dbconSQLJOOQ.generated.Tables.GARA;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,9 +28,11 @@ import db.exception.GaraEccezione;
 import javafx.collections.ObservableList;
 import model.ClassificaRiga;
 import model.Concorrente;
+import model.RisultatoTurno;
 import model.Settore;
 import model.Turno;
-import service.RisultatoTurno;
+import model.enums.StatoConferma;
+
 import org.jooq.Query;
 import org.jooq.impl.DSL;
 import org.jooq.DSLContext;
@@ -167,6 +171,7 @@ public class PunteggioDAO {
 	            posizioneFinale += (j - i);
 	            i = j;
 	        }
+	        
 
 	        return classifica;
 
@@ -179,23 +184,34 @@ public class PunteggioDAO {
 	}
 
 	
+
+	public void terminaGara(int codiceGara) {
+
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+
+	        ctx.update(GARA)
+	           .set(GARA.STATOCONFERMA, "TERMINATA")
+	           .where(GARA.ID.eq(codiceGara))
+	           .execute();
+
+
+	    } catch (Exception e) {
+	        throw new GaraEccezione(
+	                "Errore nella terminazione della gara " + codiceGara,
+	                e
+	        );
+	    }
+	}
+
+
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public void salvaTurno(int codiceGara, int numeroTurno, List<RisultatoTurno> risultati) {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
 	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
-	        System.out.println("risultati: " + risultati);
 
 	        ctx.transaction(configuration -> {
 	            DSLContext tx = DSL.using(configuration);
@@ -207,7 +223,6 @@ public class PunteggioDAO {
 	                    .and(TURNO.GARA.eq(codiceGara))
 	                    .fetchInto(Integer.class);
 
-	            System.out.println("turni recuperati: " + turni);
 
 	            // Aggiorna i risultati dei concorrenti per tutti i turni trovati
 	            List<Query> queries = risultati.stream()
@@ -298,7 +313,6 @@ public class PunteggioDAO {
 	        .where(cond)
 	        .fetchInto(Concorrente.class);
 
-	    System.out.println("presenti: " + presenti);
 	    return presenti;
 	}
 
@@ -332,7 +346,6 @@ public class PunteggioDAO {
 	            return t;
 	        });
 
-	    System.out.println("turni: " + turni);
 	    return turni;
 	}
 
@@ -343,7 +356,6 @@ public class PunteggioDAO {
 	            .distinct()
 	            .toList();
 
-	    System.out.println("settori gara: " + settori);
 	    return settori;
 	}
 
@@ -355,6 +367,9 @@ public class PunteggioDAO {
 
 	    settorePerConcorrente = new HashMap<>();
 	    int i = 0;
+	    
+	    // Mischia l’ordine dei concorrenti
+	    Collections.shuffle(presenti);
 
 	    for (Concorrente c : presenti) {
 	    	settorePerConcorrente.put(
@@ -364,7 +379,6 @@ public class PunteggioDAO {
 	        i++;
 	    }
 
-	    System.out.println("mappa settori: " + settorePerConcorrente);
 	}
 
 	
