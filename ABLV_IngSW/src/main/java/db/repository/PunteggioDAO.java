@@ -9,6 +9,7 @@ import static dbconSQLJOOQ.generated.Tables.SETTORE;
 import static dbconSQLJOOQ.generated.Tables.CONTRATTO;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -182,15 +183,7 @@ public class PunteggioDAO {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public void salvaTurno(int codiceGara, int numeroTurno, List<RisultatoTurno> risultati) {
 	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
 
@@ -355,6 +348,9 @@ public class PunteggioDAO {
 
 	    settorePerConcorrente = new HashMap<>();
 	    int i = 0;
+	    
+	    // Mischia l’ordine dei concorrenti
+	    Collections.shuffle(presenti);
 
 	    for (Concorrente c : presenti) {
 	    	settorePerConcorrente.put(
