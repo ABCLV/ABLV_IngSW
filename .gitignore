@@ -29,10 +29,9 @@ Thumbs.db
 /.metadata/
 
 #db
-/ABLV_IngSW/database/gare.db
+/database/gare.db
 
 
 #dbeaver
-ABLV_IngSW/.dbeaver
-ABLV_IngSW/.mvn
-ABLV_IngSW/.settings
+/.dbeaver/
+

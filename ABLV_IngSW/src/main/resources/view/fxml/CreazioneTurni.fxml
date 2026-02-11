@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.proposte.DefinizioneTurni"
+      alignment="CENTER"
+      spacing="12"
+      prefWidth="500"
+      prefHeight="600"
+      style="-fx-background-color: #e6f7ff;">
+
+    <Label text="Inserimento Durata Turni"
+           style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #005f5f;"/>
+
+    <Label fx:id="turnoLabel"
+           text="Durata primo turno (minuti):"
+           style="-fx-font-size: 14; -fx-text-fill: #003333;"/>
+
+    <Spinner fx:id="durataSpinner"
+             prefWidth="150"/>
+
+    <VBox fx:id="listaTurniBox"
+          spacing="5"
+          maxHeight="250"
+          style="-fx-background-color: white; -fx-padding: 10; -fx-border-color: #b3e0e0; -fx-border-radius: 5;">
+    </VBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Avanti"
+                onAction="#aggiungiTurno"
+                prefWidth="100"/>
+
+        <Button text="Stop"
+                onAction="#terminaInserimento"
+                prefWidth="100"/>
+    </HBox>
+
+</VBox>

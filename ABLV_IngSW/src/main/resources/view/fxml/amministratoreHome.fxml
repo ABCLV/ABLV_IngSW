@@ -25,6 +25,7 @@
         <Button text="Registra Nuovo Amministratore" onAction="#apriRegistraAmministratore" prefWidth="200"/>
         <Button text="Proponi Gara" onAction="#apriProponiGara" prefWidth="150"/>
         <Button text="Torna alla Home" onAction="#handleBack" prefWidth="150"/>
+        <Button text="Modifica dati personali" onAction="#handleModificaDati" prefWidth="150"/>
     </HBox>
 
     <!-- Separatore -->

@@ -32,7 +32,7 @@ public class AmministratoreHomeController {
 	@FXML private TableColumn<Gara, String> colTecnicaProposte;
 	@FXML private TableColumn<Gara, LocalDate> colDataProposte;
 	@FXML private TableColumn<Gara, String> colCampionatoProposte;
-	@FXML private TableColumn<Gara, String> colCampoGaraProposte;
+	@FXML private TableColumn<Gara, Integer> colCampoGaraProposte;
 	@FXML private TableColumn<Gara, String> colStatoConfermaProposte;
 
 	// Tabella gare da confermare
@@ -43,7 +43,7 @@ public class AmministratoreHomeController {
 	@FXML private TableColumn<Gara, LocalDate> colDataConferma;
 	@FXML private TableColumn<Gara, String> colCampionatoConferma;
 	@FXML private TableColumn<Gara, String> colPropositoreConferma;
-	@FXML private TableColumn<Gara, String> colCampoGaraConferma;
+	@FXML private TableColumn<Gara, Integer> colCampoGaraConferma;
 
 	private final AmministratoreService amministratoreService = new AmministratoreService();
 
@@ -71,8 +71,10 @@ public class AmministratoreHomeController {
 		colDataProposte.setCellValueFactory(new PropertyValueFactory<>("data"));
 		colCampionatoProposte.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
 				cellData.getValue().getCampionato() != null ? cellData.getValue().getCampionato().getTitolo() : "N/A"));
-		colCampoGaraProposte.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
-				cellData.getValue().getCampoGara().getIdCampoGara()));
+		colCampoGaraProposte.setCellValueFactory(cellData ->
+	    new javafx.beans.property.SimpleIntegerProperty(
+	        cellData.getValue().getCampoGara().getIdCampoGara()
+	    ).asObject());
 		colStatoConfermaProposte.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
 				cellData.getValue().getStatoConferma().name()));
 	}
@@ -87,8 +89,11 @@ public class AmministratoreHomeController {
 				cellData.getValue().getCampionato() != null ? cellData.getValue().getCampionato().getTitolo() : "N/A"));
 		colPropositoreConferma.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
 				cellData.getValue().getPropositore().getIdentificatore()));
-		colCampoGaraConferma.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
-				cellData.getValue().getCampoGara().getIdCampoGara()));
+		colCampoGaraConferma.setCellValueFactory(cellData ->
+	    new javafx.beans.property.SimpleIntegerProperty(
+	        cellData.getValue().getCampoGara().getIdCampoGara()
+	    ).asObject());
+
 	}
 
 	private void caricaDati() {
@@ -143,7 +148,7 @@ public class AmministratoreHomeController {
 	@FXML
 	private void accettaGara() {
 		Gara garaSelezionata = gareDaConfermare.getSelectionModel().getSelectedItem();
-
+		
 		if (garaSelezionata == null) {
 			Alerter.showError("Seleziona una gara da accettare!");
 			return;
@@ -166,12 +171,30 @@ public class AmministratoreHomeController {
 			return;
 		}
 
+		
+		
 		try {
 			amministratoreService.negaProposta(garaSelezionata.getCodice(), Session.getUserName());
 			caricaDati();
 		} catch(PropostaEccezione e) {
 			Alerter.showError(e.getMessage());
 		}
+	}
+	
+	@FXML
+	private void handleModificaDati(ActionEvent event) {
+		try {
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/ModificaDati.fxml"));
+	        Parent root = loader.load();
+	        
+	        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+	        Scene scene = new Scene(root);
+	        stage.setScene(scene);
+	        stage.show();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        Alerter.showError("Errore nel caricamento della pagina di modifica dei dati");
+	    }
 	}
 
 	@FXML

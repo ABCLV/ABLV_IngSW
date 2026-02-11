@@ -1,6 +1,5 @@
 package service;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 import db.exception.AmministratoreEccezione;

@@ -5,7 +5,10 @@ import java.util.List;
 
 import db.repository.AmministratoreDAO;
 import db.repository.GaraDAO;
+import db.repository.TurnoDAO;
+import model.Amministratore;
 import model.Gara;
+import service.exception.AmministratoreHomeEccezione;
 import service.exception.PropostaEccezione;
 import db.exception.*;
 //import model.interfaces.*;
@@ -14,30 +17,13 @@ public class AmministratoreService /*implements PropositoreIF*/ {
 	
 	private final GaraDAO garaDAO;
 	private final AmministratoreDAO amministratoreDAO;
+	private final TurnoDAO turnoDAO;
 	
 	public AmministratoreService() {
 		this.garaDAO = new GaraDAO();
 		this.amministratoreDAO = new AmministratoreDAO();
+		this.turnoDAO = new TurnoDAO();
 	};
-	
-	/*
-	/**
-	 * Crea e proponi una nuova gara.
-	 * 
-	 * @param gara oggetto gara da inserire nel sistema
-	 
-	public boolean proponiGara(Gara gara) {
-		boolean ret = false;
-		try {
-			GaraDAO.insertGara(gara);
-			ret = true;
-		} catch(Exception e) {
-			e.printStackTrace();
-			new Alert(Alert.AlertType.INFORMATION, "Errore nell'inserimento della nuova gara!");
-		}
-		
-		return ret;
-	}*/
 
 	/**
 	 * Approva una proposta di gara.
@@ -45,12 +31,19 @@ public class AmministratoreService /*implements PropositoreIF*/ {
 	 * @param numGara numero identificativo della gara
 	 * @throws SQLException
 	 */
-	public void confermaProposta(String codiceGara, String ammId) throws PropostaEccezione {
+	public void confermaProposta(int codiceGara, String ammId) throws PropostaEccezione {
 		try {
 			this.garaDAO.accettaGara(codiceGara, ammId);
 		} catch(GaraEccezione e) {
-			e.printStackTrace();
 			throw new PropostaEccezione(e.getMessage(), e);
+		}
+	}
+	
+	public Amministratore getAmministratore(String cf) {
+		try {
+			return this.amministratoreDAO.getAmministratore(cf);
+		} catch(ConcorrenteEccezione e) {
+			throw new AmministratoreHomeEccezione(e.getMessage(), e);
 		}
 	}
 
@@ -60,7 +53,7 @@ public class AmministratoreService /*implements PropositoreIF*/ {
 	 * @param numGara numero identificativo della gara
 	 * @param motivo  motivazione del rifiuto
 	 */
-	public void negaProposta(String codiceGara, String ammId) throws PropostaEccezione {
+	public void negaProposta(int codiceGara, String ammId) throws PropostaEccezione {
 		try {
 			this.garaDAO.rifiutaGara(codiceGara, ammId);
 		} catch(GaraEccezione e) {

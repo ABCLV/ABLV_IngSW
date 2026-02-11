@@ -85,37 +85,9 @@ public class ProponiGaraService {
 		return ret;
 	}
 
-	/* ---------- ricerche per chiave ---------- 
-	public Campionato getSelectedCampionato(String titolo, List<Campionato> lista) {
-		Campionato ret = null;
-		if (titolo != null) {
-			ret = lista.stream().filter(c -> c.getTitolo().equals(titolo)).findFirst().orElse(null);
-		}
-		
-		return ret;
-	}
-
-	public Arbitro getSelectedArbitro(String cf, List<Arbitro> lista) {
-		Arbitro ret = null;
-		if (cf != null) {
-			ret = lista.stream().filter(a -> a.getCfArbitro().equals(cf)).findFirst().orElse(null);
-		}
-	
-		return ret;
-	}
-
-	public CampoGara getSelectedCampoGara(String id, List<CampoGara> lista) {
-		CampoGara ret = null;
-		if (id != null) {
-			ret = lista.stream().filter(cg -> cg.getIdCampoGara().equals(id)).findFirst().orElse(null);
-		}
-		
-		return ret;
-	}*/
-
 	/* ---------- genera codice ---------- */
-	public String getUltimoCodiceGara() throws PropostaEccezione {
-		String ret = null;
+	public int getUltimoCodiceGara() throws PropostaEccezione {
+		int ret;
 		try {
 			ret = this.garaDAO.getUltimoCodiceGara();
 		} catch(Exception e) {
@@ -163,13 +135,9 @@ public class ProponiGaraService {
                 propositore = this.caricaPropositore("Amministratore", Session.getUserName());
             }
             
-            String ultimoCodice = this.getUltimoCodiceGara();
-            int numero = Integer.parseInt(ultimoCodice.substring(1));
-            numero++;
-            String nuovoCodice = String.format("G%03d", numero);
+            int ultimoCodice = this.getUltimoCodiceGara();
 
             Gara g = new Gara();
-            g.setCodice(nuovoCodice);
             g.setNumProva(numProva);
             g.setTecnica(tecnica);
             g.setCriterioPunti(criterio);
@@ -185,6 +153,8 @@ public class ProponiGaraService {
             g.setCampoGara(campoGara);
             
 			this.garaDAO.insertGara(g);
+			
+			
 		} catch(Exception e) {
 			throw new PropostaEccezione(e.getMessage(), e);
 		}

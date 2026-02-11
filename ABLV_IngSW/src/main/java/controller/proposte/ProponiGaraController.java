@@ -4,6 +4,8 @@ package controller.proposte;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
@@ -18,6 +20,7 @@ import service.exception.PropostaEccezione;
 import state.Session;
 import utils.Alerter;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class ProponiGaraController {
@@ -42,6 +45,7 @@ public class ProponiGaraController {
     private ObservableList<Campionato> campionatiList;
     private ObservableList<Arbitro> arbitriList;
     private ObservableList<CampoGara> campiGaraList;
+    private static String codiceGara;
     
     @FXML
     public void initialize() {
@@ -227,20 +231,21 @@ public class ProponiGaraController {
     
     private CampoGara getSelectedCampoGara() {
         Object selected = campoGaraBox.getValue();
-        
-        if(selected != null) {
-        	String text = selected.toString();
-            String id = text.split(",")[0].trim();
-            
+
+        if (selected != null) {
+            String text = selected.toString();
+            int id = Integer.parseInt(text.split(",")[0].trim());
+
             for (CampoGara cg : campiGaraList) {
-                if (cg.getIdCampoGara().equals(id)) {
+                if (cg.getIdCampoGara() == id) {
                     return cg;
                 }
             }
         }
-        
+
         return null;
     }
+
     
     @FXML
     private void proponiGara() {
@@ -256,12 +261,24 @@ public class ProponiGaraController {
         Campionato campionato = getSelectedCampionato();
         Arbitro arbitro = getSelectedArbitro();
         CampoGara campoGara = getSelectedCampoGara();
+        
+        LocalDate oggi = LocalDate.now();
 
         if (tecnica == null || criterio == null || data == null ||
                 tipo == null || campoGara == null) {
             Alerter.showError("Devi compilare tutti i campi obbligatori!");
             return;
         }
+        /*
+        if(data.isBefore(LocalDate.now())) {
+        	Alerter.showError("La data di svolgimento della gara deve essere almeno domani!");
+        	return;
+        }
+        
+        if(data.isBefore(oggi.plusDays(3))) {
+        	Alerter.showError("La proposta deve avvenire almeno 3 giorni prima del suo inizio...");
+        	return;
+        }*/
 
         if (!checkMinMax()) {
             return;
@@ -270,13 +287,15 @@ public class ProponiGaraController {
         try {
         	proponiService.insertGara(tecnica, criterio, data, minPersone, maxPersone, tipo, campionato,
         			numProva, arbitro, campoGara, Session.getUserType(), Session.getUserName());
+        	definizioneTurni();
             chiudi();
+            
+            Alerter.showSuccess("Gara proposta con successo!");
 
         } catch (Exception e) {
         	Alerter.showError(e.getMessage());
         }
         
-        Alerter.showSuccess("Gara proposta con successo!");
     }
 
     @FXML
@@ -284,4 +303,25 @@ public class ProponiGaraController {
         Stage stage = (Stage) numProvaSpinner.getScene().getWindow();
         stage.close();
     }
+    
+    public static String getCodiceGara() {
+    	return codiceGara;
+    }
+    
+    
+    private void definizioneTurni() {
+    	try {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/CreazioneTurni.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Definizione turni");
+            stage.setScene(scene);
+            stage.showAndWait();
+            
+    	} catch(IOException e) {
+    		Alerter.showError(e.getMessage());
+    	}
+    }
+    
+    
 }

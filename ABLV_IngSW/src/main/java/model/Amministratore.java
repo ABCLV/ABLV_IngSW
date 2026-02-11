@@ -24,13 +24,17 @@ public class Amministratore implements SoggettoIF {
 		this.cognome = cognome;
 	}
 
-	public Amministratore() {};
+	public Amministratore() {
+	};
 
 	public String getCfAmministratore() {
 		return cfAmministratore;
 	}
 
 	public void setCfAmministratore(String cfAmministratore) {
+		if (cfAmministratore == null) {
+			throw new IllegalArgumentException("Il codice fiscale amministratore non può essere null");
+		}
 		this.cfAmministratore = cfAmministratore;
 	}
 
@@ -39,6 +43,9 @@ public class Amministratore implements SoggettoIF {
 	}
 
 	public void setNome(String nome) {
+		if (nome == null) {
+			throw new IllegalArgumentException("Il nome non può essere null");
+		}
 		this.nome = nome;
 	}
 
@@ -47,6 +54,9 @@ public class Amministratore implements SoggettoIF {
 	}
 
 	public void setCognome(String cognome) {
+		if (cognome == null) {
+			throw new IllegalArgumentException("Il cognome non può essere null");
+		}
 		this.cognome = cognome;
 	}
 

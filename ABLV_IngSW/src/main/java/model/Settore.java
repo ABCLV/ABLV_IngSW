@@ -1,11 +1,13 @@
 package model;
 
+import java.util.Objects;
+
 /**
  * Rappresenta un settore all'interno di un campo gara.
  */
 public class Settore {
 
-	public String getIdSettore() {
+	public int getIdSettore() {
 		return idSettore;
 	}
 
@@ -17,7 +19,7 @@ public class Settore {
 		return descrizione;
 	}
 
-	private String idSettore;
+	private int idSettore;
 	private int lunghezza;
 	private String descrizione;
 
@@ -27,7 +29,7 @@ public class Settore {
 	 * @param idSettore   identificativo del settore
 	 * @param descrizione descrizione del settore
 	 */
-	public Settore(String idSettore, int lunghezza, String descrizione) {
+	public Settore(int idSettore, int lunghezza, String descrizione) {
 		this.idSettore = idSettore;
 		this.lunghezza = lunghezza;
 		this.descrizione = descrizione;
@@ -41,6 +43,20 @@ public class Settore {
 	public String getCaratteristiche() {
 		return null;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+	    if (this == o) return true;
+	    if (!(o instanceof Settore)) return false;
+	    Settore other = (Settore) o;
+	    return Objects.equals(idSettore, other.idSettore);
+	}
+
+	@Override
+	public int hashCode() {
+	    return Objects.hash(idSettore);
+	}
+
 
 	/**
 	 * Imposta le caratteristiche del settore.

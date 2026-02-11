@@ -15,7 +15,7 @@ import model.interfaces.SoggettoIF;
  */
 public class Gara {
 
-	private String codice;
+	private int codice;
 	private int numProva;
 	private Tecnica tecnica;
 	private CriterioPunti criterioPunti;
@@ -47,10 +47,10 @@ public class Gara {
 	 * @param tipoGara        tipologia (singola, campionato, ecc.)
 	 * @param annoGara        anno di edizione
 	 */
-	public Gara(String codiceGara, int nProva, Tecnica tipoTecnica, CriterioPunti criterioPunti,
-			LocalDate dataSvolgimento, int maxPersone, int minPersone, StatoConferma statoConferma, StatoGara statoGara,
-			TipologiaGara tipoGara, LocalDate annoGara, SoggettoIF propositore, SoggettoIF accettatore,
-			Campionato campionato, Arbitro arbitro, CampoGara campoGara) {
+	public Gara(int codiceGara, int nProva, Tecnica tipoTecnica, CriterioPunti criterioPunti, LocalDate dataSvolgimento,
+			int maxPersone, int minPersone, StatoConferma statoConferma, StatoGara statoGara, TipologiaGara tipoGara,
+			LocalDate annoGara, SoggettoIF propositore, SoggettoIF accettatore, Campionato campionato, Arbitro arbitro,
+			CampoGara campoGara) {
 		try {
 			this.setCodice(codiceGara);
 			this.setNumProva(nProva);
@@ -213,8 +213,10 @@ public class Gara {
 		return true;
 	}
 
-	public void setCodice(String codice) throws IllegalArgumentException {
-		this.checkNull(codice, "Codice Gara non valido!");
+	public void setCodice(Integer codice) {
+		if (codice == null) {
+			throw new IllegalArgumentException("Il codice non può essere null");
+		}
 		this.codice = codice;
 	}
 
@@ -234,16 +236,16 @@ public class Gara {
 	}
 
 	public void setData(LocalDate data) {
-		LocalDate current = LocalDate.now();
-		if (current.isAfter(data)) {
-			throw new IllegalArgumentException("Data della gara non valida! (E' antecedente ad oggi...)");
-		} else {
-			this.data = data;
+		if (data == null) {
+			throw new IllegalArgumentException("La data non può essere null");
 		}
+		this.data = data;
 	}
 
 	public void setMinPersone(int minPersone) {
-		this.checkNum(minPersone, "Numero di persone minime della gara non valido! Deve essere positivo...");
+		if (minPersone <= 0) {
+			throw new IllegalArgumentException("Il numero minimo di persone deve essere positivo");
+		}
 		this.minPersone = minPersone;
 	}
 
@@ -293,7 +295,7 @@ public class Gara {
 		this.campoGara = campoGara;
 	}
 
-	public String getCodice() {
+	public int getCodice() {
 		return this.codice;
 	}
 
@@ -359,10 +361,8 @@ public class Gara {
 
 	@Override
 	public String toString() {
-		return "Gara [codice=" + codice + ", numProva=" + numProva + ", tecnica=" + tecnica + ", criterioPunti="
-				+ criterioPunti + ", data=" + data + ", maxPersone=" + maxPersone + ", minPersone=" + minPersone
-				+ ", statoGara=" + statoGara + ", statoConferma=" + statoConferma + ", tipoGara=" + tipoGara
-				+ ", autori=" + Arrays.toString(autori) + ", campionato=" + campionato + ", arbitro=" + arbitro
-				+ ", campoGara=" + campoGara + "]";
+		return this.getCodice() + ", " + this.getCampoGara().getIdCampoGara() + ", " + this.getNumProva() + ", "
+				+ this.getCriterioPunti() + ", " + this.getStatoGara() + ", " + this.getData() + ", "
+				+ this.getTecnica() + ", " + this.getTipoGara();
 	}
 }

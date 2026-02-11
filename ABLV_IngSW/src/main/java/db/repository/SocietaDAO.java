@@ -17,6 +17,8 @@ import org.jooq.Record5;
 import org.jooq.Record8;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataAccessException;
+import org.jooq.exception.IntegrityConstraintViolationException;
 import org.jooq.impl.DSL;
 
 import model.Campionato;
@@ -41,10 +43,26 @@ public class SocietaDAO {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 			ctx.insertInto(SOCIETA, SOCIETA.NOME, SOCIETA.INDIRIZZO, SOCIETA.CITTA, SOCIETA.CAP, SOCIETA.EMAIL,
 					SOCIETA.PASSWORD_HASH).values(nome, indirizzo, citta, cap, email, hash).execute();
-		} catch(SQLException e) {
-			e.printStackTrace();
+		} catch (IntegrityConstraintViolationException e) {
+			throw new SocietaEccezione("Società già esistente con nome = " + nome, e);
+		} catch (DataAccessException e) {
+			throw new SocietaEccezione("Errore nel registrare la società!", e);
+		} catch (SQLException e) {
 			throw new SocietaEccezione("Errore nel registrare la società!", e);
 		}
+	}
+	
+	public void eliminaSocieta(String nome) throws SocietaEccezione {
+	    try (Connection conn = SQLiteConnectionManager.getConnection()) {
+	        DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
+	        ctx.deleteFrom(SOCIETA)
+	           .where(SOCIETA.NOME.eq(nome))
+	           .execute();
+	    } catch (DataAccessException e) {
+	        throw new SocietaEccezione("Errore nell'eliminare la società", e);
+	    } catch (SQLException e) {
+	        throw new SocietaEccezione("Errore di connessione", e);
+	    }
 	}
 
 	public Societa getSocieta(String nome) throws SocietaEccezione {
@@ -54,10 +72,17 @@ public class SocietaDAO {
 					.select(SOCIETA.NOME, SOCIETA.INDIRIZZO, SOCIETA.CITTA, SOCIETA.CAP, SOCIETA.EMAIL).from(SOCIETA)
 					.where(SOCIETA.NOME.eq(nome)).fetchOne();
 			if (r == null)
-				throw new IllegalArgumentException("Società non trovata");
-			return new Societa(r.value1(), r.value2(), r.value3(), r.value4(), r.value5());
-		} catch(Exception e) {
-			e.printStackTrace();
+				return null;
+			return new Societa(
+					r.get(SOCIETA.NOME),
+					r.get(SOCIETA.EMAIL),
+					r.get(SOCIETA.CAP),
+					r.get(SOCIETA.CITTA),
+					r.get(SOCIETA.INDIRIZZO)
+					);
+		}  catch (DataAccessException e) {
+			throw new SocietaEccezione("Errore nel recuperare la società!", e);
+		} catch (SQLException e) {
 			throw new SocietaEccezione("Errore nel recuperare la società!", e);
 		}
 	}
@@ -66,8 +91,9 @@ public class SocietaDAO {
 		try (Connection conn = SQLiteConnectionManager.getConnection()) {
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 			return ctx.fetchExists(ctx.selectFrom(SOCIETA).where(SOCIETA.NOME.eq(nome)));
-		} catch(SQLException e) {
-			e.printStackTrace();
+		} catch (DataAccessException e) {
+			throw new SocietaEccezione("Errore nel cercare la società!", e);
+		} catch (SQLException e) {
 			throw new SocietaEccezione("Errore nel cercare la società!", e);
 		}
 	}
@@ -78,15 +104,15 @@ public class SocietaDAO {
 
 			DSLContext ctx = DSL.using(conn, SQLDialect.SQLITE);
 
-			Result<Record8<String, Integer, String, LocalDate, String, String, String, String>> rs = ctx
-					.select(GARA.CODICE, GARA.NUMPROVA, GARA.TECNICA, GARA.DATA, GARA.CAMPOGARA, CAMPIONATO.TITOLO,
+			Result<Record8<Integer, Integer, String, LocalDate, Integer, String, String, String>> rs = ctx
+					.select(GARA.ID, GARA.NUMPROVA, GARA.TECNICA, GARA.DATA, GARA.CAMPOGARA, CAMPIONATO.TITOLO,
 							CAMPIONATO.CATEGORIA, GARA.STATOCONFERMA)
 					.from(GARA).leftJoin(CAMPIONATO).on(GARA.CAMPIONATO.eq(CAMPIONATO.TITOLO))
 					.where(GARA.SOCIETA.eq(soc)).fetch();
 
 			List<Gara> out = new ArrayList<>();
 
-			for (Record8<String, Integer, String, LocalDate, String, String, String, String> r : rs) {
+			for (Record8<Integer, Integer, String, LocalDate, Integer, String, String, String> r : rs) {
 
 				Gara g = new Gara();
 				g.setCodice(r.value1());
@@ -112,8 +138,9 @@ public class SocietaDAO {
 			}
 
 			return out;
-		} catch(SQLException e) {
-			e.printStackTrace();
+		}catch (DataAccessException e) {
+			throw new SocietaEccezione("Errore nel recuperare le gare proposte dalla società!", e);
+		} catch (SQLException e) {
 			throw new SocietaEccezione("Errore nel recuperare le gare proposte dalla società!", e);
 		}
 	}
@@ -133,8 +160,9 @@ public class SocietaDAO {
 						r.get(CONCORRENTE.EMAIL), r.get(CONCORRENTE.NASCITA), r.get(CONCORRENTE.SOCIETA)));
 			}
 			return out;
-		} catch(SQLException e) {
-			e.printStackTrace();
+		} catch (DataAccessException e) {
+			throw new SocietaEccezione("Errore nel recuperare i concorrenti iscritti alla società!", e);
+		} catch (SQLException e) {
 			throw new SocietaEccezione("Errore nel recuperare i concorrenti iscritti alla società!", e);
 		}
 	}

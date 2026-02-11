@@ -23,6 +23,7 @@ public class UtenteEsternoHomeController {
             stage.setScene(scene);
             stage.setTitle("Ricerche Gare");
     	} catch(IOException e) {
+    		e.printStackTrace();
     		Alerter.showError(e.getMessage());
     	}
         
